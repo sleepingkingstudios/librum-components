@@ -1,0 +1,19 @@
+# Ignore bundler config.
+/.bundle
+Gemfile.lock
+
+# Ignore all logfiles and tempfiles.
+.byebug_history
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore local and generated documentation.
+/coverage/*
+/doc/*
+.yardoc
+.yardopts
+
+# Ignore built gem versions.
+*.gem
