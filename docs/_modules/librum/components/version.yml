@@ -1,0 +1,43 @@
+---
+name: Librum::Components::Version
+slug: version
+type: module
+files:
+- lib/librum/components/version.rb
+parent_path: librum/components
+short_description: The current version of the engine.
+class_methods:
+- name: to_gem_version
+  path: librum/components/version/c-to-gem-version
+  slug: to-gem-version
+  inherited: false
+constants:
+- name: BUILD
+  path: librum/components/version/build
+  slug: build
+  inherited: false
+- name: MAJOR
+  path: librum/components/version/major
+  slug: major
+  inherited: false
+- name: MINOR
+  path: librum/components/version/minor
+  slug: minor
+  inherited: false
+- name: PATCH
+  path: librum/components/version/patch
+  slug: patch
+  inherited: false
+- name: PRERELEASE
+  path: librum/components/version/prerelease
+  slug: prerelease
+  inherited: false
+data_path: librum/components/version
+metadata:
+  api: private
+  see:
+  - label: http://semver.org/
+    path: http://semver.org/
+    text:
+    type: link
+version: "*"

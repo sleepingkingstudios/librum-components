@@ -1,0 +1,10 @@
+---
+name: Librum::Components::Version::MAJOR
+parent_path: librum/components/version
+slug: major
+short_description: Major version.
+value: '0'
+data_path: librum/components/version/major
+metadata:
+  api: private
+version: "*"

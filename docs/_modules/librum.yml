@@ -1,0 +1,14 @@
+---
+name: Librum
+slug: librum
+type: module
+files:
+- lib/librum/components.rb
+- lib/librum/components/version.rb
+parent_path: ''
+short_description: A Ruby application toolkit.
+defined_modules:
+- name: Components
+  slug: components
+data_path: librum
+version: "*"

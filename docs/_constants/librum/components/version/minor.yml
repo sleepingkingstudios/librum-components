@@ -1,0 +1,10 @@
+---
+name: Librum::Components::Version::MINOR
+parent_path: librum/components/version
+slug: minor
+short_description: Minor version.
+value: '1'
+data_path: librum/components/version/minor
+metadata:
+  api: private
+version: "*"

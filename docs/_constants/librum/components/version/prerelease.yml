@@ -1,0 +1,10 @@
+---
+name: Librum::Components::Version::PRERELEASE
+parent_path: librum/components/version
+slug: prerelease
+short_description: Prerelease version.
+value: nil
+data_path: librum/components/version/prerelease
+metadata:
+  api: private
+version: "*"

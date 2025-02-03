@@ -1,0 +1,24 @@
+---
+name: Librum::Components
+slug: components
+type: module
+files:
+- lib/librum/components.rb
+- lib/librum/components/version.rb
+parent_path: librum
+short_description: Component library for Librum applications.
+class_methods:
+- name: version
+  path: librum/components/c-version
+  slug: version
+  inherited: false
+constants:
+- name: VERSION
+  path: librum/components/version
+  slug: version
+  inherited: false
+defined_modules:
+- name: Version
+  slug: version
+data_path: librum/components
+version: "*"
