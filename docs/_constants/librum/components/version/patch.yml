@@ -1,0 +1,10 @@
+---
+name: Librum::Components::Version::PATCH
+parent_path: librum/components/version
+slug: patch
+short_description: Patch version.
+value: '0'
+data_path: librum/components/version/patch
+metadata:
+  api: private
+version: "*"

@@ -1,0 +1,8 @@
+---
+name: Librum::Components::VERSION
+parent_path: librum/components
+slug: version
+short_description: The current version of the gem.
+value: Version.to_gem_version
+data_path: librum/components/version
+version: "*"
