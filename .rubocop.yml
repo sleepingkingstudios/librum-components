@@ -55,3 +55,16 @@ RSpec/ExampleWording:
 
 RSpec/HookArgument:
   EnforcedStyle: example
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/NestedGroups:
+  Max: 5
+
+Style/ClassAndModuleChildren:
+  # Checks the style of children definitions at classes and modules.
+  #
+  # Our preferred style is compact-plus-one, which does not match any of the
+  # existing styles, so we disable this cop.
+  Enabled: false
