@@ -1,5 +1,8 @@
-# Ignore bundler config.
+# Ignore local configuration files.
 /.bundle
+/.rspec
+/.rubocop
+/.ruby-version
 Gemfile.lock
 
 # Ignore all logfiles and tempfiles.
@@ -8,6 +11,7 @@ Gemfile.lock
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/spec/examples.txt
 
 # Ignore local and generated documentation.
 /coverage/*

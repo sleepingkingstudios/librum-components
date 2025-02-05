@@ -7,6 +7,10 @@ gemspec
 
 group :development, :test do
   gem 'byebug', '~> 11.1'
+
+  gem 'rspec', '~> 3.13'
+  gem 'rspec-sleeping_king_studios', '~> 2.7'
+  gem 'simplecov', '~> 0.22'
 end
 
 group :doc do
