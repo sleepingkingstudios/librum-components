@@ -10,10 +10,16 @@ module Plumbum
     extend SleepingKingStudios::Tools::Toolbox::Mixin
 
     module ClassMethods
-      def dependency(key)
+      def dependency(key, delegate: [])
         validate_key(key)
 
-        define_method(key) { get_plumbum_dependency(key) }
+        self::Dependencies.define_method(key) { get_plumbum_dependency(key) }
+
+        delegate.each do |method_name|
+          self::Dependencies.define_method(method_name) do
+            get_plumbum_dependency(key).public_send(method_name)
+          end
+        end
       end
 
       private
@@ -24,6 +30,17 @@ module Plumbum
 
       def validate_key(key)
         tools.assertions.validate_name(key, as: 'key')
+      end
+    end
+
+    class << self
+      def included(other)
+        super
+
+        return if other.const_defined?(:Dependencies, false)
+
+        other.const_set(:Dependencies, Module.new)
+        other.include(other::Dependencies)
       end
     end
 
@@ -84,17 +101,21 @@ end
 #                                                                              #
 ################################################################################
 
-Mission = Struct.new(:name, :launch_site, :rocket)
-
-Rocket = Struct.new(:name)
+Application = Data.define(:launch_site)
+Mission     = Data.define(:name, :launch_site, :rocket)
+Rocket      = Data.define(:name)
 
 class RocketryService
   include Plumbum::Consumer
 
-  dependency :launch_site
+  dependency :application, delegate: %i[launch_site]
 
   def launch(rocket)
-    Mission.new("#{rocket.name} 1", launch_site, rocket)
+    Mission.new(
+      name:        "#{rocket.name} 1",
+      launch_site:,
+      rocket:
+    )
   end
 end
 
@@ -105,8 +126,8 @@ end
 RSpec.describe RocketryService do # rubocop:disable RSpec/SpecFilePathFormat
   subject(:service) { described_class.new }
 
-  let(:values)   { { launch_site: 'KSC' } }
-  let(:provider) { Plumbum::Provider.new(**values) }
+  let(:application) { Application.new(launch_site: 'KSC') }
+  let(:provider)    { Plumbum::Provider.new(application:) }
 
   before(:example) do
     service.register_plumbum_provider(provider)
@@ -117,7 +138,7 @@ RSpec.describe RocketryService do # rubocop:disable RSpec/SpecFilePathFormat
 
     it 'should launch the mission' do
       expect(service.launch(rocket)).to be_a(Mission).and have_attributes(
-        launch_site: 'KSC',
+        launch_site: application.launch_site,
         name:        'Cerberus 1',
         rocket:
       )
