@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'forwardable'
+
 require 'byebug'
 require 'sleeping_king_studios/tools'
 
@@ -45,7 +47,7 @@ module Plumbum
     end
 
     def get_plumbum_dependency(key)
-      plumbum_providers.each do |provider|
+      plumbum_providers.reverse_each do |provider|
         return provider.read(key) if provider.key?(key)
       end
 
@@ -58,8 +60,12 @@ module Plumbum
 
     private
 
+    def initialize_plumbum_providers
+      []
+    end
+
     def plumbum_providers
-      @plumbum_providers ||= []
+      @plumbum_providers ||= initialize_plumbum_providers
     end
   end
 
@@ -95,6 +101,44 @@ module Plumbum
       tools.assertions.validate_name(key, as: 'key')
     end
   end
+
+  module SingletonConsumer
+    def initialize_plumbum_providers
+      self
+        .class
+        .ancestors
+        .select { |ancestor| ancestor.is_a?(SingletonProvider) }
+        .reduce(super) { |ary, provider| ary << provider }
+    end
+  end
+
+  class SingletonProvider < Module
+    extend Forwardable
+
+    def initialize(**values)
+      super()
+
+      @provider = Plumbum::Provider.new(**values)
+    end
+
+    def_delegators :@provider,
+      :[],
+      :get,
+      :has?,
+      :key?,
+      :read
+
+    attr_reader :provider
+
+    def included(other)
+      super
+
+      return unless other < Consumer
+      return if other < SingletonConsumer
+
+      other.include(SingletonConsumer)
+    end
+  end
 end
 
 ################################################################################
@@ -105,8 +149,13 @@ Application = Data.define(:launch_site)
 Mission     = Data.define(:name, :launch_site, :rocket)
 Rocket      = Data.define(:name)
 
+ApplicationProvider = Plumbum::SingletonProvider.new(
+  application: Application.new(launch_site: 'KSC')
+)
+
 class RocketryService
   include Plumbum::Consumer
+  include ApplicationProvider
 
   dependency :application, delegate: %i[launch_site]
 
@@ -126,12 +175,7 @@ end
 RSpec.describe RocketryService do # rubocop:disable RSpec/SpecFilePathFormat
   subject(:service) { described_class.new }
 
-  let(:application) { Application.new(launch_site: 'KSC') }
-  let(:provider)    { Plumbum::Provider.new(application:) }
-
-  before(:example) do
-    service.register_plumbum_provider(provider)
-  end
+  let(:application) { ApplicationProvider.get(:application) }
 
   describe '#launch' do
     let(:rocket) { Rocket.new(name: 'Cerberus') }
@@ -146,6 +190,6 @@ RSpec.describe RocketryService do # rubocop:disable RSpec/SpecFilePathFormat
   end
 
   describe '#launch_site' do
-    it { expect(service.launch_site).to be 'KSC' }
+    it { expect(service.launch_site).to be == application.launch_site }
   end
 end
