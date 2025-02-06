@@ -15,6 +15,10 @@ module Plumbum
       def dependency(key, delegate: [])
         validate_key(key)
 
+        key = key.to_s
+
+        dependencies[key] = {}
+
         self::Dependencies.define_method(key) { get_plumbum_dependency(key) }
 
         delegate.each do |method_name|
@@ -22,6 +26,10 @@ module Plumbum
             get_plumbum_dependency(key).public_send(method_name)
           end
         end
+      end
+
+      def dependencies
+        @dependencies ||= {}
       end
 
       private
@@ -69,6 +77,57 @@ module Plumbum
     end
   end
 
+  module Consumers
+    module Parameters
+      class << self
+        def bisect_keys(hsh, expected_keys)
+          matching     = {}
+          non_matching = {}
+
+          hsh.each do |key, value|
+            if expected_keys.include?(key.to_s)
+              matching[key] = value
+            else
+              non_matching[key] = value
+            end
+          end
+
+          [matching, non_matching]
+        end
+      end
+
+      def initialize(*, **keywords, &)
+        parameter_values, keywords =
+          Plumbum::Consumers::Parameters.bisect_keys(
+            keywords,
+            Set.new(self.class.dependencies.keys.map)
+          )
+
+        super
+
+        @parameters_provider = Plumbum::Provider.new(**parameter_values)
+      end
+
+      private
+
+      def initialize_plumbum_providers
+        super << @parameters_provider
+      end
+    end
+
+    module Singleton
+      private
+
+      def initialize_plumbum_providers
+        self
+          .class
+          .ancestors
+          .select { |ancestor| ancestor.is_a?(SingletonProvider) }
+          .reduce(super) { |ary, provider| ary << provider }
+      end
+    end
+  end
+
   class Provider
     def initialize(**values)
       @values = tools.hash_tools.convert_keys_to_strings(values)
@@ -102,16 +161,6 @@ module Plumbum
     end
   end
 
-  module SingletonConsumer
-    def initialize_plumbum_providers
-      self
-        .class
-        .ancestors
-        .select { |ancestor| ancestor.is_a?(SingletonProvider) }
-        .reduce(super) { |ary, provider| ary << provider }
-    end
-  end
-
   class SingletonProvider < Module
     extend Forwardable
 
@@ -134,9 +183,9 @@ module Plumbum
       super
 
       return unless other < Consumer
-      return if other < SingletonConsumer
+      return if other < Consumers::Singleton
 
-      other.include(SingletonConsumer)
+      other.include(Consumers::Singleton)
     end
   end
 end
@@ -155,6 +204,8 @@ ApplicationProvider = Plumbum::SingletonProvider.new(
 
 class RocketryService
   include Plumbum::Consumer
+  include Plumbum::Consumers::Singleton
+  include Plumbum::Consumers::Parameters
   include ApplicationProvider
 
   dependency :application, delegate: %i[launch_site]
@@ -173,9 +224,10 @@ end
 ################################################################################
 
 RSpec.describe RocketryService do # rubocop:disable RSpec/SpecFilePathFormat
-  subject(:service) { described_class.new }
+  subject(:service) { described_class.new(**options) }
 
   let(:application) { ApplicationProvider.get(:application) }
+  let(:options)     { {} }
 
   describe '#launch' do
     let(:rocket) { Rocket.new(name: 'Cerberus') }
@@ -191,5 +243,12 @@ RSpec.describe RocketryService do # rubocop:disable RSpec/SpecFilePathFormat
 
   describe '#launch_site' do
     it { expect(service.launch_site).to be == application.launch_site }
+
+    context 'with a test application' do
+      let(:test_application) { Application.new(launch_site: 'Baikerbanur') }
+      let(:options)          { super().merge(application: test_application) }
+
+      it { expect(service.launch_site).to be == test_application.launch_site }
+    end
   end
 end
