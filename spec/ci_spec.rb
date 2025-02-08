@@ -6,18 +6,38 @@ require 'byebug'
 require 'sleeping_king_studios/tools'
 
 module Plumbum
+  Dependency = Data.define(:key) do
+    def initialize(key:)
+      tools.assertions.validate_name(key, as: 'key')
+
+      super(key: key.to_s)
+    end
+
+    private
+
+    def tools
+      SleepingKingStudios::Tools::Toolbelt.instance
+    end
+  end
+
   class DependencyNotFoundError < StandardError; end
 
   module Consumer
     extend SleepingKingStudios::Tools::Toolbox::Mixin
 
     module ClassMethods
+      # @todo: Other options.
+      #   - default [value, Proc]
+      #   - memoize [true, false]: If true, memoizes the value.
+      #
+      # @todo: Nested delegates.
+      #   dependency :application, delegate: [{ configuration: :launch_site }]
       def dependency(key, delegate: [])
         validate_key(key)
 
         key = key.to_s
 
-        dependencies[key] = {}
+        dependencies[key] = Dependency.new(key)
 
         self::Dependencies.define_method(key) { get_plumbum_dependency(key) }
 
