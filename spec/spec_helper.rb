@@ -7,6 +7,12 @@ unless ENV['COVERAGE'] == 'false'
 end
 
 require 'rspec/sleeping_king_studios'
+require 'rspec/sleeping_king_studios/concerns/example_constants'
+require 'rspec/sleeping_king_studios/concerns/focus_examples'
+require 'rspec/sleeping_king_studios/concerns/wrap_examples'
+require 'rspec/sleeping_king_studios/examples/property_examples'
+require 'rspec/sleeping_king_studios/matchers/core/construct'
+require 'rspec/sleeping_king_studios/matchers/built_in/respond_to'
 require 'byebug'
 
 # Isolated namespace for defining spec-only or transient objects.
@@ -14,6 +20,11 @@ module Spec; end
 
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.extend  RSpec::SleepingKingStudios::Concerns::ExampleConstants
+  config.extend  RSpec::SleepingKingStudios::Concerns::FocusExamples
+  config.extend  RSpec::SleepingKingStudios::Concerns::WrapExamples
+  config.include RSpec::SleepingKingStudios::Examples::PropertyExamples
+
   config.disable_monkey_patching!
 
   # This allows you to limit a spec run to individual examples or groups
