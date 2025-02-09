@@ -27,4 +27,7 @@ Gem::Specification.new do |gem|
   gem.files        = Dir['lib/**/*.rb', 'LICENSE', '*.md']
 
   gem.required_ruby_version = '>= 3.4'
+
+  gem.add_dependency 'rails',           '>= 7.0', '< 9'
+  gem.add_dependency 'view_component',  '~> 3.21'
 end
