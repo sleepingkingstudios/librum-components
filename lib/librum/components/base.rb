@@ -49,9 +49,6 @@ module Librum::Components
       end
     end
 
-    # @return [Hash] additional options passed to the component.
-    attr_reader :options
-
     private
 
     def components
