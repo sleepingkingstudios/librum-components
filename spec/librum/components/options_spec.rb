@@ -2,7 +2,13 @@
 
 require 'librum/components/options'
 
+require 'support/deferred/abstract_examples'
+require 'support/deferred/options_examples'
+
 RSpec.describe Librum::Components::Options do
+  include Spec::Support::Deferred::AbstractExamples
+  include Spec::Support::Deferred::OptionsExamples
+
   subject(:component) { described_class.new(**component_options) }
 
   shared_context 'when the component defines options' do
@@ -10,52 +16,6 @@ RSpec.describe Librum::Components::Options do
       described_class.option :label
 
       described_class.option :checked, boolean: true
-    end
-  end
-
-  shared_context 'when the option is defined' do
-    before(:example) { described_class.option(name, **meta_options) }
-  end
-
-  shared_examples 'should define component option' \
-  do |name, boolean: false, default: nil, value: 'value'|
-    name = name.to_s
-    name = name.sub(/\?\z/, '') if boolean
-
-    let(:expected_value) do
-      next super() if defined?(super())
-
-      next false if boolean && default.nil?
-
-      next default unless default.is_a?(Proc)
-
-      instance_exec(&default)
-    end
-
-    it { expect(described_class.options.keys).to include name }
-
-    if boolean
-      include_examples 'should define predicate', name, -> { expected_value }
-
-      context "when the component is initialized with #{name}: false" do
-        let(:component_options) { super().merge(name.intern => false) }
-
-        it { expect(component.send(:"#{name}?")).to be false }
-      end
-
-      context "when the component is initialized with #{name}: true" do
-        let(:component_options) { super().merge(name.intern => true) }
-
-        it { expect(component.send(:"#{name}?")).to be true }
-      end
-    else
-      include_examples 'should define reader', name, -> { expected_value }
-
-      context "when the component is initialized with #{name}: value" do
-        let(:component_options) { super().merge(name.intern => value) }
-
-        it { expect(component.send(name)).to be == value }
-      end
     end
   end
 
@@ -83,118 +43,8 @@ RSpec.describe Librum::Components::Options do
   end
 
   describe '.option' do
-    shared_examples 'should check for duplicate options' do
-      wrap_context 'when the option is defined' do
-        let(:error_message) do
-          option_name = "#{name}#{meta_options[:boolean] ? '?' : ''}"
-
-          "unable to define option ##{option_name} - the option is already " \
-            "defined on #{described_class.name}"
-        end
-
-        it 'should raise an exception' do
-          expect { described_class.option(name, **meta_options) }
-            .to raise_error(
-              Librum::Components::Options::DuplicateOptionError,
-              error_message
-            )
-        end
-      end
-    end
-
-    shared_examples 'should define the configured option' do
-      describe 'with boolean: true' do
-        let(:meta_options) { super().merge(boolean: true) }
-
-        it 'should return the name of the generated method' do
-          expect(described_class.option(name, **meta_options))
-            .to be :"#{name}?"
-        end
-
-        include_examples 'should check for duplicate options'
-
-        wrap_context 'when the option is defined' do
-          let(:error_message) do
-            "unable to define option ##{name}? - the option is already " \
-              "defined on #{described_class.name}"
-          end
-
-          include_examples 'should define component option',
-            'example_option?',
-            boolean: true,
-            default: false
-        end
-
-        describe 'with default: false' do
-          let(:meta_options) { super().merge(default: false) }
-
-          wrap_context 'when the option is defined' do
-            include_examples 'should define component option',
-              'example_option?',
-              boolean: true,
-              default: false
-          end
-        end
-
-        describe 'with default: true' do
-          let(:meta_options) { super().merge(default: true) }
-
-          wrap_context 'when the option is defined' do
-            include_examples 'should define component option',
-              'example_option?',
-              boolean: true,
-              default: true
-          end
-        end
-      end
-
-      describe 'with default: a Proc' do
-        let(:meta_options)     { super().merge(default: -> { 'value' }) }
-        let(:expected_default) { 'value' }
-
-        wrap_context 'when the option is defined' do
-          include_examples 'should define component option',
-            'example_option',
-            default: -> { expected_default }
-        end
-      end
-
-      describe 'with default: value' do
-        let(:meta_options)     { super().merge(default: 'value') }
-        let(:expected_default) { 'value' }
-
-        wrap_context 'when the option is defined' do
-          include_examples 'should define component option',
-            'example_option',
-            default: 'value'
-        end
-      end
-
-      describe 'with name: a string' do
-        it 'should return the name of the generated method' do
-          expect(described_class.option(name, **meta_options)).to be name.intern
-        end
-
-        include_examples 'should check for duplicate options'
-
-        wrap_context 'when the option is defined' do
-          include_examples 'should define component option', 'example_option'
-        end
-      end
-
-      describe 'with name: a symbol' do
-        let(:name) { super().intern }
-
-        it 'should return the name of the generated method' do
-          expect(described_class.option(name, **meta_options)).to be name
-        end
-
-        include_examples 'should check for duplicate options'
-
-        wrap_context 'when the option is defined' do
-          include_examples 'should define component option', 'example_option'
-        end
-      end
+    deferred_context 'when the option is defined' do
+      before(:example) { described_class.option(name, **meta_options) }
     end
 
     let(:name)         { 'example_option' }
@@ -207,7 +57,7 @@ RSpec.describe Librum::Components::Options do
         .and_keywords(:boolean, :default)
     end
 
-    include_examples 'should define the configured option'
+    include_deferred 'should define the configured option'
   end
 
   describe '.options' do
