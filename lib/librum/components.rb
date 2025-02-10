@@ -6,6 +6,8 @@ require 'librum/components/version'
 module Librum
   # Component library for Librum applications.
   module Components
+    autoload :Base, 'librum/components/base'
+
     # @return [String] the current version of the gem.
     def self.version
       VERSION

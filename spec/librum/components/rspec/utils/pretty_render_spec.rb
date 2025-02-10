@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'librum/components/literal'
 require 'librum/components/rspec/render_component'
 require 'librum/components/rspec/utils/pretty_render'
 
@@ -10,27 +11,13 @@ RSpec.describe Librum::Components::RSpec::Utils::PrettyRender do
 
   describe '#call' do
     let(:contents)  { '<hr>' }
-    let(:component) { Spec::Component.new(contents) }
+    let(:component) { Librum::Components::Literal.new(contents) }
     let(:document)  { render_document(component) }
     let(:rendered)  { renderer.call(document) }
     let(:expected) do
       <<~HTML
         #{contents.strip}
       HTML
-    end
-
-    example_class 'Spec::Component', ViewComponent::Base do |klass|
-      klass.define_method(:initialize) { |contents| @contents = contents }
-
-      klass.attr_reader :contents
-
-      klass.define_method(:call) do
-        Loofah
-          .html5_fragment(contents)
-          .scrub!(:strip)
-          .to_s
-          .html_safe # rubocop:disable Rails/OutputSafety
-      end
     end
 
     it { expect(renderer).to respond_to(:call).with(1).argument }

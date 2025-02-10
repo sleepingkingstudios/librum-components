@@ -18,20 +18,6 @@ RSpec.describe Librum::Components::RSpec::Matchers::MatchSnapshotMatcher do
     HTML
   end
 
-  example_class 'Spec::Component', ViewComponent::Base do |klass|
-    klass.define_method(:initialize) { |contents| @contents = contents }
-
-    klass.attr_reader :contents
-
-    klass.define_method(:call) do
-      Loofah
-        .html5_fragment(contents)
-        .scrub!(:strip)
-        .to_s
-        .html_safe # rubocop:disable Rails/OutputSafety
-    end
-  end
-
   describe '.new' do
     it { expect(described_class).to be_constructible.with(1).argument }
   end
@@ -45,7 +31,7 @@ RSpec.describe Librum::Components::RSpec::Matchers::MatchSnapshotMatcher do
   describe '#does_not_match?' do
     shared_context 'with a bare component' do
       let(:actual) do
-        Spec::Component.new(super())
+        Librum::Components::Literal.new(super())
       end
       let(:failure_message) do
         'expected the component not to match the snapshot'
@@ -54,7 +40,7 @@ RSpec.describe Librum::Components::RSpec::Matchers::MatchSnapshotMatcher do
 
     shared_context 'with a rendered component' do
       let(:actual) do
-        component = Spec::Component.new(super())
+        component = Librum::Components::Literal.new(super())
 
         render_component(component)
       end
@@ -65,7 +51,7 @@ RSpec.describe Librum::Components::RSpec::Matchers::MatchSnapshotMatcher do
 
     shared_context 'with a rendered document' do
       let(:actual) do
-        component = Spec::Component.new(super())
+        component = Librum::Components::Literal.new(super())
 
         render_document(component)
       end
@@ -211,7 +197,7 @@ RSpec.describe Librum::Components::RSpec::Matchers::MatchSnapshotMatcher do
   describe '#matches?' do
     shared_context 'with a bare component' do
       let(:actual) do
-        Spec::Component.new(super())
+        Librum::Components::Literal.new(super())
       end
       let(:diffable) { pretty_render(actual) }
       let(:failure_message) do
@@ -221,7 +207,7 @@ RSpec.describe Librum::Components::RSpec::Matchers::MatchSnapshotMatcher do
 
     shared_context 'with a rendered component' do
       let(:actual) do
-        component = Spec::Component.new(super())
+        component = Librum::Components::Literal.new(super())
 
         render_component(component)
       end
@@ -232,7 +218,7 @@ RSpec.describe Librum::Components::RSpec::Matchers::MatchSnapshotMatcher do
 
     shared_context 'with a rendered document' do
       let(:actual) do
-        component = Spec::Component.new(super())
+        component = Librum::Components::Literal.new(super())
 
         render_document(component)
       end
