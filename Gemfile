@@ -21,7 +21,9 @@ group :development, :test do
   gem 'simplecov', '~> 0.22'
 
   gem 'rubocop', '~> 1.71'
+  gem 'rubocop-rails', '~> 2.29'
   gem 'rubocop-rspec', '~> 3.4'
+  gem 'rubocop-rspec_rails', '~> 2.30'
 end
 
 group :doc do
