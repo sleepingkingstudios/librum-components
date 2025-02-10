@@ -19,6 +19,72 @@ RSpec.describe Librum::Components::RSpec::RenderComponent do
     end
   end
 
+  describe '#pretty_render' do
+    let(:contents) do
+      <<~HTML
+        <ul>
+          <li>Ichi</li>
+              <li>Ni</li>
+
+
+          <li>San</li>
+        </ul>
+      HTML
+    end
+    let(:expected) do
+      <<~HTML
+        <ul>
+          <li>Ichi</li>
+
+          <li>Ni</li>
+
+          <li>San</li>
+        </ul>
+      HTML
+    end
+
+    it { expect(example).to respond_to(:pretty_render).with(1).argument }
+
+    describe 'with nil' do
+      let(:error_message) do
+        'expected an instance of ViewComponent::Base, got nil'
+      end
+
+      it 'should raise an exception' do
+        expect { example.pretty_render(nil) }
+          .to raise_error ArgumentError, error_message
+      end
+    end
+
+    describe 'with an Object' do
+      let(:component) { Object.new.freeze }
+      let(:error_message) do
+        "expected an instance of ViewComponent::Base, got #{component.inspect}"
+      end
+
+      it 'should raise an exception' do
+        expect { example.pretty_render(component) }
+          .to raise_error ArgumentError, error_message
+      end
+    end
+
+    describe 'with a String' do
+      it { expect(example.pretty_render(contents)).to be == expected }
+    end
+
+    describe 'with a component' do
+      let(:component) { Spec::Component.new(contents) }
+
+      it { expect(example.pretty_render(component)).to be == expected }
+    end
+
+    describe 'with a document' do
+      let(:document) { Nokogiri::HTML5.fragment(contents) }
+
+      it { expect(example.pretty_render(document)).to be == expected }
+    end
+  end
+
   describe '#render_component' do
     it { expect(example).to respond_to(:render_component).with(1).argument }
 

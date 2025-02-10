@@ -3,12 +3,36 @@
 require 'action_controller'
 
 require 'librum/components/rspec'
+require 'librum/components/rspec/utils/pretty_render'
 
 module Librum::Components::RSpec
   # Test helper for rendering a ViewComponent instance to a String.
   module RenderComponent
+    PRETTY_RENDERER = Librum::Components::RSpec::Utils::PrettyRender.new.freeze
+    private_constant :PRETTY_RENDERER
+
     VIEW_CONTEXT = ActionController::Base.new.view_context.freeze
     private_constant :VIEW_CONTEXT
+
+    # Generates a normalized representating of a component or fragment.
+    #
+    # @param component
+    #   [ViewComponent::Base, Nokogiri::HTML::DocumentFragment, String] the
+    #   component, fragment, or HTML string to normalize.
+    #
+    # @return [String] the normalized string representation.
+    def pretty_render(component)
+      document =
+        if component.is_a?(Nokogiri::HTML::DocumentFragment)
+          component
+        elsif component.is_a?(String)
+          Nokogiri::HTML5.fragment(component)
+        else
+          render_document(component)
+        end
+
+      PRETTY_RENDERER.call(document)
+    end
 
     # Renders a component to a string.
     #
