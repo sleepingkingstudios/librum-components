@@ -1,0 +1,12 @@
+---
+name: Librum::Components::RSpec::Matchers::MatchSnapshotMatcher#failure_message
+parent_path: librum/components/r-spec/matchers/match-snapshot-matcher
+signature: failure_message
+slug: failure-message
+constructor: false
+data_path: librum/components/r-spec/matchers/match-snapshot-matcher/i-failure-message
+returns:
+- description: the message to display on failure.
+  type:
+  - name: String
+version: "*"

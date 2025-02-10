@@ -1,0 +1,18 @@
+---
+name: Librum::Components::RSpec::RenderComponent#render_component
+parent_path: librum/components/r-spec/render-component
+signature: render_component(component)
+slug: render-component
+constructor: false
+data_path: librum/components/r-spec/render-component/i-render-component
+params:
+- description: the component to render.
+  name: component
+  type:
+  - name: ViewComponent::Base
+returns:
+- description: the string representation of the component.
+  type:
+  - name: String
+short_description: Renders a component to a string.
+version: "*"

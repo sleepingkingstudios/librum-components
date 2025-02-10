@@ -1,0 +1,16 @@
+---
+name: Librum::Components::Options::ClassMethods#options
+parent_path: librum/components/options/class-methods
+signature: options
+slug: options
+constructor: false
+data_path: librum/components/options/class-methods/i-options
+returns:
+- description: the defined options for the component.
+  type:
+  - name: Hash
+    keys:
+    - name: String
+    values:
+    - name: Option
+version: "*"

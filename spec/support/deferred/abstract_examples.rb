@@ -47,36 +47,33 @@ module Spec::Support::Deferred
         include_deferred 'should check for duplicate options'
 
         wrap_deferred 'when the option is defined' do
-          let(:error_message) do
-            "unable to define option ##{name}? - the option is already " \
-              "defined on #{described_class.name}"
-          end
-
           include_deferred 'should define component option',
             'example_option?',
             boolean: true,
             default: false
         end
 
-        describe 'with default: false' do
-          let(:meta_options) { super().merge(default: false) }
+        describe 'with default: a Proc' do
+          let(:meta_options)     { super().merge(default: -> { 'value' }) }
+          let(:expected_default) { 'value' }
 
           wrap_deferred 'when the option is defined' do
             include_deferred 'should define component option',
-              'example_option?',
+              'example_option',
               boolean: true,
-              default: false
+              default: -> { expected_default }
           end
         end
 
-        describe 'with default: true' do
-          let(:meta_options) { super().merge(default: true) }
+        describe 'with default: value' do
+          let(:meta_options)     { super().merge(default: 'value') }
+          let(:expected_default) { 'value' }
 
           wrap_deferred 'when the option is defined' do
             include_deferred 'should define component option',
-              'example_option?',
+              'example_option',
               boolean: true,
-              default: true
+              default: 'value'
           end
         end
       end

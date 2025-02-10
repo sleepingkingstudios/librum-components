@@ -1,0 +1,17 @@
+---
+name: Librum::Components::RSpec::Matchers::MatchSnapshotMatcher#initialize
+parent_path: librum/components/r-spec/matchers/match-snapshot-matcher
+signature: initialize(expected)
+slug: initialize
+constructor: true
+data_path: librum/components/r-spec/matchers/match-snapshot-matcher/i-initialize
+params:
+- description: the expected string.
+  name: expected
+  type:
+  - name: String
+returns:
+- description: a new instance of MatchSnapshotMatcher
+  type:
+  - name: MatchSnapshotMatcher
+version: "*"

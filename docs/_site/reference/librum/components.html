@@ -29,11 +29,15 @@
   
 
   
+  <li><a href="#defined-under-namespace">Defined Under Namespace</a></li>
+  
 
   
 <li>
   <a href="#constants">Constants</a>
   <ul style="margin-bottom: 0px;">
+  
+    <li><a href="#constant-option">Option</a></li>
   
     <li><a href="#constant-version">VERSION</a></li>
   
@@ -75,13 +79,50 @@
 <h2 id="defined-under-namespace">Defined Under Namespace</h2>
 
 <dl>
+  <dt>Classes</dt>
+  <dd><a href="/reference/librum/components/base">Base</a>, 
+  <a href="/reference/librum/components/literal">Literal</a></dd>
   <dt>Modules</dt>
-  <dd><a href="/reference/librum/components/version">Version</a></dd>
+  <dd><a href="/reference/librum/components/options">Options</a>, 
+  <a href="/reference/librum/components/r-spec">RSpec</a>, 
+  <a href="/reference/librum/components/version">Version</a></dd>
 </dl>
 
 <p><a href="#">Back To Top</a></p>
 
 <h2 id="constants">Constants</h2>
+
+<h3 id="constant-option">
+  <code>Option</code>
+</h3>
+
+<p><span class="constant-value" style="margin-left: 1rem;">= <code>Data.define(:name, :boolean, :default) do
+  # @param name [String, Symbol] the name of the option.
+  # @param boolean [true, false] if true, indicates that the option is a
+  #   boolean option and should have only true or false values.
+  # @param default [Proc, Object] the default value for the object.
+  def initialize(name:, boolean: false, default: nil)
+    name = name.to_s
+    name = name.sub(/\?\z/, '') if boolean</code></span></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>default = false if boolean &amp;&amp; default.nil?
+
+super(boolean: boolean ? true : false, name:, default:)   end
+</code></pre></div></div>
+
+<p># @return [true, false] if true, indicates that the option is a boolean
+  #   option and should have only true or false values.
+  def boolean?
+    boolean
+  end</p>
+
+<p># @return [true, false] if true, the option defines a default value.
+  def default?
+    !default.nil?
+  end
+end&lt;/code&gt;&lt;/span&gt;</p>
+
+<p>Value class representing an optional parameter for a component.</p>
 
 <h3 id="constant-version">
   <code>VERSION</code>

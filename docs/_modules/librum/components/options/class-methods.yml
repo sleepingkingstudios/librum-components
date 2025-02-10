@@ -1,0 +1,19 @@
+---
+name: Librum::Components::Options::ClassMethods
+slug: class-methods
+type: module
+files:
+- lib/librum/components/options.rb
+parent_path: librum/components/options
+short_description: Class methods to extend when including Options.
+instance_methods:
+- name: option
+  path: librum/components/options/class-methods/i-option
+  slug: option
+  inherited: false
+- name: options
+  path: librum/components/options/class-methods/i-options
+  slug: options
+  inherited: false
+data_path: librum/components/options/class-methods
+version: "*"

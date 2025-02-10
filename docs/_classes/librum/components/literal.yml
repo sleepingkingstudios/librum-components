@@ -1,0 +1,49 @@
+---
+name: Librum::Components::Literal
+slug: literal
+type: class
+files:
+- lib/librum/components/literal.rb
+parent_path: librum/components
+short_description: Component wrapping a sanitized HTML string.
+class_methods:
+- name: abstract?
+  path: librum/components/base/c-abstract?
+  slug: abstract?
+  inherited: true
+- name: option
+  path: librum/components/base/c-option
+  slug: option
+  inherited: true
+instance_attributes:
+- name: contents
+  read: true
+  write: false
+  path: librum/components/literal/i-contents
+  slug: contents
+  inherited: false
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: true
+instance_methods:
+- name: call
+  path: librum/components/literal/i-call
+  slug: call
+  inherited: false
+- name: initialize
+  path: librum/components/literal/i-initialize
+  slug: initialize
+  inherited: false
+  constructor: true
+data_path: librum/components/literal
+constructor: true
+inherited_classes:
+- name: Librum::Components::Base
+  slug: base
+  path: librum/components/base
+- name: ViewComponent::Base
+  slug: base
+version: "*"

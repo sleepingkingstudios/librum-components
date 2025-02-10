@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Base.abstract?
+parent_path: librum/components/base
+signature: abstract?
+slug: abstract?
+constructor: false
+data_path: librum/components/base/c-abstract?
+returns:
+- description: |-
+    true if the component class is an abstract class;
+    otherwise returns false.
+  type:
+  - name: 'true'
+  - name: 'false'
+version: "*"

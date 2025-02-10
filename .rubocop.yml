@@ -1,5 +1,7 @@
 require:
+  - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 inherit_gem:
   rspec-sleeping_king_studios: config/rubocop-rspec.yml

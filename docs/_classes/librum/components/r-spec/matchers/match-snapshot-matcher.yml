@@ -1,0 +1,62 @@
+---
+name: Librum::Components::RSpec::Matchers::MatchSnapshotMatcher
+slug: match-snapshot-matcher
+type: class
+files:
+- lib/librum/components/rspec/matchers/match_snapshot_matcher.rb
+parent_path: librum/components/r-spec/matchers
+short_description: Matcher asserting the string or document matches the expected value.
+instance_attributes:
+- name: actual
+  read: true
+  write: false
+  path: librum/components/r-spec/matchers/match-snapshot-matcher/i-actual
+  slug: actual
+  inherited: false
+- name: expected
+  read: true
+  write: false
+  path: librum/components/r-spec/matchers/match-snapshot-matcher/i-expected
+  slug: expected
+  inherited: false
+instance_methods:
+- name: description
+  path: librum/components/r-spec/matchers/match-snapshot-matcher/i-description
+  slug: description
+  inherited: false
+- name: does_not_match?
+  path: librum/components/r-spec/matchers/match-snapshot-matcher/i-does-not-match?
+  slug: does-not-match?
+  inherited: false
+- name: failure_message
+  path: librum/components/r-spec/matchers/match-snapshot-matcher/i-failure-message
+  slug: failure-message
+  inherited: false
+- name: failure_message_when_negated
+  path: librum/components/r-spec/matchers/match-snapshot-matcher/i-failure-message-when-negated
+  slug: failure-message-when-negated
+  inherited: false
+- name: initialize
+  path: librum/components/r-spec/matchers/match-snapshot-matcher/i-initialize
+  slug: initialize
+  inherited: false
+  constructor: true
+- name: matches?
+  path: librum/components/r-spec/matchers/match-snapshot-matcher/i-matches?
+  slug: matches?
+  inherited: false
+- name: render_component
+  path: librum/components/r-spec/render-component/i-render-component
+  slug: render-component
+  inherited: true
+- name: render_document
+  path: librum/components/r-spec/render-component/i-render-document
+  slug: render-document
+  inherited: true
+data_path: librum/components/r-spec/matchers/match-snapshot-matcher
+included_modules:
+- name: Librum::Components::RSpec::RenderComponent
+  slug: render-component
+  path: librum/components/r-spec/render-component
+constructor: true
+version: "*"

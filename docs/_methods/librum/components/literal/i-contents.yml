@@ -1,0 +1,12 @@
+---
+name: Librum::Components::Literal#contents
+parent_path: librum/components/literal
+signature: contents
+slug: contents
+constructor: false
+data_path: librum/components/literal/i-contents
+returns:
+- description: the HTML string to render.
+  type:
+  - name: String
+version: "*"

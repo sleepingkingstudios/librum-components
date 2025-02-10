@@ -1,0 +1,20 @@
+---
+name: Librum::Components::RSpec::Matchers::MatchSnapshotMatcher#does_not_match?
+parent_path: librum/components/r-spec/matchers/match-snapshot-matcher
+signature: does_not_match?(actual)
+slug: does-not-match?
+constructor: false
+data_path: librum/components/r-spec/matchers/match-snapshot-matcher/i-does-not-match?
+params:
+- description: the object to match.
+  name: actual
+  type:
+  - name: Object
+returns:
+- description: |-
+    false if the object matches the expected snapshot,
+    otherwise true.
+  type:
+  - name: 'true'
+  - name: 'false'
+version: "*"

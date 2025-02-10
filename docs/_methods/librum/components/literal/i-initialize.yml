@@ -1,0 +1,17 @@
+---
+name: Librum::Components::Literal#initialize
+parent_path: librum/components/literal
+signature: initialize(contents)
+slug: initialize
+constructor: true
+data_path: librum/components/literal/i-initialize
+params:
+- description: the HTML string to render.
+  name: contents
+  type:
+  - name: String
+returns:
+- description: a new instance of Literal
+  type:
+  - name: Literal
+version: "*"

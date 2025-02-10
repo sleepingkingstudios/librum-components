@@ -1,0 +1,9 @@
+---
+name: Librum::Components::Base.option
+parent_path: librum/components/base
+signature: 'option(name, boolean: false, default: nil)'
+slug: option
+constructor: false
+data_path: librum/components/base/c-option
+short_description: Defines an option for the component.
+version: "*"

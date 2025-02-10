@@ -1,0 +1,33 @@
+---
+name: Librum::Components::Options
+slug: options
+type: module
+files:
+- lib/librum/components/options.rb
+parent_path: librum/components
+short_description: Module for defining named options for components.
+defined_classes:
+- name: DuplicateOptionError
+  slug: duplicate-option-error
+- name: InvalidOptionsError
+  slug: invalid-options-error
+defined_modules:
+- name: ClassMethods
+  slug: class-methods
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: false
+instance_methods:
+- name: initialize
+  path: librum/components/options/i-initialize
+  slug: initialize
+  inherited: false
+data_path: librum/components/options
+extended_modules:
+- name: SleepingKingStudios::Tools::Toolbox::Mixin
+  slug: mixin
+version: "*"

@@ -1,0 +1,46 @@
+---
+name: Librum::Components::Base
+slug: base
+type: class
+files:
+- lib/librum/components/base.rb
+parent_path: librum/components
+short_description: Abstract base class for component objects.
+class_methods:
+- name: abstract?
+  path: librum/components/base/c-abstract?
+  slug: abstract?
+  inherited: false
+- name: option
+  path: librum/components/base/c-option
+  slug: option
+  inherited: false
+defined_classes:
+- name: AbstractComponentError
+  slug: abstract-component-error
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: true
+instance_methods:
+- name: initialize
+  path: librum/components/options/i-initialize
+  slug: initialize
+  inherited: true
+data_path: librum/components/base
+included_modules:
+- name: Librum::Components::Options
+  slug: options
+  path: librum/components/options
+constructor: true
+direct_subclasses:
+- name: Librum::Components::Literal
+  slug: literal
+  path: librum/components/literal
+inherited_classes:
+- name: ViewComponent::Base
+  slug: base
+version: "*"

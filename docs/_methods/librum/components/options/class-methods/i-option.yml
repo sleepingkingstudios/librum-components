@@ -1,0 +1,33 @@
+---
+name: Librum::Components::Options::ClassMethods#option
+parent_path: librum/components/options/class-methods
+signature: 'option(name, boolean: false, default: nil)'
+slug: option
+constructor: false
+data_path: librum/components/options/class-methods/i-option
+params:
+- description: the name of the option.
+  name: name
+  type:
+  - name: String
+  - name: Symbol
+- description: |-
+    if true, the option is a boolean and will
+    generate a predicate method.
+  name: boolean
+  type:
+  - name: 'true'
+  - name: 'false'
+  default: 'false'
+- description: the default value for the option.
+  name: default
+  type:
+  - name: Proc
+  - name: Object
+  default: nil
+returns:
+- description: the name of the generated method.
+  type:
+  - name: Symbol
+short_description: Defines an option for the component.
+version: "*"

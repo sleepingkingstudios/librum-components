@@ -1,0 +1,12 @@
+---
+name: Librum::Components::Options#options
+parent_path: librum/components/options
+signature: options
+slug: options
+constructor: false
+data_path: librum/components/options/i-options
+returns:
+- description: additional options passed to the component.
+  type:
+  - name: Hash
+version: "*"
