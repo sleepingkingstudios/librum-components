@@ -1,0 +1,143 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Librum::Components</title>
+  </head>
+  <body>
+    
+<h1 id="module-librumcomponentsrspecrendercomponent">Module: Librum::Components::RSpec::RenderComponent</h1>
+
+<dl>
+  <dt>Parent Namespace</dt>
+  <dd><a href="/reference/librum/components/r-spec">Librum::Components::RSpec</a></dd>
+  <dt>Defined In</dt>
+  <dd>lib/librum/components/rspec/render_component.rb</dd>
+</dl>
+
+<h2 id="table-of-contents">Table Of Contents</h2>
+
+<ul>
+  <li>
+  <a href="#overview">Overview</a>
+  
+  
+</li>
+
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+  
+
+  
+
+
+  
+<li>
+  <a href="#instance-methods">Instance Methods</a>
+  <ul style="margin-bottom: 0px;">
+  
+    <li><a href="#instance-method-pretty-render">pretty_render</a></li>
+  
+    <li><a href="#instance-method-render-component">render_component</a></li>
+  
+    <li><a href="#instance-method-render-document">render_document</a></li>
+  
+  </ul>
+</li>
+
+
+</ul>
+
+<h2 id="overview">Overview</h2>
+
+<p>Test helper for rendering a ViewComponent instance to a String.</p>
+
+<p><a href="#">Back To Top</a></p>
+
+<h2 id="instance-methods">Instance Methods</h2>
+
+<h3 id="instance-method-pretty-render">
+  <code>#pretty_render(component) =&gt; String</code>
+  </h3>
+
+<p>Generates a normalized representating of a component or fragment.</p>
+
+<h4 id="instance-method-pretty-render--parameters">Parameters</h4>
+
+<ul>
+<li><strong>component</strong>  — [ViewComponent::Base, Nokogiri::HTML::DocumentFragment, String] the
+component, fragment, or HTML string to normalize.</li>
+</ul>
+
+<h4 id="instance-method-pretty-render--returns">Returns</h4>
+
+<ul>
+<li>(String) — the normalized string representation.</li>
+</ul>
+
+<h3 id="instance-method-render-component">
+  <code>#render_component(component) =&gt; String</code>
+  </h3>
+
+<p>Renders a component to a string.</p>
+
+<h4 id="instance-method-render-component--parameters">Parameters</h4>
+
+<ul>
+<li><strong>component</strong> (ViewComponent::Base) — the component to render.</li>
+</ul>
+
+<h4 id="instance-method-render-component--returns">Returns</h4>
+
+<ul>
+<li>(String) — the string representation of the component.</li>
+</ul>
+
+<h3 id="instance-method-render-document">
+  <code>#render_document(component) =&gt; Nokogiri::HTML::DocumentFragment</code>
+  </h3>
+
+<p>Renders a component to a Nokogiri document fragment.</p>
+
+<h4 id="instance-method-render-document--parameters">Parameters</h4>
+
+<ul>
+<li><strong>component</strong> (ViewComponent::Base) — the component to render.</li>
+</ul>
+
+<h4 id="instance-method-render-document--returns">Returns</h4>
+
+<ul>
+<li>(Nokogiri::HTML::DocumentFragment) — the parsed document fragment.</li>
+</ul>
+
+<p><a href="#">Back To Top</a></p>
+
+<hr />
+
+<p>Back to
+<a href="/">Documentation</a> |
+<a href="/reference">Reference</a>
+ | 
+<a href="/reference/librum">Librum</a>
+ | 
+<a href="/reference/librum/components">Librum::Components</a>
+ | 
+<a href="/reference/librum/components/r-spec">Librum::Components::RSpec</a></p>
+
+
+  </body>
+</html>

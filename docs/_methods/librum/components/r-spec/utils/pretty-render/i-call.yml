@@ -1,0 +1,17 @@
+---
+name: Librum::Components::RSpec::Utils::PrettyRender#call
+parent_path: librum/components/r-spec/utils/pretty-render
+signature: call(document)
+slug: call
+constructor: false
+data_path: librum/components/r-spec/utils/pretty-render/i-call
+params:
+- description: the document or tag to render.
+  name: document
+  type:
+  - name: Nokogiri::XML::Node
+returns:
+- description: the rendered HTML.
+  type:
+  - name: String
+version: "*"

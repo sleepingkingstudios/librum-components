@@ -1,0 +1,13 @@
+---
+name: Librum::Components::RSpec::Matchers::MatchSnapshotMatcher#expected
+parent_path: librum/components/r-spec/matchers/match-snapshot-matcher
+signature: expected
+slug: expected
+constructor: false
+data_path: librum/components/r-spec/matchers/match-snapshot-matcher/i-expected
+params:
+- description: expected string.
+  name: the
+  type:
+  - name: String
+version: "*"

@@ -1,0 +1,23 @@
+---
+name: Librum::Components::RSpec::RenderComponent
+slug: render-component
+type: module
+files:
+- lib/librum/components/rspec/render_component.rb
+parent_path: librum/components/r-spec
+short_description: Test helper for rendering a ViewComponent instance to a String.
+instance_methods:
+- name: pretty_render
+  path: librum/components/r-spec/render-component/i-pretty-render
+  slug: pretty-render
+  inherited: false
+- name: render_component
+  path: librum/components/r-spec/render-component/i-render-component
+  slug: render-component
+  inherited: false
+- name: render_document
+  path: librum/components/r-spec/render-component/i-render-document
+  slug: render-document
+  inherited: false
+data_path: librum/components/r-spec/render-component
+version: "*"

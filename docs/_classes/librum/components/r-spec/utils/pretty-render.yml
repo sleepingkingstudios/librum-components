@@ -1,0 +1,16 @@
+---
+name: Librum::Components::RSpec::Utils::PrettyRender
+slug: pretty-render
+type: class
+files:
+- lib/librum/components/rspec/utils/pretty_render.rb
+parent_path: librum/components/r-spec/utils
+short_description: Utility class for rendering HTML documents with a consistent format.
+instance_methods:
+- name: call
+  path: librum/components/r-spec/utils/pretty-render/i-call
+  slug: call
+  inherited: false
+data_path: librum/components/r-spec/utils/pretty-render
+constructor: false
+version: "*"

@@ -1,0 +1,19 @@
+---
+name: Librum::Components::RSpec::Matchers
+slug: matchers
+type: module
+files:
+- lib/librum/components/rspec/matchers.rb
+- lib/librum/components/rspec/matchers/match_snapshot_matcher.rb
+parent_path: librum/components/r-spec
+short_description: Namespace for shared RSpec matchers.
+defined_classes:
+- name: MatchSnapshotMatcher
+  slug: match-snapshot-matcher
+instance_methods:
+- name: match_snapshot
+  path: librum/components/r-spec/matchers/i-match-snapshot
+  slug: match-snapshot
+  inherited: false
+data_path: librum/components/r-spec/matchers
+version: "*"

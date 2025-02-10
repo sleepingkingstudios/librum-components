@@ -1,0 +1,41 @@
+---
+name: Librum::Components::RSpec::Matchers#match_snapshot
+parent_path: librum/components/r-spec/matchers
+signature: match_snapshot(expected = UNDEFINED)
+slug: match-snapshot
+constructor: false
+data_path: librum/components/r-spec/matchers/i-match-snapshot
+overloads:
+- name: Librum::Components::RSpec::Matchers#match_snapshot
+  parent_path: librum/components/r-spec/matchers
+  signature: match_snapshot
+  slug: match-snapshot
+  constructor: false
+  returns:
+  - description: |-
+      the
+      snapshot matcher.
+    type:
+    - name: Librum::Components::RSpec::Matchers::MatchSnapshotMatcher
+      path: librum/components/r-spec/matchers/match-snapshot-matcher
+  short_description: 'Returns a snapshot matcher against the value of the #snapshot
+    method.'
+- name: Librum::Components::RSpec::Matchers#match_snapshot
+  parent_path: librum/components/r-spec/matchers
+  signature: match_snapshot(expected)
+  slug: match-snapshot
+  constructor: false
+  params:
+  - description: the expected string.
+    name: expected
+    type:
+    - name: String
+  returns:
+  - description: |-
+      the
+      snapshot matcher.
+    type:
+    - name: Librum::Components::RSpec::Matchers::MatchSnapshotMatcher
+      path: librum/components/r-spec/matchers/match-snapshot-matcher
+  short_description: Returns a snapshot matcher with the given expected value.
+version: "*"

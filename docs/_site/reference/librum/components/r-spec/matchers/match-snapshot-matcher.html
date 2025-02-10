@@ -1,0 +1,271 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Librum::Components</title>
+  </head>
+  <body>
+    
+<h1 id="class-librumcomponentsrspecmatchersmatchsnapshotmatcher">Class: Librum::Components::RSpec::Matchers::MatchSnapshotMatcher</h1>
+
+<dl>
+  <dt>Parent Namespace</dt>
+  <dd><a href="/reference/librum/components/r-spec/matchers">Librum::Components::RSpec::Matchers</a></dd>
+  <dt>Included Modules</dt>
+  <dd><a href="/reference/librum/components/r-spec/render-component">Librum::Components::RSpec::RenderComponent</a></dd>
+  <dt>Defined In</dt>
+  <dd>lib/librum/components/rspec/matchers/match_snapshot_matcher.rb</dd>
+</dl>
+
+<h2 id="table-of-contents">Table Of Contents</h2>
+
+<ul>
+  <li>
+  <a href="#overview">Overview</a>
+  
+  
+</li>
+
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+  
+  <li><a href="#constructor">Constructor</a></li>
+  
+
+  
+<li>
+  <a href="#instance-attributes">Instance Attributes</a>
+  <ul style="margin-bottom: 0px;">
+  
+    <li><a href="#instance-attribute-actual">actual</a></li>
+  
+    <li><a href="#instance-attribute-expected">expected</a></li>
+  
+  </ul>
+</li>
+
+
+
+  
+<li>
+  <a href="#instance-methods">Instance Methods</a>
+  <ul style="margin-bottom: 0px;">
+  
+    <li><a href="#instance-method-description">description</a></li>
+  
+    <li><a href="#instance-method-does-not-match--predicate">does_not_match?</a></li>
+  
+    <li><a href="#instance-method-failure-message">failure_message</a></li>
+  
+    <li><a href="#instance-method-failure-message-when-negated">failure_message_when_negated</a></li>
+  
+    <li><a href="#instance-method-initialize">initialize</a></li>
+  
+    <li><a href="#instance-method-matches--predicate">matches?</a></li>
+  
+    <li><a href="#instance-method-render-component">render_component</a></li>
+  
+    <li><a href="#instance-method-render-document">render_document</a></li>
+  
+  </ul>
+</li>
+
+
+</ul>
+
+<h2 id="overview">Overview</h2>
+
+<p>Matcher asserting the string or document matches the expected value.</p>
+
+<p><a href="#">Back To Top</a></p>
+
+<h2 id="constructor">Constructor</h2>
+
+<h3 id="instance-method-initialize">
+  <code>#initialize(expected) =&gt; MatchSnapshotMatcher</code>
+  </h3>
+
+<h4 id="instance-method-initialize--parameters">Parameters</h4>
+
+<ul>
+<li><strong>expected</strong> (String) — the expected string.</li>
+</ul>
+
+<h4 id="instance-method-initialize--returns">Returns</h4>
+
+<ul>
+<li>(MatchSnapshotMatcher) — a new instance of MatchSnapshotMatcher</li>
+</ul>
+
+<p><a href="#">Back To Top</a></p>
+
+<h2 id="instance-attributes">Instance Attributes</h2>
+
+<h3 id="instance-attribute-actual">
+  <code>#actual =&gt; Object <small>(readonly)</small></code>
+  
+</h3>
+
+<h4 id="instance-attribute-actual--parameters">Parameters</h4>
+
+<ul>
+<li><strong>the</strong> (Object) — actual object.</li>
+</ul>
+
+<h3 id="instance-attribute-expected">
+  <code>#expected =&gt; Object <small>(readonly)</small></code>
+  
+</h3>
+
+<h4 id="instance-attribute-expected--parameters">Parameters</h4>
+
+<ul>
+<li><strong>the</strong> (String) — expected string.</li>
+</ul>
+
+<p><a href="#">Back To Top</a></p>
+
+<h2 id="instance-methods">Instance Methods</h2>
+
+<h3 id="instance-method-description">
+  <code>#description =&gt; String</code>
+  </h3>
+
+<h4 id="instance-method-description--returns">Returns</h4>
+
+<ul>
+<li>(String) — the description of the matcher.</li>
+</ul>
+
+<h3 id="instance-method-does-not-match--predicate">
+  <code>#does_not_match?(actual) =&gt; true, false</code>
+  </h3>
+
+<h4 id="instance-method-does-not-match--predicate--parameters">Parameters</h4>
+
+<ul>
+<li><strong>actual</strong> (Object) — the object to match.</li>
+</ul>
+
+<h4 id="instance-method-does-not-match--predicate--returns">Returns</h4>
+
+<ul>
+<li>(true, false) — false if the object matches the expected snapshot,
+otherwise true.</li>
+</ul>
+
+<h3 id="instance-method-failure-message">
+  <code>#failure_message =&gt; String</code>
+  </h3>
+
+<h4 id="instance-method-failure-message--returns">Returns</h4>
+
+<ul>
+<li>(String) — the message to display on failure.</li>
+</ul>
+
+<h3 id="instance-method-failure-message-when-negated">
+  <code>#failure_message_when_negated =&gt; String</code>
+  </h3>
+
+<h4 id="instance-method-failure-message-when-negated--returns">Returns</h4>
+
+<ul>
+<li>(String) — the message to display on failure for a negated matcher.</li>
+</ul>
+
+<h3 id="instance-method-matches--predicate">
+  <code>#matches?(actual) =&gt; true, false</code>
+  </h3>
+
+<h4 id="instance-method-matches--predicate--parameters">Parameters</h4>
+
+<ul>
+<li><strong>actual</strong> (Object) — the object to match.</li>
+</ul>
+
+<h4 id="instance-method-matches--predicate--returns">Returns</h4>
+
+<ul>
+<li>(true, false) — true if the object matches the expected snapshot,
+otherwise false.</li>
+</ul>
+
+<h3 id="instance-method-render-component">
+  <code>#render_component(component) =&gt; String</code>
+  </h3>
+
+<dl>
+  <dt>Inherited From</dt>
+  <dd><a href="/reference/librum/components/r-spec/render-component">Librum::Components::RSpec::RenderComponent</a></dd>
+</dl>
+
+<p>Renders a component to a string.</p>
+
+<h4 id="instance-method-render-component--parameters">Parameters</h4>
+
+<ul>
+<li><strong>component</strong> (ViewComponent::Base) — the component to render.</li>
+</ul>
+
+<h4 id="instance-method-render-component--returns">Returns</h4>
+
+<ul>
+<li>(String) — the string representation of the component.</li>
+</ul>
+
+<h3 id="instance-method-render-document">
+  <code>#render_document(component) =&gt; Nokogiri::HTML::DocumentFragment</code>
+  </h3>
+
+<dl>
+  <dt>Inherited From</dt>
+  <dd><a href="/reference/librum/components/r-spec/render-component">Librum::Components::RSpec::RenderComponent</a></dd>
+</dl>
+
+<p>Renders a component to a Nokogiri document fragment.</p>
+
+<h4 id="instance-method-render-document--parameters">Parameters</h4>
+
+<ul>
+<li><strong>component</strong> (ViewComponent::Base) — the component to render.</li>
+</ul>
+
+<h4 id="instance-method-render-document--returns">Returns</h4>
+
+<ul>
+<li>(Nokogiri::HTML::DocumentFragment) — the parsed document fragment.</li>
+</ul>
+
+<p><a href="#">Back To Top</a></p>
+
+<hr />
+
+<p>Back to
+<a href="/">Documentation</a> |
+<a href="/reference">Reference</a>
+ | 
+<a href="/reference/librum">Librum</a>
+ | 
+<a href="/reference/librum/components">Librum::Components</a>
+ | 
+<a href="/reference/librum/components/r-spec">Librum::Components::RSpec</a>
+ | 
+<a href="/reference/librum/components/r-spec/matchers">Librum::Components::RSpec::Matchers</a></p>
+
+
+  </body>
+</html>

@@ -1,0 +1,12 @@
+---
+name: Librum::Components::RSpec::Matchers::MatchSnapshotMatcher#description
+parent_path: librum/components/r-spec/matchers/match-snapshot-matcher
+signature: description
+slug: description
+constructor: false
+data_path: librum/components/r-spec/matchers/match-snapshot-matcher/i-description
+returns:
+- description: the description of the matcher.
+  type:
+  - name: String
+version: "*"

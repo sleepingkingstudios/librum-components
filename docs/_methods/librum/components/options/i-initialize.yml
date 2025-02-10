@@ -1,0 +1,13 @@
+---
+name: Librum::Components::Options#initialize
+parent_path: librum/components/options
+signature: initialize(**options)
+slug: initialize
+constructor: false
+data_path: librum/components/options/i-initialize
+params:
+- description: additional options passed to the component.
+  name: options
+  type:
+  - name: Hash
+version: "*"

@@ -1,0 +1,8 @@
+---
+name: Librum::Components::Literal#call
+parent_path: librum/components/literal
+signature: call
+slug: call
+constructor: false
+data_path: librum/components/literal/i-call
+version: "*"

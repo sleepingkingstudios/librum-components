@@ -1,0 +1,19 @@
+---
+name: Librum::Components::RSpec::RenderComponent#pretty_render
+parent_path: librum/components/r-spec/render-component
+signature: pretty_render(component)
+slug: pretty-render
+constructor: false
+data_path: librum/components/r-spec/render-component/i-pretty-render
+params:
+- description: |-
+    [ViewComponent::Base, Nokogiri::HTML::DocumentFragment, String] the
+    component, fragment, or HTML string to normalize.
+  name: component
+  type: []
+returns:
+- description: the normalized string representation.
+  type:
+  - name: String
+short_description: Generates a normalized representating of a component or fragment.
+version: "*"

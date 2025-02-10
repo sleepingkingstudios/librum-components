@@ -1,0 +1,18 @@
+---
+name: Librum::Components::RSpec::RenderComponent#render_document
+parent_path: librum/components/r-spec/render-component
+signature: render_document(component)
+slug: render-document
+constructor: false
+data_path: librum/components/r-spec/render-component/i-render-document
+params:
+- description: the component to render.
+  name: component
+  type:
+  - name: ViewComponent::Base
+returns:
+- description: the parsed document fragment.
+  type:
+  - name: Nokogiri::HTML::DocumentFragment
+short_description: Renders a component to a Nokogiri document fragment.
+version: "*"
