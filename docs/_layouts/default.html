@@ -4,8 +4,51 @@
   <head>
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/bulma-prefixed.min.css">
   </head>
   <body>
-    {{ content }}
+    <header>
+      <section class="bulma-hero">
+        <div class="bulma-hero-body">
+          <div class="bulma-columns">
+            <div class="bulma-column bulma-is-12">
+              <div class="bulma-container">
+                <p class="bulma-title">Librum::Components</p>
+                <p class="bulma-subtitle">
+                  Component library for Librum applications.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </header>
+    <nav></nav>
+    <section class="bulma-section">
+      <div class="bulma-container">
+        <div class="bulma-columns">
+          <div class="bulma-column bulma-is-2">
+            <nav>
+              <p>Documentation</p>
+
+              <p>Versions</p>
+
+              <p>Reference</p>
+            </nav>
+          </div>
+
+          <div class="bulma-column bulma-is-10">
+            <div class="bulma-content">
+              {{ content }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div class="bulma-container">
+        <p>Amare et sapere vix deo conceditur.</p>
+      </div>
+    </footer>
   </body>
 </html>
