@@ -150,6 +150,69 @@ module Spec::Support::Deferred
           -> { an_instance_of(Hash) }
       end
 
+      describe '#class_names' do
+        let(:arguments) { [] }
+        let(:keywords)  { {} }
+        let(:output)    { component.class_names(*arguments, **keywords) }
+
+        it 'should define the method' do
+          expect(component)
+            .to respond_to(:class_names)
+            .with(0).arguments
+            .and_unlimited_arguments
+            .and_keywords(:prefix)
+        end
+
+        describe 'with no arguments' do
+          it { expect(output).to be == '' }
+
+          describe 'with prefix: value' do
+            let(:keywords) { super().merge(prefix: 'spec-') }
+
+            it { expect(output).to be == '' }
+          end
+        end
+
+        describe 'with string arguments' do
+          let(:arguments) { ['color-red', 'shape-rectangle corners-rounded'] }
+          let(:expected)  { 'color-red shape-rectangle corners-rounded' }
+
+          it { expect(output).to be == expected }
+
+          describe 'with prefix: value' do
+            let(:keywords) { super().merge(prefix: 'spec-') }
+            let(:expected) do
+              'spec-color-red spec-shape-rectangle spec-corners-rounded'
+            end
+
+            it { expect(output).to be == expected }
+          end
+        end
+
+        describe 'with mixed arguments' do
+          let(:arguments) do
+            [
+              nil,
+              false,
+              :'color-red',
+              ['shape-rectangle corners-rounded'],
+            ]
+          end
+          let(:expected)  { 'color-red shape-rectangle corners-rounded' }
+
+          it { expect(output).to be == expected }
+
+          describe 'with prefix: value' do
+            let(:keywords) { super().merge(prefix: 'spec-') }
+            let(:expected) do
+              'spec-color-red spec-shape-rectangle spec-corners-rounded'
+            end
+
+            it { expect(output).to be == expected }
+          end
+        end
+      end
+
       describe '#components' do
         include_examples 'should define private reader',
           :components,

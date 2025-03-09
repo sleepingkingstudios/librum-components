@@ -49,6 +49,25 @@ module Librum::Components
       end
     end
 
+    # Combines the given class names and applies a prefix, if any.
+    #
+    # Nil or false arguments are ignored. String and symbol arguments are split
+    # by whitespace and added. Array arguments are flattened. Hash arguments are
+    # mapped to a list of keys with truthy values and flattened. All other
+    # arguments are converted to strings. Finally, the items are rendered unique
+    # and then combined into a space-separated string.
+    #
+    # @param args [Array] the input arguments to combine.
+    # @param prefix [String] if given, each item in the output is prefixed with
+    #   the specified string.
+    #
+    # @return [String] the combined output string.
+    def class_names(*args, prefix: nil)
+      return super(*args) if prefix.blank?
+
+      super(*args).split(' ').map { |str| "#{prefix}#{str}" }.join(' ')
+    end
+
     private
 
     def components
