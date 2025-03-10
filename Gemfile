@@ -20,9 +20,10 @@ group :development, :test do
     branch: 'main'
   gem 'simplecov', '~> 0.22'
 
-  gem 'rubocop', '~> 1.71'
-  gem 'rubocop-rails', '~> 2.29'
-  gem 'rubocop-rspec', '~> 3.4'
+  gem 'rubocop', '~> 1.73'
+  gem 'rubocop-factory_bot', '~> 2.27'
+  gem 'rubocop-rails', '~> 2.30'
+  gem 'rubocop-rspec', '~> 3.5'
   gem 'rubocop-rspec_rails', '~> 2.30'
 end
 

@@ -195,10 +195,10 @@ module Spec::Support::Deferred
               nil,
               false,
               :'color-red',
-              ['shape-rectangle corners-rounded'],
+              ['shape-rectangle corners-rounded']
             ]
           end
-          let(:expected)  { 'color-red shape-rectangle corners-rounded' }
+          let(:expected) { 'color-red shape-rectangle corners-rounded' }
 
           it { expect(output).to be == expected }
 
