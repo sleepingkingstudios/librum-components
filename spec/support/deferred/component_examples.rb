@@ -132,6 +132,7 @@ module Spec::Support::Deferred
           expect(described_class)
             .to be_constructible
             .with(0).arguments
+            .and_keywords(:configuration)
             .and_any_keywords
         end
 
@@ -217,6 +218,12 @@ module Spec::Support::Deferred
         include_examples 'should define private reader',
           :components,
           -> { an_instance_of(Module) }
+      end
+
+      describe '#configuration' do
+        include_examples 'should define reader',
+          :configuration,
+          -> { an_instance_of(Librum::Components::Configuration) }
       end
 
       describe '#options' do

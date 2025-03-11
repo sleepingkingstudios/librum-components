@@ -25,6 +25,9 @@ group :development, :test do
   gem 'rubocop-rails', '~> 2.30'
   gem 'rubocop-rspec', '~> 3.5'
   gem 'rubocop-rspec_rails', '~> 2.30'
+
+  gem 'sleeping_king_studios-tasks',
+    git: 'https://github.com/sleepingkingstudios/sleeping_king_studios-tasks'
 end
 
 group :doc do

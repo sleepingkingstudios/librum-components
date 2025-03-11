@@ -49,6 +49,21 @@ module Librum::Components
       end
     end
 
+    # @overload initialize(configuration: nil, **options)
+    #   @param configuration [Librum::Core::Configuration] the configuration for
+    #     the component library.
+    #   @param options [Hash] additional options passed to the component.
+    def initialize(configuration: nil, **)
+      super(**)
+
+      @configuration =
+        configuration || Librum::Components::Configuration.instance
+    end
+
+    # @return [Librum::Core::Configuration] the configuration for the component
+    #   library.
+    attr_reader :configuration
+
     # @overload class_names(*args, prefix: nil)
     #   Combines the given class names and applies a prefix, if any.
     #
