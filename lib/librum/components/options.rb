@@ -6,7 +6,7 @@ require 'librum/components'
 
 module Librum::Components
   # Module for defining named options for components.
-  module Options
+  module Options # rubocop:disable Metrics/ModuleLength
     extend SleepingKingStudios::Tools::Toolbox::Mixin
 
     # Exception raised when defining an option that already exists.
@@ -23,10 +23,132 @@ module Librum::Components
       # @param boolean [true, false] if true, the option is a boolean and will
       #   generate a predicate method.
       # @param default [Proc, Object] the default value for the option.
+      # @param required [true, false] if true, indicates that the option is
+      #   required for the component.
+      # @param validate [Symbol, Class, Proc, nil] the validation for the
+      #   option, if any.
       #
       # @return [Symbol] the name of the generated method.
-      def option(name, boolean: false, default: nil)
-        option = Librum::Components::Option.new(boolean:, default:, name:)
+      #
+      # @example Define An Option
+      #   class CustomComponent
+      #     include Librum::Components::Options
+      #
+      #     option :label
+      #
+      #     option :checked, boolean: true
+      #   end
+      #
+      #   component = CustomComponent.new(label: 'Click Me')
+      #   component.label    #=> 'Click Me'
+      #   component.checked? #=> false
+      #
+      # @example Define A Required Option
+      #   class CustomComponent
+      #     include Librum::Components::Options
+      #
+      #     option :disclaimer, required: true
+      #   end
+      #
+      #   CustomComponent.new
+      #   #=> raises InvalidOptionsError, "disclaimer can't be blank"
+      #
+      # @example Define A Validated Option
+      #   class CustomComponent
+      #     include Librum::Components::Options
+      #
+      #     option :license, validate: true
+      #
+      #     private
+      #
+      #     def validate_license(value, :as)
+      #       return if value =~ /MIT/
+      #
+      #       'project must use the MIT License'
+      #     end
+      #   end
+      #
+      #   CustomComponent.new(license: 'LGPL')
+      #   #=> raises InvalidOptionsError, 'project must use the MIT license'
+      #
+      # @example Define An Option With Block Validation
+      #   class CustomComponent
+      #     include Librum::Components::Options
+      #
+      #     option :checked,
+      #       validate: ->(value) { value == 4 ? nil : 'there are four lights' }
+      #   end
+      #
+      #   CustomComponent.new(lights: 5)
+      #   #=> raises InvalidOptionsError, 'there are four lights'
+      #
+      # @example Define An Option With Method Validation
+      #   class CustomComponent
+      #     include Librum::Components::Options
+      #
+      #     option :checked,
+      #       boolean:  true
+      #       validate: :boolean
+      #
+      #     option :checked_popover,
+      #       validate: :popover_text
+      #
+      #     private
+      #
+      #     def validate_popover_text(value, as:)
+      #       return if value.nil? || value.length < 20
+      #
+      #       "#{as} is too long"
+      #     end
+      #   end
+      #
+      #   CustomComponent.new(checked: nil)
+      #   #=> raises InvalidOptionsError, 'checked must be true or false'
+      #
+      #   checked_popover = "Neque porro quisquam est qui dolorem ipsum quia..."
+      #   CustomComponent.new(checked_popover:)
+      #   #=> raises InvalidOptionsError, 'checked_popover is too long'
+      #
+      # @example Define An Option With Type Validation
+      #   class CustomComponent
+      #     include Librum::Components::Options
+      #
+      #     option :counter, validate: Integer
+      #   end
+      #
+      #   CustomComponent.new(counter: 'threeve')
+      #   #=> raises InvalidOptionsError, 'counter is not an instance of Integer'
+      #
+      # @example Define An Option With Multiple Validations
+      #   class CustomComponent
+      #     include Librum::Components::Options
+      #
+      #     option :rgb_color, validate: {
+      #       presence: true,
+      #       matches:  /\d{1,3}, \d{1,3}, \d{1,3}/
+      #     }
+      #   end
+      #
+      #   CustomComponent.new
+      #   #=> raises InvalidOptionsError, "rgb_color can't be blank"
+      #
+      #   CustomComponent.new(rgb_color: 'blue')
+      #   #=> raises InvalidOptionsError, 'rgb_color does not match the pattern'
+      def option( # rubocop:disable Metrics/MethodLength
+        name,
+        boolean: false,
+        default: nil,
+        required: false,
+        validate: nil
+      )
+        option =
+          Librum::Components::Option.new(
+            boolean:,
+            default:,
+            name:,
+            required:,
+            validate:
+          )
 
         handle_duplicate_option!(name, boolean:)
 
@@ -117,20 +239,22 @@ module Librum::Components
 
     private
 
-    def invalid_options_message(extra_options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-      format_options =
-        extra_options
-        .map { |key, value| "#{key}: #{value.inspect}" }
-        .join(', ')
-      message = "invalid options #{format_options} -"
+    def find_extra_options(options)
+      options.each_key.reject { |key| self.class.options.key?(key.to_s) }
+    end
+
+    def invalid_options_message(extra_keys:, failure_message:)
+      return failure_message if extra_keys.empty?
 
       if self.class.options.empty?
-        "#{message} #{self.class.name} does not define any valid options"
+        "#{failure_message} - #{self.class.name} does not define any valid " \
+          'options'
       else
         valid_options = self.class.options.keys.sort.map { |key| ":#{key}" }
         valid_options = tools.array_tools.humanize_list(valid_options)
 
-        "#{message} valid options for #{self.class.name} are #{valid_options}"
+        "#{failure_message} - valid options for #{self.class.name} are " \
+          "#{valid_options}"
       end
     end
 
@@ -138,13 +262,121 @@ module Librum::Components
       SleepingKingStudios::Tools::Toolbelt.instance
     end
 
-    def validate_options(options)
-      extra_options =
-        options.reject { |key, _| self.class.options.key?(key.to_s) }
+    def validate_color(value, as: 'color')
+      return if value.nil?
 
-      return options if extra_options.empty?
+      return if configuration.colors.include?('value')
 
-      raise InvalidOptionsError, invalid_options_message(extra_options)
+      "#{as} is not a valid color name"
+    end
+
+    def validate_option(aggregator:, option:, value:) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
+      failures = aggregator.size
+
+      aggregator.validate_presence(value, as: option.name) if option.required?
+
+      return unless option.validate?
+
+      # Skip additional validation for missing required options.
+      return unless aggregator.size == failures
+
+      case option.validate
+      when true
+        validate_option_name(aggregator:, option:, value:)
+      when String, Symbol
+        validate_option_method(aggregator:, option:, value:)
+      when Module
+        validate_option_class(aggregator:, option:, value:)
+      when Proc
+        validate_option_block(aggregator:, option:, value:)
+      when Hash
+        validate_option_hash(aggregator:, option:, value:)
+      end
+    end
+
+    def validate_option_block(aggregator:, option:, value:)
+      validator  = option.validate
+      message    =
+        if validator_accepts_name_parameter?(validator)
+          validator.call(value, as: option.name)
+        else
+          validator.call(value)
+        end
+
+      aggregator << message if message.present?
+    end
+
+    def validate_option_class(aggregator:, option:, value:)
+      aggregator
+        .validate_instance_of(value, expected: option.validate, as: option.name)
+    end
+
+    def validate_option_hash(aggregator:, option:, value:) # rubocop:disable Metrics/MethodLength
+      option.validate.each do |method_name, expected|
+        validation_method = "validate_#{method_name}"
+
+        keywords = { as: option.name }
+        keywords[:expected] = expected unless expected == true
+
+        if aggregator.respond_to?(validation_method)
+          aggregator.public_send(validation_method, value, **keywords)
+        else
+          message = send(validation_method, value, **keywords)
+
+          aggregator << message if message.present?
+        end
+      end
+    end
+
+    def validate_option_method(aggregator:, option:, value:)
+      validation_method = "validate_#{option.validate}"
+
+      if aggregator.respond_to?(validation_method)
+        aggregator.public_send(validation_method, value, as: option.name)
+      else
+        message = send(validation_method, value, as: option.name)
+
+        aggregator << message if message.present?
+      end
+    end
+
+    def validate_option_name(aggregator:, option:, value:)
+      validation_method = "validate_#{option.name}"
+
+      message = public_send(validation_method, value, as: option.name)
+
+      aggregator << message if message.present?
+    end
+
+    def validate_options(options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      aggregator = tools.assertions.aggregator_class.new
+      extra_keys = find_extra_options(options)
+
+      extra_keys.each { |key| aggregator << "#{key} is not a valid option" }
+
+      self.class.options.each_value do |option|
+        validate_option(
+          aggregator:,
+          option:,
+          value:      options[option.name.intern]
+        )
+      end
+
+      return options if aggregator.empty?
+
+      raise InvalidOptionsError,
+        invalid_options_message(
+          extra_keys:,
+          failure_message: aggregator.failure_message
+        )
+    end
+
+    def validator_accepts_name_parameter?(validator)
+      parameters = validator.parameters
+
+      parameters.any? do |type, name|
+        name == :as && (type == :key || type == :keyreq) # rubocop:disable Style/MultipleComparison
+      end
     end
   end
 end

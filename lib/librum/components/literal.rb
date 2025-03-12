@@ -15,6 +15,9 @@ module Librum::Components
     # @return [String] the HTML string to render.
     attr_reader :contents
 
+    # Scrubs the contents and wraps in an HTML-safe buffer.
+    #
+    # @return [ActiveSupport::SafeBuffer] the scrubbed component contents.
     def call
       Loofah
         .html5_fragment(contents)

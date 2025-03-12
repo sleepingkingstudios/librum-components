@@ -63,4 +63,86 @@ RSpec.describe Librum::Components::Option do
   describe '#name' do
     include_examples 'should define reader', :name, -> { name }
   end
+
+  describe '#required?' do
+    include_examples 'should define predicate', :required?, false
+
+    context 'when initialized with required: false' do
+      let(:options) { super().merge(required: false) }
+
+      it { expect(option.required?).to be false }
+    end
+
+    context 'when initialized with required: true' do
+      let(:options) { super().merge(required: true) }
+
+      it { expect(option.required?).to be true }
+    end
+  end
+
+  describe '#validate' do
+    include_examples 'should define reader', :validate, nil
+
+    context 'when initialized with validate: a Proc' do
+      let(:validate) do
+        lambda do |_|
+          # :nocov:
+          next unless validate.nil?
+
+          "option can't be blank"
+          # :nocov:
+        end
+      end
+      let(:options) { super().merge(validate:) }
+
+      it { expect(option.validate).to be validate }
+    end
+
+    context 'when initialized with validate: a Class' do
+      let(:validate) { Integer }
+      let(:options)  { super().merge(validate:) }
+
+      it { expect(option.validate).to be validate }
+    end
+
+    context 'when initialized with validate: a Symbol' do
+      let(:validate) { :present }
+      let(:options)  { super().merge(validate:) }
+
+      it { expect(option.validate).to be validate }
+    end
+  end
+
+  describe '#validate?' do
+    include_examples 'should define predicate', :validate?, false
+
+    context 'when initialized with validate: a Proc' do
+      let(:validate) do
+        lambda do |_|
+          # :nocov:
+          next unless validate.nil?
+
+          "option can't be blank"
+          # :nocov:
+        end
+      end
+      let(:options) { super().merge(validate:) }
+
+      it { expect(option.validate?).to be true }
+    end
+
+    context 'when initialized with validate: a Class' do
+      let(:validate) { Integer }
+      let(:options)  { super().merge(validate:) }
+
+      it { expect(option.validate?).to be true }
+    end
+
+    context 'when initialized with validate: a Symbol' do
+      let(:validate) { :present }
+      let(:options)  { super().merge(validate:) }
+
+      it { expect(option.validate?).to be true }
+    end
+  end
 end

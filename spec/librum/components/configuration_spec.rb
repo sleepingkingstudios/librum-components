@@ -5,6 +5,25 @@ require 'librum/components/configuration'
 RSpec.describe Librum::Components::Configuration do
   subject(:configuration) { described_class.new(**options) }
 
+  # :nocov:
+  deferred_examples 'should define option' \
+  do |option_name, option_value = 'value'|
+    describe "##{option_name}" do
+      include_examples 'should define reader',
+        option_name,
+        -> { described_class::DEFAULTS[option_name.to_s] }
+
+      context "when initialized with #{option_name}: value" do
+        let(:options) { super().merge(option_name => option_value) }
+
+        it 'should return the configured value' do
+          expect(configuration.public_send(option_name)).to be == option_value
+        end
+      end
+    end
+  end
+  # :nocov:
+
   let(:options) { {} }
 
   define_method :tools do
@@ -35,6 +54,20 @@ RSpec.describe Librum::Components::Configuration do
         .to be_constructible
         .with(0).arguments
         .and_any_keywords
+    end
+  end
+
+  describe '#colors' do
+    let(:expected) { Set.new(described_class::DEFAULTS['colors']) }
+
+    include_examples 'should define reader', :colors, -> { expected }
+
+    context 'when initialized with colors: value' do
+      let(:colors)   { %i[red orange yellow green blue indigo violet] }
+      let(:options)  { super().merge(colors:) }
+      let(:expected) { Set.new(colors.map(&:to_s)) }
+
+      it { expect(configuration.colors).to be == expected }
     end
   end
 
