@@ -109,6 +109,30 @@ module Spec::Support::Deferred
           "#{option_name} is not a valid color name"
         end
 
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              error_message
+            )
+        end
+      end
+    end
+
+    deferred_examples 'should validate the format of option' \
+    do |option_name, expected:, invalid_value:|
+      context "when :#{option_name} does not match the format" do
+        let(:component_options) do
+          super().merge(option_name.intern => invalid_value)
+        end
+        let(:error_message) do
+          tools.assertions.error_message_for(
+            'sleeping_king_studios.tools.assertions.matches_regexp',
+            as:      option_name,
+            pattern: expected.inspect
+          )
+        end
+
         define_method :tools do
           SleepingKingStudios::Tools::Toolbelt.instance
         end
@@ -117,7 +141,7 @@ module Spec::Support::Deferred
           expect { described_class.new(**component_options) }
             .to raise_error(
               described_class::InvalidOptionsError,
-              error_message
+              include(error_message)
             )
         end
       end
@@ -144,7 +168,7 @@ module Spec::Support::Deferred
           expect { described_class.new(**component_options) }
             .to raise_error(
               described_class::InvalidOptionsError,
-              error_message
+              include(error_message)
             )
         end
       end
@@ -169,7 +193,7 @@ module Spec::Support::Deferred
             expect { described_class.new(**component_options) }
               .to raise_error(
                 described_class::InvalidOptionsError,
-                error_message
+                include(error_message)
               )
           end
         end
@@ -199,7 +223,7 @@ module Spec::Support::Deferred
             expect { described_class.new(**component_options) }
               .to raise_error(
                 described_class::InvalidOptionsError,
-                error_message
+                include(error_message)
               )
           end
         end
@@ -225,7 +249,7 @@ module Spec::Support::Deferred
           expect { described_class.new(**component_options) }
             .to raise_error(
               described_class::InvalidOptionsError,
-              error_message
+              include(error_message)
             )
         end
       end

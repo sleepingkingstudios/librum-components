@@ -15,10 +15,10 @@ module Librum::Components::RSpec::Matchers
       @expected = expected
     end
 
-    # @param [Object] the actual object.
+    # @return [Object] the actual object.
     attr_reader :actual
 
-    # @param [String] the expected string.
+    # @return [String] the expected string.
     attr_reader :expected
 
     # @return [String] the description of the matcher.

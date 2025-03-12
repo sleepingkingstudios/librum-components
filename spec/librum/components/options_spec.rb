@@ -271,6 +271,57 @@ RSpec.describe Librum::Components::Options do
       end
     end
 
+    context 'with an option with multiple validations' do
+      before(:example) do
+        described_class.option :password, validate: {
+          instance_of: String,
+          matches:     /12345/,
+          secret:      true
+        }
+
+        described_class.define_method :validate_secret do |value, as:|
+          return if value == '12345'
+
+          "#{as} should match the password on your luggage"
+        end
+      end
+
+      include_deferred 'should validate the type of option',
+        :password,
+        expected: String
+
+      include_deferred 'should validate the format of option',
+        :password,
+        expected:      /12345/,
+        invalid_value: '23456'
+
+      context 'when initialized with an invalid value' do
+        let(:component_options) { super().merge(password: 'whatever') }
+        let(:error_message) do
+          'password should match the password on your luggage'
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+
+      context 'when initialized with a valid value' do
+        let(:component_options) do
+          super().merge(password: '12345')
+        end
+
+        it 'should not raise an exception' do
+          expect { described_class.new(**component_options) }
+            .not_to raise_error
+        end
+      end
+    end
+
     context 'with a required option' do
       before(:example) { described_class.option :disclaimer, required: true }
 
@@ -445,6 +496,62 @@ RSpec.describe Librum::Components::Options do
       context 'when initialized with a valid value' do
         let(:component_options) do
           super().merge(text_color: '#ff3366')
+        end
+
+        it 'should not raise an exception' do
+          expect { described_class.new(**component_options) }
+            .not_to raise_error
+        end
+      end
+    end
+
+    context 'with a required option with multiple validations' do
+      before(:example) do
+        described_class.option :password,
+          required: true,
+          validate: {
+            instance_of: String,
+            matches:     /12345/,
+            secret:      true
+          }
+
+        described_class.define_method :validate_secret do |value, as:|
+          return if value == '12345'
+
+          "#{as} should match the password on your luggage"
+        end
+      end
+
+      include_deferred 'should validate the presence of option', :password
+
+      include_deferred 'should validate the type of option',
+        :password,
+        expected: String,
+        required: true
+
+      include_deferred 'should validate the format of option',
+        :password,
+        expected:      /12345/,
+        invalid_value: '23456'
+
+      context 'when initialized with an invalid value' do
+        let(:component_options) { super().merge(password: 'whatever') }
+        let(:error_message) do
+          'password should match the password on your luggage'
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+
+      context 'when initialized with a valid value' do
+        let(:component_options) do
+          super().merge(password: '12345')
         end
 
         it 'should not raise an exception' do
