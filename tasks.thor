@@ -1,3 +1,16 @@
 # frozen_string_literal: true
 
-load 'sleeping_king_studios/yard/tasks.rb'
+require 'sleeping_king_studios/tasks'
+
+SleepingKingStudios::Tasks.configure do |config|
+  config.file do |file|
+    file.template_paths =
+      [
+        '../sleeping_king_studios-templates/lib',
+        file.class.default_template_path
+      ]
+  end
+end
+
+load 'sleeping_king_studios/docs/tasks.rb'
+load 'sleeping_king_studios/tasks/file/tasks.thor'

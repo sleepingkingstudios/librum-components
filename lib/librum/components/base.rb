@@ -49,6 +49,47 @@ module Librum::Components
       end
     end
 
+    # @overload initialize(configuration: nil, **options)
+    #   @param configuration [Librum::Core::Configuration] the configuration for
+    #     the component library.
+    #   @param options [Hash] additional options passed to the component.
+    def initialize(configuration: nil, **)
+      super(**)
+
+      @configuration =
+        configuration || Librum::Components::Configuration.instance
+    end
+
+    # @return [Librum::Core::Configuration] the configuration for the component
+    #   library.
+    attr_reader :configuration
+
+    # @overload class_names(*args, prefix: nil)
+    #   Combines the given class names and applies a prefix, if any.
+    #
+    #   Input arguments are processed as follows:
+    #
+    #   - Nil or false arguments are ignored.
+    #   - String and symbol arguments are split by whitespace and added.
+    #   - Array arguments are flattened.
+    #   - Hash arguments are mapped to a list of keys with truthy values and
+    #     flattened.
+    #   - All other arguments are converted to strings.
+    #
+    #   Finally, the items are rendered unique and then combined into a
+    #   space-separated string.
+    #
+    #   @param args [Array] the input arguments to combine.
+    #   @param prefix [String] if given, each item in the output is prefixed
+    #     with the specified string.
+    #
+    #   @return [String] the combined output string.
+    def class_names(*, prefix: nil)
+      return super(*) if prefix.blank?
+
+      super(*).split.map { |str| "#{prefix}#{str}" }.join(' ')
+    end
+
     private
 
     def components
