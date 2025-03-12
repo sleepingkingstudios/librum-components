@@ -23,10 +23,27 @@ module Librum::Components
       # @param boolean [true, false] if true, the option is a boolean and will
       #   generate a predicate method.
       # @param default [Proc, Object] the default value for the option.
+      # @param required [true, false] if true, indicates that the option is
+      #   required for the component.
+      # @param validate [Symbol, Class, Proc, nil] the validation for the
+      #   option, if any.
       #
       # @return [Symbol] the name of the generated method.
-      def option(name, boolean: false, default: nil)
-        option = Librum::Components::Option.new(boolean:, default:, name:)
+      def option( # rubocop:disable Metrics/MethodLength
+        name,
+        boolean: false,
+        default: nil,
+        required: false,
+        validate: nil
+      )
+        option =
+          Librum::Components::Option.new(
+            boolean:,
+            default:,
+            name:,
+            required:,
+            validate:
+          )
 
         handle_duplicate_option!(name, boolean:)
 
@@ -117,20 +134,22 @@ module Librum::Components
 
     private
 
-    def invalid_options_message(extra_options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-      format_options =
-        extra_options
-        .map { |key, value| "#{key}: #{value.inspect}" }
-        .join(', ')
-      message = "invalid options #{format_options} -"
+    def find_extra_options(options)
+      options.each_key.reject { |key| self.class.options.key?(key.to_s) }
+    end
+
+    def invalid_options_message(extra_keys:, failure_message:)
+      return failure_message if extra_keys.empty?
 
       if self.class.options.empty?
-        "#{message} #{self.class.name} does not define any valid options"
+        "#{failure_message} - #{self.class.name} does not define any valid " \
+          'options'
       else
         valid_options = self.class.options.keys.sort.map { |key| ":#{key}" }
         valid_options = tools.array_tools.humanize_list(valid_options)
 
-        "#{message} valid options for #{self.class.name} are #{valid_options}"
+        "#{failure_message} - valid options for #{self.class.name} are " \
+          "#{valid_options}"
       end
     end
 
@@ -138,13 +157,94 @@ module Librum::Components
       SleepingKingStudios::Tools::Toolbelt.instance
     end
 
-    def validate_options(options)
-      extra_options =
-        options.reject { |key, _| self.class.options.key?(key.to_s) }
+    def validate_option(aggregator:, option:, value:) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
+      failures = aggregator.size
 
-      return options if extra_options.empty?
+      aggregator.validate_presence(value, as: option.name) if option.required?
 
-      raise InvalidOptionsError, invalid_options_message(extra_options)
+      return unless option.validate?
+
+      # Skip additional validation for missing required options.
+      return unless aggregator.size == failures
+
+      case option.validate
+      when true
+        validate_option_name(aggregator:, option:, value:)
+      when String, Symbol
+        validate_option_method(aggregator:, option:, value:)
+      when Module
+        validate_option_class(aggregator:, option:, value:)
+      when Proc
+        validate_option_block(aggregator:, option:, value:)
+      end
+    end
+
+    def validate_option_block(aggregator:, option:, value:)
+      validator  = option.validate
+      message    =
+        if validator_accepts_name_parameter?(validator)
+          validator.call(value, as: option.name)
+        else
+          validator.call(value)
+        end
+
+      aggregator << message if message.present?
+    end
+
+    def validate_option_class(aggregator:, option:, value:)
+      aggregator
+        .validate_instance_of(value, expected: option.validate, as: option.name)
+    end
+
+    def validate_option_method(aggregator:, option:, value:)
+      validation_method = "validate_#{option.validate}"
+
+      if aggregator.respond_to?(validation_method)
+        aggregator.public_send(validation_method, value, as: option.name)
+      else
+        message = public_send(validation_method, value, as: option.name)
+
+        aggregator << message if message.present?
+      end
+    end
+
+    def validate_option_name(aggregator:, option:, value:)
+      validation_method = "validate_#{option.name}"
+
+      message = public_send(validation_method, value, as: option.name)
+
+      aggregator << message if message.present?
+    end
+
+    def validate_options(options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      aggregator = tools.assertions.aggregator_class.new
+      extra_keys = find_extra_options(options)
+
+      extra_keys.each { |key| aggregator << "#{key} is not a valid option" }
+
+      self.class.options.each_value do |option|
+        validate_option(
+          aggregator:,
+          option:,
+          value:      options[option.name.intern]
+        )
+      end
+
+      return options if aggregator.empty?
+
+      raise InvalidOptionsError,
+        invalid_options_message(
+          extra_keys:,
+          failure_message: aggregator.failure_message
+        )
+    end
+
+    def validator_accepts_name_parameter?(validator)
+      parameters = validator.parameters
+
+      parameters.any? do |type, name|
+        name == :as && (type == :key || type == :keyreq) # rubocop:disable Style/MultipleComparison
+      end
     end
   end
 end

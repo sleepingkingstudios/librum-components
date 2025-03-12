@@ -86,9 +86,11 @@ RSpec.describe Librum::Components::Option do
     context 'when initialized with validate: a Proc' do
       let(:validate) do
         lambda do |_|
+          # :nocov:
           next unless validate.nil?
 
           "option can't be blank"
+          # :nocov:
         end
       end
       let(:options) { super().merge(validate:) }
@@ -117,9 +119,11 @@ RSpec.describe Librum::Components::Option do
     context 'when initialized with validate: a Proc' do
       let(:validate) do
         lambda do |_|
+          # :nocov:
           next unless validate.nil?
 
           "option can't be blank"
+          # :nocov:
         end
       end
       let(:options) { super().merge(validate:) }

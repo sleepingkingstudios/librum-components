@@ -17,14 +17,6 @@ module Spec::Support::Deferred
         example_class 'Spec::ExampleComponent', base_class
       end
 
-      deferred_context 'when the component defines options' do
-        before(:example) do
-          described_class.option :label
-
-          described_class.option :checked, boolean: true
-        end
-      end
-
       include_deferred 'should be a view component'
 
       describe '.new' do
@@ -230,50 +222,6 @@ module Spec::Support::Deferred
         include_examples 'should define reader',
           :options,
           -> { an_instance_of(Hash) }
-      end
-    end
-
-    deferred_examples 'should validate the component options' do
-      describe 'with invalid component options' do
-        let(:component_options) do
-          {
-            invalid_color:      '#ff3366',
-            invalid_decoration: 'underline'
-          }
-        end
-        let(:valid_options) do
-          described_class
-            .options
-            .keys
-            .sort
-            .map { |key| ":#{key}" }
-            .then { |ary| tools.ary.humanize_list(ary) }
-        end
-        let(:error_message) do
-          message =
-            'invalid options invalid_color: "#ff3366", invalid_decoration: ' \
-            '"underline" - '
-
-          if described_class.options.empty?
-            "#{message}#{described_class.name} does not define any " \
-              'valid options'
-          else
-            "#{message}valid options for #{described_class.name} are " \
-              "#{valid_options}"
-          end
-        end
-
-        define_method :tools do
-          SleepingKingStudios::Tools::Toolbelt.instance
-        end
-
-        it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
-            .to raise_error(
-              described_class::InvalidOptionsError,
-              error_message
-            )
-        end
       end
     end
   end

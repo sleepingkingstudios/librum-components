@@ -6,6 +6,14 @@ module Spec::Support::Deferred
   module OptionsExamples
     include RSpec::SleepingKingStudios::Deferred::Provider
 
+    deferred_context 'when the component defines options' do
+      before(:example) do
+        described_class.option :label
+
+        described_class.option :checked, boolean: true
+      end
+    end
+
     deferred_examples 'should define component option' \
     do |name, boolean: false, default: nil, value: 'value'|
       name = name.to_s
@@ -44,6 +52,158 @@ module Spec::Support::Deferred
           let(:component_options) { super().merge(name.intern => value) }
 
           it { expect(component.send(name)).to be == value }
+        end
+      end
+    end
+
+    deferred_examples 'should validate the component options' do
+      describe 'with extra component options' do
+        let(:component_options) do
+          {
+            invalid_color:      '#ff3366',
+            invalid_decoration: 'underline'
+          }
+        end
+        let(:valid_options) do
+          described_class
+            .options
+            .keys
+            .sort
+            .map { |key| ":#{key}" }
+            .then { |ary| tools.ary.humanize_list(ary) }
+        end
+        let(:error_message) do
+          message =
+            'invalid_color is not a valid option, invalid_decoration is ' \
+            'not a valid option - '
+
+          if described_class.options.empty?
+            "#{message}#{described_class.name} does not define any " \
+              'valid options'
+          else
+            "#{message}valid options for #{described_class.name} are " \
+              "#{valid_options}"
+          end
+        end
+
+        define_method :tools do
+          SleepingKingStudios::Tools::Toolbelt.instance
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              error_message
+            )
+        end
+      end
+    end
+
+    deferred_examples 'should validate the presence of option' \
+    do |option_name, string: false|
+      context "when :#{option_name} is nil" do
+        let(:component_options) do
+          super().merge(option_name.intern => nil)
+        end
+        let(:error_message) do
+          tools.assertions.error_message_for(
+            'sleeping_king_studios.tools.assertions.presence',
+            as: option_name
+          )
+        end
+
+        define_method :tools do
+          SleepingKingStudios::Tools::Toolbelt.instance
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              error_message
+            )
+        end
+      end
+
+      if string
+        context "when :#{option_name} is an empty String" do
+          let(:component_options) do
+            super().merge(option_name.intern => '')
+          end
+          let(:error_message) do
+            tools.assertions.error_message_for(
+              'sleeping_king_studios.tools.assertions.presence',
+              as: option_name
+            )
+          end
+
+          define_method :tools do
+            SleepingKingStudios::Tools::Toolbelt.instance
+          end
+
+          it 'should raise an exception' do
+            expect { described_class.new(**component_options) }
+              .to raise_error(
+                described_class::InvalidOptionsError,
+                error_message
+              )
+          end
+        end
+      end
+    end
+
+    deferred_examples 'should validate the type of option' \
+    do |option_name, expected:, required: false|
+      unless required
+        context "when :#{option_name} is nil" do
+          let(:component_options) do
+            super().merge(option_name.intern => nil)
+          end
+          let(:error_message) do
+            tools.assertions.error_message_for(
+              'sleeping_king_studios.tools.assertions.instance_of',
+              as:       option_name,
+              expected: expected
+            )
+          end
+
+          define_method :tools do
+            SleepingKingStudios::Tools::Toolbelt.instance
+          end
+
+          it 'should raise an exception' do
+            expect { described_class.new(**component_options) }
+              .to raise_error(
+                described_class::InvalidOptionsError,
+                error_message
+              )
+          end
+        end
+      end
+
+      context "when :#{option_name} is an Object" do
+        let(:component_options) do
+          super().merge(option_name.intern => Object.new.freeze)
+        end
+        let(:error_message) do
+          tools.assertions.error_message_for(
+            'sleeping_king_studios.tools.assertions.instance_of',
+            as:       option_name,
+            expected: expected
+          )
+        end
+
+        define_method :tools do
+          SleepingKingStudios::Tools::Toolbelt.instance
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              error_message
+            )
         end
       end
     end

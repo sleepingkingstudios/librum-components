@@ -11,8 +11,8 @@ module Librum::Components
     # @param default [Proc, Object] the default value for the object.
     # @param required [true, false] if true, indicates that the option is
     #   required for the component.
-    # @param validate [Symbol, Class, Proc, nil] the validation for the option,
-    #   if any.
+    # @param validate [true, Symbol, Class, Proc, nil] the validation for the
+    #   option, if any.
     def initialize(
       name:,
       boolean:  false,
