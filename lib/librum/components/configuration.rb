@@ -9,9 +9,13 @@ module Librum::Components
     def self.instance = @instance ||= new
 
     # Default options for configuration.
-    DEFAULTS = {}.freeze
+    DEFAULTS = {
+      'colors' => [].freeze
+    }.freeze
 
     # @param options [Hash] initialization options for the configuration.
+    #
+    # @option colors [Array<String>] the colors defined for the component set.
     def initialize(**options)
       @options =
         DEFAULTS
@@ -21,6 +25,11 @@ module Librum::Components
 
     # @return [Hash] initialization options for the configuration.
     attr_reader :options
+
+    # @return [Array<String>] the colors defined for the component set.
+    def colors
+      @colors ||= Set.new(@options['colors'].map(&:to_s))
+    end
 
     private
 

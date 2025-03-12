@@ -11,6 +11,14 @@ RSpec.describe Librum::Components::Options do
 
   subject(:component) { described_class.new(**component_options) }
 
+  shared_context 'when the component defines configuration' do
+    before(:example) do
+      memoized_configuration = configuration
+
+      described_class.define_method(:configuration) { memoized_configuration }
+    end
+  end
+
   shared_context 'when the component defines options' do
     before(:example) do
       described_class.option :label
@@ -94,6 +102,22 @@ RSpec.describe Librum::Components::Options do
           end
         end
       end
+    end
+
+    context 'with an option with validate: :color' do
+      include_context 'when the component defines configuration'
+
+      let(:configuration) do
+        Librum::Components::Configuration.new(
+          colors: %i[red orange yellow green blue indigo violet]
+        )
+      end
+
+      before(:example) do
+        described_class.option :text_color, validate: :color
+      end
+
+      include_deferred 'should validate the color of option', :text_color
     end
 
     context 'with an option with validate: :presence' do
@@ -297,6 +321,26 @@ RSpec.describe Librum::Components::Options do
           end
         end
       end
+    end
+
+    context 'with a required option with validate: :color' do
+      include_context 'when the component defines configuration'
+
+      let(:configuration) do
+        Librum::Components::Configuration.new(
+          colors: %i[red orange yellow green blue indigo violet]
+        )
+      end
+
+      before(:example) do
+        described_class.option :text_color, required: true, validate: :color
+      end
+
+      include_deferred 'should validate the presence of option',
+        :text_color,
+        string: true
+
+      include_deferred 'should validate the color of option', :text_color
     end
 
     context 'with a required option with validate: :presence' do

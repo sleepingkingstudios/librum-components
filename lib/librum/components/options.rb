@@ -6,7 +6,7 @@ require 'librum/components'
 
 module Librum::Components
   # Module for defining named options for components.
-  module Options
+  module Options # rubocop:disable Metrics/ModuleLength
     extend SleepingKingStudios::Tools::Toolbox::Mixin
 
     # Exception raised when defining an option that already exists.
@@ -157,6 +157,14 @@ module Librum::Components
       SleepingKingStudios::Tools::Toolbelt.instance
     end
 
+    def validate_color(value, as: 'color')
+      return if value.nil?
+
+      return if configuration.colors.include?('value')
+
+      "#{as} is not a valid color name"
+    end
+
     def validate_option(aggregator:, option:, value:) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
       failures = aggregator.size
 
@@ -202,7 +210,7 @@ module Librum::Components
       if aggregator.respond_to?(validation_method)
         aggregator.public_send(validation_method, value, as: option.name)
       else
-        message = public_send(validation_method, value, as: option.name)
+        message = send(validation_method, value, as: option.name)
 
         aggregator << message if message.present?
       end

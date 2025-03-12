@@ -100,6 +100,29 @@ module Spec::Support::Deferred
       end
     end
 
+    deferred_examples 'should validate the color of option' do |option_name|
+      context "when :#{option_name} is an invalid color" do
+        let(:component_options) do
+          super().merge(option_name.intern => 'octarine')
+        end
+        let(:error_message) do
+          "#{option_name} is not a valid color name"
+        end
+
+        define_method :tools do
+          SleepingKingStudios::Tools::Toolbelt.instance
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              error_message
+            )
+        end
+      end
+    end
+
     deferred_examples 'should validate the presence of option' \
     do |option_name, string: false|
       context "when :#{option_name} is nil" do
