@@ -27,8 +27,8 @@ module Librum::Components
         self == Librum::Components::Base
       end
 
-      # Defines an option for the component.
-      def option(name, boolean: false, default: nil)
+      # (see Librum::Components::Options::ClassMethods#option)
+      def option(name, boolean: false, **)
         handle_abstract_class!(name, boolean:)
 
         super

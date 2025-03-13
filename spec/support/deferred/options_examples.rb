@@ -73,16 +73,14 @@ module Spec::Support::Deferred
             .then { |ary| tools.ary.humanize_list(ary) }
         end
         let(:error_message) do
-          message =
-            'invalid_color is not a valid option, invalid_decoration is ' \
-            'not a valid option - '
-
+          'invalid_color is not a valid option, invalid_decoration is not a ' \
+            'valid option'
+        end
+        let(:valid_options_message) do
           if described_class.options.empty?
-            "#{message}#{described_class.name} does not define any " \
-              'valid options'
+            "#{described_class.name} does not define any valid options"
           else
-            "#{message}valid options for #{described_class.name} are " \
-              "#{valid_options}"
+            "valid options for #{described_class.name} are #{valid_options}"
           end
         end
 
@@ -94,7 +92,7 @@ module Spec::Support::Deferred
           expect { described_class.new(**component_options) }
             .to raise_error(
               described_class::InvalidOptionsError,
-              error_message
+              include(error_message).and(include(valid_options_message))
             )
         end
       end
