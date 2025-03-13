@@ -54,10 +54,10 @@ module Librum::Components
     #     the component library.
     #   @param options [Hash] additional options passed to the component.
     def initialize(configuration: nil, **)
-      super(**)
-
       @configuration =
         configuration || Librum::Components::Configuration.instance
+
+      super(**)
     end
 
     # @return [Librum::Core::Configuration] the configuration for the component

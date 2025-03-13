@@ -118,7 +118,8 @@ module Spec::Support::Deferred
       end
     end
 
-    deferred_examples 'should be a view component' do
+    deferred_examples 'should be a view component' \
+    do |allow_extra_options: false|
       describe '.new' do
         it 'should define the constructor' do
           expect(described_class)
@@ -128,7 +129,9 @@ module Spec::Support::Deferred
             .and_any_keywords
         end
 
-        include_deferred 'should validate the component options'
+        unless allow_extra_options
+          include_deferred 'should validate the component options'
+        end
       end
 
       describe '.abstract?' do

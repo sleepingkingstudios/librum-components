@@ -57,6 +57,8 @@ RSpec.describe Librum::Components::Configuration do
     end
   end
 
+  include_deferred 'should define option', :default_icon_family
+
   describe '#colors' do
     let(:expected) { Set.new(described_class::DEFAULTS['colors']) }
 
@@ -68,6 +70,20 @@ RSpec.describe Librum::Components::Configuration do
       let(:expected) { Set.new(colors.map(&:to_s)) }
 
       it { expect(configuration.colors).to be == expected }
+    end
+  end
+
+  describe '#icon_families' do
+    let(:expected) { Set.new(described_class::DEFAULTS['icon_families']) }
+
+    include_examples 'should define reader', :icon_families, -> { expected }
+
+    context 'when initialized with icon_families: value' do
+      let(:icon_families) { %i[bootstrap material-design iconicons] }
+      let(:options)       { super().merge(icon_families:) }
+      let(:expected)      { Set.new(icon_families.map(&:to_s)) }
+
+      it { expect(configuration.icon_families).to be == expected }
     end
   end
 

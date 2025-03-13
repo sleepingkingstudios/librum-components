@@ -93,6 +93,23 @@ RSpec.describe Librum::Components::Options do
       end
     end
 
+    context 'with an option with default: value and validate: :presence' do
+      before(:example) do
+        described_class.option :access_level,
+          default:  'public',
+          validate: :presence
+      end
+
+      it 'should not raise an exception' do
+        expect { described_class.new(**component_options) }
+          .not_to raise_error
+      end
+
+      include_deferred 'should validate the presence of option',
+        :access_level,
+        string: true
+    end
+
     context 'with an option with validate: true' do
       let(:error_message) { /undefined method 'validate_license'/ }
 

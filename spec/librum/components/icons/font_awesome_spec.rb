@@ -64,8 +64,6 @@ RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
   end
 
   describe '.new' do
-    include_deferred 'should validate the component options'
-
     include_deferred 'should validate the class_name option'
 
     include_deferred 'should validate the presence of option',

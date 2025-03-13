@@ -32,6 +32,13 @@ module Librum::Components
 
       # Defines an option for the component.
       #
+      # A note on defaults and validation: options can have a default value that
+      # is defined as a Proc. By default, this is lazily evaluated within the
+      # context of the component, meaning it can reference other option values.
+      # However, required options and options with validations need to evaluate
+      # the default value at initialization, and cannot reference the component
+      # or its properties.
+      #
       # @param name [String, Symbol] the name of the option.
       # @param boolean [true, false] if true, the option is a boolean and will
       #   generate a predicate method.
@@ -244,6 +251,7 @@ module Librum::Components
     def initialize(**options)
       super()
 
+      @options = apply_default_options(options)
       @options = validate_options(options)
     end
 
@@ -251,6 +259,16 @@ module Librum::Components
     attr_reader :options
 
     private
+
+    def apply_default_options(options)
+      self.class.options.each.with_object(options) do |(key, option), hsh|
+        next if hsh.key?(key.intern)
+        next unless option.required? || option.validate?
+
+        hsh[key.intern] =
+          option.default.is_a?(Proc) ? option.default.call : option.default
+      end
+    end
 
     def find_extra_options(options)
       return [] if self.class.allow_extra_options?
