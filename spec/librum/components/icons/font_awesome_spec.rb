@@ -35,6 +35,34 @@ RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
       }
   end
 
+  describe '::ICON_SIZES' do
+    include_examples 'should define frozen constant',
+      :ICON_SIZES,
+      lambda {
+        Set.new(
+          %w[
+            1x
+            2x
+            3x
+            4x
+            5x
+            6x
+            7x
+            8x
+            9x
+            10x
+            2xs
+            xs
+            sm
+            md
+            lg
+            xl
+            2xl
+          ]
+        )
+      }
+  end
+
   describe '.new' do
     include_deferred 'should validate the component options'
 
@@ -70,12 +98,45 @@ RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
 
     it { expect(rendered.to_s).to match_snapshot }
 
+    describe 'with class_name: value' do
+      let(:component_options) { super().merge(class_name: 'custom-class') }
+      let(:snapshot) do
+        <<~HTML
+          <i class="fa-solid fa-rainbow custom-class"></i>
+        HTML
+      end
+
+      it { expect(rendered.to_s).to match_snapshot }
+    end
+
     describe 'with family: brands' do
       let(:family) { 'font-awesome-brands' }
       let(:icon)   { 'github' }
       let(:snapshot) do
         <<~HTML
           <i class="fa-brands fa-github"></i>
+        HTML
+      end
+
+      it { expect(rendered.to_s).to match_snapshot }
+    end
+
+    describe 'with fixed_width: true' do
+      let(:component_options) { super().merge(fixed_width: true) }
+      let(:snapshot) do
+        <<~HTML
+          <i class="fa-solid fa-rainbow fa-fw"></i>
+        HTML
+      end
+
+      it { expect(rendered.to_s).to match_snapshot }
+    end
+
+    describe 'with size: value' do
+      let(:component_options) { super().merge(size: 'lg') }
+      let(:snapshot) do
+        <<~HTML
+          <i class="fa-solid fa-rainbow fa-lg"></i>
         HTML
       end
 
