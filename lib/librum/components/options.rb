@@ -9,6 +9,8 @@ module Librum::Components
   module Options # rubocop:disable Metrics/ModuleLength
     extend SleepingKingStudios::Tools::Toolbox::Mixin
 
+    autoload :ClassName, 'librum/components/options/class_name'
+
     # Exception raised when defining an option that already exists.
     class DuplicateOptionError < StandardError; end
 
@@ -343,7 +345,7 @@ module Librum::Components
     def validate_option_name(aggregator:, option:, value:)
       validation_method = "validate_#{option.name}"
 
-      message = public_send(validation_method, value, as: option.name)
+      message = send(validation_method, value, as: option.name)
 
       aggregator << message if message.present?
     end

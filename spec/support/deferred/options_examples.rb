@@ -56,6 +56,42 @@ module Spec::Support::Deferred
       end
     end
 
+    deferred_examples 'should validate the class_name option' do
+      context 'when initialized with class_name: an Object' do
+        let(:component_options) do
+          super().merge(class_name: Object.new.freeze)
+        end
+        let(:error_message) do
+          'class_name must be a String or Array of Strings'
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+
+      context 'when initialized with class_name: an Array with an Object' do
+        let(:component_options) do
+          super().merge(class_name: [Object.new.freeze])
+        end
+        let(:error_message) do
+          'class_name must be a String or Array of Strings'
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+    end
+
     deferred_examples 'should validate the component options' do
       describe 'with extra component options' do
         let(:component_options) do

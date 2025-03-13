@@ -7,6 +7,8 @@ module Librum::Components::Icons
   #
   # @see https://fontawesome.com/
   class FontAwesome < Librum::Components::Base
+    include Librum::Components::Options::ClassName
+
     ICON_FAMILY_MAPPINGS = {
       'fa'                  => 'fa-solid',
       'fa-solid'            => 'fa-solid',
@@ -37,7 +39,7 @@ module Librum::Components::Icons
     private
 
     def class_name
-      class_names(mapped_family, "fa-#{icon}")
+      class_names(mapped_family, "fa-#{icon}", super)
     end
 
     def mapped_family
