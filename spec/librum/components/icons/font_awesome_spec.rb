@@ -86,6 +86,18 @@ RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
             error_message
       end
     end
+
+    describe 'with size: an invalid value' do
+      let(:size)              { 'tiny' }
+      let(:component_options) { super().merge(size:) }
+      let(:error_message)     { 'size is not a valid size' }
+
+      it 'should raise an exception' do
+        expect { described_class.new(**component_options) }
+          .to raise_error Librum::Components::Options::InvalidOptionsError,
+            error_message
+      end
+    end
   end
 
   describe '#call' do

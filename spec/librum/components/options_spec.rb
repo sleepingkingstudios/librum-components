@@ -53,8 +53,44 @@ RSpec.describe Librum::Components::Options do
   describe '.new' do
     include_deferred 'should validate the component options'
 
+    context 'when the component allows extra options' do
+      before(:example) { described_class.allow_extra_options }
+
+      describe 'with extra component options' do
+        let(:component_options) do
+          {
+            invalid_color:      '#ff3366',
+            invalid_decoration: 'underline'
+          }
+        end
+
+        it 'should not raise an exception' do
+          expect { described_class.new(**component_options) }
+            .not_to raise_error
+        end
+      end
+    end
+
     wrap_deferred 'when the component defines options' do
       include_deferred 'should validate the component options'
+
+      context 'when the component allows extra options' do
+        before(:example) { described_class.allow_extra_options }
+
+        describe 'with extra component options' do
+          let(:component_options) do
+            {
+              invalid_color:      '#ff3366',
+              invalid_decoration: 'underline'
+            }
+          end
+
+          it 'should not raise an exception' do
+            expect { described_class.new(**component_options) }
+              .not_to raise_error
+          end
+        end
+      end
     end
 
     context 'with an option with validate: true' do
@@ -559,6 +595,28 @@ RSpec.describe Librum::Components::Options do
             .not_to raise_error
         end
       end
+    end
+  end
+
+  describe '.allow_extra_options' do
+    it 'should define the class method' do
+      expect(described_class)
+        .to respond_to(:allow_extra_options)
+        .with(0).arguments
+    end
+
+    it 'should update the flag' do
+      expect { described_class.allow_extra_options }
+        .to change(described_class, :allow_extra_options?)
+        .to be true
+    end
+  end
+
+  describe '.allow_extra_options?' do
+    it 'should define the predicate' do
+      expect(described_class)
+        .to define_predicate(:allow_extra_options?)
+        .with_value(false)
     end
   end
 

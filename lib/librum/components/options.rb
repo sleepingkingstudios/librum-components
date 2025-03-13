@@ -19,6 +19,17 @@ module Librum::Components
 
     # Class methods to extend when including Options.
     module ClassMethods
+      # Flags the component as accepting unexpected options.
+      #
+      # If called, updates #allow_extra_options? to true. Unexpected options
+      # passed to the constructor will be ignored, rather than raising an
+      # exception.
+      def allow_extra_options = @allow_extra_options = true
+
+      # @return [true, false] if true, ignores unexpected options rather than
+      #   raising an exception.
+      def allow_extra_options? = @allow_extra_options || false
+
       # Defines an option for the component.
       #
       # @param name [String, Symbol] the name of the option.
@@ -242,6 +253,8 @@ module Librum::Components
     private
 
     def find_extra_options(options)
+      return [] if self.class.allow_extra_options?
+
       options.each_key.reject { |key| self.class.options.key?(key.to_s) }
     end
 
