@@ -17,50 +17,60 @@ RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
 
   include_deferred 'should be a view component'
 
+  include_deferred 'should define component option',
+    :family,
+    value: 'fa-solid'
+
+  include_deferred 'should define component option',
+    :fixed_width,
+    boolean: true
+
+  include_deferred 'should define component option', :icon
+
+  include_deferred 'should define component option',
+    :size,
+    value: '5x'
+
   describe '::ICON_FAMILIES' do
     include_examples 'should define frozen constant',
       :ICON_FAMILIES,
-      lambda {
-        Set.new(
-          %w[
-            fa
-            fa-brands
-            fa-solid
-            fas
-            font-awesome
-            font-awesome-brands
-            font-awesome-solid
-          ]
-        )
-      }
+      Set.new(
+        %w[
+          fa
+          fa-brands
+          fa-solid
+          fas
+          font-awesome
+          font-awesome-brands
+          font-awesome-solid
+        ]
+      )
   end
 
   describe '::ICON_SIZES' do
     include_examples 'should define frozen constant',
       :ICON_SIZES,
-      lambda {
-        Set.new(
-          %w[
-            1x
-            2x
-            3x
-            4x
-            5x
-            6x
-            7x
-            8x
-            9x
-            10x
-            2xs
-            xs
-            sm
-            md
-            lg
-            xl
-            2xl
-          ]
-        )
-      }
+      Set.new(
+        %w[
+          1x
+          2x
+          3x
+          4x
+          5x
+          6x
+          7x
+          8x
+          9x
+          10x
+          2xs
+          xs
+          sm
+          md
+          lg
+          xl
+          2xl
+        ]
+      )
   end
 
   describe '.new' do

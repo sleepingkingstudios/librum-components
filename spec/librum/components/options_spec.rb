@@ -170,7 +170,17 @@ RSpec.describe Librum::Components::Options do
         described_class.option :text_color, validate: :color
       end
 
-      include_deferred 'should validate the color of option', :text_color
+      include_deferred 'should validate that option is a valid color',
+        :text_color
+    end
+
+    context 'with an option with validate: :icon' do
+      before(:example) do
+        described_class.option :spinner_icon, validate: :icon
+      end
+
+      include_deferred 'should validate that option is a valid icon',
+        :spinner_icon
     end
 
     context 'with an option with validate: :presence' do
@@ -444,7 +454,8 @@ RSpec.describe Librum::Components::Options do
         :text_color,
         string: true
 
-      include_deferred 'should validate the color of option', :text_color
+      include_deferred 'should validate that option is a valid color',
+        :text_color
     end
 
     context 'with a required option with validate: :presence' do
