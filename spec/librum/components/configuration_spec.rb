@@ -5,7 +5,6 @@ require 'librum/components/configuration'
 RSpec.describe Librum::Components::Configuration do
   subject(:configuration) { described_class.new(**options) }
 
-  # :nocov:
   deferred_examples 'should define option' \
   do |option_name, option_value = 'value'|
     describe "##{option_name}" do
@@ -22,7 +21,6 @@ RSpec.describe Librum::Components::Configuration do
       end
     end
   end
-  # :nocov:
 
   let(:options) { {} }
 

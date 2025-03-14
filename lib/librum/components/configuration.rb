@@ -29,7 +29,7 @@ module Librum::Components
     # @option colors [Array<String>] the colors defined for the component set.
     def initialize(**options)
       @options =
-        DEFAULTS
+        self.class::DEFAULTS
         .merge(tools.hash_tools.convert_keys_to_strings(options))
         .freeze
     end
