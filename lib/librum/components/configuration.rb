@@ -29,13 +29,17 @@ module Librum::Components
     # @option colors [Array<String>] the colors defined for the component set.
     def initialize(**options)
       @options =
-        DEFAULTS
+        self.class::DEFAULTS
         .merge(tools.hash_tools.convert_keys_to_strings(options))
         .freeze
     end
 
     # @return [Hash] initialization options for the configuration.
     attr_reader :options
+
+    # @return [String, nil] the prefix for classes using the Bulma CSS
+    #   framework.
+    def bulma_prefix = @options['bulma_prefix']
 
     # @return [Array<String>] the colors defined for the component set.
     def colors

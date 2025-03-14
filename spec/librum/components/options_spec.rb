@@ -3,19 +3,21 @@
 require 'librum/components/options'
 
 require 'support/deferred/abstract_examples'
+require 'support/deferred/configuration_examples'
 require 'support/deferred/options_examples'
 
 RSpec.describe Librum::Components::Options do
   include Spec::Support::Deferred::AbstractExamples
+  include Spec::Support::Deferred::ConfigurationExamples
   include Spec::Support::Deferred::OptionsExamples
 
   subject(:component) { described_class.new(**component_options) }
 
   shared_context 'when the component defines configuration' do
     before(:example) do
-      memoized_configuration = configuration
-
-      described_class.define_method(:configuration) { memoized_configuration }
+      described_class.define_method(:configuration) do
+        Librum::Components::Configuration.instance
+      end
     end
   end
 
@@ -160,17 +162,24 @@ RSpec.describe Librum::Components::Options do
     context 'with an option with validate: :color' do
       include_context 'when the component defines configuration'
 
-      let(:configuration) do
-        Librum::Components::Configuration.new(
-          colors: %i[red orange yellow green blue indigo violet]
-        )
-      end
-
       before(:example) do
         described_class.option :text_color, validate: :color
       end
 
-      include_deferred 'should validate the color of option', :text_color
+      include_deferred 'with configuration',
+        colors: %i[red orange yellow green blue indigo violet]
+
+      include_deferred 'should validate that option is a valid color',
+        :text_color
+    end
+
+    context 'with an option with validate: :icon' do
+      before(:example) do
+        described_class.option :spinner_icon, validate: :icon
+      end
+
+      include_deferred 'should validate that option is a valid icon',
+        :spinner_icon
     end
 
     context 'with an option with validate: :presence' do
@@ -430,21 +439,19 @@ RSpec.describe Librum::Components::Options do
     context 'with a required option with validate: :color' do
       include_context 'when the component defines configuration'
 
-      let(:configuration) do
-        Librum::Components::Configuration.new(
-          colors: %i[red orange yellow green blue indigo violet]
-        )
-      end
-
       before(:example) do
         described_class.option :text_color, required: true, validate: :color
       end
+
+      include_deferred 'with configuration',
+        colors: %i[red orange yellow green blue indigo violet]
 
       include_deferred 'should validate the presence of option',
         :text_color,
         string: true
 
-      include_deferred 'should validate the color of option', :text_color
+      include_deferred 'should validate that option is a valid color',
+        :text_color
     end
 
     context 'with a required option with validate: :presence' do

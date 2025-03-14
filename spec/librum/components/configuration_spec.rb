@@ -5,7 +5,6 @@ require 'librum/components/configuration'
 RSpec.describe Librum::Components::Configuration do
   subject(:configuration) { described_class.new(**options) }
 
-  # :nocov:
   deferred_examples 'should define option' \
   do |option_name, option_value = 'value'|
     describe "##{option_name}" do
@@ -22,7 +21,6 @@ RSpec.describe Librum::Components::Configuration do
       end
     end
   end
-  # :nocov:
 
   let(:options) { {} }
 
@@ -77,6 +75,8 @@ RSpec.describe Librum::Components::Configuration do
         .and_any_keywords
     end
   end
+
+  include_deferred 'should define option', :bulma_prefix
 
   include_deferred 'should define option', :default_icon_family
 

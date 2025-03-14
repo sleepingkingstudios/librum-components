@@ -19,20 +19,16 @@ module Spec::Support::Deferred
       name = name.to_s
       name = name.sub(/\?\z/, '') if boolean
 
-      let(:expected_value) do
-        next super() if defined?(super())
-
-        next false if boolean && default.nil?
-
-        next default unless default.is_a?(Proc)
-
-        instance_exec(&default)
-      end
-
       it { expect(described_class.options.keys).to include name }
 
       if boolean
-        include_examples 'should define predicate', name, -> { expected_value }
+        include_examples 'should define predicate',
+          name,
+          lambda {
+            component_options.fetch(name.intern) do
+              (default.is_a?(Proc) ? instance_exec(&default) : default) || false
+            end
+          }
 
         context "when the component is initialized with #{name}: false" do
           let(:component_options) { super().merge(name.intern => false) }
@@ -46,7 +42,13 @@ module Spec::Support::Deferred
           it { expect(component.send(:"#{name}?")).to be true }
         end
       else
-        include_examples 'should define reader', name, -> { expected_value }
+        include_examples 'should define reader',
+          name,
+          lambda {
+            component_options.fetch(name.intern) do
+              default.is_a?(Proc) ? instance_exec(&default) : default
+            end
+          }
 
         context "when the component is initialized with #{name}: value" do
           let(:component_options) { super().merge(name.intern => value) }
@@ -134,25 +136,6 @@ module Spec::Support::Deferred
       end
     end
 
-    deferred_examples 'should validate the color of option' do |option_name|
-      context "when :#{option_name} is an invalid color" do
-        let(:component_options) do
-          super().merge(option_name.intern => 'octarine')
-        end
-        let(:error_message) do
-          "#{option_name} is not a valid color name"
-        end
-
-        it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
-            .to raise_error(
-              described_class::InvalidOptionsError,
-              error_message
-            )
-        end
-      end
-    end
-
     deferred_examples 'should validate the format of option' \
     do |option_name, expected:, invalid_value:|
       context "when :#{option_name} does not match the format" do
@@ -165,6 +148,43 @@ module Spec::Support::Deferred
             as:      option_name,
             pattern: expected.inspect
           )
+        end
+
+        define_method :tools do
+          SleepingKingStudios::Tools::Toolbelt.instance
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+    end
+
+    deferred_examples 'should validate the inclusion of option' \
+    do |option_name, expected:, invalid_value: '12345'|
+      expected.each do |expected_value|
+        context "when :#{option_name} is #{expected_value}" do
+          let(:component_options) do
+            super().merge(option_name.intern => expected_value)
+          end
+
+          it 'should not raise an exception' do
+            expect { described_class.new(**component_options) }
+              .not_to raise_error
+          end
+        end
+      end
+
+      context "when :#{option_name} is invalid" do
+        let(:component_options) do
+          super().merge(option_name.intern => invalid_value)
+        end
+        let(:error_message) do
+          "#{option_name} is not included in the list"
         end
 
         define_method :tools do
@@ -285,6 +305,85 @@ module Spec::Support::Deferred
               described_class::InvalidOptionsError,
               include(error_message)
             )
+        end
+      end
+    end
+
+    deferred_examples 'should validate that option is a valid color' \
+    do |option_name|
+      context "when :#{option_name} is an invalid color" do
+        let(:component_options) do
+          super().merge(option_name.intern => 'octarine')
+        end
+        let(:error_message) do
+          "#{option_name} is not a valid color name"
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              error_message
+            )
+        end
+      end
+    end
+
+    deferred_examples 'should validate that option is a valid icon' \
+    do |option_name|
+      context "when :#{option_name} is an Object" do
+        let(:component_options) do
+          super().merge(option_name.intern => Object.new.freeze)
+        end
+        let(:error_message) do
+          "#{option_name} is not a valid icon"
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+
+      context "when :#{option_name} is an icon name" do
+        let(:component_options) do
+          super().merge(option_name.intern => 'rainbow')
+        end
+
+        it 'should not raise an exception' do
+          expect { described_class.new(**component_options) }
+            .not_to raise_error
+        end
+      end
+
+      context "when :#{option_name} is parameters for an icon component" do
+        let(:component_options) do
+          super().merge(option_name.intern => { icon: 'rainbow' })
+        end
+
+        it 'should not raise an exception' do
+          expect { described_class.new(**component_options) }
+            .not_to raise_error
+        end
+      end
+
+      context "when :#{option_name} is an icon component" do
+        let(:icon) do
+          Librum::Components::Icons::FontAwesome.new(
+            family: 'fa-solid',
+            icon:   'rainbow'
+          )
+        end
+        let(:component_options) do
+          super().merge(option_name.intern => { icon: })
+        end
+
+        it 'should not raise an exception' do
+          expect { described_class.new(**component_options) }
+            .not_to raise_error
         end
       end
     end

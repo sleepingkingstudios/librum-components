@@ -2,11 +2,13 @@
 
 require 'support/deferred'
 require 'support/deferred/abstract_examples'
+require 'support/deferred/configuration_examples'
 require 'support/deferred/options_examples'
 
 module Spec::Support::Deferred
   module ComponentExamples
     include RSpec::SleepingKingStudios::Deferred::Provider
+    include Spec::Support::Deferred::ConfigurationExamples
     include Spec::Support::Deferred::OptionsExamples
 
     deferred_examples 'should be an abstract view component' do |base_class|
