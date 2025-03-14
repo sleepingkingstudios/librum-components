@@ -164,6 +164,43 @@ module Spec::Support::Deferred
       end
     end
 
+    deferred_examples 'should validate the inclusion of option' \
+    do |option_name, expected:, invalid_value: '12345'|
+      expected.each do |expected_value|
+        context "when :#{option_name} is #{expected_value}" do
+          let(:component_options) do
+            super().merge(option_name.intern => expected_value)
+          end
+
+          it 'should not raise an exception' do
+            expect { described_class.new(**component_options) }
+              .not_to raise_error
+          end
+        end
+      end
+
+      context "when :#{option_name} is invalid" do
+        let(:component_options) do
+          super().merge(option_name.intern => invalid_value)
+        end
+        let(:error_message) do
+          "#{option_name} is not included in the list"
+        end
+
+        define_method :tools do
+          SleepingKingStudios::Tools::Toolbelt.instance
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+    end
+
     deferred_examples 'should validate the presence of option' \
     do |option_name, string: false|
       context "when :#{option_name} is nil" do
@@ -293,26 +330,7 @@ module Spec::Support::Deferred
     end
 
     deferred_examples 'should validate that option is a valid icon' \
-    do |option_name, required: false|
-      unless required
-        context "when :#{option_name} is nil" do
-          let(:component_options) do
-            super().merge(option_name.intern => nil)
-          end
-          let(:error_message) do
-            "#{option_name} is not a valid icon"
-          end
-
-          it 'should raise an exception' do
-            expect { described_class.new(**component_options) }
-              .to raise_error(
-                described_class::InvalidOptionsError,
-                include(error_message)
-              )
-          end
-        end
-      end
-
+    do |option_name|
       context "when :#{option_name} is an Object" do
         let(:component_options) do
           super().merge(option_name.intern => Object.new.freeze)

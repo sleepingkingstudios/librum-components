@@ -304,11 +304,19 @@ module Librum::Components
     end
 
     def validate_icon(value, as: 'icon')
+      return if value.nil?
       return if value.is_a?(String)
       return if value.is_a?(Hash) && value.key?(:icon)
       return if value.is_a?(ViewComponent::Base)
 
       "#{as} is not a valid icon"
+    end
+
+    def validate_inclusion(value, expected:, as: '')
+      return if value.nil?
+      return if expected.include?(value)
+
+      "#{as} is not included in the list"
     end
 
     def validate_option(aggregator:, option:, value:) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength

@@ -13,7 +13,10 @@ module Spec::Support::Deferred
 
       around(:example) do |example|
         original = Librum::Components::Configuration.instance
-        config   = Librum::Components::Configuration.new(**values)
+        config   = Librum::Components::Configuration.new(
+          **original.options,
+          **values
+        )
 
         Librum::Components::Configuration.instance = config
 

@@ -47,21 +47,11 @@ RSpec.describe Librum::Components::Bulma::Icon, type: :component do
       :icon,
       string: true
 
-    include_deferred 'should validate that option is a valid icon',
-      :icon,
-      required: true
+    include_deferred 'should validate that option is a valid icon', :icon
 
-    describe 'with size: an invalid value' do
-      let(:size)              { 'tiny' }
-      let(:component_options) { super().merge(size:) }
-      let(:error_message)     { 'size is not a valid size' }
-
-      it 'should raise an exception' do
-        expect { described_class.new(**component_options) }
-          .to raise_error Librum::Components::Options::InvalidOptionsError,
-            error_message
-      end
-    end
+    include_deferred 'should validate the inclusion of option',
+      :size,
+      expected: described_class::ICON_SIZES
   end
 
   describe '#call' do
@@ -145,11 +135,7 @@ RSpec.describe Librum::Components::Bulma::Icon, type: :component do
         HTML
       end
 
-      include_deferred 'with configuration',
-        bulma_prefix:        'bulma-',
-        colors:              %i[red orange yellow green blue indigo violet],
-        default_icon_family: 'fa-solid',
-        icon_families:       %i[fa-solid]
+      include_deferred 'with configuration', bulma_prefix: 'bulma-'
 
       it { expect(rendered.to_s).to match_snapshot }
     end

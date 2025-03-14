@@ -2,8 +2,6 @@
 
 require 'librum/components/bulma'
 
-require 'support/deferred/component_examples'
-
 module Librum::Components::Bulma
   # Abstract base component for components using the Bulma CSS Framework.
   #

@@ -14,7 +14,7 @@ module Librum::Components::Bulma
 
     option :color, validate: true
     option :icon,  required: true, validate: true
-    option :size,  validate: true
+    option :size,  validate: { inclusion: ICON_SIZES }
 
     # @return [ActiveSupport::SafeBuffer] the rendered component.
     def call
@@ -39,13 +39,6 @@ module Librum::Components::Bulma
 
     def size_class
       size ? "is-#{size}" : nil
-    end
-
-    def validate_size(value, as:)
-      return if value.nil?
-      return if ICON_SIZES.include?(value.to_s)
-
-      "#{as} is not a valid size"
     end
   end
 end
