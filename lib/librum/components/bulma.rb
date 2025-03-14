@@ -9,6 +9,7 @@ module Librum::Components
   module Bulma
     autoload :Base,    'librum/components/bulma/base'
     autoload :Icon,    'librum/components/bulma/icon'
+    autoload :Label,   'librum/components/bulma/label'
     autoload :Options, 'librum/components/bulma/options'
   end
 end
