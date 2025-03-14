@@ -46,4 +46,10 @@ RSpec.describe Librum::Components::Bulma::Base do
       end
     end
   end
+
+  describe '#components' do
+    include_examples 'should define private reader',
+      :components,
+      -> { Librum::Components::Bulma }
+  end
 end

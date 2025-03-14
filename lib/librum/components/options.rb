@@ -298,7 +298,7 @@ module Librum::Components
     def validate_color(value, as: 'color')
       return if value.nil?
 
-      return if configuration.colors.include?('value')
+      return if configuration.colors.include?(value)
 
       "#{as} is not a valid color name"
     end

@@ -28,5 +28,11 @@ module Librum::Components::Bulma
     def bulma_class_names(*)
       class_names(*, prefix: configuration.bulma_prefix)
     end
+
+    private
+
+    def components
+      Librum::Components::Bulma
+    end
   end
 end
