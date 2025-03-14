@@ -5,8 +5,17 @@ require 'librum/components'
 module Librum::Components
   # Configuration object for Librum::Components.
   class Configuration
-    # Singleton configuration instance.
-    def self.instance = @instance ||= new
+    class << self
+      # @param value [Librum::Components::Configuration] the configuration
+      #   instance to set.
+      attr_writer :instance
+
+      # Singleton configuration instance.
+      #
+      # @return [Librum::Components::Configuration] the memoized configuration
+      #   instance.
+      def instance = @instance ||= new
+    end
 
     # Default options for configuration.
     DEFAULTS = {

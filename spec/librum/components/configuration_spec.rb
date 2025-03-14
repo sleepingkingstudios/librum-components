@@ -48,6 +48,27 @@ RSpec.describe Librum::Components::Configuration do
     it { expect(instance.options).to be == described_class::DEFAULTS }
   end
 
+  describe '.instance=' do
+    let(:colors) { %i[red orange yellow green blue indigo violet] }
+    let(:value)  { described_class.new(colors:) }
+
+    around(:example) do |example|
+      config = described_class.instance
+
+      example.call
+    ensure
+      described_class.instance = config
+    end
+
+    include_examples 'should define class writer', :instance
+
+    it 'should set the memoized instance' do
+      expect { described_class.instance = value }
+        .to change(described_class, :instance)
+        .to be value
+    end
+  end
+
   describe '.new' do
     it 'should define the constructor' do
       expect(described_class)

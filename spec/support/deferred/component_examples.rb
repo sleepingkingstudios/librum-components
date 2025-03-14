@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'support/deferred'
+require 'support/deferred/abstract_examples'
 require 'support/deferred/options_examples'
 
 module Spec::Support::Deferred
@@ -9,6 +10,7 @@ module Spec::Support::Deferred
     include Spec::Support::Deferred::OptionsExamples
 
     deferred_examples 'should be an abstract view component' do |base_class|
+      include Spec::Support::Deferred::AbstractExamples
       include Spec::Support::Deferred::ComponentExamples
 
       deferred_context 'with a component subclass' do

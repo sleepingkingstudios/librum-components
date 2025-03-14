@@ -6,7 +6,7 @@ module Librum::Components::Icons
   # A FontAwesome icon.
   #
   # @see https://fontawesome.com/
-  class FontAwesome < Librum::Components::Base
+  class FontAwesome < Librum::Components::Icons::Base
     include Librum::Components::Options::ClassName
 
     ICON_FAMILY_MAPPINGS = {

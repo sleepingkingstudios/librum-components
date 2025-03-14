@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'librum/components'
+require 'librum/components/icons/font_awesome'
 
 module Librum::Components
   # Generic icon component.
@@ -23,13 +24,32 @@ module Librum::Components
     option :family
     option :icon, required: true, validate: String
 
-    # (see Librum::Components::Base#initialize)
-    def initialize(configuration: nil, **options)
-      unless options.key?(:family)
-        options = options.merge(family: configuration&.default_icon_family)
+    # (see Librum::Components::Base.build)
+    #
+    # @overload build(icon, **options)
+    #   Builds an icon component using the default icon family.
+    #
+    #   @param icon [String] the icon to build.
+    #   @param options [Hash] additional options to pass to the icon.
+    #
+    #   @return [Librum::Components::Icon] the icon component.
+    def self.build(maybe_component, **)
+      return new(icon: maybe_component, **) if maybe_component.is_a?(String)
+
+      if maybe_component.is_a?(Librum::Components::Icons::Base)
+        return maybe_component
       end
 
       super
+    end
+
+    # (see Librum::Components::Base#initialize)
+    def initialize(**)
+      super
+
+      unless options.key?(:family)
+        @options[:family] = configuration&.default_icon_family
+      end
 
       validate_icon_family(family, as: 'icon_family')
     end

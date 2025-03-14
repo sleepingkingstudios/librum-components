@@ -2,11 +2,9 @@
 
 require 'librum/components/base'
 
-require 'support/deferred/abstract_examples'
 require 'support/deferred/component_examples'
 
 RSpec.describe Librum::Components::Base do
-  include Spec::Support::Deferred::AbstractExamples
   include Spec::Support::Deferred::ComponentExamples
 
   subject(:component) { described_class.new(**component_options) }
