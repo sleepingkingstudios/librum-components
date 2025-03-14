@@ -9,6 +9,8 @@ module Librum
     autoload :Base,          'librum/components/base'
     autoload :Colors,        'librum/components/colors'
     autoload :Configuration, 'librum/components/configuration'
+    autoload :Icon,          'librum/components/icon'
+    autoload :Icons,         'librum/components/icons'
     autoload :Option,        'librum/components/option'
     autoload :Options,       'librum/components/options'
 

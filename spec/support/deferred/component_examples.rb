@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'support/deferred'
+require 'support/deferred/abstract_examples'
 require 'support/deferred/options_examples'
 
 module Spec::Support::Deferred
@@ -9,6 +10,7 @@ module Spec::Support::Deferred
     include Spec::Support::Deferred::OptionsExamples
 
     deferred_examples 'should be an abstract view component' do |base_class|
+      include Spec::Support::Deferred::AbstractExamples
       include Spec::Support::Deferred::ComponentExamples
 
       deferred_context 'with a component subclass' do
@@ -118,7 +120,8 @@ module Spec::Support::Deferred
       end
     end
 
-    deferred_examples 'should be a view component' do
+    deferred_examples 'should be a view component' \
+    do |allow_extra_options: false|
       describe '.new' do
         it 'should define the constructor' do
           expect(described_class)
@@ -128,13 +131,86 @@ module Spec::Support::Deferred
             .and_any_keywords
         end
 
-        include_deferred 'should validate the component options'
+        unless allow_extra_options
+          include_deferred 'should validate the component options'
+        end
       end
 
       describe '.abstract?' do
         it { expect(described_class).to define_predicate(:abstract) }
 
         it { expect(described_class.abstract?).to be_boolean }
+      end
+
+      describe '.build' do
+        it { expect(described_class).to respond_to(:build).with(1).argument }
+
+        describe 'with nil' do
+          let(:value) { nil }
+          let(:error_message) do
+            "unable to build component with parameters #{value.inspect}"
+          end
+
+          it 'should raise an exception' do
+            expect { described_class.build(value) }
+              .to raise_error Librum::Components::Base::InvalidComponentError,
+                error_message
+          end
+        end
+
+        describe 'with an Object' do
+          let(:value) { Object.new.freeze }
+          let(:error_message) do
+            "unable to build component with parameters #{value.inspect}"
+          end
+
+          it 'should raise an exception' do
+            expect { described_class.build(value) }
+              .to raise_error Librum::Components::Base::InvalidComponentError,
+                error_message
+          end
+        end
+
+        describe 'with a ViewComponent' do
+          let(:value) { ViewComponent::Base.new }
+          let(:error_message) do
+            "#{value.inspect} is not an instance of #{described_class}"
+          end
+
+          it 'should raise an exception' do
+            expect { described_class.build(value) }
+              .to raise_error Librum::Components::Base::InvalidComponentError,
+                error_message
+          end
+        end
+
+        describe 'with an instance of the class' do
+          it { expect(described_class.build(component)).to be component }
+        end
+
+        if described_class.options.any? || !allow_extra_options
+          describe 'with invalid options' do
+            let(:value) do
+              {
+                invalid_color:      '#ff3366',
+                invalid_decoration: 'underline'
+              }
+            end
+
+            it 'should raise an exception' do
+              expect { described_class.build(value) }.to raise_error(
+                Librum::Components::Options::InvalidOptionsError
+              )
+            end
+          end
+        end
+
+        describe 'with valid options' do
+          it 'should build a component' do
+            expect(described_class.build(component_options))
+              .to be_a described_class
+          end
+        end
       end
 
       describe '.options' do

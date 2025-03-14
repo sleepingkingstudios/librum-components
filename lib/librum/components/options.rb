@@ -9,6 +9,8 @@ module Librum::Components
   module Options # rubocop:disable Metrics/ModuleLength
     extend SleepingKingStudios::Tools::Toolbox::Mixin
 
+    autoload :ClassName, 'librum/components/options/class_name'
+
     # Exception raised when defining an option that already exists.
     class DuplicateOptionError < StandardError; end
 
@@ -17,7 +19,25 @@ module Librum::Components
 
     # Class methods to extend when including Options.
     module ClassMethods
+      # Flags the component as accepting unexpected options.
+      #
+      # If called, updates #allow_extra_options? to true. Unexpected options
+      # passed to the constructor will be ignored, rather than raising an
+      # exception.
+      def allow_extra_options = @allow_extra_options = true
+
+      # @return [true, false] if true, ignores unexpected options rather than
+      #   raising an exception.
+      def allow_extra_options? = @allow_extra_options || false
+
       # Defines an option for the component.
+      #
+      # A note on defaults and validation: options can have a default value that
+      # is defined as a Proc. By default, this is lazily evaluated within the
+      # context of the component, meaning it can reference other option values.
+      # However, required options and options with validations need to evaluate
+      # the default value at initialization, and cannot reference the component
+      # or its properties.
       #
       # @param name [String, Symbol] the name of the option.
       # @param boolean [true, false] if true, the option is a boolean and will
@@ -231,6 +251,7 @@ module Librum::Components
     def initialize(**options)
       super()
 
+      @options = apply_default_options(options)
       @options = validate_options(options)
     end
 
@@ -239,7 +260,19 @@ module Librum::Components
 
     private
 
+    def apply_default_options(options)
+      self.class.options.each.with_object(options) do |(key, option), hsh|
+        next if hsh.key?(key.intern)
+        next unless option.required? || option.validate?
+
+        hsh[key.intern] =
+          option.default.is_a?(Proc) ? option.default.call : option.default
+      end
+    end
+
     def find_extra_options(options)
+      return [] if self.class.allow_extra_options?
+
       options.each_key.reject { |key| self.class.options.key?(key.to_s) }
     end
 
@@ -343,7 +376,7 @@ module Librum::Components
     def validate_option_name(aggregator:, option:, value:)
       validation_method = "validate_#{option.name}"
 
-      message = public_send(validation_method, value, as: option.name)
+      message = send(validation_method, value, as: option.name)
 
       aggregator << message if message.present?
     end

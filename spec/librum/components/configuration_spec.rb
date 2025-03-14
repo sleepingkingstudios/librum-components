@@ -48,6 +48,27 @@ RSpec.describe Librum::Components::Configuration do
     it { expect(instance.options).to be == described_class::DEFAULTS }
   end
 
+  describe '.instance=' do
+    let(:colors) { %i[red orange yellow green blue indigo violet] }
+    let(:value)  { described_class.new(colors:) }
+
+    around(:example) do |example|
+      config = described_class.instance
+
+      example.call
+    ensure
+      described_class.instance = config
+    end
+
+    include_examples 'should define class writer', :instance
+
+    it 'should set the memoized instance' do
+      expect { described_class.instance = value }
+        .to change(described_class, :instance)
+        .to be value
+    end
+  end
+
   describe '.new' do
     it 'should define the constructor' do
       expect(described_class)
@@ -56,6 +77,8 @@ RSpec.describe Librum::Components::Configuration do
         .and_any_keywords
     end
   end
+
+  include_deferred 'should define option', :default_icon_family
 
   describe '#colors' do
     let(:expected) { Set.new(described_class::DEFAULTS['colors']) }
@@ -68,6 +91,20 @@ RSpec.describe Librum::Components::Configuration do
       let(:expected) { Set.new(colors.map(&:to_s)) }
 
       it { expect(configuration.colors).to be == expected }
+    end
+  end
+
+  describe '#icon_families' do
+    let(:expected) { Set.new(described_class::DEFAULTS['icon_families']) }
+
+    include_examples 'should define reader', :icon_families, -> { expected }
+
+    context 'when initialized with icon_families: value' do
+      let(:icon_families) { %i[bootstrap material-design iconicons] }
+      let(:options)       { super().merge(icon_families:) }
+      let(:expected)      { Set.new(icon_families.map(&:to_s)) }
+
+      it { expect(configuration.icon_families).to be == expected }
     end
   end
 

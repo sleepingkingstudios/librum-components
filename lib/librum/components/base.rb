@@ -20,6 +20,9 @@ module Librum::Components
     # Exception raised when defining options on an abstract component.
     class AbstractComponentError < StandardError; end
 
+    # Exception raised when building a component with invalid parameters.
+    class InvalidComponentError < StandardError; end
+
     class << self
       # @return [true, false] true if the component class is an abstract class;
       #   otherwise returns false.
@@ -27,8 +30,41 @@ module Librum::Components
         self == Librum::Components::Base
       end
 
-      # Defines an option for the component.
-      def option(name, boolean: false, default: nil)
+      # @overload build(component)
+      #   Asserts that the component is an instance of the class and returns.
+      #
+      #   @param component [Librum::Components::Base] the component to evaluate.
+      #
+      #   @return [Librum::Components::Base] the component.
+      #
+      #   @raise [Librum::Components::Base::InvalidComponentError] if the
+      #     component is not an instance of the class.
+      #
+      # @overload build(options)
+      #   Builds an instance of the component with the given options.
+      #
+      #   @param options [Hash] the options for the component.
+      #
+      #   @return [Librum::Components::Base] the component.
+      #
+      #   @raise [Librum::Components::Options::InvalidOptionsError] if the
+      #     options are not valid for the class.
+      def build(maybe_component)
+        return maybe_component        if maybe_component.is_a?(self)
+        return new(**maybe_component) if maybe_component.is_a?(Hash)
+
+        if maybe_component.is_a?(ViewComponent::Base)
+          raise InvalidComponentError,
+            "#{maybe_component.inspect} is not an instance of #{self}"
+        end
+
+        raise InvalidComponentError,
+          'unable to build component with parameters ' \
+          "#{maybe_component.inspect}"
+      end
+
+      # (see Librum::Components::Options::ClassMethods#option)
+      def option(name, boolean: false, **)
         handle_abstract_class!(name, boolean:)
 
         super
@@ -54,10 +90,10 @@ module Librum::Components
     #     the component library.
     #   @param options [Hash] additional options passed to the component.
     def initialize(configuration: nil, **)
-      super(**)
-
       @configuration =
         configuration || Librum::Components::Configuration.instance
+
+      super(**)
     end
 
     # @return [Librum::Core::Configuration] the configuration for the component
