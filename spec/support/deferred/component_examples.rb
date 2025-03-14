@@ -140,6 +140,77 @@ module Spec::Support::Deferred
         it { expect(described_class.abstract?).to be_boolean }
       end
 
+      describe '.build' do
+        it { expect(described_class).to respond_to(:build).with(1).argument }
+
+        describe 'with nil' do
+          let(:value) { nil }
+          let(:error_message) do
+            "unable to build component with parameters #{value.inspect}"
+          end
+
+          it 'should raise an exception' do
+            expect { described_class.build(value) }
+              .to raise_error Librum::Components::Base::InvalidComponentError,
+                error_message
+          end
+        end
+
+        describe 'with an Object' do
+          let(:value) { Object.new.freeze }
+          let(:error_message) do
+            "unable to build component with parameters #{value.inspect}"
+          end
+
+          it 'should raise an exception' do
+            expect { described_class.build(value) }
+              .to raise_error Librum::Components::Base::InvalidComponentError,
+                error_message
+          end
+        end
+
+        describe 'with a ViewComponent' do
+          let(:value) { ViewComponent::Base.new }
+          let(:error_message) do
+            "#{value.inspect} is not an instance of #{described_class}"
+          end
+
+          it 'should raise an exception' do
+            expect { described_class.build(value) }
+              .to raise_error Librum::Components::Base::InvalidComponentError,
+                error_message
+          end
+        end
+
+        describe 'with an instance of the class' do
+          it { expect(described_class.build(component)).to be component }
+        end
+
+        if described_class.options.any? || !allow_extra_options
+          describe 'with invalid options' do
+            let(:value) do
+              {
+                invalid_color:      '#ff3366',
+                invalid_decoration: 'underline'
+              }
+            end
+
+            it 'should raise an exception' do
+              expect { described_class.build(value) }.to raise_error(
+                Librum::Components::Options::InvalidOptionsError
+              )
+            end
+          end
+        end
+
+        describe 'with valid options' do
+          it 'should build a component' do
+            expect(described_class.build(component_options))
+              .to be_a described_class
+          end
+        end
+      end
+
       describe '.options' do
         include_examples 'should define class reader',
           :options,

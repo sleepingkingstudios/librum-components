@@ -20,19 +20,18 @@ module Librum::Components
 
     allow_extra_options
 
-    option :family, validate: {
-      icon_family: true,
-      instance_of: String
-    }
+    option :family
     option :icon, required: true, validate: String
 
     # (see Librum::Components::Base#initialize)
-    def initialize(configuration:, **options)
+    def initialize(configuration: nil, **options)
       unless options.key?(:family)
-        options[:family] = configuration.default_icon_family
+        options = options.merge(family: configuration&.default_icon_family)
       end
 
       super
+
+      validate_icon_family(family, as: 'icon_family')
     end
 
     # @return [ActiveSupport::SafeBuffer] the rendered component.
@@ -53,7 +52,11 @@ module Librum::Components
     def validate_icon_family(value, as:)
       return if configuration.icon_families.include?(value)
 
-      "#{as} is not a configured icon family"
+      if value.is_a?(String)
+        raise InvalidOptionsError, "#{as} is not a configured icon family"
+      end
+
+      raise InvalidOptionsError, "#{as} is not an instance of String"
     end
   end
 end
