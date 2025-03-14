@@ -11,15 +11,13 @@ RSpec.describe Librum::Components::Icon, type: :component do
   subject(:component) { described_class.new(**component_options) }
 
   let(:icon) { 'rainbow' }
-  let(:configuration) do
-    Librum::Components::Configuration.new(
-      default_icon_family: 'iconicons',
-      icon_families:       %i[bootstrap material-design iconicons]
-    )
-  end
   let(:component_options) do
-    { configuration:, icon: }
+    { icon: }
   end
+
+  include_deferred 'with configuration',
+    default_icon_family: 'iconicons',
+    icon_families:       %i[bootstrap material-design iconicons]
 
   include_deferred 'should be a view component',
     allow_extra_options: true
@@ -46,12 +44,9 @@ RSpec.describe Librum::Components::Icon, type: :component do
     end
 
     context 'when the configuration does not define a default icon family' do
-      let(:configuration) do
-        Librum::Components::Configuration.new(
-          default_icon_family: nil,
-          icon_families:       %i[bootstrap material-design iconicons]
-        )
-      end
+      include_deferred 'with configuration',
+        default_icon_family: nil,
+        icon_families:       %i[bootstrap material-design iconicons]
 
       include_deferred 'should validate the type of option',
         :family,
@@ -73,19 +68,9 @@ RSpec.describe Librum::Components::Icon, type: :component do
 
     describe 'with an icon name' do
       context 'when the default icon family is FontAwesome' do
-        around(:example) do |example|
-          config = Librum::Components::Configuration.instance
-
-          Librum::Components::Configuration.instance =
-            Librum::Components::Configuration.new(
-              default_icon_family: 'fa-solid',
-              icon_families:       %i[fa-brands fa-solid]
-            )
-
-          example.call
-        ensure
-          Librum::Components::Configuration.instance = config
-        end
+        include_deferred 'with configuration',
+          default_icon_family: 'fa-solid',
+          icon_families:       %i[fa-brands fa-solid]
 
         it { expect(described_class.build(icon)).to be_a described_class }
 
@@ -107,12 +92,6 @@ RSpec.describe Librum::Components::Icon, type: :component do
     let(:rendered) { render_component(component) }
 
     describe 'with family: FontAwesome' do
-      let(:configuration) do
-        Librum::Components::Configuration.new(
-          default_icon_family: 'iconicons',
-          icon_families:       %i[fa-brands fa-solid]
-        )
-      end
       let(:component_options) do
         super().merge(family: 'fa-solid')
       end
@@ -121,6 +100,10 @@ RSpec.describe Librum::Components::Icon, type: :component do
 
         render_component(icon)
       end
+
+      include_deferred 'with configuration',
+        default_icon_family: 'iconicons',
+        icon_families:       %i[fa-brands fa-solid]
 
       it { expect(rendered).to be == expected }
 

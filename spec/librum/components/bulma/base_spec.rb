@@ -32,12 +32,7 @@ RSpec.describe Librum::Components::Bulma::Base do
     end
 
     context 'when the configured bulma prefix is non-empty' do
-      let(:configuration) do
-        Librum::Components::Configuration.new(bulma_prefix: 'bulma-')
-      end
-      let(:component_options) do
-        super().merge(configuration:)
-      end
+      include_deferred 'with configuration', bulma_prefix: 'bulma-'
 
       it { expect(output).to be == '' }
 
