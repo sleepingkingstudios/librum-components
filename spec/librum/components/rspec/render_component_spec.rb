@@ -113,6 +113,34 @@ RSpec.describe Librum::Components::RSpec::RenderComponent do
       let(:component) { Librum::Components::Literal.new(contents) }
 
       it { expect(example.render_component(component)).to be == contents }
+
+      describe 'with a block' do
+        let(:component) { Spec::ComponentWithBlock.new }
+        let(:expected) do
+          <<~HTML.strip
+            <div><ul>
+              <li>Ichi</li>
+                  <li>Ni</li>
+
+
+              <li>San</li>
+            </ul>
+            </div>
+          HTML
+        end
+
+        example_class 'Spec::ComponentWithBlock', Librum::Components::Base \
+        do |klass|
+          klass.define_method :call do
+            content_tag(:div) { content }
+          end
+        end
+
+        it 'should render the component' do
+          expect(example.render_component(component) { contents.html_safe }) # rubocop:disable Rails/OutputSafety
+            .to be == expected
+        end
+      end
     end
   end
 

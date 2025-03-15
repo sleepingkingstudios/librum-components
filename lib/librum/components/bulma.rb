@@ -8,6 +8,7 @@ module Librum::Components
   # @see https://bulma.io/
   module Bulma
     autoload :Base,          'librum/components/bulma/base'
+    autoload :Box,           'librum/components/bulma/box'
     autoload :Configuration, 'librum/components/bulma/configuration'
     autoload :Icon,          'librum/components/bulma/icon'
     autoload :Label,         'librum/components/bulma/label'
