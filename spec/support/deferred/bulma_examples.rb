@@ -196,6 +196,73 @@ module Spec::Support::Deferred
           end
         end
       end
+
+      describe '#typography_options' do
+        include_examples 'should define private reader',
+          :typography_options,
+          {}
+
+        context 'when initialized with alignment: value' do
+          let(:component_options) { super().merge(alignment: 'centered') }
+          let(:expected)          { { alignment: 'centered' } }
+
+          it { expect(component.send(:typography_options)).to be == expected }
+        end
+
+        context 'when initialized with font_family: value' do
+          let(:component_options) { super().merge(font_family: 'sans-serif') }
+          let(:expected)          { { font_family: 'sans-serif' } }
+
+          it { expect(component.send(:typography_options)).to be == expected }
+        end
+
+        context 'when initialized with italic: true' do
+          let(:component_options) { super().merge(italic: true) }
+          let(:expected)          { { italic: true } }
+
+          it { expect(component.send(:typography_options)).to be == expected }
+        end
+
+        context 'when initialized with size: value' do
+          let(:component_options) { super().merge(size: 3) }
+          let(:expected)          { { size: 3 } }
+
+          it { expect(component.send(:typography_options)).to be == expected }
+        end
+
+        context 'when initialized with transform: value' do
+          let(:component_options) { super().merge(transform: 'uppercase') }
+          let(:expected)          { { transform: 'uppercase' } }
+
+          it { expect(component.send(:typography_options)).to be == expected }
+        end
+
+        context 'when initialized with underlined: true' do
+          let(:component_options) { super().merge(underlined: true) }
+          let(:expected)          { { underlined: true } }
+
+          it { expect(component.send(:typography_options)).to be == expected }
+        end
+
+        context 'when initialized with weight: value' do
+          let(:component_options) { super().merge(weight: 'semibold') }
+          let(:expected)          { { weight: 'semibold' } }
+
+          it { expect(component.send(:typography_options)).to be == expected }
+        end
+
+        context 'when initialized with multiple options' do
+          let(:component_options) do
+            super()
+              .merge(italic: true, font_family: 'primary', weight: 'semibold')
+          end
+          let(:expected) do
+            { italic: true, font_family: 'primary', weight: 'semibold' }
+          end
+
+          it { expect(component.send(:typography_options)).to be == expected }
+        end
+      end
     end
   end
 end

@@ -1,0 +1,10 @@
+<%= content_tag(:a, **attributes) do %>
+  <% if icon.present? && text.present? %>
+  <%= render(build_icon) %>
+  <%= text %>
+  <% elsif icon.present? %>
+  <%= render(build_icon) %>
+  <% else %>
+  <%= text %>
+  <% end %>
+<% end %>
