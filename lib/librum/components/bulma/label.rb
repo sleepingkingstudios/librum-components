@@ -21,9 +21,9 @@ module Librum::Components::Bulma
       return icon if icon.is_a?(Librum::Components::Bulma::Icon)
 
       if icon.is_a?(Hash)
-        Librum::Components::Bulma::Icon.new(**icon)
+        components::Icon.new(**icon)
       else
-        Librum::Components::Bulma::Icon.new(icon:)
+        components::Icon.new(icon:)
       end
     end
 

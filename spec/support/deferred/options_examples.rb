@@ -187,10 +187,6 @@ module Spec::Support::Deferred
           "#{option_name} is not included in the list"
         end
 
-        define_method :tools do
-          SleepingKingStudios::Tools::Toolbelt.instance
-        end
-
         it 'should raise an exception' do
           expect { described_class.new(**component_options) }
             .to raise_error(
@@ -384,6 +380,33 @@ module Spec::Support::Deferred
         it 'should not raise an exception' do
           expect { described_class.new(**component_options) }
             .not_to raise_error
+        end
+      end
+    end
+
+    deferred_examples 'should validate that option is a valid name' \
+    do |option_name|
+      context "when :#{option_name} is an empty String" do
+        let(:component_options) do
+          super().merge(option_name.intern => '')
+        end
+        let(:error_message) do
+          tools.assertions.error_message_for(
+            'sleeping_king_studios.tools.assertions.name',
+            as: option_name
+          )
+        end
+
+        define_method :tools do
+          SleepingKingStudios::Tools::Toolbelt.instance
+        end
+
+        it 'should raise an exception' do
+          expect { described_class.new(**component_options) }
+            .to raise_error(
+              described_class::InvalidOptionsError,
+              include(error_message)
+            )
         end
       end
     end

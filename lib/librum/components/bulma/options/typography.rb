@@ -44,5 +44,19 @@ module Librum::Components::Bulma::Options
         underlined? ? 'is-underlined'             : nil
       )
     end
+
+    def typography_options # rubocop:disable Metrics/MethodLength
+      options
+        .slice(
+          :alignment,
+          :font_family,
+          :italic,
+          :size,
+          :transform,
+          :underlined,
+          :weight
+        )
+        .compact
+    end
   end
 end

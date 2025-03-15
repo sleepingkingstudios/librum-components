@@ -1,17 +1,23 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/label'
+require 'librum/components/bulma/link'
 
 require 'support/deferred/bulma_examples'
 require 'support/deferred/component_examples'
 
-RSpec.describe Librum::Components::Bulma::Label, type: :component do
+RSpec.describe Librum::Components::Bulma::Link, type: :component do
   include Spec::Support::Deferred::BulmaExamples
   include Spec::Support::Deferred::ComponentExamples
 
   subject(:component) { described_class.new(**component_options) }
 
   let(:component_options) { {} }
+
+  describe '::LINK_TARGETS' do
+    include_examples 'should define frozen constant',
+      :LINK_TARGETS,
+      Set.new(%w[blank self])
+  end
 
   include_deferred 'with configuration',
     colors:              %i[red orange yellow green blue indigo violet],
@@ -31,11 +37,12 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
   include_deferred 'should define component option', :icon
 
   include_deferred 'should define component option',
-    :tag,
-    default: 'span',
-    value:   'div'
+    :target,
+    value: 'blank'
 
   include_deferred 'should define component option', :text
+
+  include_deferred 'should define component option', :url
 
   describe '.new' do
     include_deferred 'should validate the class_name option'
@@ -46,16 +53,18 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
     include_deferred 'should validate that option is a valid icon', :icon
 
     include_deferred 'should validate the inclusion of option',
-      :tag,
-      expected: %w[div span]
+      :target,
+      expected: described_class::LINK_TARGETS
+
+    include_deferred 'should validate that option is a valid name', :url
   end
 
   describe '#call' do
     let(:rendered) { render_component(component) }
     let(:snapshot) do
       <<~HTML
-        <span>
-        </span>
+        <a>
+        </a>
       HTML
     end
 
@@ -65,8 +74,8 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
       let(:component_options) { super().merge(class_name: 'custom-class') }
       let(:snapshot) do
         <<~HTML
-          <span class="custom-class">
-          </span>
+          <a class="custom-class">
+          </a>
         HTML
       end
 
@@ -77,8 +86,8 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
       let(:component_options) { super().merge(color: 'indigo') }
       let(:snapshot) do
         <<~HTML
-          <span class="has-text-indigo">
-          </span>
+          <a class="has-text-indigo">
+          </a>
         HTML
       end
 
@@ -89,11 +98,11 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
       let(:component_options) { super().merge(icon: 'rainbow') }
       let(:snapshot) do
         <<~HTML
-          <span class="icon-text">
+          <a>
             <span class="icon">
               <i class="fa-solid fa-rainbow"></i>
             </span>
-          </span>
+          </a>
         HTML
       end
 
@@ -106,25 +115,25 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <span class="icon-text">
+          <a class="icon-text">
             <span class="icon">
               <i class="fa-solid fa-rainbow"></i>
             </span>
 
             The More You Know
-          </span>
+          </a>
         HTML
       end
 
       it { expect(rendered.to_s).to match_snapshot }
     end
 
-    describe 'with tag: div' do
-      let(:component_options) { super().merge(tag: 'div') }
+    describe 'with target: value' do
+      let(:component_options) { super().merge(target: 'blank') }
       let(:snapshot) do
         <<~HTML
-          <div>
-          </div>
+          <a target="_blank">
+          </a>
         HTML
       end
 
@@ -132,12 +141,24 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
     end
 
     describe 'with text: value' do
-      let(:component_options) { super().merge(text: 'The More You Know') }
+      let(:component_options) { super().merge(text: 'Click Me') }
       let(:snapshot) do
         <<~HTML
-          <span>
-            The More You Know
-          </span>
+          <a>
+            Click Me
+          </a>
+        HTML
+      end
+
+      it { expect(rendered.to_s).to match_snapshot }
+    end
+
+    describe 'with url: value' do
+      let(:component_options) { super().merge(url: 'www.example.com') }
+      let(:snapshot) do
+        <<~HTML
+          <a href="www.example.com">
+          </a>
         HTML
       end
 
@@ -148,8 +169,8 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
       let(:component_options) { super().merge(size: 3) }
       let(:snapshot) do
         <<~HTML
-          <span class="is-size-3">
-          </span>
+          <a class="is-size-3">
+          </a>
         HTML
       end
 
@@ -162,20 +183,21 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
           class_name: 'custom-class',
           color:      'indigo',
           icon:       { icon: 'rainbow', size: 'large' },
-          tag:        'div',
+          target:     'blank',
           text:       'The More You Know',
+          url:        'www.example.com',
           weight:     'bold'
         )
       end
       let(:snapshot) do
         <<~HTML
-          <div class="icon-text has-text-indigo has-text-weight-bold custom-class">
+          <a class="icon-text has-text-indigo has-text-weight-bold custom-class" href="www.example.com" target="_blank">
             <span class="icon is-large">
               <i class="fa-solid fa-rainbow"></i>
             </span>
 
             The More You Know
-          </div>
+          </a>
         HTML
       end
 
@@ -191,20 +213,21 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
             class_name: 'custom-class',
             color:      'indigo',
             icon:       { icon: 'rainbow', size: 'large' },
-            tag:        'div',
+            target:     'blank',
             text:       'The More You Know',
+            url:        'www.example.com',
             weight:     'bold'
           )
         end
         let(:snapshot) do
           <<~HTML
-            <div class="bulma-icon-text bulma-has-text-indigo bulma-has-text-weight-bold custom-class">
+            <a class="bulma-icon-text bulma-has-text-indigo bulma-has-text-weight-bold custom-class" href="www.example.com" target="_blank">
               <span class="bulma-icon bulma-is-large">
                 <i class="fa-solid fa-rainbow"></i>
               </span>
 
               The More You Know
-            </div>
+            </a>
           HTML
         end
 
