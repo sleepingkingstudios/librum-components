@@ -38,11 +38,13 @@ module Librum::Components::RSpec
     #
     # @param component [ViewComponent::Base] the component to render.
     #
+    # @yieldreturn the contents passed to the component.
+    #
     # @return [String] the string representation of the component.
-    def render_component(component)
+    def render_component(component, &)
       validate_component!(component)
 
-      VIEW_CONTEXT.render(component)
+      VIEW_CONTEXT.render(component, &)
     end
 
     # Renders a component to a Nokogiri document fragment.
