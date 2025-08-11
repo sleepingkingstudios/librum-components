@@ -75,7 +75,7 @@ module Librum::Components
       def handle_abstract_class!(name, boolean: false)
         return unless abstract?
 
-        option_name = "##{name}#{boolean ? '?' : ''}"
+        option_name = "##{name}#{'?' if boolean}"
 
         message =
           "unable to define option #{option_name} - #{self.name} " \
