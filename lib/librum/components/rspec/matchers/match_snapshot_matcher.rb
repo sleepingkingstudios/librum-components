@@ -30,7 +30,7 @@ module Librum::Components::RSpec::Matchers
     #
     # @return [true, false] false if the object matches the expected snapshot,
     #   otherwise true.
-    def does_not_match?(actual)
+    def does_not_match?(actual) # rubocop:disable Naming/PredicatePrefix
       @actual   = actual
       @diffable = pretty_render(actual)
 

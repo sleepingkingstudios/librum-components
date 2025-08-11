@@ -14,7 +14,7 @@ module Spec::Support::Deferred
 
       wrap_deferred 'when the option is defined' do
         let(:error_message) do
-          option_name = "#{name}#{meta_options[:boolean] ? '?' : ''}"
+          option_name = "#{name}#{'?' if meta_options[:boolean]}"
 
           "unable to define option ##{option_name} - the option is already " \
             "defined on #{described_class.name}"
