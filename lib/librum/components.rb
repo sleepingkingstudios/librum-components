@@ -26,6 +26,16 @@ module Librum
       }
     )
 
+    # @return [String] the root path for the gem.
+    def self.root_path
+      @root_path ||= File.expand_path(__dir__).sub('/lib/librum', '')
+    end
+
+    # @return [Pathname] the stylesheets path for the gem.
+    def self.stylesheets_path
+      File.join(root_path, 'app', 'assets', 'stylesheets')
+    end
+
     # @return [String] the current version of the gem.
     def self.version
       VERSION
