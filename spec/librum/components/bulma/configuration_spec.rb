@@ -33,4 +33,16 @@ RSpec.describe Librum::Components::Bulma::Configuration do
       end
     end
   end
+
+  describe '.default' do
+    subject(:configuration) { described_class.default }
+
+    include_examples 'should define class reader',
+      :default,
+      -> { an_instance_of(described_class) }
+
+    it { expect(described_class.default).to be configuration }
+
+    it { expect(configuration.options).to be == described_class::DEFAULTS }
+  end
 end

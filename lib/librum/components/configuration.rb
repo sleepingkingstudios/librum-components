@@ -6,6 +6,10 @@ module Librum::Components
   # Configuration object for Librum::Components.
   class Configuration
     class << self
+      # @return [Librum::Components::Configuration] a configuration instance
+      #   with default settings.
+      def default = @default ||= new
+
       # @param value [Librum::Components::Configuration] the configuration
       #   instance to set.
       attr_writer :instance
