@@ -26,5 +26,9 @@ module Librum::Components::Bulma
         *Librum::Components::Icons::FontAwesome::ICON_FAMILIES
       ].freeze
     ).freeze
+
+    # @return [String, nil] the prefix for classes using the Bulma CSS
+    #   framework.
+    def bulma_prefix = @options['bulma_prefix']
   end
 end

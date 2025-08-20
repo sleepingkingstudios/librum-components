@@ -9,16 +9,6 @@ module Librum::Components
       # @return [Librum::Components::Configuration] a configuration instance
       #   with default settings.
       def default = @default ||= new
-
-      # @param value [Librum::Components::Configuration] the configuration
-      #   instance to set.
-      attr_writer :instance
-
-      # Singleton configuration instance.
-      #
-      # @return [Librum::Components::Configuration] the memoized configuration
-      #   instance.
-      def instance = @instance ||= new
     end
 
     # Default options for configuration.
@@ -40,10 +30,6 @@ module Librum::Components
 
     # @return [Hash] initialization options for the configuration.
     attr_reader :options
-
-    # @return [String, nil] the prefix for classes using the Bulma CSS
-    #   framework.
-    def bulma_prefix = @options['bulma_prefix']
 
     # @return [Array<String>] the colors defined for the component set.
     def colors

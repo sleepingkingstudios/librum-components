@@ -46,39 +46,6 @@ RSpec.describe Librum::Components::Configuration do
     it { expect(configuration.options).to be == described_class::DEFAULTS }
   end
 
-  describe '.instance' do
-    let(:instance) { described_class.instance }
-
-    include_examples 'should define class reader',
-      :instance,
-      -> { an_instance_of(described_class) }
-
-    it { expect(described_class.instance).to be instance }
-
-    it { expect(instance.options).to be == described_class::DEFAULTS }
-  end
-
-  describe '.instance=' do
-    let(:colors) { %i[red orange yellow green blue indigo violet] }
-    let(:value)  { described_class.new(colors:) }
-
-    around(:example) do |example|
-      config = described_class.instance
-
-      example.call
-    ensure
-      described_class.instance = config
-    end
-
-    include_examples 'should define class writer', :instance
-
-    it 'should set the memoized instance' do
-      expect { described_class.instance = value }
-        .to change(described_class, :instance)
-        .to be value
-    end
-  end
-
   describe '.new' do
     it 'should define the constructor' do
       expect(described_class)
@@ -87,8 +54,6 @@ RSpec.describe Librum::Components::Configuration do
         .and_any_keywords
     end
   end
-
-  include_deferred 'should define option', :bulma_prefix
 
   include_deferred 'should define option', :default_icon_family
 

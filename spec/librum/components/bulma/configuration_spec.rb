@@ -3,6 +3,27 @@
 require 'librum/components/bulma/configuration'
 
 RSpec.describe Librum::Components::Bulma::Configuration do
+  subject(:configuration) { described_class.new(**options) }
+
+  deferred_examples 'should define option' \
+  do |option_name, option_value = 'value'|
+    describe "##{option_name}" do
+      include_examples 'should define reader',
+        option_name,
+        -> { described_class::DEFAULTS[option_name.to_s] }
+
+      context "when initialized with #{option_name}: value" do
+        let(:options) { super().merge(option_name => option_value) }
+
+        it 'should return the configured value' do
+          expect(configuration.public_send(option_name)).to be == option_value
+        end
+      end
+    end
+  end
+
+  let(:options) { {} }
+
   describe '::DEFAULTS' do
     include_examples 'should define immutable constant',
       :DEFAULTS,
@@ -45,4 +66,15 @@ RSpec.describe Librum::Components::Bulma::Configuration do
 
     it { expect(configuration.options).to be == described_class::DEFAULTS }
   end
+
+  describe '.new' do
+    it 'should define the constructor' do
+      expect(described_class)
+        .to be_constructible
+        .with(0).arguments
+        .and_any_keywords
+    end
+  end
+
+  include_deferred 'should define option', :bulma_prefix
 end
