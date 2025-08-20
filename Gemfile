@@ -2,9 +2,11 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in librum-core.gemspec.
+# Specify your gem's dependencies in librum-components.gemspec.
 gemspec
 
+gem 'plumbum',
+  git: 'https://github.com/sleepingkingstudios/plumbum'
 gem 'sleeping_king_studios-tools', '~> 1.2'
 
 group :development, :test do
@@ -29,5 +31,5 @@ group :doc do
   gem 'kramdown', '~> 2.5'
   gem 'sleeping_king_studios-docs', '~> 0.2'
   gem 'webrick', '~> 1.9' # Use Webrick as local content server.
-  gem 'yard', '~> 0.9',  require: false
+  gem 'yard', '~> 0.9', require: false
 end
