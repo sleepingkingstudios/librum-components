@@ -105,6 +105,38 @@ module Spec::Support::Deferred
         end
       end
 
+      describe '#components' do
+        let(:default_components) do
+          next super() if defined?(super())
+
+          Librum::Components::Empty
+        end
+
+        include_examples 'should define reader',
+          :components,
+          -> { match(default_components) }
+
+        wrap_deferred 'with components', Module.new do
+          it { expect(subject.components).to match(expected_components) }
+        end
+      end
+
+      describe '#configuration' do
+        let(:default_configuration) do
+          next super() if defined?(super())
+
+          Librum::Components::Configuration.default
+        end
+
+        include_examples 'should define reader',
+          :configuration,
+          -> { match(default_configuration) }
+
+        wrap_deferred 'with configuration', custom_key: 'custom_value' do
+          it { expect(subject.configuration).to match(expected_configuration) }
+        end
+      end
+
       describe '#options' do
         wrap_deferred 'when the component defines options' do
           include_deferred 'with a component subclass'
@@ -285,7 +317,7 @@ module Spec::Support::Deferred
       end
 
       describe '#components' do
-        include_examples 'should define private reader',
+        include_examples 'should define reader',
           :components,
           -> { an_instance_of(Module) }
       end
@@ -293,7 +325,7 @@ module Spec::Support::Deferred
       describe '#configuration' do
         include_examples 'should define reader',
           :configuration,
-          -> { an_instance_of(Librum::Components::Configuration) }
+          -> { be_a(Librum::Components::Configuration) }
       end
 
       describe '#options' do

@@ -3,9 +3,12 @@
 require 'rails'
 require 'view_component'
 
+require 'plumbum/consumer'
+require 'plumbum/parameters'
 require 'sleeping_king_studios/tools/toolbelt'
 
 require 'librum/components'
+require 'librum/components/empty'
 require 'librum/components/option'
 require 'librum/components/options'
 
@@ -13,9 +16,13 @@ module Librum::Components
   # Abstract base class for component objects.
   class Base < ViewComponent::Base
     include Librum::Components::Options
+    include Plumbum::Consumer
+    prepend Plumbum::Parameters
 
-    EMPTY_COMPONENTS = Module.new
-    private_constant :EMPTY_COMPONENTS
+    provider Librum::Components::Provider
+
+    dependency :components,    optional: true
+    dependency :configuration, optional: true
 
     # Exception raised when defining options on an abstract component.
     class AbstractComponentError < StandardError; end
@@ -85,21 +92,6 @@ module Librum::Components
       end
     end
 
-    # @overload initialize(configuration: nil, **options)
-    #   @param configuration [Librum::Core::Configuration] the configuration for
-    #     the component library.
-    #   @param options [Hash] additional options passed to the component.
-    def initialize(configuration: nil, **)
-      @configuration =
-        configuration || Librum::Components::Configuration.instance
-
-      super(**)
-    end
-
-    # @return [Librum::Core::Configuration] the configuration for the component
-    #   library.
-    attr_reader :configuration
-
     # @overload class_names(*args, prefix: nil)
     #   Combines the given class names and applies a prefix, if any.
     #
@@ -126,10 +118,27 @@ module Librum::Components
       super(*).split.map { |str| "#{prefix}#{str}" }.join(' ')
     end
 
+    # @return [Module] the class scope for the component library.
+    def components
+      # @todo: Replace this with dependency(default:).
+      super || default_components
+    end
+
+    # @return [Librum::Core::Configuration] the configuration for the component
+    #   library.
+    def configuration
+      # @todo: Replace this with dependency(default:).
+      super || default_configuration
+    end
+
     private
 
-    def components
-      EMPTY_COMPONENTS
+    def default_components
+      Librum::Components::Empty
+    end
+
+    def default_configuration
+      Librum::Components::Configuration.default
     end
   end
 end

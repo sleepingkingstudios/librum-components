@@ -29,8 +29,12 @@ module Librum::Components::Bulma
 
     private
 
-    def components
+    def default_components
       Librum::Components::Bulma
+    end
+
+    def default_configuration
+      Librum::Components::Bulma::Configuration.default
     end
   end
 end
