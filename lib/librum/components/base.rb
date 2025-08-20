@@ -140,5 +140,11 @@ module Librum::Components
     def default_configuration
       Librum::Components::Configuration.default
     end
+
+    def present?(value)
+      return false if value.nil?
+
+      value.respond_to?(:empty?) && !value.empty?
+    end
   end
 end

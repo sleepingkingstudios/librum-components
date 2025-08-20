@@ -1,0 +1,9 @@
+<p class="has-text-centered">
+  <span class="icon-text">
+    <% if scope && !scope.empty? %>
+      <%= scope %> is
+    <% end %>
+    <%= render(build_icon) %>
+    <%= holder %> <%= year %>
+  </span>
+</p>

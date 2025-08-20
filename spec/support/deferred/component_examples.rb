@@ -11,6 +11,15 @@ module Spec::Support::Deferred
     include Spec::Support::Deferred::ConfigurationExamples
     include Spec::Support::Deferred::OptionsExamples
 
+    define_method :pad do |str, int|
+      first, *rest = str.strip.lines
+
+      rest =
+        rest.map { |line| line.strip.empty? ? "\n" : "#{' ' * int}#{line}" }
+
+      [first, *rest].join
+    end
+
     deferred_examples 'should be an abstract view component' do |base_class|
       include Spec::Support::Deferred::AbstractExamples
       include Spec::Support::Deferred::ComponentExamples
