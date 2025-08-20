@@ -13,6 +13,7 @@ RSpec.describe Librum::Components::Bulma::Icon, type: :component do
   let(:component_options) do
     { icon: }
   end
+  let(:configuration_class) { Librum::Components::Bulma::Configuration }
 
   describe '::ICON_SIZES' do
     include_examples 'should define frozen constant',

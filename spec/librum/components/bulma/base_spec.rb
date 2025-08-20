@@ -9,7 +9,14 @@ RSpec.describe Librum::Components::Bulma::Base do
 
   subject(:component) { described_class.new(**component_options) }
 
-  let(:component_options) { {} }
+  let(:component_options)   { {} }
+  let(:configuration_class) { Librum::Components::Bulma::Configuration }
+  let(:default_components) do
+    Librum::Components::Bulma
+  end
+  let(:default_configuration) do
+    configuration_class.default
+  end
 
   include_deferred 'should be an abstract view component', described_class
 
@@ -47,11 +54,5 @@ RSpec.describe Librum::Components::Bulma::Base do
         it { expect(output).to be == expected }
       end
     end
-  end
-
-  describe '#components' do
-    include_examples 'should define private reader',
-      :components,
-      -> { Librum::Components::Bulma }
   end
 end

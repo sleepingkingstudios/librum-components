@@ -11,8 +11,9 @@ RSpec.describe Librum::Components::Bulma::Options::Typography do
 
   subject(:component) { described_class.new(**component_options) }
 
-  let(:described_class)   { Spec::ExampleComponent }
-  let(:component_options) { {} }
+  let(:described_class)     { Spec::ExampleComponent }
+  let(:component_options)   { {} }
+  let(:configuration_class) { Librum::Components::Bulma::Configuration }
 
   example_class 'Spec::ExampleComponent', Librum::Components::Bulma::Base \
   do |klass|

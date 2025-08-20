@@ -6,23 +6,85 @@ module Spec::Support::Deferred
   module ConfigurationExamples
     include RSpec::SleepingKingStudios::Deferred::Provider
 
-    deferred_context 'with configuration' do |**values|
-      define_method :configuration do
-        Librum::Components::Configuration.instance
+    deferred_context 'with components' do |configured_components = Module.new|
+      let(:expected_components) do
+        next super() if defined?(super())
+
+        configured_components
       end
 
-      around(:example) do |example|
-        original = Librum::Components::Configuration.instance
-        config   = Librum::Components::Configuration.new(
-          **original.options,
+      before(:example) do
+        # @todo: Replace this with stub_provider().
+        registered =
+          ::RSpec::Mocks.space.registered?(Librum::Components::Provider)
+
+        unless registered
+          allow(Librum::Components::Provider)
+            .to receive(:get)
+            .and_call_original
+
+          allow(Librum::Components::Provider)
+            .to receive(:has?)
+            .and_call_original
+        end
+
+        allow(Librum::Components::Provider)
+          .to receive(:get)
+          .with(:components)
+          .and_return(configured_components)
+
+        allow(Librum::Components::Provider)
+          .to receive(:has?)
+          .with(:components)
+          .and_return(true)
+      end
+    end
+
+    deferred_context 'with configuration' do |**values|
+      let(:configuration_class) do
+        next super() if defined?(super())
+
+        Librum::Components::Configuration
+      end
+      let(:configuration) do
+        previous_options = defined?(super()) ? super().options : {}
+
+        configuration_class.new(
+          **configuration_class::DEFAULTS,
+          **previous_options,
           **values
         )
+      end
+      let(:expected_configuration) do
+        next super() if defined?(super())
 
-        Librum::Components::Configuration.instance = config
+        configuration
+      end
 
-        example.call
-      ensure
-        Librum::Components::Configuration.instance = original
+      before(:example) do
+        # @todo: Replace this with stub_provider().
+        registered =
+          ::RSpec::Mocks.space.registered?(Librum::Components::Provider)
+
+        unless registered
+          allow(Librum::Components::Provider)
+            .to receive(:get)
+            .and_call_original
+
+          allow(Librum::Components::Provider)
+            .to receive(:has?)
+            .and_call_original
+        end
+
+        allow(Librum::Components::Provider)
+          .to receive(:get)
+          .with(:configuration)
+          .and_return(configuration)
+
+        allow(Librum::Components::Provider)
+          .to receive(:has?)
+          .with(:configuration)
+          .and_return(true)
       end
     end
   end

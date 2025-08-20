@@ -16,7 +16,7 @@ RSpec.describe Librum::Components::Options do
   shared_context 'when the component defines configuration' do
     before(:example) do
       described_class.define_method(:configuration) do
-        Librum::Components::Configuration.instance
+        Librum::Components::Configuration.default
       end
     end
   end

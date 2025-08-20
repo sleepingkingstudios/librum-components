@@ -5,8 +5,7 @@ require_relative 'lib/librum/components/version'
 Gem::Specification.new do |gem|
   gem.name        = 'librum-components'
   gem.version     = Librum::Components::VERSION
-  gem.summary     =
-    'Component library for Librum applications.'
+  gem.summary     = 'Component library for Librum applications.'
 
   description = <<~DESCRIPTION
     A component library for developing Librum applications.
@@ -29,6 +28,7 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 3.4'
 
   gem.add_dependency 'diffy',           '~> 3.4'
+  gem.add_dependency 'plumbum',         '>= 0.1.0.alpha'
   gem.add_dependency 'rails',           '>= 7.0', '< 9'
   gem.add_dependency 'view_component',  '~> 3.21'
 end

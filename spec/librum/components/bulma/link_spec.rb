@@ -11,7 +11,8 @@ RSpec.describe Librum::Components::Bulma::Link, type: :component do
 
   subject(:component) { described_class.new(**component_options) }
 
-  let(:component_options) { {} }
+  let(:component_options)   { {} }
+  let(:configuration_class) { Librum::Components::Bulma::Configuration }
 
   describe '::LINK_TARGETS' do
     include_examples 'should define frozen constant',

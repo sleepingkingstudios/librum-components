@@ -11,7 +11,8 @@ RSpec.describe Librum::Components::Bulma::Label, type: :component do
 
   subject(:component) { described_class.new(**component_options) }
 
-  let(:component_options) { {} }
+  let(:component_options)   { {} }
+  let(:configuration_class) { Librum::Components::Bulma::Configuration }
 
   include_deferred 'with configuration',
     colors:              %i[red orange yellow green blue indigo violet],
