@@ -19,6 +19,7 @@ module Spec::Support::Deferred
           ::RSpec::Mocks.space.registered?(Librum::Components::Provider)
 
         unless registered
+          # :nocov:
           allow(Librum::Components::Provider)
             .to receive(:get)
             .and_call_original
@@ -26,6 +27,7 @@ module Spec::Support::Deferred
           allow(Librum::Components::Provider)
             .to receive(:has?)
             .and_call_original
+          # :nocov:
         end
 
         allow(Librum::Components::Provider)
@@ -67,6 +69,7 @@ module Spec::Support::Deferred
           ::RSpec::Mocks.space.registered?(Librum::Components::Provider)
 
         unless registered
+          # :nocov:
           allow(Librum::Components::Provider)
             .to receive(:get)
             .and_call_original
@@ -74,6 +77,7 @@ module Spec::Support::Deferred
           allow(Librum::Components::Provider)
             .to receive(:has?)
             .and_call_original
+          # :nocov:
         end
 
         allow(Librum::Components::Provider)
@@ -99,6 +103,7 @@ module Spec::Support::Deferred
           ::RSpec::Mocks.space.registered?(Librum::Components::Provider)
 
         unless registered
+          # :nocov:
           allow(Librum::Components::Provider)
             .to receive(:get)
             .and_call_original
@@ -106,6 +111,7 @@ module Spec::Support::Deferred
           allow(Librum::Components::Provider)
             .to receive(:has?)
             .and_call_original
+          # :nocov:
         end
 
         allow(Librum::Components::Provider)

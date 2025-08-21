@@ -10,7 +10,7 @@ RSpec.describe Librum::Components::Bulma::Page::Header, type: :component do
 
   subject(:component) { described_class.new(**component_options) }
 
-  let(:component_options)   { {} }
+  let(:component_options)   { { max_width: 'desktop' } }
   let(:configuration_class) { Librum::Components::Bulma::Configuration }
 
   include_deferred 'with configuration',
@@ -57,10 +57,10 @@ RSpec.describe Librum::Components::Bulma::Page::Header, type: :component do
     end
     let(:snapshot) do
       <<~HTML
-        <nav class="navbar" role="navigation" aria-label="main navigation" data-controller="navbar">
+        <nav class="navbar" role="navigation" aria-label="main navigation" data-controller="librum-components-navbar">
           <div class="container is-max-desktop">
             <div class="navbar-brand">
-              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->navbar#toggle" data-navbar-target="button">
+              <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->librum-components-navbar#toggle" data-librum-components-navbar-target="button">
                 <span aria-hidden="true"></span>
 
                 <span aria-hidden="true"></span>
@@ -83,12 +83,12 @@ RSpec.describe Librum::Components::Bulma::Page::Header, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <nav class="navbar" role="navigation" aria-label="main navigation" data-controller="navbar">
+          <nav class="navbar" role="navigation" aria-label="main navigation" data-controller="librum-components-navbar">
             <div class="container is-max-desktop">
               <div class="navbar-brand">
                 #{render_brand.then { |s| pad(s, 6) }}
 
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->navbar#toggle" data-navbar-target="button">
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->librum-components-navbar#toggle" data-librum-components-navbar-target="button">
                   <span aria-hidden="true"></span>
 
                   <span aria-hidden="true"></span>
@@ -118,10 +118,10 @@ RSpec.describe Librum::Components::Bulma::Page::Header, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <nav class="navbar" role="navigation" aria-label="main navigation" data-controller="navbar">
+          <nav class="navbar" role="navigation" aria-label="main navigation" data-controller="librum-components-navbar">
             <div class="container is-max-desktop">
               <div class="navbar-brand">
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->navbar#toggle" data-navbar-target="button">
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->librum-components-navbar#toggle" data-librum-components-navbar-target="button">
                   <span aria-hidden="true"></span>
 
                   <span aria-hidden="true"></span>
@@ -130,9 +130,9 @@ RSpec.describe Librum::Components::Bulma::Page::Header, type: :component do
 
                   <span aria-hidden="true"></span>
                 </a>
-
-                #{render_navbar.then { |s| pad(s, 6) }}
               </div>
+
+              #{render_navbar.then { |s| pad(s, 4) }}
             </div>
           </nav>
         HTML
@@ -147,12 +147,12 @@ RSpec.describe Librum::Components::Bulma::Page::Header, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <nav class="navbar" role="navigation" aria-label="main navigation" data-controller="navbar">
+          <nav class="navbar" role="navigation" aria-label="main navigation" data-controller="librum-components-navbar">
             <div class="container is-max-desktop">
               <div class="navbar-brand">
                 #{render_brand.then { |s| pad(s, 6) }}
 
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->navbar#toggle" data-navbar-target="button">
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->librum-components-navbar#toggle" data-librum-components-navbar-target="button">
                   <span aria-hidden="true"></span>
 
                   <span aria-hidden="true"></span>
@@ -188,12 +188,12 @@ RSpec.describe Librum::Components::Bulma::Page::Header, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <nav class="navbar is-red" role="navigation" aria-label="main navigation" data-controller="navbar">
+          <nav class="navbar is-red" role="navigation" aria-label="main navigation" data-controller="librum-components-navbar">
             <div class="container is-max-tablet">
               <div class="navbar-brand">
                 #{render_brand.then { |s| pad(s, 6) }}
 
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->navbar#toggle" data-navbar-target="button">
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->librum-components-navbar#toggle" data-librum-components-navbar-target="button">
                   <span aria-hidden="true"></span>
 
                   <span aria-hidden="true"></span>
@@ -202,9 +202,9 @@ RSpec.describe Librum::Components::Bulma::Page::Header, type: :component do
 
                   <span aria-hidden="true"></span>
                 </a>
-
-                #{render_navbar.then { |s| pad(s, 6) }}
               </div>
+
+              #{render_navbar.then { |s| pad(s, 4) }}
             </div>
           </nav>
         HTML

@@ -76,7 +76,7 @@ do
       end
       let(:snapshot) do
         <<~HTML
-          <div id="primary-navigation" class="navbar-menu" data-navbar-target="menu">
+          <div id="primary-navigation" class="navbar-menu" data-librum-components-navbar-target="menu">
             <div class="navbar-start has-text-weight-semibold">
               <a href="/" class="navbar-item">
                 Home

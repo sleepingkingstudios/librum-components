@@ -11,7 +11,7 @@ module Librum::Components::Bulma
 
     option :brand
     option :color,     validate: true
-    option :max_width, default: 'desktop'
+    option :max_width, required: true
     option :navigation
     option :title
 

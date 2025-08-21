@@ -14,5 +14,6 @@ module Librum::Components
     autoload :Label,         'librum/components/bulma/label'
     autoload :Link,          'librum/components/bulma/link'
     autoload :Options,       'librum/components/bulma/options'
+    autoload :Page,          'librum/components/bulma/page'
   end
 end

@@ -7,5 +7,41 @@ module Librum::Components::Bulma
   class Page < Librum::Components::Bulma::Base
     autoload :Footer, 'librum/components/bulma/page/footer'
     autoload :Header, 'librum/components/bulma/page/header'
+
+    option :brand
+    option :color, validate: true
+    option :copyright
+    option :max_width, default: 'desktop'
+    option :navigation
+    option :tagline
+    option :title
+
+    private
+
+    def build_footer
+      Librum::Components::Bulma::Page::Footer.new(
+        copyright:,
+        max_width:,
+        tagline:
+      )
+    end
+
+    def build_header
+      Librum::Components::Bulma::Page::Header.new(
+        brand:,
+        color:,
+        max_width:,
+        navigation:,
+        title:
+      )
+    end
+
+    def container_class_name
+      class_names(
+        'container',
+        'content',
+        "is-max-#{max_width}"
+      )
+    end
   end
 end

@@ -116,6 +116,21 @@ do
       it { expect(rendered).to match_snapshot }
     end
 
+    describe 'with brand: an empty Hash and title: value' do
+      let(:component_options) do
+        super().merge(brand: {}, title: 'Example Company')
+      end
+      let(:snapshot) do
+        <<~HTML
+          <a class="navbar-item" href="/">
+            <span class="title is-size-4">Example Company</span>
+          </a>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot }
+    end
+
     describe 'with title: value' do
       let(:component_options) { super().merge(title: 'Example Company') }
       let(:snapshot) do
