@@ -23,7 +23,13 @@ Gem::Specification.new do |gem|
   }
 
   gem.require_path = 'lib'
-  gem.files        = Dir['lib/**/*.rb', 'LICENSE', '*.md']
+  gem.files        = Dir[
+    'app/assets/stylesheets/**/*.css',
+    'app/javascripts/**/*.js',
+    'lib/**/*.rb',
+    'LICENSE',
+    '*.md'
+  ]
 
   gem.required_ruby_version = '>= 3.4'
 
