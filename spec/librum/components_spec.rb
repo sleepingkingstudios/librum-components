@@ -9,7 +9,8 @@ RSpec.describe Librum::Components do
     let(:expected_values) do
       {
         'components'    => Plumbum::UNDEFINED,
-        'configuration' => Plumbum::UNDEFINED
+        'configuration' => Plumbum::UNDEFINED,
+        'routes'        => Plumbum::UNDEFINED
       }
     end
 

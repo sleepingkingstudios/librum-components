@@ -22,7 +22,8 @@ module Librum
       write_once: true,
       values:     {
         components:    Plumbum::UNDEFINED,
-        configuration: Plumbum::UNDEFINED
+        configuration: Plumbum::UNDEFINED,
+        routes:        Plumbum::UNDEFINED
       }
     )
 
