@@ -1,0 +1,16 @@
+<nav class="<%= header_class_name %>" role="navigation" aria-label="main navigation" data-controller="librum-components-navbar">
+  <div class="<%= container_class_name %>">
+    <div class="navbar-brand">
+      <%= render(build_brand) %>
+
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-action="click->librum-components-navbar#toggle" data-librum-components-navbar-target="button">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <%= render_navigation %>
+  </div>
+</nav>

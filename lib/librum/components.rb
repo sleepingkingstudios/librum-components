@@ -22,9 +22,25 @@ module Librum
       write_once: true,
       values:     {
         components:    Plumbum::UNDEFINED,
-        configuration: Plumbum::UNDEFINED
+        configuration: Plumbum::UNDEFINED,
+        routes:        Plumbum::UNDEFINED
       }
     )
+
+    # @return [Pathname] the javascript path for the gem.
+    def self.javascript_path
+      File.join(root_path, 'app', 'javascript')
+    end
+
+    # @return [String] the root path for the gem.
+    def self.root_path
+      @root_path ||= File.expand_path(__dir__).sub('/lib/librum', '')
+    end
+
+    # @return [Pathname] the stylesheets path for the gem.
+    def self.stylesheets_path
+      File.join(root_path, 'app', 'assets', 'stylesheets')
+    end
 
     # @return [String] the current version of the gem.
     def self.version
@@ -32,3 +48,5 @@ module Librum
     end
   end
 end
+
+require 'librum/components/railtie' if defined?(Rails::Railtie)

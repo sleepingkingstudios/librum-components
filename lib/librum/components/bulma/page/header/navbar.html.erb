@@ -1,0 +1,7 @@
+<div id="primary-navigation" class="<%= navigation_class_name %>" data-librum-components-navbar-target="<%= navbar_data_target %>">
+  <div class="<%= navbar_class_name %>">
+    <% navigation.each do |item| %>
+      <%= render_navbar_item(**item) %>
+    <% end %>
+  </div>
+</div>

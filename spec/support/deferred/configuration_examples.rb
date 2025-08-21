@@ -19,6 +19,7 @@ module Spec::Support::Deferred
           ::RSpec::Mocks.space.registered?(Librum::Components::Provider)
 
         unless registered
+          # :nocov:
           allow(Librum::Components::Provider)
             .to receive(:get)
             .and_call_original
@@ -26,6 +27,7 @@ module Spec::Support::Deferred
           allow(Librum::Components::Provider)
             .to receive(:has?)
             .and_call_original
+          # :nocov:
         end
 
         allow(Librum::Components::Provider)
@@ -67,6 +69,7 @@ module Spec::Support::Deferred
           ::RSpec::Mocks.space.registered?(Librum::Components::Provider)
 
         unless registered
+          # :nocov:
           allow(Librum::Components::Provider)
             .to receive(:get)
             .and_call_original
@@ -74,6 +77,7 @@ module Spec::Support::Deferred
           allow(Librum::Components::Provider)
             .to receive(:has?)
             .and_call_original
+          # :nocov:
         end
 
         allow(Librum::Components::Provider)
@@ -84,6 +88,40 @@ module Spec::Support::Deferred
         allow(Librum::Components::Provider)
           .to receive(:has?)
           .with(:configuration)
+          .and_return(true)
+      end
+    end
+
+    deferred_context 'with routes' do |**routes|
+      let(:defined_routes) do
+        Struct.new(*routes.keys, keyword_init: true).new(**routes)
+      end
+
+      before(:example) do
+        # @todo: Replace this with stub_provider().
+        registered =
+          ::RSpec::Mocks.space.registered?(Librum::Components::Provider)
+
+        unless registered
+          # :nocov:
+          allow(Librum::Components::Provider)
+            .to receive(:get)
+            .and_call_original
+
+          allow(Librum::Components::Provider)
+            .to receive(:has?)
+            .and_call_original
+          # :nocov:
+        end
+
+        allow(Librum::Components::Provider)
+          .to receive(:get)
+          .with(:routes)
+          .and_return(defined_routes)
+
+        allow(Librum::Components::Provider)
+          .to receive(:has?)
+          .with(:routes)
           .and_return(true)
       end
     end

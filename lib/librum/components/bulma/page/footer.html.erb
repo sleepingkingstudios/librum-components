@@ -1,0 +1,17 @@
+<footer>
+  <%# @todo: Breadcrumbs %>
+
+  <div class="footer">
+    <%# @todo: Footer Links %>
+
+    <div class="<%= container_class_name %>">
+      <%= render(build_copyright) if copyright %>
+
+      <% if render_tagline? %>
+      <p class="has-text-centered is-italic mt-1">
+        <%= tagline %>
+      </p>
+      <% end %>
+    </div>
+  </div>
+</footer>

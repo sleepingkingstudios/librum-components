@@ -9,7 +9,8 @@ RSpec.describe Librum::Components do
     let(:expected_values) do
       {
         'components'    => Plumbum::UNDEFINED,
-        'configuration' => Plumbum::UNDEFINED
+        'configuration' => Plumbum::UNDEFINED,
+        'routes'        => Plumbum::UNDEFINED
       }
     end
 
@@ -20,6 +21,44 @@ RSpec.describe Librum::Components do
     it { expect(provider.values).to be == expected_values }
 
     it { expect(provider.write_once?).to be true }
+  end
+
+  describe '.javascript_path' do
+    let(:root_path) { __dir__.sub('/spec/librum', '') }
+    let(:expected)  { File.join(root_path, 'app', 'javascript') }
+
+    it 'should define the class method' do
+      expect(described_class).to respond_to(:javascript_path).with(0).arguments
+    end
+
+    it { expect(described_class.javascript_path).to be_a String }
+
+    it { expect(described_class.javascript_path).to be == expected }
+  end
+
+  describe '.root_path' do
+    let(:root_path) { __dir__.sub('/spec/librum', '') }
+
+    it 'should define the class method' do
+      expect(described_class).to respond_to(:root_path).with(0).arguments
+    end
+
+    it { expect(described_class.root_path).to be_a String }
+
+    it { expect(described_class.root_path).to be == root_path }
+  end
+
+  describe '.stylesheets_path' do
+    let(:root_path) { __dir__.sub('/spec/librum', '') }
+    let(:expected)  { File.join(root_path, 'app', 'assets', 'stylesheets') }
+
+    it 'should define the class method' do
+      expect(described_class).to respond_to(:stylesheets_path).with(0).arguments
+    end
+
+    it { expect(described_class.stylesheets_path).to be_a String }
+
+    it { expect(described_class.stylesheets_path).to be == expected }
   end
 
   describe '.version' do
