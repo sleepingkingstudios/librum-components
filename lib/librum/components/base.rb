@@ -131,6 +131,10 @@ module Librum::Components
       super || default_configuration
     end
 
+    # @return [true, false] if true, indicates that the component represents a
+    #   full-page layout. Defaults to false.
+    def is_layout? = false # rubocop:disable Naming/PredicatePrefix
+
     private
 
     def default_components

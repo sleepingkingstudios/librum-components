@@ -16,6 +16,10 @@ module Librum::Components::Bulma
     option :tagline
     option :title
 
+    # @return [true, false] if true, indicates that the component represents a
+    #   full-page layout. Defaults to true.
+    def is_layout? = true # rubocop:disable Naming/PredicatePrefix
+
     private
 
     def build_footer

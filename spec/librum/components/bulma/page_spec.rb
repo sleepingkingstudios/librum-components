@@ -17,7 +17,7 @@ RSpec.describe Librum::Components::Bulma::Page, type: :component do
     default_icon_family: 'fa-solid',
     icon_families:       %i[fa-solid]
 
-  include_deferred 'should be a view component'
+  include_deferred 'should be a view component', layout: true
 
   include_deferred 'should define component option', :brand
 
