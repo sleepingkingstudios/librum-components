@@ -164,7 +164,7 @@ module Spec::Support::Deferred
     end
 
     deferred_examples 'should be a view component' \
-    do |allow_extra_options: false|
+    do |allow_extra_options: false, layout: false|
       describe '.new' do
         it 'should define the constructor' do
           expect(described_class)
@@ -335,6 +335,10 @@ module Spec::Support::Deferred
         include_examples 'should define reader',
           :configuration,
           -> { be_a(Librum::Components::Configuration) }
+      end
+
+      describe '#is_layout?' do
+        include_examples 'should define predicate', :is_layout, -> { layout }
       end
 
       describe '#options' do
