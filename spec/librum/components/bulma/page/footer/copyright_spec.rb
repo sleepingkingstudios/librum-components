@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 require 'librum/components/bulma/page/footer/copyright'
-
-require 'support/deferred/component_examples'
+require 'librum/components/rspec/deferred/component_examples'
 
 RSpec.describe Librum::Components::Bulma::Page::Footer::Copyright,
   type: :component \
 do
-  include Spec::Support::Deferred::ComponentExamples
+  include Librum::Components::RSpec::Deferred::ComponentExamples
 
   subject(:component) { described_class.new(**component_options) }
 

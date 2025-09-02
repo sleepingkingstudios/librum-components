@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 require 'librum/components/bulma/options/typography'
-
-require 'support/deferred/bulma_examples'
-require 'support/deferred/options_examples'
+require 'librum/components/rspec/deferred/bulma_examples'
+require 'librum/components/rspec/deferred/options_examples'
 
 RSpec.describe Librum::Components::Bulma::Options::Typography do
-  include Spec::Support::Deferred::BulmaExamples
-  include Spec::Support::Deferred::OptionsExamples
+  include Librum::Components::RSpec::Deferred::BulmaExamples
+  include Librum::Components::RSpec::Deferred::OptionsExamples
 
   subject(:component) { described_class.new(**component_options) }
 

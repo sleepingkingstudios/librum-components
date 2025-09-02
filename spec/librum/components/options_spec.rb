@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
 require 'librum/components/options'
-
-require 'support/deferred/abstract_examples'
-require 'support/deferred/configuration_examples'
-require 'support/deferred/options_examples'
+require 'librum/components/rspec/deferred/configuration_examples'
+require 'librum/components/rspec/deferred/options_examples'
 
 RSpec.describe Librum::Components::Options do
-  include Spec::Support::Deferred::AbstractExamples
-  include Spec::Support::Deferred::ConfigurationExamples
-  include Spec::Support::Deferred::OptionsExamples
+  include Librum::Components::RSpec::Deferred::ConfigurationExamples
+  include Librum::Components::RSpec::Deferred::OptionsExamples
 
   subject(:component) { described_class.new(**component_options) }
 

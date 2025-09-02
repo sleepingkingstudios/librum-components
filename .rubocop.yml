@@ -35,10 +35,12 @@ Layout/ParameterAlignment:
 
 Metrics/BlockLength:
   Exclude:
+    - 'lib/librum/components/rspec/deferred/**/*_examples.rb'
     - 'spec/**/*.rb'
 
 Metrics/ModuleLength:
   Exclude:
+    - 'lib/librum/components/rspec/deferred/**/*_examples.rb'
     - 'spec/**/*.rb'
 
 Naming/RescuedExceptionsVariableName:

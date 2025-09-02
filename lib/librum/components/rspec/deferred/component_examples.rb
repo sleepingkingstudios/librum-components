@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'support/deferred'
-require 'support/deferred/abstract_examples'
-require 'support/deferred/configuration_examples'
-require 'support/deferred/options_examples'
+require 'librum/components/rspec/deferred'
+require 'librum/components/rspec/deferred/configuration_examples'
+require 'librum/components/rspec/deferred/options_examples'
 
-module Spec::Support::Deferred
+module Librum::Components::RSpec::Deferred
+  # Deferred examples for asserting on view components.
   module ComponentExamples
     include RSpec::SleepingKingStudios::Deferred::Provider
-    include Spec::Support::Deferred::ConfigurationExamples
-    include Spec::Support::Deferred::OptionsExamples
+    include Librum::Components::RSpec::Deferred::ConfigurationExamples
+    include Librum::Components::RSpec::Deferred::OptionsExamples
 
     define_method :pad do |str, int|
       first, *rest = str.strip.lines
@@ -21,9 +21,6 @@ module Spec::Support::Deferred
     end
 
     deferred_examples 'should be an abstract view component' do |base_class|
-      include Spec::Support::Deferred::AbstractExamples
-      include Spec::Support::Deferred::ComponentExamples
-
       deferred_context 'with a component subclass' do
         let(:described_class) { Spec::ExampleComponent }
 

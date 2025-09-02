@@ -13,7 +13,7 @@ group :development, :test do
   gem 'byebug', '~> 11.1'
 
   gem 'rspec', '~> 3.13'
-  gem 'rspec-sleeping_king_studios', '~> 2.8', '>= 2.8.1'
+  gem 'rspec-sleeping_king_studios', '~> 2.8', '>= 2.8.2'
   gem 'simplecov', '~> 0.22'
 
   gem 'rubocop', '~> 1.79'
