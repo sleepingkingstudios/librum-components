@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
-require 'support/deferred'
-require 'support/deferred/configuration_examples'
-require 'support/deferred/options_examples'
+require 'librum/components/rspec/deferred'
 
-module Spec::Support::Deferred
+module Librum::Components::RSpec::Deferred
+  # Deferred examples for asserting on components using the Bulma framework.
   module BulmaExamples
     include RSpec::SleepingKingStudios::Deferred::Provider
 
     deferred_context 'should define typography options' do
-      include Spec::Support::Deferred::ConfigurationExamples
-      include Spec::Support::Deferred::OptionsExamples
+      include Librum::Components::RSpec::Deferred::ConfigurationExamples
+      include Librum::Components::RSpec::Deferred::OptionsExamples
 
       include_deferred 'should define component option',
         :alignment,

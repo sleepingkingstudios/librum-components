@@ -19,6 +19,7 @@ require 'byebug'
 
 require 'librum/components/rspec/matchers'
 require 'librum/components/rspec/render_component'
+require 'plumbum/rspec/stub_provider'
 
 # Isolated namespace for defining spec-only or transient objects.
 module Spec; end
@@ -30,6 +31,7 @@ RSpec.configure do |config|
   config.extend  RSpec::SleepingKingStudios::Concerns::WrapExamples
   config.include RSpec::SleepingKingStudios::Deferred::Consumer
   config.include RSpec::SleepingKingStudios::Examples::PropertyExamples
+  config.include Plumbum::RSpec::StubProvider
 
   config.include Librum::Components::RSpec::Matchers,        type: :component
   config.include Librum::Components::RSpec::RenderComponent, type: :component
