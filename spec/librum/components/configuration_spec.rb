@@ -69,6 +69,12 @@ RSpec.describe Librum::Components::Configuration do
 
       it { expect(configuration.colors).to be == expected }
     end
+
+    context 'when the configuration is frozen' do
+      before(:example) { configuration.freeze }
+
+      it { expect(configuration.colors).to be == expected }
+    end
   end
 
   describe '#icon_families' do
@@ -80,6 +86,12 @@ RSpec.describe Librum::Components::Configuration do
       let(:icon_families) { %i[bootstrap material-design iconicons] }
       let(:options)       { super().merge(icon_families:) }
       let(:expected)      { Set.new(icon_families.map(&:to_s)) }
+
+      it { expect(configuration.icon_families).to be == expected }
+    end
+
+    context 'when the configuration is frozen' do
+      before(:example) { configuration.freeze }
 
       it { expect(configuration.icon_families).to be == expected }
     end
