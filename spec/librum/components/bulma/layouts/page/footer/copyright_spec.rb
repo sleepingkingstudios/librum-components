@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/page/footer/copyright'
+require 'librum/components/bulma/layouts/page/footer/copyright'
 require 'librum/components/rspec/deferred/component_examples'
 
-RSpec.describe Librum::Components::Bulma::Page::Footer::Copyright,
+RSpec.describe Librum::Components::Bulma::Layouts::Page::Footer::Copyright,
   type: :component \
 do
   include Librum::Components::RSpec::Deferred::ComponentExamples

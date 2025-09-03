@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/page'
+require 'librum/components/bulma/layouts/page'
 
-module Librum::Components::Bulma
+module Librum::Components::Bulma::Layouts
   # Renders the footer for a page component.
   class Page::Footer < Librum::Components::Bulma::Base
-    autoload :Copyright, 'librum/components/bulma/page/footer/copyright'
+    autoload :Copyright, 'librum/components/bulma/layouts/page/footer/copyright'
 
     option :copyright
     option :max_width, required: true
@@ -20,7 +20,8 @@ module Librum::Components::Bulma
     private
 
     def build_copyright
-      Copyright.build(copyright)
+      Librum::Components::Bulma::Layouts::Page::Footer::Copyright
+        .build(copyright)
     end
 
     def container_class_name

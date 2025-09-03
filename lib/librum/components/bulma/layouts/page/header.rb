@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/page'
+require 'librum/components/bulma/layouts/page'
 
-module Librum::Components::Bulma
+module Librum::Components::Bulma::Layouts
   # Renders the default header for a page component.
   class Page::Header < Librum::Components::Bulma::Base
-    autoload :Brand,      'librum/components/bulma/page/header/brand'
-    autoload :Navbar,     'librum/components/bulma/page/header/navbar'
-    autoload :NavbarItem, 'librum/components/bulma/page/header/navbar_item'
+    autoload :Brand,
+      'librum/components/bulma/layouts/page/header/brand'
+    autoload :Navbar,
+      'librum/components/bulma/layouts/page/header/navbar'
+    autoload :NavbarItem,
+      'librum/components/bulma/layouts/page/header/navbar_item'
 
     option :brand
     option :color,     validate: true
@@ -20,7 +23,7 @@ module Librum::Components::Bulma
     def build_brand
       return brand if brand.is_a?(ViewComponent::Base)
 
-      Librum::Components::Bulma::Page::Header::Brand.build({
+      Librum::Components::Bulma::Layouts::Page::Header::Brand.build({
         brand:,
         title:
       })
@@ -46,7 +49,8 @@ module Librum::Components::Bulma
       return navigation if navigation.is_a?(ViewComponent::Base)
 
       component =
-        Librum::Components::Bulma::Page::Header::Navbar.build({ navigation: })
+        Librum::Components::Bulma::Layouts::Page::Header::Navbar
+        .build({ navigation: })
 
       render(component)
     end

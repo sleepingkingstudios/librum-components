@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/page/footer'
+require 'librum/components/bulma/layouts/page/footer'
 require 'librum/components/rspec/deferred/component_examples'
 
-RSpec.describe Librum::Components::Bulma::Page::Footer, type: :component do
+RSpec.describe Librum::Components::Bulma::Layouts::Page::Footer,
+  type: :component \
+do
   include Librum::Components::RSpec::Deferred::ComponentExamples
 
   subject(:component) { described_class.new(**component_options) }

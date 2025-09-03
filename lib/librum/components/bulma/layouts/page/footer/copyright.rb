@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/page/footer'
+require 'librum/components/bulma/layouts/page/footer'
 
-module Librum::Components::Bulma
+module Librum::Components::Bulma::Layouts
   # Renders the copyright notice for a page component.
   class Page::Footer::Copyright < Librum::Components::Bulma::Base
     option :holder

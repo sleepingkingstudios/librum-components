@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/page/header/navbar_item'
+require 'librum/components/bulma/layouts/page/header/navbar_item'
 require 'librum/components/rspec/deferred/component_examples'
 
-RSpec.describe Librum::Components::Bulma::Page::Header::NavbarItem,
+RSpec.describe Librum::Components::Bulma::Layouts::Page::Header::NavbarItem,
   type: :component \
 do
   include Librum::Components::RSpec::Deferred::ComponentExamples
