@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/page'
+require 'librum/components/bulma/layouts/page'
 require 'librum/components/rspec/deferred/component_examples'
 
-RSpec.describe Librum::Components::Bulma::Page, type: :component do
+RSpec.describe Librum::Components::Bulma::Layouts::Page, type: :component do
   include Librum::Components::RSpec::Deferred::ComponentExamples
 
   subject(:component) { described_class.new(**component_options) }

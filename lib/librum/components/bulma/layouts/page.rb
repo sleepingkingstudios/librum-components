@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma'
+require 'librum/components/bulma/layouts'
 
-module Librum::Components::Bulma
+module Librum::Components::Bulma::Layouts
   # Flexible layout component used to render a full content page.
   class Page < Librum::Components::Bulma::Base
-    autoload :Footer, 'librum/components/bulma/page/footer'
-    autoload :Header, 'librum/components/bulma/page/header'
+    autoload :Footer, 'librum/components/bulma/layouts/page/footer'
+    autoload :Header, 'librum/components/bulma/layouts/page/header'
 
     option :brand
     option :color, validate: true
@@ -23,7 +23,7 @@ module Librum::Components::Bulma
     private
 
     def build_footer
-      Librum::Components::Bulma::Page::Footer.new(
+      Librum::Components::Bulma::Layouts::Page::Footer.new(
         copyright:,
         max_width:,
         tagline:
@@ -31,7 +31,7 @@ module Librum::Components::Bulma
     end
 
     def build_header
-      Librum::Components::Bulma::Page::Header.new(
+      Librum::Components::Bulma::Layouts::Page::Header.new(
         brand:,
         color:,
         max_width:,

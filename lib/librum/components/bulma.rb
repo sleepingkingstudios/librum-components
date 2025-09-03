@@ -12,8 +12,8 @@ module Librum::Components
     autoload :Configuration, 'librum/components/bulma/configuration'
     autoload :Icon,          'librum/components/bulma/icon'
     autoload :Label,         'librum/components/bulma/label'
+    autoload :Layouts,       'librum/components/bulma/layouts'
     autoload :Link,          'librum/components/bulma/link'
     autoload :Options,       'librum/components/bulma/options'
-    autoload :Page,          'librum/components/bulma/page'
   end
 end

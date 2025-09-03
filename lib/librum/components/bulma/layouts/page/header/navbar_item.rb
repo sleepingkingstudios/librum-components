@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/page/header'
+require 'librum/components/bulma/layouts/page/header'
 
-module Librum::Components::Bulma
+module Librum::Components::Bulma::Layouts
   # Renders a navigation item for the default page header.
   class Page::Header::NavbarItem < Librum::Components::Bulma::Base
     option :label, required: true

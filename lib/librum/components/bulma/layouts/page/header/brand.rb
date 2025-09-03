@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/page/header'
+require 'librum/components/bulma/layouts/page/header'
 
-module Librum::Components::Bulma
+module Librum::Components::Bulma::Layouts
   # Renders the brand image and text for a page header.
   class Page::Header::Brand < Librum::Components::Bulma::Base
     dependency :routes, optional: true

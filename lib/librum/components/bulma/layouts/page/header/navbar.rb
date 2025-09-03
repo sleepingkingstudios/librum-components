@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/page/header'
+require 'librum/components/bulma/layouts/page/header'
+require 'librum/components/bulma/layouts/page/header/navbar_item'
 
-module Librum::Components::Bulma
+module Librum::Components::Bulma::Layouts
   # Renders the navigation bar for the default page header.
   class Page::Header::Navbar < Librum::Components::Bulma::Base
     option :navigation, validate: true
@@ -28,7 +29,9 @@ module Librum::Components::Bulma
     end
 
     def render_navbar_item(label:, url:)
-      component = components::Page::Header::NavbarItem.new(label:, url:)
+      component =
+        Librum::Components::Bulma::Layouts::Page::Header::NavbarItem
+        .new(label:, url:)
 
       render(component)
     end
