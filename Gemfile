@@ -12,6 +12,9 @@ gem 'sleeping_king_studios-tools', '~> 1.2'
 group :development, :test do
   gem 'byebug', '~> 11.1'
 
+  gem 'cuprum-rails',
+    git: 'https://github.com/sleepingkingstudios/cuprum-rails'
+
   gem 'rspec', '~> 3.13'
   gem 'rspec-sleeping_king_studios', '~> 2.8', '>= 2.8.2'
   gem 'simplecov', '~> 0.22'

@@ -33,6 +33,7 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = '>= 3.4'
 
+  gem.add_dependency 'cuprum-rails',    '~> 0.2'
   gem.add_dependency 'diffy',           '~> 3.4'
   gem.add_dependency 'plumbum',         '>= 0.1.0.alpha'
   gem.add_dependency 'rails',           '>= 7.0', '< 9'

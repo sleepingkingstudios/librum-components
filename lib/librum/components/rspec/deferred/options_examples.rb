@@ -220,11 +220,16 @@ module Librum::Components::RSpec::Deferred
 
     deferred_examples 'should validate the component options' do
       describe 'with extra component options' do
+        let(:required_keywords) do
+          next super() if defined?(super())
+
+          {}
+        end
         let(:component_options) do
-          {
+          required_keywords.merge(
             invalid_color:      '#ff3366',
             invalid_decoration: 'underline'
-          }
+          )
         end
         let(:valid_options) do
           described_class

@@ -20,14 +20,15 @@ module Librum::Components::RSpec::Deferred
       [first, *rest].join
     end
 
-    deferred_examples 'should be an abstract view component' do |base_class|
+    deferred_examples 'should be an abstract view component' \
+    do |base_class, **options|
       deferred_context 'with a component subclass' do
         let(:described_class) { Spec::ExampleComponent }
 
         example_class 'Spec::ExampleComponent', base_class
       end
 
-      include_deferred 'should be a view component'
+      include_deferred 'should be a view component', **options
 
       describe '.new' do
         wrap_deferred 'when the component defines options' do
@@ -161,14 +162,37 @@ module Librum::Components::RSpec::Deferred
     end
 
     deferred_examples 'should be a view component' \
-    do |allow_extra_options: false, layout: false|
+    do |allow_extra_options: false, has_required_keywords: false, layout: false|
       describe '.new' do
+        let(:required_keywords) do
+          next super() if defined?(super())
+
+          {}
+        end
+
         it 'should define the constructor' do
           expect(described_class)
             .to be_constructible
             .with(0).arguments
-            .and_keywords(:configuration)
+            .and_keywords(:configuration, *required_keywords.keys)
             .and_any_keywords
+        end
+
+        if has_required_keywords
+          describe 'with missing keywords' do
+            let(:error_message) do
+              message = 'missing keyword'
+              message = "#{message}s" if required_keywords.size > 1
+              message = "#{message}: "
+
+              "#{message}#{required_keywords.keys.map(&:inspect).join(', ')}"
+            end
+
+            it 'should raise an exception' do
+              expect { described_class.new }
+                .to raise_error ArgumentError, error_message
+            end
+          end
         end
 
         unless allow_extra_options
@@ -230,11 +254,16 @@ module Librum::Components::RSpec::Deferred
 
         if described_class.options.any? || !allow_extra_options
           describe 'with invalid options' do
+            let(:required_keywords) do
+              next super() if defined?(super())
+
+              {}
+            end
             let(:value) do
-              {
+              required_keywords.merge(
                 invalid_color:      '#ff3366',
                 invalid_decoration: 'underline'
-              }
+              )
             end
 
             it 'should raise an exception' do
@@ -246,8 +275,17 @@ module Librum::Components::RSpec::Deferred
         end
 
         describe 'with valid options' do
+          let(:required_keywords) do
+            next super() if defined?(super())
+
+            {}
+          end
+          let(:value) do
+            required_keywords.merge(component_options)
+          end
+
           it 'should build a component' do
-            expect(described_class.build(component_options))
+            expect(described_class.build(value))
               .to be_a described_class
           end
         end
