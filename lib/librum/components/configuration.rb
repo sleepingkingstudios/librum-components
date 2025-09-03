@@ -39,6 +39,15 @@ module Librum::Components
     # @return [String] the name of the default icon family, if any.
     def default_icon_family = @options['default_icon_family']
 
+    # Prevents further modifications to the configuration object.
+    def freeze
+      # Ensure memoized values are hydrated before freezing.
+      colors
+      icon_families
+
+      super
+    end
+
     # @return [Array<String>] the icon families defined for the component set.
     def icon_families
       @icon_families ||= Set.new(@options['icon_families'].map(&:to_s))
