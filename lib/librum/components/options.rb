@@ -9,13 +9,24 @@ module Librum::Components
   module Options # rubocop:disable Metrics/ModuleLength
     extend SleepingKingStudios::Tools::Toolbox::Mixin
 
-    autoload :ClassName, 'librum/components/options/class_name'
+    autoload :ClassName,         'librum/components/options/class_name'
+    autoload :Validator,         'librum/components/options/validator'
+    autoload :ValidationHelpers, 'librum/components/options/validation_helpers'
 
     # Exception raised when defining an option that already exists.
     class DuplicateOptionError < StandardError; end
 
     # Exception raised when creating a component with unrecognized option.
     class InvalidOptionsError < ArgumentError; end
+
+    class << self
+      # Callback invoked whenever Options is included in another module.
+      def included(other)
+        super
+
+        other.include ValidationHelpers
+      end
+    end
 
     # Class methods to extend when including Options.
     module ClassMethods
@@ -293,30 +304,6 @@ module Librum::Components
 
     def tools
       SleepingKingStudios::Tools::Toolbelt.instance
-    end
-
-    def validate_color(value, as: 'color')
-      return if value.nil?
-
-      return if configuration.colors.include?(value)
-
-      "#{as} is not a valid color name"
-    end
-
-    def validate_icon(value, as: 'icon')
-      return if value.nil?
-      return if value.is_a?(String)
-      return if value.is_a?(Hash) && value.key?(:icon)
-      return if value.is_a?(ViewComponent::Base)
-
-      "#{as} is not a valid icon"
-    end
-
-    def validate_inclusion(value, expected:, as: '')
-      return if value.nil?
-      return if expected.include?(value)
-
-      "#{as} is not included in the list"
     end
 
     def validate_option(aggregator:, option:, value:) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
