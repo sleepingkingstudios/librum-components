@@ -6,16 +6,27 @@ require 'librum/components'
 
 module Librum::Components
   # Module for defining named options for components.
-  module Options # rubocop:disable Metrics/ModuleLength
+  module Options
     extend SleepingKingStudios::Tools::Toolbox::Mixin
 
-    autoload :ClassName, 'librum/components/options/class_name'
+    autoload :ClassName,         'librum/components/options/class_name'
+    autoload :Validator,         'librum/components/options/validator'
+    autoload :ValidationHelpers, 'librum/components/options/validation_helpers'
 
     # Exception raised when defining an option that already exists.
     class DuplicateOptionError < StandardError; end
 
     # Exception raised when creating a component with unrecognized option.
     class InvalidOptionsError < ArgumentError; end
+
+    class << self
+      # Callback invoked whenever Options is included in another module.
+      def included(other)
+        super
+
+        other.include ValidationHelpers
+      end
+    end
 
     # Class methods to extend when including Options.
     module ClassMethods
@@ -252,7 +263,8 @@ module Librum::Components
       super()
 
       @options = apply_default_options(options)
-      @options = validate_options(options)
+
+      validate_options(@options)
     end
 
     # @return [Hash] additional options passed to the component.
@@ -270,162 +282,17 @@ module Librum::Components
       end
     end
 
-    def find_extra_options(options)
-      return [] if self.class.allow_extra_options?
-
-      options.each_key.reject { |key| self.class.options.key?(key.to_s) }
-    end
-
-    def invalid_options_message(extra_keys:, failure_message:)
-      return failure_message if extra_keys.empty?
-
-      if self.class.options.empty?
-        "#{failure_message} - #{self.class.name} does not define any valid " \
-          'options'
-      else
-        valid_options = self.class.options.keys.sort.map { |key| ":#{key}" }
-        valid_options = tools.array_tools.humanize_list(valid_options)
-
-        "#{failure_message} - valid options for #{self.class.name} are " \
-          "#{valid_options}"
-      end
-    end
-
     def tools
       SleepingKingStudios::Tools::Toolbelt.instance
     end
 
-    def validate_color(value, as: 'color')
-      return if value.nil?
-
-      return if configuration.colors.include?(value)
-
-      "#{as} is not a valid color name"
-    end
-
-    def validate_icon(value, as: 'icon')
-      return if value.nil?
-      return if value.is_a?(String)
-      return if value.is_a?(Hash) && value.key?(:icon)
-      return if value.is_a?(ViewComponent::Base)
-
-      "#{as} is not a valid icon"
-    end
-
-    def validate_inclusion(value, expected:, as: '')
-      return if value.nil?
-      return if expected.include?(value)
-
-      "#{as} is not included in the list"
-    end
-
-    def validate_option(aggregator:, option:, value:) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
-      failures = aggregator.size
-
-      aggregator.validate_presence(value, as: option.name) if option.required?
-
-      return unless option.validate?
-
-      # Skip additional validation for missing required options.
-      return unless aggregator.size == failures
-
-      case option.validate
-      when true
-        validate_option_name(aggregator:, option:, value:)
-      when String, Symbol
-        validate_option_method(aggregator:, option:, value:)
-      when Module
-        validate_option_class(aggregator:, option:, value:)
-      when Proc
-        validate_option_block(aggregator:, option:, value:)
-      when Hash
-        validate_option_hash(aggregator:, option:, value:)
-      end
-    end
-
-    def validate_option_block(aggregator:, option:, value:)
-      validator  = option.validate
-      message    =
-        if validator_accepts_name_parameter?(validator)
-          validator.call(value, as: option.name)
-        else
-          validator.call(value)
-        end
-
-      aggregator << message if message.present?
-    end
-
-    def validate_option_class(aggregator:, option:, value:)
-      aggregator
-        .validate_instance_of(value, expected: option.validate, as: option.name)
-    end
-
-    def validate_option_hash(aggregator:, option:, value:) # rubocop:disable Metrics/MethodLength
-      option.validate.each do |method_name, expected|
-        validation_method = "validate_#{method_name}"
-
-        keywords = { as: option.name }
-        keywords[:expected] = expected unless expected == true
-
-        if aggregator.respond_to?(validation_method)
-          aggregator.public_send(validation_method, value, **keywords)
-        else
-          message = send(validation_method, value, **keywords)
-
-          aggregator << message if message.present?
-        end
-      end
-    end
-
-    def validate_option_method(aggregator:, option:, value:)
-      validation_method = "validate_#{option.validate}"
-
-      if aggregator.respond_to?(validation_method)
-        aggregator.public_send(validation_method, value, as: option.name)
-      else
-        message = send(validation_method, value, as: option.name)
-
-        aggregator << message if message.present?
-      end
-    end
-
-    def validate_option_name(aggregator:, option:, value:)
-      validation_method = "validate_#{option.name}"
-
-      message = send(validation_method, value, as: option.name)
-
-      aggregator << message if message.present?
-    end
-
-    def validate_options(options) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-      aggregator = tools.assertions.aggregator_class.new
-      extra_keys = find_extra_options(options)
-
-      extra_keys.each { |key| aggregator << "#{key} is not a valid option" }
-
-      self.class.options.each_value do |option|
-        validate_option(
-          aggregator:,
-          option:,
-          value:      options[option.name.intern]
+    def validate_options(value)
+      Librum::Components::Options::Validator
+        .new(
+          allow_extra_options: self.class.allow_extra_options?,
+          options:             self.class.options
         )
-      end
-
-      return options if aggregator.empty?
-
-      raise InvalidOptionsError,
-        invalid_options_message(
-          extra_keys:,
-          failure_message: aggregator.failure_message
-        )
-    end
-
-    def validator_accepts_name_parameter?(validator)
-      parameters = validator.parameters
-
-      parameters.any? do |type, name|
-        name == :as && (type == :key || type == :keyreq) # rubocop:disable Style/MultipleComparison
-      end
+        .call(component: self, value:)
     end
   end
 end

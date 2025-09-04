@@ -46,6 +46,12 @@ module Librum::Components
       required
     end
 
+    # @return [Hash] a Hash representation of the option.
+    def to_hash
+      { boolean:, name:, default:, required:, validate: }
+    end
+    alias_method :to_h, :to_hash
+
     # @return [true, false] if true, the option defines a validation.
     def validate?
       !validate.nil?

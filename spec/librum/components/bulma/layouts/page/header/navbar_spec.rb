@@ -20,44 +20,11 @@ do
     value: [{ label: 'Home', url: '/' }]
 
   describe '.new' do
-    describe 'with navigation: an Object' do
-      let(:component_options) do
-        super().merge(navigation: Object.new.freeze)
-      end
-      let(:error_message) do
-        'navigation is not an Array'
-      end
-
-      it 'should raise an exception' do
-        expect { described_class.new(**component_options) }.to raise_error(
-          Librum::Components::Options::InvalidOptionsError,
-          error_message
-        )
-      end
-    end
-
-    describe 'with navigation: an Array with invalid items' do
-      let(:navigation) do
-        [
-          { label: 'Home', url: '/' },
-          Object.new.freeze,
-          { label: 'Widgets', url: '/widgets' }
-        ]
-      end
-      let(:component_options) do
-        super().merge(navigation:)
-      end
-      let(:error_message) do
-        'navigation item 1 is not a Hash'
-      end
-
-      it 'should raise an exception' do
-        expect { described_class.new(**component_options) }.to raise_error(
-          Librum::Components::Options::InvalidOptionsError,
-          error_message
-        )
-      end
-    end
+    include_deferred 'should validate that option is a valid array',
+      :navigation,
+      invalid_item: Object.new.freeze,
+      item_message: 'is not an instance of Hash',
+      valid_items:  [{ icon: 'left-arrow' }, { icon: 'right-arrow' }]
   end
 
   describe '#call' do
