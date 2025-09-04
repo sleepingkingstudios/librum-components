@@ -80,6 +80,48 @@ RSpec.describe Librum::Components::Option do
     end
   end
 
+  describe '#to_h' do
+    let(:expected) do
+      {
+        boolean:  option.boolean,
+        default:  option.default,
+        name:     option.name,
+        required: option.required,
+        validate: option.validate
+      }
+    end
+
+    it { expect(option.to_h).to be == expected }
+
+    it { expect(option).to have_aliased_method(:to_h).as(:to_hash) }
+
+    context 'when initialized with boolean: true' do
+      let(:options) { super().merge(boolean: true) }
+
+      it { expect(option.to_h).to be == expected }
+    end
+
+    context 'when initialized with default: a value' do
+      let(:default) { 'value' }
+      let(:options) { super().merge(default:) }
+
+      it { expect(option.to_h).to be == expected }
+    end
+
+    context 'when initialized with required: true' do
+      let(:options) { super().merge(required: true) }
+
+      it { expect(option.to_h).to be == expected }
+    end
+
+    context 'when initialized with validate: a value' do
+      let(:validate) { :present }
+      let(:options)  { super().merge(validate:) }
+
+      it { expect(option.to_h).to be == expected }
+    end
+  end
+
   describe '#validate' do
     include_examples 'should define reader', :validate, nil
 

@@ -14,6 +14,7 @@ require 'rspec/sleeping_king_studios/deferred'
 require 'rspec/sleeping_king_studios/examples/property_examples'
 require 'rspec/sleeping_king_studios/matchers/core/be_boolean'
 require 'rspec/sleeping_king_studios/matchers/core/construct'
+require 'rspec/sleeping_king_studios/matchers/core/have_aliased_method'
 require 'rspec/sleeping_king_studios/matchers/built_in/respond_to'
 require 'byebug'
 

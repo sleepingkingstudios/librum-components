@@ -194,7 +194,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { described_class.new(**component_options) }
             .to raise_error(
-              described_class::InvalidOptionsError,
+              Librum::Components::Options::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -211,7 +211,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { described_class.new(**component_options) }
             .to raise_error(
-              described_class::InvalidOptionsError,
+              Librum::Components::Options::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -232,8 +232,7 @@ module Librum::Components::RSpec::Deferred
           )
         end
         let(:valid_options) do
-          described_class
-            .options
+          defined_options
             .keys
             .sort
             .map { |key| ":#{key}" }
@@ -244,21 +243,39 @@ module Librum::Components::RSpec::Deferred
             'valid option'
         end
         let(:valid_options_message) do
-          if described_class.options.empty?
-            "#{described_class.name} does not define any valid options"
+          if defined_options.empty?
+            "#{component_name} does not define any valid options"
           else
-            "valid options for #{described_class.name} are #{valid_options}"
+            "valid options for #{component_name} are #{valid_options}"
           end
+        end
+
+        define_method :component_name do
+          next super() if defined?(super())
+
+          described_class.name
+        end
+
+        define_method :defined_options do
+          next super() if defined?(super())
+
+          described_class.options
         end
 
         define_method :tools do
           SleepingKingStudios::Tools::Toolbelt.instance
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
+          expect { validate_options }
             .to raise_error(
-              described_class::InvalidOptionsError,
+              Librum::Components::Options::InvalidOptionsError,
               include(error_message).and(include(valid_options_message))
             )
         end
@@ -283,10 +300,16 @@ module Librum::Components::RSpec::Deferred
           SleepingKingStudios::Tools::Toolbelt.instance
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
+          expect { validate_options }
             .to raise_error(
-              described_class::InvalidOptionsError,
+              Librum::Components::Options::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -301,9 +324,14 @@ module Librum::Components::RSpec::Deferred
             super().merge(option_name.intern => expected_value)
           end
 
+          define_method :validate_options do
+            next super() if defined?(super())
+
+            described_class.new(**component_options)
+          end
+
           it 'should not raise an exception' do
-            expect { described_class.new(**component_options) }
-              .not_to raise_error
+            expect { validate_options }.not_to raise_error
           end
         end
       end
@@ -316,10 +344,16 @@ module Librum::Components::RSpec::Deferred
           "#{option_name} is not included in the list"
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
+          expect { validate_options }
             .to raise_error(
-              described_class::InvalidOptionsError,
+              Librum::Components::Options::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -343,10 +377,16 @@ module Librum::Components::RSpec::Deferred
           SleepingKingStudios::Tools::Toolbelt.instance
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
+          expect { validate_options }
             .to raise_error(
-              described_class::InvalidOptionsError,
+              Librum::Components::Options::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -364,14 +404,20 @@ module Librum::Components::RSpec::Deferred
             )
           end
 
+          define_method :validate_options do
+            next super() if defined?(super())
+
+            described_class.new(**component_options)
+          end
+
           define_method :tools do
             SleepingKingStudios::Tools::Toolbelt.instance
           end
 
           it 'should raise an exception' do
-            expect { described_class.new(**component_options) }
+            expect { validate_options }
               .to raise_error(
-                described_class::InvalidOptionsError,
+                Librum::Components::Options::InvalidOptionsError,
                 include(error_message)
               )
           end
@@ -398,10 +444,16 @@ module Librum::Components::RSpec::Deferred
             SleepingKingStudios::Tools::Toolbelt.instance
           end
 
+          define_method :validate_options do
+            next super() if defined?(super())
+
+            described_class.new(**component_options)
+          end
+
           it 'should raise an exception' do
-            expect { described_class.new(**component_options) }
+            expect { validate_options }
               .to raise_error(
-                described_class::InvalidOptionsError,
+                Librum::Components::Options::InvalidOptionsError,
                 include(error_message)
               )
           end
@@ -424,10 +476,16 @@ module Librum::Components::RSpec::Deferred
           SleepingKingStudios::Tools::Toolbelt.instance
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
+          expect { validate_options }
             .to raise_error(
-              described_class::InvalidOptionsError,
+              Librum::Components::Options::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -444,10 +502,16 @@ module Librum::Components::RSpec::Deferred
           "#{option_name} is not a valid color name"
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
+          expect { validate_options }
             .to raise_error(
-              described_class::InvalidOptionsError,
+              Librum::Components::Options::InvalidOptionsError,
               error_message
             )
         end
@@ -464,10 +528,16 @@ module Librum::Components::RSpec::Deferred
           "#{option_name} is not a valid icon"
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
+          expect { validate_options }
             .to raise_error(
-              described_class::InvalidOptionsError,
+              Librum::Components::Options::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -478,9 +548,14 @@ module Librum::Components::RSpec::Deferred
           super().merge(option_name.intern => 'rainbow')
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should not raise an exception' do
-          expect { described_class.new(**component_options) }
-            .not_to raise_error
+          expect { validate_options }.not_to raise_error
         end
       end
 
@@ -489,9 +564,14 @@ module Librum::Components::RSpec::Deferred
           super().merge(option_name.intern => { icon: 'rainbow' })
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should not raise an exception' do
-          expect { described_class.new(**component_options) }
-            .not_to raise_error
+          expect { validate_options }.not_to raise_error
         end
       end
 
@@ -506,18 +586,23 @@ module Librum::Components::RSpec::Deferred
           super().merge(option_name.intern => { icon: })
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should not raise an exception' do
-          expect { described_class.new(**component_options) }
-            .not_to raise_error
+          expect { validate_options }.not_to raise_error
         end
       end
     end
 
     deferred_examples 'should validate that option is a valid name' \
     do |option_name|
-      context "when :#{option_name} is an empty String" do
+      context "when :#{option_name} is an Object" do
         let(:component_options) do
-          super().merge(option_name.intern => '')
+          super().merge(option_name.intern => Object.new.freeze)
         end
         let(:error_message) do
           tools.assertions.error_message_for(
@@ -530,10 +615,16 @@ module Librum::Components::RSpec::Deferred
           SleepingKingStudios::Tools::Toolbelt.instance
         end
 
+        define_method :validate_options do
+          next super() if defined?(super())
+
+          described_class.new(**component_options)
+        end
+
         it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
+          expect { validate_options }
             .to raise_error(
-              described_class::InvalidOptionsError,
+              Librum::Components::Options::InvalidOptionsError,
               include(error_message)
             )
         end
