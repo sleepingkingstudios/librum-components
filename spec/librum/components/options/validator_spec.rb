@@ -179,6 +179,15 @@ RSpec.describe Librum::Components::Options::Validator do
         :text_color
     end
 
+    context 'with an option with validate: :component' do
+      let(:raw_options) do
+        { widget: { validate: :component } }
+      end
+
+      include_deferred 'should validate that option is a valid component',
+        :widget
+    end
+
     context 'with an option with validate: :icon' do
       let(:raw_options) do
         { spinner_icon: { validate: :icon } }

@@ -10,14 +10,6 @@ RSpec.describe Librum::Components::Options do
 
   subject(:component) { described_class.new(**component_options) }
 
-  shared_context 'when the component defines configuration' do
-    before(:example) do
-      described_class.define_method(:configuration) do
-        Librum::Components::Configuration.default
-      end
-    end
-  end
-
   shared_context 'when the component defines options' do
     before(:example) do
       described_class.option :label

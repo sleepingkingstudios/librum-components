@@ -7,6 +7,16 @@ module Librum::Components::RSpec::Deferred
   module OptionsExamples
     include RSpec::SleepingKingStudios::Deferred::Provider
 
+    define_method :tools do
+      SleepingKingStudios::Tools::Toolbelt.instance
+    end
+
+    define_method :validate_options do
+      next super() if defined?(super())
+
+      described_class.new(**component_options)
+    end
+
     deferred_context 'when the component defines options' do
       before(:example) do
         described_class.option :label
@@ -262,16 +272,6 @@ module Librum::Components::RSpec::Deferred
           described_class.options
         end
 
-        define_method :tools do
-          SleepingKingStudios::Tools::Toolbelt.instance
-        end
-
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
-        end
-
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
@@ -296,16 +296,6 @@ module Librum::Components::RSpec::Deferred
           )
         end
 
-        define_method :tools do
-          SleepingKingStudios::Tools::Toolbelt.instance
-        end
-
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
-        end
-
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
@@ -324,12 +314,6 @@ module Librum::Components::RSpec::Deferred
             super().merge(option_name.intern => expected_value)
           end
 
-          define_method :validate_options do
-            next super() if defined?(super())
-
-            described_class.new(**component_options)
-          end
-
           it 'should not raise an exception' do
             expect { validate_options }.not_to raise_error
           end
@@ -342,12 +326,6 @@ module Librum::Components::RSpec::Deferred
         end
         let(:error_message) do
           "#{option_name} is not included in the list"
-        end
-
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
         end
 
         it 'should raise an exception' do
@@ -373,16 +351,6 @@ module Librum::Components::RSpec::Deferred
           )
         end
 
-        define_method :tools do
-          SleepingKingStudios::Tools::Toolbelt.instance
-        end
-
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
-        end
-
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
@@ -402,16 +370,6 @@ module Librum::Components::RSpec::Deferred
               'sleeping_king_studios.tools.assertions.presence',
               as: option_name
             )
-          end
-
-          define_method :validate_options do
-            next super() if defined?(super())
-
-            described_class.new(**component_options)
-          end
-
-          define_method :tools do
-            SleepingKingStudios::Tools::Toolbelt.instance
           end
 
           it 'should raise an exception' do
@@ -440,16 +398,6 @@ module Librum::Components::RSpec::Deferred
             )
           end
 
-          define_method :tools do
-            SleepingKingStudios::Tools::Toolbelt.instance
-          end
-
-          define_method :validate_options do
-            next super() if defined?(super())
-
-            described_class.new(**component_options)
-          end
-
           it 'should raise an exception' do
             expect { validate_options }
               .to raise_error(
@@ -472,16 +420,6 @@ module Librum::Components::RSpec::Deferred
           )
         end
 
-        define_method :tools do
-          SleepingKingStudios::Tools::Toolbelt.instance
-        end
-
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
-        end
-
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
@@ -502,18 +440,54 @@ module Librum::Components::RSpec::Deferred
           "#{option_name} is not a valid color name"
         end
 
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
-        end
-
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
               Librum::Components::Options::InvalidOptionsError,
               error_message
             )
+        end
+      end
+    end
+
+    deferred_examples 'should validate that option is a valid component' \
+    do |option_name|
+      context "when #{option_name} is an Object" do
+        let(:component_options) do
+          super().merge(option_name.intern => Object.new.freeze)
+        end
+        let(:error_message) do
+          "#{option_name} is not a component or options Hash"
+        end
+
+        it 'should raise an exception' do
+          expect { validate_options }
+            .to raise_error(
+              Librum::Components::Options::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+
+      context "when #{option_name} is parameters for a component" do
+        let(:component_options) do
+          super().merge(option_name.intern => {})
+        end
+
+        it 'should not raise an exception' do
+          expect { validate_options }.not_to raise_error
+        end
+      end
+
+      context "when #{option_name} is a component" do
+        let(:component_options) do
+          value = Librum::Components::Literal.new('<img />')
+
+          super().merge(option_name.intern => value)
+        end
+
+        it 'should not raise an exception' do
+          expect { validate_options }.not_to raise_error
         end
       end
     end
@@ -526,12 +500,6 @@ module Librum::Components::RSpec::Deferred
         end
         let(:error_message) do
           "#{option_name} is not a valid icon"
-        end
-
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
         end
 
         it 'should raise an exception' do
@@ -548,12 +516,6 @@ module Librum::Components::RSpec::Deferred
           super().merge(option_name.intern => 'rainbow')
         end
 
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
-        end
-
         it 'should not raise an exception' do
           expect { validate_options }.not_to raise_error
         end
@@ -562,12 +524,6 @@ module Librum::Components::RSpec::Deferred
       context "when :#{option_name} is parameters for an icon component" do
         let(:component_options) do
           super().merge(option_name.intern => { icon: 'rainbow' })
-        end
-
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
         end
 
         it 'should not raise an exception' do
@@ -584,12 +540,6 @@ module Librum::Components::RSpec::Deferred
         end
         let(:component_options) do
           super().merge(option_name.intern => { icon: })
-        end
-
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
         end
 
         it 'should not raise an exception' do
@@ -609,16 +559,6 @@ module Librum::Components::RSpec::Deferred
             'sleeping_king_studios.tools.assertions.name',
             as: option_name
           )
-        end
-
-        define_method :tools do
-          SleepingKingStudios::Tools::Toolbelt.instance
-        end
-
-        define_method :validate_options do
-          next super() if defined?(super())
-
-          described_class.new(**component_options)
         end
 
         it 'should raise an exception' do

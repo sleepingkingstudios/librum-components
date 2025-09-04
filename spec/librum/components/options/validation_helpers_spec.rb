@@ -52,6 +52,48 @@ RSpec.describe Librum::Components::Options::ValidationHelpers do
     end
   end
 
+  describe '#validate_component' do
+    it 'should define the private method' do
+      expect(helpers)
+        .to respond_to(:validate_component, true)
+        .with(1).argument
+        .and_keywords(:as)
+    end
+
+    describe 'with nil' do
+      it { expect(helpers.send(:validate_component, nil)).to be nil }
+    end
+
+    describe 'with an Object' do
+      let(:message) { 'value is not a component or options Hash' }
+
+      it 'should return the error message' do
+        expect(helpers.send(:validate_component, Object.new.freeze))
+          .to be == message
+      end
+
+      describe 'with as: value' do
+        let(:as)      { 'logo' }
+        let(:message) { 'logo is not a component or options Hash' }
+
+        it 'should return the error message' do
+          expect(helpers.send(:validate_component, Object.new.freeze, as:))
+            .to be == message
+        end
+      end
+    end
+
+    describe 'with a Hash' do
+      it { expect(helpers.send(:validate_component, {})).to be nil }
+    end
+
+    describe 'with a component' do
+      let(:component) { Librum::Components::Literal.new('<img />') }
+
+      it { expect(helpers.send(:validate_component, component)).to be nil }
+    end
+  end
+
   describe '#validate_icon' do
     it 'should define the private method' do
       expect(helpers)

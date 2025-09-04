@@ -17,6 +17,14 @@ module Librum::Components::Options
       "#{as} is not a valid color name"
     end
 
+    def validate_component(value, as: 'value')
+      return if value.nil?
+      return if value.is_a?(Hash)
+      return if value.is_a?(::ViewComponent::Base)
+
+      "#{as} is not a component or options Hash"
+    end
+
     def validate_icon(value, as: 'icon')
       return if value.nil?
       return if value.is_a?(String)
