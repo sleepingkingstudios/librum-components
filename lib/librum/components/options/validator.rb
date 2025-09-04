@@ -63,6 +63,24 @@ module Librum::Components::Options
       end
     end
 
+    def array_validation?(validate)
+      return true if validate == :array
+
+      validate.is_a?(Hash) && validate.fetch(:array, false)
+    end
+
+    def call_validation_method(method_name:, name:, value:, validate: nil, **)
+      if array_validation?(validate)
+        validate_option_array(name:, value:, validate:)
+      elsif aggregator.respond_to?(method_name)
+        aggregator.public_send(method_name, value, as: name, **)
+      else
+        message = component.send(method_name, value, as: name, **)
+
+        aggregator << message if message.present?
+      end
+    end
+
     def component_name
       component.class.name
     end
@@ -104,6 +122,30 @@ module Librum::Components::Options
       validate_option_value(name:, value:, validate:)
     end
 
+    def validate_option_array(name:, value:, validate:)
+      return if value.nil?
+
+      unless value.is_a?(Array)
+        aggregator << "#{name} is not an Array"
+
+        return
+      end
+
+      validate_option_array_items(name:, value:, validate:)
+    end
+
+    def validate_option_array_items(name:, value:, validate:)
+      return if validate == true
+
+      validate = validate[:array] if validate.is_a?(Hash)
+
+      value.each.with_index do |item, index|
+        item_name = "#{name} item #{index}"
+
+        validate_option_value(name: item_name, validate:, value: item)
+      end
+    end
+
     def validate_option_block(name:, value:, validate:)
       message =
         if accepts_name_parameter?(validate)
@@ -115,20 +157,13 @@ module Librum::Components::Options
       aggregator << message if message.present?
     end
 
-    def validate_option_hash(name:, value:, validate:) # rubocop:disable Metrics/MethodLength
-      validate.each do |method_name, expected|
-        validation_method = "validate_#{method_name}"
+    def validate_option_hash(name:, value:, validate:)
+      validate.each do |type, expected|
+        method_name = "validate_#{type}"
 
-        keywords = { as: name }
-        keywords[:expected] = expected unless expected == true
+        opts = expected == true ? {} : { expected: }
 
-        if aggregator.respond_to?(validation_method)
-          aggregator.public_send(validation_method, value, **keywords)
-        else
-          message = component.send(validation_method, value, **keywords)
-
-          aggregator << message if message.present?
-        end
+        call_validation_method(method_name:, name:, value:, validate:, **opts)
       end
     end
 
@@ -137,15 +172,9 @@ module Librum::Components::Options
     end
 
     def validate_option_method(name:, validate:, value:)
-      validation_method = "validate_#{validate}"
+      method_name = "validate_#{validate}"
 
-      if aggregator.respond_to?(validation_method)
-        aggregator.public_send(validation_method, value, as: name)
-      else
-        message = component.send(validation_method, value, as: name)
-
-        aggregator << message if message.present?
-      end
+      call_validation_method(method_name:, name:, value:, validate:)
     end
 
     def validate_option_name(name:, value:, **)

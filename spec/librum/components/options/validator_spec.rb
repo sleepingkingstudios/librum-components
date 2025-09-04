@@ -167,6 +167,42 @@ RSpec.describe Librum::Components::Options::Validator do
       end
     end
 
+    context 'with an option with validate: :array' do
+      let(:raw_options) do
+        { variants: { validate: :array } }
+      end
+
+      include_deferred 'should validate that option is a valid array',
+        :variants
+    end
+
+    context 'with an option with validate: { array: true }' do
+      let(:raw_options) do
+        { variants: { validate: { array: true } } }
+      end
+
+      include_deferred 'should validate that option is a valid array',
+        :variants
+    end
+
+    context 'with an option with validate: :array and item validations' do
+      let(:raw_options) do
+        {
+          stir_directions: {
+            validate: {
+              array: { inclusion: %w[deosil widdershins] }
+            }
+          }
+        }
+      end
+
+      include_deferred 'should validate that option is a valid array',
+        :stir_directions,
+        invalid_item: 'clockwise',
+        item_message: 'is not included in the list',
+        valid_items:  %w[deosil deosil widdershins deosil]
+    end
+
     context 'with an option with validate: :color' do
       let(:raw_options) do
         { text_color: { validate: :color } }
