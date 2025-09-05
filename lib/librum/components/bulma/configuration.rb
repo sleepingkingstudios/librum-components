@@ -13,9 +13,11 @@ module Librum::Components::Bulma
 
     # Default options for configuration for a Bulma application.
     DEFAULTS = Librum::Components::Configuration::DEFAULTS.merge(
+      # See https://bulma.io/documentation/helpers/palette-helpers/
       'colors'              => %w[
-        primary
+        text
         link
+        primary
         info
         success
         warning
