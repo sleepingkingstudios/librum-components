@@ -31,7 +31,7 @@ RSpec.describe Librum::Components::Bulma::Configuration do
 
     describe 'colors' do
       let(:expected) do
-        %w[primary link info success warning danger]
+        %w[text link primary info success warning danger]
       end
 
       it { expect(described_class::DEFAULTS['colors']).to be == expected }
