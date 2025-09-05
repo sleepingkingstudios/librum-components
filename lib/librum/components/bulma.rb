@@ -10,6 +10,7 @@ module Librum::Components
     autoload :Base,          'librum/components/bulma/base'
     autoload :Box,           'librum/components/bulma/box'
     autoload :Configuration, 'librum/components/bulma/configuration'
+    autoload :Heading,       'librum/components/bulma/heading'
     autoload :Icon,          'librum/components/bulma/icon'
     autoload :Label,         'librum/components/bulma/label'
     autoload :Layouts,       'librum/components/bulma/layouts'

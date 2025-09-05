@@ -11,6 +11,7 @@ module Librum::Components::Bulma
     # The valid option values for the :target option.
     LINK_TARGETS = Set.new(%w[blank self]).freeze
 
+    option :button, boolean:  true
     option :color,  validate: true
     option :icon,   validate: true
     option :target, validate: { inclusion: LINK_TARGETS }
@@ -40,6 +41,7 @@ module Librum::Components::Bulma
     def link_class_name
       class_names(
         bulma_class_names(
+          button?                        ? 'button'            : nil,
           icon.present? && text.present? ? 'icon-text'         : nil,
           color                          ? "has-text-#{color}" : nil
         ),

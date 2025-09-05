@@ -28,6 +28,8 @@ RSpec.describe Librum::Components::Bulma::Link, type: :component do
 
   include_deferred 'should define typography options'
 
+  include_deferred 'should define component option', :button, boolean: true
+
   include_deferred 'should define component option', :class_name
 
   include_deferred 'should define component option',
@@ -69,6 +71,18 @@ RSpec.describe Librum::Components::Bulma::Link, type: :component do
     end
 
     it { expect(rendered.to_s).to match_snapshot }
+
+    describe 'with button: true' do
+      let(:component_options) { super().merge(button: true) }
+      let(:snapshot) do
+        <<~HTML
+          <a class="button">
+          </a>
+        HTML
+      end
+
+      it { expect(rendered.to_s).to match_snapshot }
+    end
 
     describe 'with class_name: value' do
       let(:component_options) { super().merge(class_name: 'custom-class') }
@@ -206,6 +220,18 @@ RSpec.describe Librum::Components::Bulma::Link, type: :component do
 
     context 'with configuration: { bulma_prefix: value }' do
       include_deferred 'with configuration', bulma_prefix: 'bulma-'
+
+      describe 'with button: true' do
+        let(:component_options) { super().merge(button: true) }
+        let(:snapshot) do
+          <<~HTML
+            <a class="bulma-button">
+            </a>
+          HTML
+        end
+
+        it { expect(rendered.to_s).to match_snapshot }
+      end
 
       describe 'with multiple options' do
         let(:component_options) do

@@ -1,0 +1,15 @@
+<% if render_actions? %>
+<div class="<%= bulma_class_names('level mb-5') %>">
+  <div class="<%= bulma_class_names('level-left') %>">
+    <%= render_heading %>
+  </div>
+
+  <div class="<%= bulma_class_names('level-right') %>">
+    <% actions.each do |action| %>
+    <%= render_action(action) %>
+    <% end %>
+  </div>
+</div>
+<% else %>
+<%= render_heading %>
+<% end %>
