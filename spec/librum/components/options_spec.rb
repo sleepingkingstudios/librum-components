@@ -25,22 +25,6 @@ RSpec.describe Librum::Components::Options do
     klass.include Librum::Components::Options # rubocop:disable RSpec/DescribedClass
   end
 
-  describe '::DuplicateOptionError' do
-    it 'should define the constant' do
-      expect(described_class)
-        .to define_constant(:DuplicateOptionError)
-        .with_value(an_instance_of(Class).and(be < StandardError))
-    end
-  end
-
-  describe '::InvalidOptionsError' do
-    it 'should define the constant' do
-      expect(described_class)
-        .to define_constant(:InvalidOptionsError)
-        .with_value(an_instance_of(Class).and(be < ArgumentError))
-    end
-  end
-
   describe '.new' do
     include_deferred 'should validate the component options'
 
@@ -129,7 +113,7 @@ RSpec.describe Librum::Components::Options do
           it 'should raise an exception' do
             expect { described_class.new(**component_options) }
               .to raise_error(
-                described_class::InvalidOptionsError,
+                Librum::Components::Errors::InvalidOptionsError,
                 error_message
               )
           end

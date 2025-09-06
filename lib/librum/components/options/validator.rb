@@ -31,7 +31,7 @@ module Librum::Components::Options
     #
     # @return [void]
     #
-    # @raises [Librum::Components::Options::InvalidOptionsError] if the options
+    # @raises [Librum::Components::Errors::InvalidOptionsError] if the options
     #   are not valid.
     def call(component:, value:)
       @component  = component
@@ -42,7 +42,7 @@ module Librum::Components::Options
 
       return if aggregator.empty?
 
-      raise Librum::Components::Options::InvalidOptionsError,
+      raise Librum::Components::Errors::InvalidOptionsError,
         invalid_options_message(
           extra_keys:,
           failure_message: aggregator.failure_message

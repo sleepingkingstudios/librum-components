@@ -7,7 +7,11 @@ module Librum::Components
   module Errors
     autoload :AbstractComponentError,
       'librum/components/errors/abstract_component_error'
+    autoload :DuplicateOptionError,
+      'librum/components/errors/duplicate_option_error'
     autoload :InvalidComponentError,
       'librum/components/errors/invalid_component_error'
+    autoload :InvalidOptionsError,
+      'librum/components/errors/invalid_options_error'
   end
 end

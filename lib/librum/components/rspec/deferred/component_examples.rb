@@ -269,7 +269,7 @@ module Librum::Components::RSpec::Deferred
 
             it 'should raise an exception' do
               expect { described_class.build(value) }.to raise_error(
-                Librum::Components::Options::InvalidOptionsError
+                Librum::Components::Errors::InvalidOptionsError
               )
             end
           end

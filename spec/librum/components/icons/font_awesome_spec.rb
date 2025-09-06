@@ -89,7 +89,7 @@ RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
 
       it 'should raise an exception' do
         expect { described_class.new(**component_options) }
-          .to raise_error Librum::Components::Options::InvalidOptionsError,
+          .to raise_error Librum::Components::Errors::InvalidOptionsError,
             error_message
       end
     end
@@ -101,7 +101,7 @@ RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
 
       it 'should raise an exception' do
         expect { described_class.new(**component_options) }
-          .to raise_error Librum::Components::Options::InvalidOptionsError,
+          .to raise_error Librum::Components::Errors::InvalidOptionsError,
             error_message
       end
     end

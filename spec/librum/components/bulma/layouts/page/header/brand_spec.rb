@@ -32,7 +32,7 @@ do
       it 'should raise an exception' do
         expect { described_class.new(**component_options) }
           .to raise_error(
-            described_class::InvalidOptionsError,
+            Librum::Components::Errors::InvalidOptionsError,
             error_message
           )
       end

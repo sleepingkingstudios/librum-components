@@ -3,6 +3,7 @@
 require 'sleeping_king_studios/tools/toolbox/mixin'
 
 require 'librum/components'
+require 'librum/components/errors/duplicate_option_error'
 
 module Librum::Components
   # Module for defining named options for components.
@@ -12,12 +13,6 @@ module Librum::Components
     autoload :ClassName,         'librum/components/options/class_name'
     autoload :Validator,         'librum/components/options/validator'
     autoload :ValidationHelpers, 'librum/components/options/validation_helpers'
-
-    # Exception raised when defining an option that already exists.
-    class DuplicateOptionError < StandardError; end
-
-    # Exception raised when creating a component with unrecognized option.
-    class InvalidOptionsError < ArgumentError; end
 
     class << self
       # Callback invoked whenever Options is included in another module.
@@ -82,7 +77,8 @@ module Librum::Components
       #   end
       #
       #   CustomComponent.new
-      #   #=> raises InvalidOptionsError, "disclaimer can't be blank"
+      #   #=> raises Librum::Components::Errors::InvalidOptionsError,
+      #         "disclaimer can't be blank"
       #
       # @example Define A Validated Option
       #   class CustomComponent
@@ -100,7 +96,8 @@ module Librum::Components
       #   end
       #
       #   CustomComponent.new(license: 'LGPL')
-      #   #=> raises InvalidOptionsError, 'project must use the MIT license'
+      #   #=> raises Librum::Components::Errors::InvalidOptionsError,
+      #         'project must use the MIT license'
       #
       # @example Define An Option With Block Validation
       #   class CustomComponent
@@ -111,7 +108,8 @@ module Librum::Components
       #   end
       #
       #   CustomComponent.new(lights: 5)
-      #   #=> raises InvalidOptionsError, 'there are four lights'
+      #   #=> raises Librum::Components::Errors::InvalidOptionsError,
+      #         'there are four lights'
       #
       # @example Define An Option With Method Validation
       #   class CustomComponent
@@ -134,11 +132,13 @@ module Librum::Components
       #   end
       #
       #   CustomComponent.new(checked: nil)
-      #   #=> raises InvalidOptionsError, 'checked must be true or false'
+      #   #=> raises Librum::Components::Errors::InvalidOptionsError,
+      #         'checked must be true or false'
       #
       #   checked_popover = "Neque porro quisquam est qui dolorem ipsum quia..."
       #   CustomComponent.new(checked_popover:)
-      #   #=> raises InvalidOptionsError, 'checked_popover is too long'
+      #   #=> raises Librum::Components::Errors::InvalidOptionsError,
+      #         'checked_popover is too long'
       #
       # @example Define An Option With Type Validation
       #   class CustomComponent
@@ -148,7 +148,8 @@ module Librum::Components
       #   end
       #
       #   CustomComponent.new(counter: 'threeve')
-      #   #=> raises InvalidOptionsError, 'counter is not an instance of Integer'
+      #   #=> raises Librum::Components::Errors::InvalidOptionsError,
+      #         'counter is not an instance of Integer'
       #
       # @example Define An Option With Multiple Validations
       #   class CustomComponent
@@ -161,10 +162,12 @@ module Librum::Components
       #   end
       #
       #   CustomComponent.new
-      #   #=> raises InvalidOptionsError, "rgb_color can't be blank"
+      #   #=> raises Librum::Components::Errors::InvalidOptionsError,
+      #          "rgb_color can't be blank"
       #
       #   CustomComponent.new(rgb_color: 'blue')
-      #   #=> raises InvalidOptionsError, 'rgb_color does not match the pattern'
+      #   #=> raises Librum::Components::Errors::InvalidOptionsError,
+      #         'rgb_color does not match the pattern'
       def option( # rubocop:disable Metrics/MethodLength
         name,
         boolean: false,
@@ -254,7 +257,7 @@ module Librum::Components
           "unable to define option #{option_name} - the option is already " \
           "defined on #{parent_component}"
 
-        raise DuplicateOptionError, message
+        raise Librum::Components::Errors::DuplicateOptionError, message
       end
     end
 

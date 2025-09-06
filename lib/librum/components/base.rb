@@ -10,6 +10,7 @@ require 'sleeping_king_studios/tools/toolbelt'
 require 'librum/components'
 require 'librum/components/empty'
 require 'librum/components/errors/abstract_component_error'
+require 'librum/components/errors/invalid_options_error'
 require 'librum/components/option'
 require 'librum/components/options'
 
@@ -49,7 +50,7 @@ module Librum::Components
       #
       #   @return [Librum::Components::Base] the component.
       #
-      #   @raise [Librum::Components::Options::InvalidOptionsError] if the
+      #   @raise [Librum::Components::Errors::InvalidOptionsError] if the
       #     options are not valid for the class.
       def build(maybe_component)
         return maybe_component        if maybe_component.is_a?(self)

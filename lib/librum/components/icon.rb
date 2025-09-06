@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'librum/components'
+require 'librum/components/errors/invalid_options_error'
 require 'librum/components/icons/font_awesome'
 
 module Librum::Components
@@ -73,10 +74,12 @@ module Librum::Components
       return if configuration.icon_families.include?(value)
 
       if value.is_a?(String)
-        raise InvalidOptionsError, "#{as} is not a configured icon family"
+        raise Librum::Components::Errors::InvalidOptionsError,
+          "#{as} is not a configured icon family"
       end
 
-      raise InvalidOptionsError, "#{as} is not an instance of String"
+      raise Librum::Components::Errors::InvalidOptionsError,
+        "#{as} is not an instance of String"
     end
   end
 end
