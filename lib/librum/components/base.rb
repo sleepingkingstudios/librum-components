@@ -21,7 +21,7 @@ module Librum::Components
     include Plumbum::Consumer
     prepend Plumbum::Parameters
 
-    provider Librum::Components::Provider
+    provider Librum::Components.provider
 
     dependency :components,    optional: true
     dependency :configuration, optional: true

@@ -9,6 +9,8 @@ module Librum::Components
       'librum/components/errors/abstract_component_error'
     autoload :DuplicateOptionError,
       'librum/components/errors/duplicate_option_error'
+    autoload :ExistingProviderError,
+      'librum/components/errors/existing_provider_error'
     autoload :InvalidComponentError,
       'librum/components/errors/invalid_component_error'
     autoload :InvalidOptionsError,

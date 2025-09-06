@@ -78,7 +78,7 @@ RSpec.describe Librum::Components::Options::Validator do
       klass.include Plumbum::Consumer
       klass.include Librum::Components::Options::ValidationHelpers
 
-      klass.provider Librum::Components::Provider
+      klass.provider Librum::Components.provider
 
       klass.dependency :configuration, optional: true
     end

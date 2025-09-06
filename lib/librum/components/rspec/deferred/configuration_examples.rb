@@ -16,7 +16,7 @@ module Librum::Components::RSpec::Deferred
 
       before(:example) do
         stub_provider(
-          Librum::Components::Provider,
+          Librum::Components.provider,
           :components,
           configured_components
         )
@@ -46,7 +46,7 @@ module Librum::Components::RSpec::Deferred
 
       before(:example) do
         stub_provider(
-          Librum::Components::Provider,
+          Librum::Components.provider,
           :configuration,
           configuration
         )
@@ -60,7 +60,7 @@ module Librum::Components::RSpec::Deferred
 
       before(:example) do
         stub_provider(
-          Librum::Components::Provider,
+          Librum::Components.provider,
           :routes,
           defined_routes
         )
