@@ -1,0 +1,12 @@
+---
+name: Librum::Components::View#value
+parent_path: librum/components/view
+signature: value
+slug: value
+constructor: false
+data_path: librum/components/view/i-value
+returns:
+- description: the value from the result, if any.
+  type:
+  - name: Object
+version: "*"

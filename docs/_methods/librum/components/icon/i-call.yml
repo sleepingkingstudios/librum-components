@@ -1,0 +1,12 @@
+---
+name: Librum::Components::Icon#call
+parent_path: librum/components/icon
+signature: call
+slug: call
+constructor: false
+data_path: librum/components/icon/i-call
+returns:
+- description: the rendered component.
+  type:
+  - name: ActiveSupport::SafeBuffer
+version: "*"

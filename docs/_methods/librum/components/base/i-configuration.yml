@@ -1,0 +1,14 @@
+---
+name: Librum::Components::Base#configuration
+parent_path: librum/components/base
+signature: configuration
+slug: configuration
+constructor: false
+data_path: librum/components/base/i-configuration
+returns:
+- description: |-
+    the configuration for the component
+    library.
+  type:
+  - name: Librum::Core::Configuration
+version: "*"

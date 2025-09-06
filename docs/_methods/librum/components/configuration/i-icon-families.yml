@@ -1,0 +1,14 @@
+---
+name: Librum::Components::Configuration#icon_families
+parent_path: librum/components/configuration
+signature: icon_families
+slug: icon-families
+constructor: false
+data_path: librum/components/configuration/i-icon-families
+returns:
+- description: the icon families defined for the component set.
+  type:
+  - name: Array
+    items:
+    - name: String
+version: "*"

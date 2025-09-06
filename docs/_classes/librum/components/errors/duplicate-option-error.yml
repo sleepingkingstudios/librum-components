@@ -1,0 +1,14 @@
+---
+name: Librum::Components::Errors::DuplicateOptionError
+slug: duplicate-option-error
+type: class
+files:
+- lib/librum/components/errors/duplicate_option_error.rb
+parent_path: librum/components/errors
+short_description: Exception raised when defining an option that already exists.
+data_path: librum/components/errors/duplicate-option-error
+constructor: false
+inherited_classes:
+- name: StandardError
+  slug: standard-error
+version: "*"

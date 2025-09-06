@@ -7,6 +7,14 @@ files:
 parent_path: librum/components/options
 short_description: Class methods to extend when including Options.
 instance_methods:
+- name: allow_extra_options
+  path: librum/components/options/class-methods/i-allow-extra-options
+  slug: allow-extra-options
+  inherited: false
+- name: allow_extra_options?
+  path: librum/components/options/class-methods/i-allow-extra-options?
+  slug: allow-extra-options?
+  inherited: false
 - name: option
   path: librum/components/options/class-methods/i-option
   slug: option

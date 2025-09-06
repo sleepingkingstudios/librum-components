@@ -50,7 +50,7 @@ RSpec.describe Librum::Components::Bulma::Heading, type: :component do
 
       it 'should raise an exception' do
         expect { described_class.new(**component_options) }.to raise_error(
-          Librum::Components::Options::InvalidOptionsError,
+          Librum::Components::Errors::InvalidOptionsError,
           error_message
         )
       end
@@ -66,7 +66,7 @@ RSpec.describe Librum::Components::Bulma::Heading, type: :component do
 
       it 'should raise an exception' do
         expect { described_class.new(**component_options) }.to raise_error(
-          Librum::Components::Options::InvalidOptionsError,
+          Librum::Components::Errors::InvalidOptionsError,
           error_message
         )
       end
@@ -82,7 +82,7 @@ RSpec.describe Librum::Components::Bulma::Heading, type: :component do
 
       it 'should raise an exception' do
         expect { described_class.new(**component_options) }.to raise_error(
-          Librum::Components::Options::InvalidOptionsError,
+          Librum::Components::Errors::InvalidOptionsError,
           error_message
         )
       end

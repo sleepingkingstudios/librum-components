@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Configuration.default
+parent_path: librum/components/configuration
+signature: default
+slug: default
+constructor: false
+data_path: librum/components/configuration/c-default
+returns:
+- description: |-
+    a configuration instance
+    with default settings.
+  type:
+  - name: Librum::Components::Configuration
+    path: librum/components/configuration
+version: "*"

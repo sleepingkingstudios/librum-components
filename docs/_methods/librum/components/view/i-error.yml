@@ -1,0 +1,12 @@
+---
+name: Librum::Components::View#error
+parent_path: librum/components/view
+signature: error
+slug: error
+constructor: false
+data_path: librum/components/view/i-error
+returns:
+- description: the error from the result, if any.
+  type:
+  - name: Cuprum::Error
+version: "*"

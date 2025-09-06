@@ -1,0 +1,9 @@
+---
+name: Librum::Components::Options.included
+parent_path: librum/components/options
+signature: included(other)
+slug: included
+constructor: false
+data_path: librum/components/options/c-included
+short_description: Callback invoked whenever Options is included in another module.
+version: "*"

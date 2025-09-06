@@ -1,0 +1,12 @@
+---
+name: Librum::Components::Icons::FontAwesome#call
+parent_path: librum/components/icons/font-awesome
+signature: call
+slug: call
+constructor: false
+data_path: librum/components/icons/font-awesome/i-call
+returns:
+- description: the rendered component.
+  type:
+  - name: ActiveSupport::SafeBuffer
+version: "*"

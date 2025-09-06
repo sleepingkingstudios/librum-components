@@ -1,0 +1,8 @@
+---
+name: Librum::Components::Bulma::Options::Typography::TRANSFORMS
+parent_path: librum/components/bulma/options/typography
+slug: transforms
+short_description: The valid option values for the :transform option.
+value: Set.new(%w[capitalized lowercase uppercase]).freeze
+data_path: librum/components/bulma/options/typography/transforms
+version: "*"

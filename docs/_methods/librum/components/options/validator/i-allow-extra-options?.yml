@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Options::Validator#allow_extra_options?
+parent_path: librum/components/options/validator
+signature: allow_extra_options?
+slug: allow-extra-options?
+constructor: false
+data_path: librum/components/options/validator/i-allow-extra-options?
+returns:
+- description: |-
+    if true, ignores unexpected options rather than
+    raising an exception.
+  type:
+  - name: 'true'
+  - name: 'false'
+version: "*"

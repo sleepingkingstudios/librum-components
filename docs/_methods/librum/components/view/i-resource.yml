@@ -1,0 +1,12 @@
+---
+name: Librum::Components::View#resource
+parent_path: librum/components/view
+signature: resource
+slug: resource
+constructor: false
+data_path: librum/components/view/i-resource
+returns:
+- description: the resource for the controller.
+  type:
+  - name: Cuprum::Rails::Resource
+version: "*"

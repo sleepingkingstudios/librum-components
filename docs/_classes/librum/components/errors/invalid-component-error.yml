@@ -1,0 +1,14 @@
+---
+name: Librum::Components::Errors::InvalidComponentError
+slug: invalid-component-error
+type: class
+files:
+- lib/librum/components/errors/invalid_component_error.rb
+parent_path: librum/components/errors
+short_description: Exception raised when building a component with invalid parameters.
+data_path: librum/components/errors/invalid-component-error
+constructor: false
+inherited_classes:
+- name: StandardError
+  slug: standard-error
+version: "*"

@@ -1,0 +1,58 @@
+---
+name: Librum::Components::Bulma::Configuration
+slug: configuration
+type: class
+files:
+- lib/librum/components/bulma/configuration.rb
+parent_path: librum/components/bulma
+short_description: Configuration object for Librum::Components using the Bulma framework.
+class_methods:
+- name: default
+  path: librum/components/bulma/configuration/c-default
+  slug: default
+  inherited: false
+constants:
+- name: DEFAULTS
+  path: librum/components/bulma/configuration/defaults
+  slug: defaults
+  inherited: false
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/configuration/i-options
+  slug: options
+  inherited: true
+instance_methods:
+- name: bulma_prefix
+  path: librum/components/bulma/configuration/i-bulma-prefix
+  slug: bulma-prefix
+  inherited: false
+- name: colors
+  path: librum/components/configuration/i-colors
+  slug: colors
+  inherited: true
+- name: default_icon_family
+  path: librum/components/configuration/i-default-icon-family
+  slug: default-icon-family
+  inherited: true
+- name: freeze
+  path: librum/components/configuration/i-freeze
+  slug: freeze
+  inherited: true
+- name: icon_families
+  path: librum/components/configuration/i-icon-families
+  slug: icon-families
+  inherited: true
+- name: initialize
+  path: librum/components/configuration/i-initialize
+  slug: initialize
+  inherited: true
+  constructor: true
+data_path: librum/components/bulma/configuration
+constructor: true
+inherited_classes:
+- name: Librum::Components::Configuration
+  slug: configuration
+  path: librum/components/configuration
+version: "*"

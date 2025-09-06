@@ -1,0 +1,26 @@
+---
+name: Librum::Components::Options::ClassName
+slug: class-name
+type: module
+files:
+- lib/librum/components/options/class_name.rb
+parent_path: librum/components/options
+short_description: Option for passing a class name parameter to a component.
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: true
+instance_methods:
+- name: initialize
+  path: librum/components/options/i-initialize
+  slug: initialize
+  inherited: true
+data_path: librum/components/options/class-name
+included_modules:
+- name: Librum::Components::Options
+  slug: options
+  path: librum/components/options
+version: "*"

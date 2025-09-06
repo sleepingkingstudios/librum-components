@@ -1,0 +1,12 @@
+---
+name: Librum::Components::Base#components
+parent_path: librum/components/base
+signature: components
+slug: components
+constructor: false
+data_path: librum/components/base/i-components
+returns:
+- description: the class scope for the component library.
+  type:
+  - name: Module
+version: "*"

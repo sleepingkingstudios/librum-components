@@ -1,0 +1,24 @@
+---
+name: Librum::Components::Bulma::Configuration::DEFAULTS
+parent_path: librum/components/bulma/configuration
+slug: defaults
+short_description: Default options for configuration for a Bulma application.
+value: |-
+  Librum::Components::Configuration::DEFAULTS.merge(
+    # See https://bulma.io/documentation/helpers/palette-helpers/
+    'colors'              => %w[
+      text
+      link
+      primary
+      info
+      success
+      warning
+      danger
+    ].freeze,
+    'default_icon_family' => 'fa-solid',
+    'icon_families'       => [
+      *Librum::Components::Icons::FontAwesome::ICON_FAMILIES
+    ].freeze
+  ).freeze
+data_path: librum/components/bulma/configuration/defaults
+version: "*"

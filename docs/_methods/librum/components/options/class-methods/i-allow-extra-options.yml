@@ -1,0 +1,13 @@
+---
+name: Librum::Components::Options::ClassMethods#allow_extra_options
+parent_path: librum/components/options/class-methods
+signature: allow_extra_options
+slug: allow-extra-options
+constructor: false
+data_path: librum/components/options/class-methods/i-allow-extra-options
+description: |-
+  If called, updates #allow_extra_options? to true. Unexpected options
+  passed to the constructor will be ignored, rather than raising an
+  exception.
+short_description: Flags the component as accepting unexpected options.
+version: "*"

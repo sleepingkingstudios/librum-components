@@ -78,7 +78,7 @@ RSpec.describe Librum::Components::Options::Validator do
       klass.include Plumbum::Consumer
       klass.include Librum::Components::Options::ValidationHelpers
 
-      klass.provider Librum::Components::Provider
+      klass.provider Librum::Components.provider
 
       klass.dependency :configuration, optional: true
     end
@@ -148,7 +148,7 @@ RSpec.describe Librum::Components::Options::Validator do
           it 'should raise an exception' do
             expect { validate_options }
               .to raise_error(
-                Librum::Components::Options::InvalidOptionsError,
+                Librum::Components::Errors::InvalidOptionsError,
                 error_message
               )
           end
@@ -288,7 +288,7 @@ RSpec.describe Librum::Components::Options::Validator do
           it 'should raise an exception' do
             expect { validate_options }
               .to raise_error(
-                Librum::Components::Options::InvalidOptionsError,
+                Librum::Components::Errors::InvalidOptionsError,
                 error_message
               )
           end
@@ -335,7 +335,7 @@ RSpec.describe Librum::Components::Options::Validator do
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               error_message
             )
         end
@@ -367,7 +367,7 @@ RSpec.describe Librum::Components::Options::Validator do
           it 'should raise an exception' do
             expect { validate_options }
               .to raise_error(
-                Librum::Components::Options::InvalidOptionsError,
+                Librum::Components::Errors::InvalidOptionsError,
                 error_message
               )
           end
@@ -390,7 +390,7 @@ RSpec.describe Librum::Components::Options::Validator do
           it 'should raise an exception' do
             expect { validate_options }
               .to raise_error(
-                Librum::Components::Options::InvalidOptionsError,
+                Librum::Components::Errors::InvalidOptionsError,
                 error_message
               )
           end
@@ -437,7 +437,7 @@ RSpec.describe Librum::Components::Options::Validator do
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -495,7 +495,7 @@ RSpec.describe Librum::Components::Options::Validator do
           it 'should raise an exception' do
             expect { validate_options }
               .to raise_error(
-                Librum::Components::Options::InvalidOptionsError,
+                Librum::Components::Errors::InvalidOptionsError,
                 error_message
               )
           end
@@ -560,7 +560,7 @@ RSpec.describe Librum::Components::Options::Validator do
           it 'should raise an exception' do
             expect { validate_options }
               .to raise_error(
-                Librum::Components::Options::InvalidOptionsError,
+                Librum::Components::Errors::InvalidOptionsError,
                 error_message
               )
           end
@@ -625,7 +625,7 @@ RSpec.describe Librum::Components::Options::Validator do
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               error_message
             )
         end
@@ -685,7 +685,7 @@ RSpec.describe Librum::Components::Options::Validator do
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end

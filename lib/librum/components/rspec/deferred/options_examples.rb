@@ -42,7 +42,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { described_class.option(name, **meta_options) }
             .to raise_error(
-              Librum::Components::Options::DuplicateOptionError,
+              Librum::Components::Errors::DuplicateOptionError,
               error_message
             )
         end
@@ -204,7 +204,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { described_class.new(**component_options) }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -221,7 +221,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { described_class.new(**component_options) }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -275,7 +275,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message).and(include(valid_options_message))
             )
         end
@@ -299,7 +299,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -331,7 +331,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -354,7 +354,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -375,7 +375,7 @@ module Librum::Components::RSpec::Deferred
           it 'should raise an exception' do
             expect { validate_options }
               .to raise_error(
-                Librum::Components::Options::InvalidOptionsError,
+                Librum::Components::Errors::InvalidOptionsError,
                 include(error_message)
               )
           end
@@ -401,7 +401,7 @@ module Librum::Components::RSpec::Deferred
           it 'should raise an exception' do
             expect { validate_options }
               .to raise_error(
-                Librum::Components::Options::InvalidOptionsError,
+                Librum::Components::Errors::InvalidOptionsError,
                 include(error_message)
               )
           end
@@ -423,7 +423,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -443,7 +443,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -463,7 +463,7 @@ module Librum::Components::RSpec::Deferred
           it 'should raise an exception' do
             expect { validate_options }
               .to raise_error(
-                Librum::Components::Options::InvalidOptionsError,
+                Librum::Components::Errors::InvalidOptionsError,
                 include(error_message)
               )
           end
@@ -494,7 +494,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               error_message
             )
         end
@@ -514,7 +514,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -559,7 +559,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end
@@ -618,7 +618,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { validate_options }
             .to raise_error(
-              Librum::Components::Options::InvalidOptionsError,
+              Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
         end

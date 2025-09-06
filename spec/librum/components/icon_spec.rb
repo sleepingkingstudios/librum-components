@@ -37,7 +37,7 @@ RSpec.describe Librum::Components::Icon, type: :component do
 
       it 'should raise an exception' do
         expect { described_class.new(**component_options) }
-          .to raise_error Librum::Components::Options::InvalidOptionsError,
+          .to raise_error Librum::Components::Errors::InvalidOptionsError,
             include(error_message)
       end
     end

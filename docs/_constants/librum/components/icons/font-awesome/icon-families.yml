@@ -1,0 +1,8 @@
+---
+name: Librum::Components::Icons::FontAwesome::ICON_FAMILIES
+parent_path: librum/components/icons/font-awesome
+slug: icon-families
+short_description: The valid icon families for a FontAwesome icon.
+value: Set.new(ICON_FAMILY_MAPPINGS.keys).freeze
+data_path: librum/components/icons/font-awesome/icon-families
+version: "*"

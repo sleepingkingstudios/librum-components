@@ -1,0 +1,20 @@
+---
+name: Librum::Components::Icons::FontAwesome::ICON_SIZES
+parent_path: librum/components/icons/font-awesome
+slug: icon-sizes
+short_description: The valid icon sizes for a FontAwesome icon.
+value: |-
+  Set.new(
+    [
+      *(1..10).map { |i| "#{i}x" },
+      '2xs',
+      'xs',
+      'sm',
+      'md',
+      'lg',
+      'xl',
+      '2xl'
+    ]
+  ).freeze
+data_path: librum/components/icons/font-awesome/icon-sizes
+version: "*"

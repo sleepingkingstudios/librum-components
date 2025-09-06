@@ -1,0 +1,14 @@
+---
+name: Librum::Components::Bulma::Options
+slug: options
+type: module
+files:
+- lib/librum/components/bulma/options.rb
+- lib/librum/components/bulma/options/typography.rb
+parent_path: librum/components/bulma
+short_description: Options for defining Bulma components.
+defined_modules:
+- name: Typography
+  slug: typography
+data_path: librum/components/bulma/options
+version: "*"

@@ -1,0 +1,63 @@
+---
+name: Librum::Components::Icon
+slug: icon
+type: class
+files:
+- lib/librum/components/icon.rb
+parent_path: librum/components
+short_description: Generic icon component.
+class_methods:
+- name: abstract?
+  path: librum/components/base/c-abstract?
+  slug: abstract?
+  inherited: true
+- name: build
+  path: librum/components/icon/c-build
+  slug: build
+  inherited: false
+- name: option
+  path: librum/components/base/c-option
+  slug: option
+  inherited: true
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: true
+instance_methods:
+- name: call
+  path: librum/components/icon/i-call
+  slug: call
+  inherited: false
+- name: class_names
+  path: librum/components/base/i-class-names
+  slug: class-names
+  inherited: true
+- name: components
+  path: librum/components/base/i-components
+  slug: components
+  inherited: true
+- name: configuration
+  path: librum/components/base/i-configuration
+  slug: configuration
+  inherited: true
+- name: initialize
+  path: librum/components/icon/i-initialize
+  slug: initialize
+  inherited: false
+  constructor: true
+- name: is_layout?
+  path: librum/components/base/i-is-layout?
+  slug: is-layout?
+  inherited: true
+data_path: librum/components/icon
+constructor: true
+inherited_classes:
+- name: Librum::Components::Base
+  slug: base
+  path: librum/components/base
+- name: ViewComponent::Base
+  slug: base
+version: "*"

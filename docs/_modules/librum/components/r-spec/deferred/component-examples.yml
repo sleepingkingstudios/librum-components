@@ -1,0 +1,19 @@
+---
+name: Librum::Components::RSpec::Deferred::ComponentExamples
+slug: component-examples
+type: module
+files:
+- lib/librum/components/rspec/deferred/component_examples.rb
+parent_path: librum/components/r-spec/deferred
+short_description: Deferred examples for asserting on view components.
+data_path: librum/components/r-spec/deferred/component-examples
+included_modules:
+- name: Librum::Components::RSpec::Deferred::ConfigurationExamples
+  slug: configuration-examples
+  path: librum/components/r-spec/deferred/configuration-examples
+- name: Librum::Components::RSpec::Deferred::OptionsExamples
+  slug: options-examples
+  path: librum/components/r-spec/deferred/options-examples
+- name: RSpec::SleepingKingStudios::Deferred::Provider
+  slug: provider
+version: "*"

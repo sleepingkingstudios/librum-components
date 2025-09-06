@@ -1,0 +1,84 @@
+---
+name: Librum::Components::Icons::FontAwesome
+slug: font-awesome
+type: class
+files:
+- lib/librum/components/icons/font_awesome.rb
+parent_path: librum/components/icons
+short_description: A FontAwesome icon.
+class_methods:
+- name: abstract?
+  path: librum/components/icons/base/c-abstract?
+  slug: abstract?
+  inherited: true
+- name: build
+  path: librum/components/base/c-build
+  slug: build
+  inherited: true
+- name: option
+  path: librum/components/base/c-option
+  slug: option
+  inherited: true
+constants:
+- name: ICON_FAMILIES
+  path: librum/components/icons/font-awesome/icon-families
+  slug: icon-families
+  inherited: false
+- name: ICON_SIZES
+  path: librum/components/icons/font-awesome/icon-sizes
+  slug: icon-sizes
+  inherited: false
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: true
+instance_methods:
+- name: call
+  path: librum/components/icons/font-awesome/i-call
+  slug: call
+  inherited: false
+- name: class_names
+  path: librum/components/base/i-class-names
+  slug: class-names
+  inherited: true
+- name: components
+  path: librum/components/base/i-components
+  slug: components
+  inherited: true
+- name: configuration
+  path: librum/components/base/i-configuration
+  slug: configuration
+  inherited: true
+- name: initialize
+  path: librum/components/options/i-initialize
+  slug: initialize
+  inherited: true
+- name: is_layout?
+  path: librum/components/base/i-is-layout?
+  slug: is-layout?
+  inherited: true
+data_path: librum/components/icons/font-awesome
+included_modules:
+- name: Librum::Components::Options::ClassName
+  slug: class-name
+  path: librum/components/options/class-name
+metadata:
+  see:
+  - label: https://fontawesome.com/
+    path: https://fontawesome.com/
+    text:
+    type: link
+constructor: true
+inherited_classes:
+- name: Librum::Components::Icons::Base
+  slug: base
+  path: librum/components/icons/base
+- name: Librum::Components::Base
+  slug: base
+  path: librum/components/base
+- name: ViewComponent::Base
+  slug: base
+version: "*"

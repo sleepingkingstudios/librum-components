@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Base#is_layout?
+parent_path: librum/components/base
+signature: is_layout?
+slug: is-layout?
+constructor: false
+data_path: librum/components/base/i-is-layout?
+returns:
+- description: |-
+    if true, indicates that the component represents a
+    full-page layout. Defaults to false.
+  type:
+  - name: 'true'
+  - name: 'false'
+version: "*"

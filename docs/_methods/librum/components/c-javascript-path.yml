@@ -1,0 +1,12 @@
+---
+name: Librum::Components.javascript_path
+parent_path: librum/components
+signature: javascript_path
+slug: javascript-path
+constructor: false
+data_path: librum/components/c-javascript-path
+returns:
+- description: the javascript path for the gem.
+  type:
+  - name: Pathname
+version: "*"

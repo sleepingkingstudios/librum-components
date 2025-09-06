@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Bulma::Layouts::Page::Header::Navbar#render?
+parent_path: librum/components/bulma/layouts/page/header/navbar
+signature: render?
+slug: render?
+constructor: false
+data_path: librum/components/bulma/layouts/page/header/navbar/i-render?
+returns:
+- description: |-
+    true if the navigation items are present; otherwise
+    false.
+  type:
+  - name: 'true'
+  - name: 'false'
+version: "*"

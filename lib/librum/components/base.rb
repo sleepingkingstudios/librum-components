@@ -9,6 +9,8 @@ require 'sleeping_king_studios/tools/toolbelt'
 
 require 'librum/components'
 require 'librum/components/empty'
+require 'librum/components/errors/abstract_component_error'
+require 'librum/components/errors/invalid_options_error'
 require 'librum/components/option'
 require 'librum/components/options'
 
@@ -19,16 +21,10 @@ module Librum::Components
     include Plumbum::Consumer
     prepend Plumbum::Parameters
 
-    provider Librum::Components::Provider
+    provider Librum::Components.provider
 
     dependency :components,    optional: true
     dependency :configuration, optional: true
-
-    # Exception raised when defining options on an abstract component.
-    class AbstractComponentError < StandardError; end
-
-    # Exception raised when building a component with invalid parameters.
-    class InvalidComponentError < StandardError; end
 
     class << self
       # @return [true, false] true if the component class is an abstract class;
@@ -44,7 +40,7 @@ module Librum::Components
       #
       #   @return [Librum::Components::Base] the component.
       #
-      #   @raise [Librum::Components::Base::InvalidComponentError] if the
+      #   @raise [Librum::Components::Errors::InvalidComponentError] if the
       #     component is not an instance of the class.
       #
       # @overload build(options)
@@ -54,18 +50,18 @@ module Librum::Components
       #
       #   @return [Librum::Components::Base] the component.
       #
-      #   @raise [Librum::Components::Options::InvalidOptionsError] if the
+      #   @raise [Librum::Components::Errors::InvalidOptionsError] if the
       #     options are not valid for the class.
       def build(maybe_component)
         return maybe_component        if maybe_component.is_a?(self)
         return new(**maybe_component) if maybe_component.is_a?(Hash)
 
         if maybe_component.is_a?(ViewComponent::Base)
-          raise InvalidComponentError,
+          raise Librum::Components::Errors::InvalidComponentError,
             "#{maybe_component.inspect} is not an instance of #{self}"
         end
 
-        raise InvalidComponentError,
+        raise Librum::Components::Errors::InvalidComponentError,
           'unable to build component with parameters ' \
           "#{maybe_component.inspect}"
       end
@@ -88,7 +84,7 @@ module Librum::Components
           "unable to define option #{option_name} - #{self.name} " \
           'is an abstract class'
 
-        raise AbstractComponentError, message
+        raise Librum::Components::Errors::AbstractComponentError, message
       end
     end
 

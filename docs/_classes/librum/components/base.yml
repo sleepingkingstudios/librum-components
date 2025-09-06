@@ -11,13 +11,14 @@ class_methods:
   path: librum/components/base/c-abstract?
   slug: abstract?
   inherited: false
+- name: build
+  path: librum/components/base/c-build
+  slug: build
+  inherited: false
 - name: option
   path: librum/components/base/c-option
   slug: option
   inherited: false
-defined_classes:
-- name: AbstractComponentError
-  slug: abstract-component-error
 instance_attributes:
 - name: options
   read: true
@@ -26,20 +27,52 @@ instance_attributes:
   slug: options
   inherited: true
 instance_methods:
+- name: class_names
+  path: librum/components/base/i-class-names
+  slug: class-names
+  inherited: false
+- name: components
+  path: librum/components/base/i-components
+  slug: components
+  inherited: false
+- name: configuration
+  path: librum/components/base/i-configuration
+  slug: configuration
+  inherited: false
 - name: initialize
   path: librum/components/options/i-initialize
   slug: initialize
   inherited: true
+- name: is_layout?
+  path: librum/components/base/i-is-layout?
+  slug: is-layout?
+  inherited: false
 data_path: librum/components/base
 included_modules:
 - name: Librum::Components::Options
   slug: options
   path: librum/components/options
+- name: Plumbum::Consumer
+  slug: consumer
+- name: Plumbum::Parameters
+  slug: parameters
 constructor: true
 direct_subclasses:
+- name: Librum::Components::Bulma::Base
+  slug: base
+  path: librum/components/bulma/base
+- name: Librum::Components::Icon
+  slug: icon
+  path: librum/components/icon
+- name: Librum::Components::Icons::Base
+  slug: base
+  path: librum/components/icons/base
 - name: Librum::Components::Literal
   slug: literal
   path: librum/components/literal
+- name: Librum::Components::View
+  slug: view
+  path: librum/components/view
 inherited_classes:
 - name: ViewComponent::Base
   slug: base

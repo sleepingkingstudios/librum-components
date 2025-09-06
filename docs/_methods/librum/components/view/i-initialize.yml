@@ -1,0 +1,36 @@
+---
+name: Librum::Components::View#initialize
+parent_path: librum/components/view
+signature: 'initialize(result:, resource: nil, **)'
+slug: initialize
+constructor: true
+data_path: librum/components/view/i-initialize
+overloads:
+- name: Librum::Components::View#initialize
+  parent_path: librum/components/view
+  signature: 'initialize(result, resource: nil, **options)'
+  slug: initialize
+  constructor: true
+  params:
+  - description: |-
+      the result returned by the controller
+      action.
+    name: result
+    type:
+    - name: Cuprum::Result
+  - description: |-
+      the resource for the
+      controller.
+    name: resource
+    type:
+    - name: Cuprum::Rails::Resource
+    default: nil
+  - description: additional options for the view.
+    name: options
+    type:
+    - name: Hash
+returns:
+- description: a new instance of View
+  type:
+  - name: View
+version: "*"

@@ -1,0 +1,61 @@
+---
+name: Librum::Components::Base.build
+parent_path: librum/components/base
+signature: build(maybe_component)
+slug: build
+constructor: false
+data_path: librum/components/base/c-build
+overloads:
+- name: Librum::Components::Base.build
+  parent_path: librum/components/base
+  signature: build(component)
+  slug: build
+  constructor: false
+  params:
+  - description: the component to evaluate.
+    name: component
+    type:
+    - name: Librum::Components::Base
+      path: librum/components/base
+  raises:
+  - description: |-
+      if the
+      component is not an instance of the class.
+    type:
+    - name: Librum::Components::Errors::InvalidComponentError
+      path: librum/components/errors/invalid-component-error
+  returns:
+  - description: the component.
+    type:
+    - name: Librum::Components::Base
+      path: librum/components/base
+  short_description: Asserts that the component is an instance of the class and returns.
+- name: Librum::Components::Base.build
+  parent_path: librum/components/base
+  signature: build(options)
+  slug: build
+  constructor: false
+  params:
+  - description: the options for the component.
+    name: options
+    type:
+    - name: Hash
+  raises:
+  - description: |-
+      if the
+      options are not valid for the class.
+    type:
+    - name: Librum::Components::Errors::InvalidOptionsError
+      path: librum/components/errors/invalid-options-error
+  returns:
+  - description: the component.
+    type:
+    - name: Librum::Components::Base
+      path: librum/components/base
+  short_description: Builds an instance of the component with the given options.
+raises:
+- description: ''
+  type:
+  - name: Librum::Components::Errors::InvalidComponentError
+    path: librum/components/errors/invalid-component-error
+version: "*"

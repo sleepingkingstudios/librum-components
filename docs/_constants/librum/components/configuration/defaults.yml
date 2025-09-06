@@ -1,0 +1,13 @@
+---
+name: Librum::Components::Configuration::DEFAULTS
+parent_path: librum/components/configuration
+slug: defaults
+short_description: Default options for configuration.
+value: |-
+  {
+    'colors'              => [].freeze,
+    'default_icon_family' => nil,
+    'icon_families'       => [].freeze
+  }.freeze
+data_path: librum/components/configuration/defaults
+version: "*"

@@ -1,0 +1,8 @@
+---
+name: Librum::Components::Bulma::Options::Typography::SIZES
+parent_path: librum/components/bulma/options/typography
+slug: sizes
+short_description: The valid option values for the :size option.
+value: Set.new([*(1..7), *(1..7).map(&:to_s)]).freeze
+data_path: librum/components/bulma/options/typography/sizes
+version: "*"

@@ -1,9 +1,170 @@
 ---
 name: Librum::Components::Base.option
 parent_path: librum/components/base
-signature: 'option(name, boolean: false, default: nil)'
+signature: 'option(name, boolean: false, **)'
 slug: option
 constructor: false
 data_path: librum/components/base/c-option
+description: |-
+  A note on defaults and validation: options can have a default value that
+  is defined as a Proc. By default, this is lazily evaluated within the
+  context of the component, meaning it can reference other option values.
+  However, required options and options with validations need to evaluate
+  the default value at initialization, and cannot reference the component
+  or its properties.
+metadata:
+  examples:
+  - name: Define An Option
+    text: |-
+      class CustomComponent
+        include Librum::Components::Options
+
+        option :label
+
+        option :checked, boolean: true
+      end
+
+      component = CustomComponent.new(label: 'Click Me')
+      component.label    #=> 'Click Me'
+      component.checked? #=> false
+  - name: Define A Required Option
+    text: |-
+      class CustomComponent
+        include Librum::Components::Options
+
+        option :disclaimer, required: true
+      end
+
+      CustomComponent.new
+      #=> raises Librum::Components::Errors::InvalidOptionsError,
+            "disclaimer can't be blank"
+  - name: Define A Validated Option
+    text: |-
+      class CustomComponent
+        include Librum::Components::Options
+
+        option :license, validate: true
+
+        private
+
+        def validate_license(value, :as)
+          return if value =~ /MIT/
+
+          'project must use the MIT License'
+        end
+      end
+
+      CustomComponent.new(license: 'LGPL')
+      #=> raises Librum::Components::Errors::InvalidOptionsError,
+            'project must use the MIT license'
+  - name: Define An Option With Block Validation
+    text: |-
+      class CustomComponent
+        include Librum::Components::Options
+
+        option :checked,
+          validate: ->(value) { value == 4 ? nil : 'there are four lights' }
+      end
+
+      CustomComponent.new(lights: 5)
+      #=> raises Librum::Components::Errors::InvalidOptionsError,
+            'there are four lights'
+  - name: Define An Option With Method Validation
+    text: |-
+      class CustomComponent
+        include Librum::Components::Options
+
+        option :checked,
+          boolean:  true
+          validate: :boolean
+
+        option :checked_popover,
+          validate: :popover_text
+
+        private
+
+        def validate_popover_text(value, as:)
+          return if value.nil? || value.length < 20
+
+          "#{as} is too long"
+        end
+      end
+
+      CustomComponent.new(checked: nil)
+      #=> raises Librum::Components::Errors::InvalidOptionsError,
+            'checked must be true or false'
+
+      checked_popover = "Neque porro quisquam est qui dolorem ipsum quia..."
+      CustomComponent.new(checked_popover:)
+      #=> raises Librum::Components::Errors::InvalidOptionsError,
+            'checked_popover is too long'
+  - name: Define An Option With Type Validation
+    text: |-
+      class CustomComponent
+        include Librum::Components::Options
+
+        option :counter, validate: Integer
+      end
+
+      CustomComponent.new(counter: 'threeve')
+      #=> raises Librum::Components::Errors::InvalidOptionsError,
+            'counter is not an instance of Integer'
+  - name: Define An Option With Multiple Validations
+    text: |-
+      class CustomComponent
+        include Librum::Components::Options
+
+        option :rgb_color, validate: {
+          presence: true,
+          matches:  /\d{1,3}, \d{1,3}, \d{1,3}/
+        }
+      end
+
+      CustomComponent.new
+      #=> raises Librum::Components::Errors::InvalidOptionsError,
+             "rgb_color can't be blank"
+
+      CustomComponent.new(rgb_color: 'blue')
+      #=> raises Librum::Components::Errors::InvalidOptionsError,
+            'rgb_color does not match the pattern'
+params:
+- description: the name of the option.
+  name: name
+  type:
+  - name: String
+  - name: Symbol
+- description: |-
+    if true, the option is a boolean and will
+    generate a predicate method.
+  name: boolean
+  type:
+  - name: 'true'
+  - name: 'false'
+  default: 'false'
+- description: the default value for the option.
+  name: default
+  type:
+  - name: Proc
+  - name: Object
+- description: |-
+    if true, indicates that the option is
+    required for the component.
+  name: required
+  type:
+  - name: 'true'
+  - name: 'false'
+- description: |-
+    the validation for the
+    option, if any.
+  name: validate
+  type:
+  - name: Symbol
+  - name: Class
+  - name: Proc
+  - name: nil
+returns:
+- description: the name of the generated method.
+  type:
+  - name: Symbol
 short_description: Defines an option for the component.
 version: "*"

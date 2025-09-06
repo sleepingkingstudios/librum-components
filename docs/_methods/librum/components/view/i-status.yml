@@ -1,0 +1,12 @@
+---
+name: Librum::Components::View#status
+parent_path: librum/components/view
+signature: status
+slug: status
+constructor: false
+data_path: librum/components/view/i-status
+returns:
+- description: the result status.
+  type:
+  - name: Symbol
+version: "*"

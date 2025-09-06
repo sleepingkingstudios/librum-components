@@ -5,14 +5,42 @@ type: module
 files:
 - lib/librum/components.rb
 - lib/librum/components/base.rb
+- lib/librum/components/icon.rb
+- lib/librum/components/view.rb
+- lib/librum/components/bulma.rb
+- lib/librum/components/empty.rb
+- lib/librum/components/icons.rb
 - lib/librum/components/rspec.rb
+- lib/librum/components/errors.rb
 - lib/librum/components/option.rb
 - lib/librum/components/literal.rb
 - lib/librum/components/options.rb
+- lib/librum/components/railtie.rb
 - lib/librum/components/version.rb
+- lib/librum/components/configuration.rb
 parent_path: librum
 short_description: Component library for Librum applications.
 class_methods:
+- name: javascript_path
+  path: librum/components/c-javascript-path
+  slug: javascript-path
+  inherited: false
+- name: provider
+  path: librum/components/c-provider
+  slug: provider
+  inherited: false
+- name: provider=
+  path: librum/components/c-provider=
+  slug: provider=
+  inherited: false
+- name: root_path
+  path: librum/components/c-root-path
+  slug: root-path
+  inherited: false
+- name: stylesheets_path
+  path: librum/components/c-stylesheets-path
+  slug: stylesheets-path
+  inherited: false
 - name: version
   path: librum/components/c-version
   slug: version
@@ -22,6 +50,10 @@ constants:
   path: librum/components/option
   slug: option
   inherited: false
+- name: PROVIDER_KEYS
+  path: librum/components/provider-keys
+  slug: provider-keys
+  inherited: false
 - name: VERSION
   path: librum/components/version
   slug: version
@@ -29,9 +61,25 @@ constants:
 defined_classes:
 - name: Base
   slug: base
+- name: Configuration
+  slug: configuration
+- name: Icon
+  slug: icon
 - name: Literal
   slug: literal
+- name: Railtie
+  slug: railtie
+- name: View
+  slug: view
 defined_modules:
+- name: Bulma
+  slug: bulma
+- name: Empty
+  slug: empty
+- name: Errors
+  slug: errors
+- name: Icons
+  slug: icons
 - name: Options
   slug: options
 - name: RSpec

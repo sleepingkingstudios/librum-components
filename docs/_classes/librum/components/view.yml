@@ -1,0 +1,91 @@
+---
+name: Librum::Components::View
+slug: view
+type: class
+files:
+- lib/librum/components/view.rb
+parent_path: librum/components
+short_description: Abstract component for a view rendering a Result for a controller
+  action.
+class_methods:
+- name: abstract?
+  path: librum/components/view/c-abstract?
+  slug: abstract?
+  inherited: false
+- name: build
+  path: librum/components/base/c-build
+  slug: build
+  inherited: true
+- name: option
+  path: librum/components/base/c-option
+  slug: option
+  inherited: true
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: true
+- name: resource
+  read: true
+  write: false
+  path: librum/components/view/i-resource
+  slug: resource
+  inherited: false
+- name: result
+  read: true
+  write: false
+  path: librum/components/view/i-result
+  slug: result
+  inherited: false
+instance_methods:
+- name: class_names
+  path: librum/components/base/i-class-names
+  slug: class-names
+  inherited: true
+- name: components
+  path: librum/components/base/i-components
+  slug: components
+  inherited: true
+- name: configuration
+  path: librum/components/base/i-configuration
+  slug: configuration
+  inherited: true
+- name: error
+  path: librum/components/view/i-error
+  slug: error
+  inherited: false
+- name: initialize
+  path: librum/components/view/i-initialize
+  slug: initialize
+  inherited: false
+  constructor: true
+- name: is_layout?
+  path: librum/components/base/i-is-layout?
+  slug: is-layout?
+  inherited: true
+- name: metadata
+  path: librum/components/view/i-metadata
+  slug: metadata
+  inherited: false
+- name: status
+  path: librum/components/view/i-status
+  slug: status
+  inherited: false
+- name: value
+  path: librum/components/view/i-value
+  slug: value
+  inherited: false
+data_path: librum/components/view
+extended_modules:
+- name: Forwardable
+  slug: forwardable
+constructor: true
+inherited_classes:
+- name: Librum::Components::Base
+  slug: base
+  path: librum/components/base
+- name: ViewComponent::Base
+  slug: base
+version: "*"

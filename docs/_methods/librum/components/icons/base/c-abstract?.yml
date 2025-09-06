@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Icons::Base.abstract?
+parent_path: librum/components/icons/base
+signature: abstract?
+slug: abstract?
+constructor: false
+data_path: librum/components/icons/base/c-abstract?
+returns:
+- description: |-
+    true if the component class is an abstract class;
+    otherwise returns false.
+  type:
+  - name: 'true'
+  - name: 'false'
+version: "*"

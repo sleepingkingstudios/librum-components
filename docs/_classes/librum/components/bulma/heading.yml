@@ -1,0 +1,93 @@
+---
+name: Librum::Components::Bulma::Heading
+slug: heading
+type: class
+files:
+- lib/librum/components/bulma/heading.rb
+parent_path: librum/components/bulma
+short_description: Heading component with optional actions.
+class_methods:
+- name: abstract?
+  path: librum/components/bulma/base/c-abstract?
+  slug: abstract?
+  inherited: true
+- name: build
+  path: librum/components/base/c-build
+  slug: build
+  inherited: true
+- name: option
+  path: librum/components/base/c-option
+  slug: option
+  inherited: true
+constants:
+- name: ALIGNMENTS
+  path: librum/components/bulma/options/typography/alignments
+  slug: alignments
+  inherited: true
+- name: FONT_FAMILIES
+  path: librum/components/bulma/options/typography/font-families
+  slug: font-families
+  inherited: true
+- name: SIZES
+  path: librum/components/bulma/options/typography/sizes
+  slug: sizes
+  inherited: true
+- name: TRANSFORMS
+  path: librum/components/bulma/options/typography/transforms
+  slug: transforms
+  inherited: true
+- name: WEIGHTS
+  path: librum/components/bulma/options/typography/weights
+  slug: weights
+  inherited: true
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: true
+instance_methods:
+- name: bulma_class_names
+  path: librum/components/bulma/base/i-bulma-class-names
+  slug: bulma-class-names
+  inherited: true
+- name: class_names
+  path: librum/components/base/i-class-names
+  slug: class-names
+  inherited: true
+- name: components
+  path: librum/components/base/i-components
+  slug: components
+  inherited: true
+- name: configuration
+  path: librum/components/base/i-configuration
+  slug: configuration
+  inherited: true
+- name: initialize
+  path: librum/components/options/i-initialize
+  slug: initialize
+  inherited: true
+- name: is_layout?
+  path: librum/components/base/i-is-layout?
+  slug: is-layout?
+  inherited: true
+data_path: librum/components/bulma/heading
+included_modules:
+- name: Librum::Components::Bulma::Options::Typography
+  slug: typography
+  path: librum/components/bulma/options/typography
+- name: Librum::Components::Options::ClassName
+  slug: class-name
+  path: librum/components/options/class-name
+constructor: true
+inherited_classes:
+- name: Librum::Components::Bulma::Base
+  slug: base
+  path: librum/components/bulma/base
+- name: Librum::Components::Base
+  slug: base
+  path: librum/components/base
+- name: ViewComponent::Base
+  slug: base
+version: "*"

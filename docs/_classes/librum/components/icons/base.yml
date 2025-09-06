@@ -1,0 +1,62 @@
+---
+name: Librum::Components::Icons::Base
+slug: base
+type: class
+files:
+- lib/librum/components/icons/base.rb
+parent_path: librum/components/icons
+short_description: Abstract base class for icon components.
+class_methods:
+- name: abstract?
+  path: librum/components/icons/base/c-abstract?
+  slug: abstract?
+  inherited: false
+- name: build
+  path: librum/components/base/c-build
+  slug: build
+  inherited: true
+- name: option
+  path: librum/components/base/c-option
+  slug: option
+  inherited: true
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: true
+instance_methods:
+- name: class_names
+  path: librum/components/base/i-class-names
+  slug: class-names
+  inherited: true
+- name: components
+  path: librum/components/base/i-components
+  slug: components
+  inherited: true
+- name: configuration
+  path: librum/components/base/i-configuration
+  slug: configuration
+  inherited: true
+- name: initialize
+  path: librum/components/options/i-initialize
+  slug: initialize
+  inherited: true
+- name: is_layout?
+  path: librum/components/base/i-is-layout?
+  slug: is-layout?
+  inherited: true
+data_path: librum/components/icons/base
+constructor: true
+direct_subclasses:
+- name: Librum::Components::Icons::FontAwesome
+  slug: font-awesome
+  path: librum/components/icons/font-awesome
+inherited_classes:
+- name: Librum::Components::Base
+  slug: base
+  path: librum/components/base
+- name: ViewComponent::Base
+  slug: base
+version: "*"

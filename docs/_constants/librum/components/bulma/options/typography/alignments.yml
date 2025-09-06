@@ -1,0 +1,8 @@
+---
+name: Librum::Components::Bulma::Options::Typography::ALIGNMENTS
+parent_path: librum/components/bulma/options/typography
+slug: alignments
+short_description: The valid option values for the :alignment option.
+value: Set.new(%w[centered justified left right]).freeze
+data_path: librum/components/bulma/options/typography/alignments
+version: "*"
