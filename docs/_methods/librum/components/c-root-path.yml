@@ -1,0 +1,12 @@
+---
+name: Librum::Components.root_path
+parent_path: librum/components
+signature: root_path
+slug: root-path
+constructor: false
+data_path: librum/components/c-root-path
+returns:
+- description: the root path for the gem.
+  type:
+  - name: String
+version: "*"

@@ -1,0 +1,10 @@
+---
+name: Librum::Components::Options::ValidationHelpers
+slug: validation-helpers
+type: module
+files:
+- lib/librum/components/options/validation_helpers.rb
+parent_path: librum/components/options
+short_description: Default helper methods for validating option values.
+data_path: librum/components/options/validation-helpers
+version: "*"

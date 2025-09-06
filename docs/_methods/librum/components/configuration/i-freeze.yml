@@ -1,0 +1,9 @@
+---
+name: Librum::Components::Configuration#freeze
+parent_path: librum/components/configuration
+signature: freeze
+slug: freeze
+constructor: false
+data_path: librum/components/configuration/i-freeze
+short_description: Prevents further modifications to the configuration object.
+version: "*"

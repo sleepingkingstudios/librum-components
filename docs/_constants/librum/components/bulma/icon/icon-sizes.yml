@@ -1,0 +1,8 @@
+---
+name: Librum::Components::Bulma::Icon::ICON_SIZES
+parent_path: librum/components/bulma/icon
+slug: icon-sizes
+short_description: The valid icon sizes for a Bulma icon.
+value: Set.new(%w[small medium large]).freeze
+data_path: librum/components/bulma/icon/icon-sizes
+version: "*"

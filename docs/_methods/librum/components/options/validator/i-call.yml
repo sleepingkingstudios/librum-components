@@ -1,0 +1,27 @@
+---
+name: Librum::Components::Options::Validator#call
+parent_path: librum/components/options/validator
+signature: call(component:, value:)
+slug: call
+constructor: false
+data_path: librum/components/options/validator/i-call
+params:
+- description: the cimponent to validate.
+  name: component
+  type:
+  - name: Object
+- description: the options to validate.
+  name: value
+  type:
+  - name: Hash
+raises:
+- description: ''
+  type:
+  - name: Librum::Components::Errors::InvalidOptionsError
+    path: librum/components/errors/invalid-options-error
+returns:
+- description: ''
+  type:
+  - name: void
+short_description: Validates the options against the expected options for the component.
+version: "*"

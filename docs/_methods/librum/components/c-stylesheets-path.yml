@@ -1,0 +1,12 @@
+---
+name: Librum::Components.stylesheets_path
+parent_path: librum/components
+signature: stylesheets_path
+slug: stylesheets-path
+constructor: false
+data_path: librum/components/c-stylesheets-path
+returns:
+- description: the stylesheets path for the gem.
+  type:
+  - name: Pathname
+version: "*"

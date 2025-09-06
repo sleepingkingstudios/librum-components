@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Errors::ExistingProviderError
+slug: existing-provider-error
+type: class
+files:
+- lib/librum/components/errors/existing_provider_error.rb
+parent_path: librum/components/errors
+short_description: Exception raised when assigning a value to a provider that already
+  exists.
+data_path: librum/components/errors/existing-provider-error
+constructor: false
+inherited_classes:
+- name: StandardError
+  slug: standard-error
+version: "*"

@@ -1,0 +1,13 @@
+---
+name: Librum::Components::RSpec::Deferred::BulmaExamples
+slug: bulma-examples
+type: module
+files:
+- lib/librum/components/rspec/deferred/bulma_examples.rb
+parent_path: librum/components/r-spec/deferred
+short_description: Deferred examples for asserting on components using the Bulma framework.
+data_path: librum/components/r-spec/deferred/bulma-examples
+included_modules:
+- name: RSpec::SleepingKingStudios::Deferred::Provider
+  slug: provider
+version: "*"

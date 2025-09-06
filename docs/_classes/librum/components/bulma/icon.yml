@@ -1,0 +1,84 @@
+---
+name: Librum::Components::Bulma::Icon
+slug: icon
+type: class
+files:
+- lib/librum/components/bulma/icon.rb
+parent_path: librum/components/bulma
+short_description: Icon component with a bulma wrapper.
+class_methods:
+- name: abstract?
+  path: librum/components/bulma/base/c-abstract?
+  slug: abstract?
+  inherited: true
+- name: build
+  path: librum/components/base/c-build
+  slug: build
+  inherited: true
+- name: option
+  path: librum/components/base/c-option
+  slug: option
+  inherited: true
+constants:
+- name: ICON_SIZES
+  path: librum/components/bulma/icon/icon-sizes
+  slug: icon-sizes
+  inherited: false
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: true
+instance_methods:
+- name: bulma_class_names
+  path: librum/components/bulma/base/i-bulma-class-names
+  slug: bulma-class-names
+  inherited: true
+- name: call
+  path: librum/components/bulma/icon/i-call
+  slug: call
+  inherited: false
+- name: class_names
+  path: librum/components/base/i-class-names
+  slug: class-names
+  inherited: true
+- name: components
+  path: librum/components/base/i-components
+  slug: components
+  inherited: true
+- name: configuration
+  path: librum/components/base/i-configuration
+  slug: configuration
+  inherited: true
+- name: initialize
+  path: librum/components/options/i-initialize
+  slug: initialize
+  inherited: true
+- name: is_layout?
+  path: librum/components/base/i-is-layout?
+  slug: is-layout?
+  inherited: true
+data_path: librum/components/bulma/icon
+included_modules:
+- name: Librum::Components::Options::ClassName
+  slug: class-name
+  path: librum/components/options/class-name
+metadata:
+  see:
+  - label: https://bulma.io/documentation/elements/icon/
+    path: https://bulma.io/documentation/elements/icon/
+    text:
+    type: link
+constructor: true
+inherited_classes:
+- name: Librum::Components::Bulma::Base
+  slug: base
+  path: librum/components/bulma/base
+- name: Librum::Components::Base
+  slug: base
+  path: librum/components/base
+- name: ViewComponent::Base
+  slug: base
+version: "*"

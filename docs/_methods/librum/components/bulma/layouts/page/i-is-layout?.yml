@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Bulma::Layouts::Page#is_layout?
+parent_path: librum/components/bulma/layouts/page
+signature: is_layout?
+slug: is-layout?
+constructor: false
+data_path: librum/components/bulma/layouts/page/i-is-layout?
+returns:
+- description: |-
+    if true, indicates that the component represents a
+    full-page layout. Defaults to true.
+  type:
+  - name: 'true'
+  - name: 'false'
+version: "*"

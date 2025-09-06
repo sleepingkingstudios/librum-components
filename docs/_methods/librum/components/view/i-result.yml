@@ -1,0 +1,12 @@
+---
+name: Librum::Components::View#result
+parent_path: librum/components/view
+signature: result
+slug: result
+constructor: false
+data_path: librum/components/view/i-result
+returns:
+- description: the result returned by the controller action.
+  type:
+  - name: Cuprum::Result
+version: "*"

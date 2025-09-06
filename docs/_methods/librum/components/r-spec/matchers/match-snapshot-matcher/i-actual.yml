@@ -5,9 +5,8 @@ signature: actual
 slug: actual
 constructor: false
 data_path: librum/components/r-spec/matchers/match-snapshot-matcher/i-actual
-params:
-- description: actual object.
-  name: the
+returns:
+- description: the actual object.
   type:
   - name: Object
 version: "*"

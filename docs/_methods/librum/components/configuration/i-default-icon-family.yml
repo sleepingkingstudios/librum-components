@@ -1,0 +1,12 @@
+---
+name: Librum::Components::Configuration#default_icon_family
+parent_path: librum/components/configuration
+signature: default_icon_family
+slug: default-icon-family
+constructor: false
+data_path: librum/components/configuration/i-default-icon-family
+returns:
+- description: the name of the default icon family, if any.
+  type:
+  - name: String
+version: "*"

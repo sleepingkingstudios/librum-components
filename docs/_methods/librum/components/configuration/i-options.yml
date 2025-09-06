@@ -1,0 +1,12 @@
+---
+name: Librum::Components::Configuration#options
+parent_path: librum/components/configuration
+signature: options
+slug: options
+constructor: false
+data_path: librum/components/configuration/i-options
+returns:
+- description: initialization options for the configuration.
+  type:
+  - name: Hash
+version: "*"

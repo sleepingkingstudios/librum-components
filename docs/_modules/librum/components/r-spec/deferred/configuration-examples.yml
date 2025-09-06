@@ -1,0 +1,13 @@
+---
+name: Librum::Components::RSpec::Deferred::ConfigurationExamples
+slug: configuration-examples
+type: module
+files:
+- lib/librum/components/rspec/deferred/configuration_examples.rb
+parent_path: librum/components/r-spec/deferred
+short_description: Deferred examples for stubbing provider values.
+data_path: librum/components/r-spec/deferred/configuration-examples
+included_modules:
+- name: RSpec::SleepingKingStudios::Deferred::Provider
+  slug: provider
+version: "*"

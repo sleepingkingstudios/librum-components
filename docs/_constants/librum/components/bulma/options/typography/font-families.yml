@@ -1,0 +1,8 @@
+---
+name: Librum::Components::Bulma::Options::Typography::FONT_FAMILIES
+parent_path: librum/components/bulma/options/typography
+slug: font-families
+short_description: The valid option values for the :font_family option.
+value: Set.new(%w[code monospace primary sans-serif secondary]).freeze
+data_path: librum/components/bulma/options/typography/font-families
+version: "*"

@@ -1,0 +1,12 @@
+---
+name: Librum::Components::Icon#initialize
+parent_path: librum/components/icon
+signature: initialize(**)
+slug: initialize
+constructor: true
+data_path: librum/components/icon/i-initialize
+returns:
+- description: a new instance of Icon
+  type:
+  - name: Icon
+version: "*"

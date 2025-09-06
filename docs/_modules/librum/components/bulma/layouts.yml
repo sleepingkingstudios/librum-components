@@ -1,0 +1,20 @@
+---
+name: Librum::Components::Bulma::Layouts
+slug: layouts
+type: module
+files:
+- lib/librum/components/bulma/layouts.rb
+- lib/librum/components/bulma/layouts/page.rb
+- lib/librum/components/bulma/layouts/page/footer.rb
+- lib/librum/components/bulma/layouts/page/header.rb
+- lib/librum/components/bulma/layouts/page/header/brand.rb
+- lib/librum/components/bulma/layouts/page/header/navbar.rb
+- lib/librum/components/bulma/layouts/page/footer/copyright.rb
+- lib/librum/components/bulma/layouts/page/header/navbar_item.rb
+parent_path: librum/components/bulma
+short_description: Namespace for layout components.
+defined_classes:
+- name: Page
+  slug: page
+data_path: librum/components/bulma/layouts
+version: "*"

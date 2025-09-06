@@ -1,0 +1,14 @@
+---
+name: Librum::Components.provider
+parent_path: librum/components
+signature: provider
+slug: provider
+constructor: false
+data_path: librum/components/c-provider
+returns:
+- description: |-
+    a provider for managing component
+    dependencies.
+  type:
+  - name: Plumbum::ManyProvider
+version: "*"

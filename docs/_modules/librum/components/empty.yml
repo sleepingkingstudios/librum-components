@@ -1,0 +1,10 @@
+---
+name: Librum::Components::Empty
+slug: empty
+type: module
+files:
+- lib/librum/components/empty.rb
+parent_path: librum/components
+short_description: Empty namespace as a default component set.
+data_path: librum/components/empty
+version: "*"

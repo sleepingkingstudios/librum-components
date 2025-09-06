@@ -1,0 +1,8 @@
+---
+name: Librum::Components::Bulma::Link::LINK_TARGETS
+parent_path: librum/components/bulma/link
+slug: link-targets
+short_description: The valid option values for the :target option.
+value: Set.new(%w[blank self]).freeze
+data_path: librum/components/bulma/link/link-targets
+version: "*"

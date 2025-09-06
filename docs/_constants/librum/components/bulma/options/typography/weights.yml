@@ -1,0 +1,8 @@
+---
+name: Librum::Components::Bulma::Options::Typography::WEIGHTS
+parent_path: librum/components/bulma/options/typography
+slug: weights
+short_description: The valid option values for the :weight option.
+value: Set.new(%w[light normal medium semibold bold]).freeze
+data_path: librum/components/bulma/options/typography/weights
+version: "*"

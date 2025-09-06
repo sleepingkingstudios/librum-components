@@ -1,0 +1,14 @@
+---
+name: Librum::Components::Errors::AbstractComponentError
+slug: abstract-component-error
+type: class
+files:
+- lib/librum/components/errors/abstract_component_error.rb
+parent_path: librum/components/errors
+short_description: Exception raised when defining options on an abstract component.
+data_path: librum/components/errors/abstract-component-error
+constructor: false
+inherited_classes:
+- name: StandardError
+  slug: standard-error
+version: "*"

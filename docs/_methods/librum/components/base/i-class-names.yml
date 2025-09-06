@@ -1,0 +1,37 @@
+---
+name: Librum::Components::Base#class_names
+parent_path: librum/components/base
+signature: 'class_names(*args, prefix: nil)'
+slug: class-names
+constructor: false
+data_path: librum/components/base/i-class-names
+description: |-
+  Input arguments are processed as follows:
+
+  - Nil or false arguments are ignored.
+  - String and symbol arguments are split by whitespace and added.
+  - Array arguments are flattened.
+  - Hash arguments are mapped to a list of keys with truthy values and
+    flattened.
+  - All other arguments are converted to strings.
+
+  Finally, the items are rendered unique and then combined into a
+  space-separated string.
+params:
+- description: the input arguments to combine.
+  name: args
+  type:
+  - name: Array
+- description: |-
+    if given, each item in the output is prefixed
+    with the specified string.
+  name: prefix
+  type:
+  - name: String
+  default: nil
+returns:
+- description: the combined output string.
+  type:
+  - name: String
+short_description: Combines the given class names and applies a prefix, if any.
+version: "*"

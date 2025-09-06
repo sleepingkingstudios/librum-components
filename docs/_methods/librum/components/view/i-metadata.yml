@@ -1,0 +1,12 @@
+---
+name: Librum::Components::View#metadata
+parent_path: librum/components/view
+signature: metadata
+slug: metadata
+constructor: false
+data_path: librum/components/view/i-metadata
+returns:
+- description: the result metadata, if any.
+  type:
+  - name: Hash
+version: "*"

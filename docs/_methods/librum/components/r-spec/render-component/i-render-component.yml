@@ -1,7 +1,7 @@
 ---
 name: Librum::Components::RSpec::RenderComponent#render_component
 parent_path: librum/components/r-spec/render-component
-signature: render_component(component)
+signature: render_component(component, &)
 slug: render-component
 constructor: false
 data_path: librum/components/r-spec/render-component/i-render-component
@@ -15,4 +15,7 @@ returns:
   type:
   - name: String
 short_description: Renders a component to a string.
+yield_returns:
+- description: the contents passed to the component.
+  type: []
 version: "*"

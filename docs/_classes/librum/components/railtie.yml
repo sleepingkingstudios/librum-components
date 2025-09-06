@@ -1,0 +1,14 @@
+---
+name: Librum::Components::Railtie
+slug: railtie
+type: class
+files:
+- lib/librum/components/railtie.rb
+parent_path: librum/components
+short_description: Initializer for configuring the components in a Rails application.
+data_path: librum/components/railtie
+constructor: false
+inherited_classes:
+- name: Rails::Railtie
+  slug: railtie
+version: "*"

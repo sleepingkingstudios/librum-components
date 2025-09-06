@@ -1,0 +1,31 @@
+---
+name: Librum::Components::Options::Validator#initialize
+parent_path: librum/components/options/validator
+signature: 'initialize(options:, allow_extra_options: false)'
+slug: initialize
+constructor: true
+data_path: librum/components/options/validator/i-initialize
+params:
+- description: |-
+    the options
+    defined for the component.
+  name: options
+  type:
+  - name: Hash
+    keys:
+    - name: String
+    values:
+    - name: Librum::Component::Option
+- description: |-
+    if true, ignores unexpected
+    options rather than raising an exception.
+  name: allow_extra_options
+  type:
+  - name: 'true'
+  - name: 'false'
+  default: 'false'
+returns:
+- description: a new instance of Validator
+  type:
+  - name: Validator
+version: "*"

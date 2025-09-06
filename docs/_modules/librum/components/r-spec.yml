@@ -5,11 +5,14 @@ type: module
 files:
 - lib/librum/components/rspec.rb
 - lib/librum/components/rspec/utils.rb
+- lib/librum/components/rspec/deferred.rb
 - lib/librum/components/rspec/matchers.rb
 - lib/librum/components/rspec/render_component.rb
 parent_path: librum/components
 short_description: Namespace for code that extends test functionality.
 defined_modules:
+- name: Deferred
+  slug: deferred
 - name: Matchers
   slug: matchers
 - name: RenderComponent

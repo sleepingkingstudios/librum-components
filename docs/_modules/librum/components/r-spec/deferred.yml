@@ -1,0 +1,23 @@
+---
+name: Librum::Components::RSpec::Deferred
+slug: deferred
+type: module
+files:
+- lib/librum/components/rspec/deferred.rb
+- lib/librum/components/rspec/deferred/bulma_examples.rb
+- lib/librum/components/rspec/deferred/options_examples.rb
+- lib/librum/components/rspec/deferred/component_examples.rb
+- lib/librum/components/rspec/deferred/configuration_examples.rb
+parent_path: librum/components/r-spec
+short_description: Namespace for deferred example groups.
+defined_modules:
+- name: BulmaExamples
+  slug: bulma-examples
+- name: ComponentExamples
+  slug: component-examples
+- name: ConfigurationExamples
+  slug: configuration-examples
+- name: OptionsExamples
+  slug: options-examples
+data_path: librum/components/r-spec/deferred
+version: "*"

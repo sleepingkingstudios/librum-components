@@ -1,0 +1,14 @@
+---
+name: Librum::Components.provider=
+parent_path: librum/components
+signature: provider=(value)
+slug: provider=
+constructor: false
+data_path: librum/components/c-provider=
+params:
+- description: the provider to set.
+  name: value
+  type:
+  - name: Plumbum::Provider
+short_description: Sets the provider if it is not already initialized.
+version: "*"

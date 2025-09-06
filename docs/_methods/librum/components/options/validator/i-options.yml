@@ -1,0 +1,18 @@
+---
+name: Librum::Components::Options::Validator#options
+parent_path: librum/components/options/validator
+signature: options
+slug: options
+constructor: false
+data_path: librum/components/options/validator/i-options
+returns:
+- description: |-
+    the options defined
+    for the component.
+  type:
+  - name: Hash
+    keys:
+    - name: String
+    values:
+    - name: Librum::Component::Option
+version: "*"

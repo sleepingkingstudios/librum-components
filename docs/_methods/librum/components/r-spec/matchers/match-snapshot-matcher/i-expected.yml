@@ -5,9 +5,8 @@ signature: expected
 slug: expected
 constructor: false
 data_path: librum/components/r-spec/matchers/match-snapshot-matcher/i-expected
-params:
-- description: expected string.
-  name: the
+returns:
+- description: the expected string.
   type:
   - name: String
 version: "*"

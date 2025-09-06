@@ -11,6 +11,10 @@ class_methods:
   path: librum/components/base/c-abstract?
   slug: abstract?
   inherited: true
+- name: build
+  path: librum/components/base/c-build
+  slug: build
+  inherited: true
 - name: option
   path: librum/components/base/c-option
   slug: option
@@ -33,11 +37,27 @@ instance_methods:
   path: librum/components/literal/i-call
   slug: call
   inherited: false
+- name: class_names
+  path: librum/components/base/i-class-names
+  slug: class-names
+  inherited: true
+- name: components
+  path: librum/components/base/i-components
+  slug: components
+  inherited: true
+- name: configuration
+  path: librum/components/base/i-configuration
+  slug: configuration
+  inherited: true
 - name: initialize
   path: librum/components/literal/i-initialize
   slug: initialize
   inherited: false
   constructor: true
+- name: is_layout?
+  path: librum/components/base/i-is-layout?
+  slug: is-layout?
+  inherited: true
 data_path: librum/components/literal
 constructor: true
 inherited_classes:

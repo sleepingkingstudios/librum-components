@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Bulma::Configuration#bulma_prefix
+parent_path: librum/components/bulma/configuration
+signature: bulma_prefix
+slug: bulma-prefix
+constructor: false
+data_path: librum/components/bulma/configuration/i-bulma-prefix
+returns:
+- description: |-
+    the prefix for classes using the Bulma CSS
+    framework.
+  type:
+  - name: String
+  - name: nil
+version: "*"

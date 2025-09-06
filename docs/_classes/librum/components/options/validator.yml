@@ -1,0 +1,32 @@
+---
+name: Librum::Components::Options::Validator
+slug: validator
+type: class
+files:
+- lib/librum/components/options/validator.rb
+parent_path: librum/components/options
+short_description: Utility class for validating the options passed to a component.
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/validator/i-options
+  slug: options
+  inherited: false
+instance_methods:
+- name: allow_extra_options?
+  path: librum/components/options/validator/i-allow-extra-options?
+  slug: allow-extra-options?
+  inherited: false
+- name: call
+  path: librum/components/options/validator/i-call
+  slug: call
+  inherited: false
+- name: initialize
+  path: librum/components/options/validator/i-initialize
+  slug: initialize
+  inherited: false
+  constructor: true
+data_path: librum/components/options/validator
+constructor: true
+version: "*"

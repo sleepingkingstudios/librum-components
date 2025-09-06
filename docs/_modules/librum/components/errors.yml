@@ -1,0 +1,26 @@
+---
+name: Librum::Components::Errors
+slug: errors
+type: module
+files:
+- lib/librum/components/errors.rb
+- lib/librum/components/errors/invalid_options_error.rb
+- lib/librum/components/errors/duplicate_option_error.rb
+- lib/librum/components/errors/existing_provider_error.rb
+- lib/librum/components/errors/invalid_component_error.rb
+- lib/librum/components/errors/abstract_component_error.rb
+parent_path: librum/components
+short_description: Namespace for exceptions raised by Librum::Components.
+defined_classes:
+- name: AbstractComponentError
+  slug: abstract-component-error
+- name: DuplicateOptionError
+  slug: duplicate-option-error
+- name: ExistingProviderError
+  slug: existing-provider-error
+- name: InvalidComponentError
+  slug: invalid-component-error
+- name: InvalidOptionsError
+  slug: invalid-options-error
+data_path: librum/components/errors
+version: "*"

@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Options::ClassMethods#allow_extra_options?
+parent_path: librum/components/options/class-methods
+signature: allow_extra_options?
+slug: allow-extra-options?
+constructor: false
+data_path: librum/components/options/class-methods/i-allow-extra-options?
+returns:
+- description: |-
+    if true, ignores unexpected options rather than
+    raising an exception.
+  type:
+  - name: 'true'
+  - name: 'false'
+version: "*"

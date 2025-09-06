@@ -1,0 +1,47 @@
+---
+name: Librum::Components::Bulma::Options::Typography
+slug: typography
+type: module
+files:
+- lib/librum/components/bulma/options/typography.rb
+parent_path: librum/components/bulma/options
+short_description: Options for passing Bulma typography helpers to a component.
+constants:
+- name: ALIGNMENTS
+  path: librum/components/bulma/options/typography/alignments
+  slug: alignments
+  inherited: false
+- name: FONT_FAMILIES
+  path: librum/components/bulma/options/typography/font-families
+  slug: font-families
+  inherited: false
+- name: SIZES
+  path: librum/components/bulma/options/typography/sizes
+  slug: sizes
+  inherited: false
+- name: TRANSFORMS
+  path: librum/components/bulma/options/typography/transforms
+  slug: transforms
+  inherited: false
+- name: WEIGHTS
+  path: librum/components/bulma/options/typography/weights
+  slug: weights
+  inherited: false
+instance_attributes:
+- name: options
+  read: true
+  write: false
+  path: librum/components/options/i-options
+  slug: options
+  inherited: true
+instance_methods:
+- name: initialize
+  path: librum/components/options/i-initialize
+  slug: initialize
+  inherited: true
+data_path: librum/components/bulma/options/typography
+included_modules:
+- name: Librum::Components::Options
+  slug: options
+  path: librum/components/options
+version: "*"

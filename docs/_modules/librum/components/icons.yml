@@ -1,0 +1,17 @@
+---
+name: Librum::Components::Icons
+slug: icons
+type: module
+files:
+- lib/librum/components/icons.rb
+- lib/librum/components/icons/base.rb
+- lib/librum/components/icons/font_awesome.rb
+parent_path: librum/components
+short_description: Namespace for icon family-specific icon components.
+defined_classes:
+- name: Base
+  slug: base
+- name: FontAwesome
+  slug: font-awesome
+data_path: librum/components/icons
+version: "*"

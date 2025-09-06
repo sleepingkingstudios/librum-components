@@ -1,0 +1,30 @@
+---
+name: Librum::Components::Configuration#initialize
+parent_path: librum/components/configuration
+signature: initialize(**options)
+slug: initialize
+constructor: true
+data_path: librum/components/configuration/i-initialize
+options:
+- name: colors
+  opts:
+  - description: colors defined for the component set.
+    name: the
+    type:
+    - name: Array
+      items:
+      - name: String
+params:
+- description: initialization options for the configuration.
+  name: options
+  type:
+  - name: Hash
+- description: a customizable set of options
+  name: colors
+  type:
+  - name: Hash
+returns:
+- description: a new instance of Configuration
+  type:
+  - name: Configuration
+version: "*"

@@ -1,0 +1,8 @@
+---
+name: Librum::Components::PROVIDER_KEYS
+parent_path: librum/components
+slug: provider-keys
+short_description: Required keys for the base components provider.
+value: "%w[components configuration routes].freeze"
+data_path: librum/components/provider-keys
+version: "*"

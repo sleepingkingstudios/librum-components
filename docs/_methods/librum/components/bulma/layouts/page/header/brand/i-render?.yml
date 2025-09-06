@@ -1,0 +1,15 @@
+---
+name: Librum::Components::Bulma::Layouts::Page::Header::Brand#render?
+parent_path: librum/components/bulma/layouts/page/header/brand
+signature: render?
+slug: render?
+constructor: false
+data_path: librum/components/bulma/layouts/page/header/brand/i-render?
+returns:
+- description: |-
+    true if the navbar has a brand image or title;
+    otherwise false.
+  type:
+  - name: 'true'
+  - name: 'false'
+version: "*"

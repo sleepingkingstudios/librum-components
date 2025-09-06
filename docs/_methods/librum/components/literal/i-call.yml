@@ -5,4 +5,9 @@ signature: call
 slug: call
 constructor: false
 data_path: librum/components/literal/i-call
+returns:
+- description: the scrubbed component contents.
+  type:
+  - name: ActiveSupport::SafeBuffer
+short_description: Scrubs the contents and wraps in an HTML-safe buffer.
 version: "*"

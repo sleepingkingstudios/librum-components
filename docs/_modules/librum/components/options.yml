@@ -4,16 +4,26 @@ slug: options
 type: module
 files:
 - lib/librum/components/options.rb
+- lib/librum/components/options/validator.rb
+- lib/librum/components/options/class_name.rb
+- lib/librum/components/options/validation_helpers.rb
 parent_path: librum/components
 short_description: Module for defining named options for components.
+class_methods:
+- name: included
+  path: librum/components/options/c-included
+  slug: included
+  inherited: false
 defined_classes:
-- name: DuplicateOptionError
-  slug: duplicate-option-error
-- name: InvalidOptionsError
-  slug: invalid-options-error
+- name: Validator
+  slug: validator
 defined_modules:
 - name: ClassMethods
   slug: class-methods
+- name: ClassName
+  slug: class-name
+- name: ValidationHelpers
+  slug: validation-helpers
 instance_attributes:
 - name: options
   read: true

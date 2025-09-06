@@ -1,0 +1,12 @@
+---
+name: Librum::Components::Bulma::Box#call
+parent_path: librum/components/bulma/box
+signature: call
+slug: call
+constructor: false
+data_path: librum/components/bulma/box/i-call
+returns:
+- description: the rendered component.
+  type:
+  - name: ActiveSupport::SafeBuffer
+version: "*"

@@ -1,0 +1,45 @@
+---
+name: Librum::Components::Bulma
+slug: bulma
+type: module
+files:
+- lib/librum/components/bulma.rb
+- lib/librum/components/bulma/box.rb
+- lib/librum/components/bulma/base.rb
+- lib/librum/components/bulma/icon.rb
+- lib/librum/components/bulma/link.rb
+- lib/librum/components/bulma/label.rb
+- lib/librum/components/bulma/heading.rb
+- lib/librum/components/bulma/layouts.rb
+- lib/librum/components/bulma/options.rb
+- lib/librum/components/bulma/configuration.rb
+parent_path: librum/components
+short_description: Namespace for components using the Bulma CSS Framework.
+defined_classes:
+- name: Base
+  slug: base
+- name: Box
+  slug: box
+- name: Configuration
+  slug: configuration
+- name: Heading
+  slug: heading
+- name: Icon
+  slug: icon
+- name: Label
+  slug: label
+- name: Link
+  slug: link
+defined_modules:
+- name: Layouts
+  slug: layouts
+- name: Options
+  slug: options
+data_path: librum/components/bulma
+metadata:
+  see:
+  - label: https://bulma.io/
+    path: https://bulma.io/
+    text:
+    type: link
+version: "*"
