@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'librum/components/errors/abstract_component_error'
 require 'librum/components/rspec/deferred'
 require 'librum/components/rspec/deferred/configuration_examples'
 require 'librum/components/rspec/deferred/options_examples'
@@ -68,7 +69,7 @@ module Librum::Components::RSpec::Deferred
         it 'should raise an exception' do
           expect { described_class.option(name, **meta_options) }
             .to raise_error(
-              described_class::AbstractComponentError,
+              Librum::Components::Errors::AbstractComponentError,
               error_message
             )
         end
@@ -83,7 +84,7 @@ module Librum::Components::RSpec::Deferred
           it 'should raise an exception' do
             expect { described_class.option(name, **meta_options) }
               .to raise_error(
-                described_class::AbstractComponentError,
+                Librum::Components::Errors::AbstractComponentError,
                 error_message
               )
           end
@@ -217,7 +218,7 @@ module Librum::Components::RSpec::Deferred
 
           it 'should raise an exception' do
             expect { described_class.build(value) }
-              .to raise_error Librum::Components::Base::InvalidComponentError,
+              .to raise_error Librum::Components::Errors::InvalidComponentError,
                 error_message
           end
         end
@@ -230,7 +231,7 @@ module Librum::Components::RSpec::Deferred
 
           it 'should raise an exception' do
             expect { described_class.build(value) }
-              .to raise_error Librum::Components::Base::InvalidComponentError,
+              .to raise_error Librum::Components::Errors::InvalidComponentError,
                 error_message
           end
         end
@@ -243,7 +244,7 @@ module Librum::Components::RSpec::Deferred
 
           it 'should raise an exception' do
             expect { described_class.build(value) }
-              .to raise_error Librum::Components::Base::InvalidComponentError,
+              .to raise_error Librum::Components::Errors::InvalidComponentError,
                 error_message
           end
         end

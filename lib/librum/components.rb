@@ -12,6 +12,7 @@ module Librum
     autoload :Colors,        'librum/components/colors'
     autoload :Configuration, 'librum/components/configuration'
     autoload :Empty,         'librum/components/empty'
+    autoload :Errors,        'librum/components/errors'
     autoload :Icon,          'librum/components/icon'
     autoload :Icons,         'librum/components/icons'
     autoload :Option,        'librum/components/option'
