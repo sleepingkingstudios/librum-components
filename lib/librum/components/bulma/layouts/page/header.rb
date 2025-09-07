@@ -1,17 +1,10 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/layouts/page'
+require 'librum/components'
 
 module Librum::Components::Bulma::Layouts
   # Renders the default header for a page component.
   class Page::Header < Librum::Components::Bulma::Base
-    autoload :Brand,
-      'librum/components/bulma/layouts/page/header/brand'
-    autoload :Navbar,
-      'librum/components/bulma/layouts/page/header/navbar'
-    autoload :NavbarItem,
-      'librum/components/bulma/layouts/page/header/navbar_item'
-
     option :brand
     option :color,     validate: true
     option :max_width, required: true

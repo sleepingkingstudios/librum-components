@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/options/class_name'
-require 'librum/components/rspec/deferred/options_examples'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Options::ClassName do
   include Librum::Components::RSpec::Deferred::OptionsExamples

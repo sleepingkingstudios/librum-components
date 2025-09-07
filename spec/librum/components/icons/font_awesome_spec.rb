@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/icons/font_awesome'
-require 'librum/components/rspec/deferred/component_examples'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
   include Librum::Components::RSpec::Deferred::ComponentExamples

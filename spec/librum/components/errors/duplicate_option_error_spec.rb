@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/errors/duplicate_option_error'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Errors::DuplicateOptionError do
   it { expect(described_class).to be_a(Class).and be < StandardError }

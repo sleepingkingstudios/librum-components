@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'librum/components/options'
-
 module Librum::Components::Options
   # Utility class for validating the options passed to a component.
   class Validator # rubocop:disable Metrics/ClassLength

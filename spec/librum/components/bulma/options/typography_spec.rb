@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/options/typography'
-require 'librum/components/rspec/deferred/bulma_examples'
-require 'librum/components/rspec/deferred/options_examples'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Bulma::Options::Typography do
   include Librum::Components::RSpec::Deferred::BulmaExamples

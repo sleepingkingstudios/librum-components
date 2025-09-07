@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require 'librum/components/rspec/deferred'
+require 'rspec/sleeping_king_studios/deferred/provider'
+
+require 'librum/components'
 
 module Librum::Components::RSpec::Deferred
   # Deferred examples verifying component options.

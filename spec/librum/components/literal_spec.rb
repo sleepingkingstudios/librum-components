@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/literal'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Literal, type: :component do
   subject(:component) { described_class.new(contents) }

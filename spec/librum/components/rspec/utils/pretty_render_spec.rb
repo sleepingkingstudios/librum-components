@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/literal'
-require 'librum/components/rspec/render_component'
-require 'librum/components/rspec/utils/pretty_render'
+require 'librum/components'
 
 RSpec.describe Librum::Components::RSpec::Utils::PrettyRender do
   include Librum::Components::RSpec::RenderComponent

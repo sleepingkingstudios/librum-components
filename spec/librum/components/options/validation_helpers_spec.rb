@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/literal'
-require 'librum/components/options/validation_helpers'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Options::ValidationHelpers do
   subject(:helpers) { Spec::ValidatedComponent.new(configuration) }

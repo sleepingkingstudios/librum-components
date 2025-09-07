@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/base'
-require 'librum/components/rspec/deferred/component_examples'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Base do
   include Librum::Components::RSpec::Deferred::ComponentExamples

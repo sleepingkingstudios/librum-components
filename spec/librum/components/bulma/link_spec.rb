@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/link'
-require 'librum/components/rspec/deferred/bulma_examples'
-require 'librum/components/rspec/deferred/component_examples'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Bulma::Link, type: :component do
   include Librum::Components::RSpec::Deferred::BulmaExamples

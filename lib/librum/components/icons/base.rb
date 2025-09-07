@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/icons'
+require 'librum/components'
 
 module Librum::Components::Icons
   # Abstract base class for icon components.

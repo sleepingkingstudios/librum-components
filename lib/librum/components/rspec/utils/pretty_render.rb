@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/rspec/utils'
+require 'librum/components'
 
 module Librum::Components::RSpec::Utils
   # Utility class for rendering HTML documents with a consistent format.

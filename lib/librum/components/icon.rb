@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'librum/components'
-require 'librum/components/errors/invalid_options_error'
-require 'librum/components/icons/font_awesome'
 
 module Librum::Components
   # Generic icon component.

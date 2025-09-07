@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'librum/components/options'
-
 module Librum::Components::Options
   # Option for passing a class name parameter to a component.
   module ClassName

@@ -8,11 +8,6 @@ require 'plumbum/parameters'
 require 'sleeping_king_studios/tools/toolbelt'
 
 require 'librum/components'
-require 'librum/components/empty'
-require 'librum/components/errors/abstract_component_error'
-require 'librum/components/errors/invalid_options_error'
-require 'librum/components/option'
-require 'librum/components/options'
 
 module Librum::Components
   # Abstract base class for component objects.

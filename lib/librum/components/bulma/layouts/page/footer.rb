@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/layouts/page'
+require 'librum/components'
 
 module Librum::Components::Bulma::Layouts
   # Renders the footer for a page component.
   class Page::Footer < Librum::Components::Bulma::Base
-    autoload :Copyright, 'librum/components/bulma/layouts/page/footer/copyright'
-
     option :copyright
     option :max_width, required: true
     option :tagline

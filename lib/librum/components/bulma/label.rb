@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma'
+require 'librum/components'
 
 module Librum::Components::Bulma
   # Basic component with text and an optional icon.

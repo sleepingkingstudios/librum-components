@@ -1,23 +1,19 @@
 # frozen_string_literal: true
 
-require 'plumbum'
-
-require 'librum/components/version'
+require 'zeitwerk'
 
 # A Ruby application toolkit.
+module Librum; end
+
+loader = Zeitwerk::Loader.for_gem_extension(Librum)
+loader.inflector.inflect('rspec' => 'RSpec')
+loader.setup
+
+require 'plumbum'
+
 module Librum
   # Component library for Librum applications.
   module Components
-    autoload :Base,          'librum/components/base'
-    autoload :Colors,        'librum/components/colors'
-    autoload :Configuration, 'librum/components/configuration'
-    autoload :Empty,         'librum/components/empty'
-    autoload :Errors,        'librum/components/errors'
-    autoload :Icon,          'librum/components/icon'
-    autoload :Icons,         'librum/components/icons'
-    autoload :Option,        'librum/components/option'
-    autoload :Options,       'librum/components/options'
-
     # Required keys for the base components provider.
     PROVIDER_KEYS = %w[components configuration routes].freeze
 

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/options/validator'
-require 'librum/components/rspec/deferred/configuration_examples'
-require 'librum/components/rspec/deferred/options_examples'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Options::Validator do
   include Librum::Components::RSpec::Deferred::ConfigurationExamples

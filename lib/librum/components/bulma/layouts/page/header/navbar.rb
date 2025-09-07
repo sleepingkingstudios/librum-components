@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/layouts/page/header'
-require 'librum/components/bulma/layouts/page/header/navbar_item'
+require 'librum/components'
 
 module Librum::Components::Bulma::Layouts
   # Renders the navigation bar for the default page header.

@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require 'librum/components/errors/abstract_component_error'
-require 'librum/components/rspec/deferred'
-require 'librum/components/rspec/deferred/configuration_examples'
-require 'librum/components/rspec/deferred/options_examples'
+require 'rspec/sleeping_king_studios/deferred/provider'
+
+require 'librum/components'
 
 module Librum::Components::RSpec::Deferred
   # Deferred examples for asserting on view components.

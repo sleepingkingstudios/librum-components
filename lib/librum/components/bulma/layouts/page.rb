@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/layouts'
+require 'librum/components'
 
 module Librum::Components::Bulma::Layouts
   # Flexible layout component used to render a full content page.
   class Page < Librum::Components::Bulma::Base
-    autoload :Footer, 'librum/components/bulma/layouts/page/footer'
-    autoload :Header, 'librum/components/bulma/layouts/page/header'
-
     option :brand
     option :color, validate: true
     option :copyright
