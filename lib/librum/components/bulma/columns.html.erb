@@ -1,0 +1,7 @@
+<div class="<%= bulma_class_names 'columns' %>">
+  <% columns.each do |column| %>
+    <div class="<%= bulma_class_names 'column' %>">
+      <%= render(column) %>
+    </div>
+  <% end %>
+</div>
