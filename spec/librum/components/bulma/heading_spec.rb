@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/heading'
-require 'librum/components/literal'
-require 'librum/components/rspec/deferred/bulma_examples'
-require 'librum/components/rspec/deferred/component_examples'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Bulma::Heading, type: :component do
   include Librum::Components::RSpec::Deferred::BulmaExamples

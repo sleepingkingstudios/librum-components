@@ -2,8 +2,7 @@
 
 require 'action_controller'
 
-require 'librum/components/rspec'
-require 'librum/components/rspec/utils/pretty_render'
+require 'librum/components'
 
 module Librum::Components::RSpec
   # Test helper for rendering a ViewComponent instance to a String.

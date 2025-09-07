@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/option'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Option do
   subject(:option) { described_class.new(name:, **options) }

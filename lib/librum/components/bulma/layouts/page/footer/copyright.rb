@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/layouts/page/footer'
+require 'librum/components'
 
 module Librum::Components::Bulma::Layouts
   # Renders the copyright notice for a page component.

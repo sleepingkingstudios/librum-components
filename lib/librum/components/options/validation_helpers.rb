@@ -3,8 +3,6 @@
 require 'rails'
 require 'view_component'
 
-require 'librum/components/options'
-
 module Librum::Components::Options
   # Default helper methods for validating option values.
   module ValidationHelpers

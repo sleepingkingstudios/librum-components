@@ -18,8 +18,7 @@ require 'rspec/sleeping_king_studios/matchers/core/have_aliased_method'
 require 'rspec/sleeping_king_studios/matchers/built_in/respond_to'
 require 'byebug'
 
-require 'librum/components/rspec/matchers'
-require 'librum/components/rspec/render_component'
+require 'librum/components'
 require 'plumbum/rspec/stub_provider'
 
 # Isolated namespace for defining spec-only or transient objects.

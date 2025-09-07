@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/literal'
-require 'librum/components/rspec/matchers/match_snapshot_matcher'
-require 'librum/components/rspec/render_component'
+require 'librum/components'
 
 RSpec.describe Librum::Components::RSpec::Matchers::MatchSnapshotMatcher do
   include Librum::Components::RSpec::RenderComponent

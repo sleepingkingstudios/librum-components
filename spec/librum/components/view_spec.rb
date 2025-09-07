@@ -3,8 +3,7 @@
 require 'cuprum'
 require 'cuprum/rails'
 
-require 'librum/components/view'
-require 'librum/components/rspec/deferred/component_examples'
+require 'librum/components'
 
 RSpec.describe Librum::Components::View, type: :component do
   include Librum::Components::RSpec::Deferred::ComponentExamples

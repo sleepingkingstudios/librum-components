@@ -3,16 +3,11 @@
 require 'sleeping_king_studios/tools/toolbox/mixin'
 
 require 'librum/components'
-require 'librum/components/errors/duplicate_option_error'
 
 module Librum::Components
   # Module for defining named options for components.
   module Options
     extend SleepingKingStudios::Tools::Toolbox::Mixin
-
-    autoload :ClassName,         'librum/components/options/class_name'
-    autoload :Validator,         'librum/components/options/validator'
-    autoload :ValidationHelpers, 'librum/components/options/validation_helpers'
 
     class << self
       # Callback invoked whenever Options is included in another module.

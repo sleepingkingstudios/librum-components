@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/literal'
-require 'librum/components/rspec/render_component'
+require 'librum/components'
 
 RSpec.describe Librum::Components::RSpec::RenderComponent do
   subject(:example) { Object.new.extend(described_class) }

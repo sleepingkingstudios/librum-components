@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/icon'
-require 'librum/components/rspec/deferred/component_examples'
+require 'librum/components'
 
 RSpec.describe Librum::Components::Bulma::Icon, type: :component do
   include Librum::Components::RSpec::Deferred::ComponentExamples

@@ -1,15 +1,12 @@
 # frozen_string_literal: true
 
-require 'librum/components/rspec'
+require 'librum/components'
 
 module Librum::Components::RSpec
   # Namespace for shared RSpec matchers.
   module Matchers
     UNDEFINED = Object.new.freeze
     private_constant :UNDEFINED
-
-    autoload :MatchSnapshotMatcher,
-      'librum/components/rspec/matchers/match_snapshot_matcher'
 
     # @overload match_snapshot
     #   Returns a snapshot matcher against the value of the #snapshot method.

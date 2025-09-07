@@ -5,6 +5,7 @@ require 'librum/components'
 module Librum::Components
   # Initializer for configuring the components in a Rails application.
   class Railtie < Rails::Railtie
+    # :nocov:
     initializer 'librum-components.append_assets_path', group: :all do |app|
       app.config.assets.paths << Librum::Components.javascript_path
       app.config.assets.paths << Librum::Components.stylesheets_path
@@ -14,5 +15,6 @@ module Librum::Components
       app.config.importmap.cache_sweepers <<
         Librum::Components.javascript_path
     end
+    # :nocov:
   end
 end

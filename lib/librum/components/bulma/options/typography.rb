@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/options'
+require 'librum/components'
 
 module Librum::Components::Bulma::Options
   # Options for passing Bulma typography helpers to a component.

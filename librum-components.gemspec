@@ -38,4 +38,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'plumbum',         '>= 0.1.0.alpha'
   gem.add_dependency 'rails',           '>= 7.0', '< 9'
   gem.add_dependency 'view_component',  '~> 3.21'
+  gem.add_dependency 'zeitwerk',        '~> 2.0'
 end
