@@ -2,7 +2,7 @@
 
 require 'rspec/sleeping_king_studios/deferred/provider'
 
-require 'librum/components'
+require 'librum/components/rspec/deferred'
 
 module Librum::Components::RSpec::Deferred
   # Deferred examples for asserting on components using the Bulma framework.

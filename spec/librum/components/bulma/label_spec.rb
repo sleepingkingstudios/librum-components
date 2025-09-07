@@ -2,6 +2,8 @@
 
 require 'librum/components'
 
+require 'librum/components/rspec/deferred/bulma_examples'
+
 RSpec.describe Librum::Components::Bulma::Label, type: :component do
   include Librum::Components::RSpec::Deferred::BulmaExamples
   include Librum::Components::RSpec::Deferred::ComponentExamples

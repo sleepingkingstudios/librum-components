@@ -2,6 +2,9 @@
 
 require 'librum/components'
 
+require 'librum/components/rspec/deferred/bulma_examples'
+require 'librum/components/rspec/deferred/options_examples'
+
 RSpec.describe Librum::Components::Bulma::Options::Typography do
   include Librum::Components::RSpec::Deferred::BulmaExamples
   include Librum::Components::RSpec::Deferred::OptionsExamples
