@@ -27,6 +27,7 @@ module Librum::Components::Bulma
           render_actions? && level ? 'mb-0' : nil,
           !render_actions? && !level ? 'is-block mb-5 title' : nil
         ),
+        typography_class,
         class_name
       )
     end

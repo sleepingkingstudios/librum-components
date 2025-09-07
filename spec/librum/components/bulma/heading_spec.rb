@@ -200,6 +200,17 @@ RSpec.describe Librum::Components::Bulma::Heading, type: :component do
       it { expect(rendered).to match_snapshot(snapshot) }
     end
 
+    describe 'with typography options' do
+      let(:component_options) { super().merge(size: 3) }
+      let(:snapshot) do
+        <<~HTML
+          <span class="title is-block mb-5 is-size-3">Greetings, Starfighter</span>
+        HTML
+      end
+
+      it { expect(rendered.to_s).to match_snapshot }
+    end
+
     describe 'with multiple options' do
       let(:actions) do
         [
@@ -208,13 +219,13 @@ RSpec.describe Librum::Components::Bulma::Heading, type: :component do
         ]
       end
       let(:component_options) do
-        super().merge(actions:, class_name: 'custom-heading', level: 2)
+        super().merge(actions:, class_name: 'custom-heading', level: 2, size: 3)
       end
       let(:snapshot) do
         <<~HTML
           <div class="level mb-5">
             <div class="level-left">
-              <h2 class="mb-0 custom-heading">Greetings, Starfighter</h2>
+              <h2 class="mb-0 is-size-3 custom-heading">Greetings, Starfighter</h2>
             </div>
 
             <div class="level-right">
