@@ -5,9 +5,11 @@ require 'zeitwerk'
 # A Ruby application toolkit.
 module Librum; end
 
-loader = Zeitwerk::Loader.for_gem_extension(Librum)
-loader.inflector.inflect('rspec' => 'RSpec')
-loader.setup
+unless defined?(Rails::Railtie)
+  loader = Zeitwerk::Loader.for_gem_extension(Librum)
+  loader.inflector.inflect('rspec' => 'RSpec')
+  loader.setup
+end
 
 require 'plumbum'
 
