@@ -2,14 +2,10 @@
 
 require 'librum/components'
 
-RSpec.describe Librum::Components::Bulma::Layouts::Page, type: :component do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
-  let(:component_options)   { {} }
-  let(:configuration_class) { Librum::Components::Bulma::Configuration }
-
+RSpec.describe Librum::Components::Bulma::Layouts::Page,
+  framework: :bulma,
+  type:      :component \
+do
   include_deferred 'with configuration',
     colors:              %i[red orange yellow green blue indigo violet],
     default_icon_family: 'fa-solid',

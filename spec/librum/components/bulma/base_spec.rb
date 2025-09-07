@@ -2,13 +2,10 @@
 
 require 'librum/components'
 
-RSpec.describe Librum::Components::Bulma::Base do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
-  let(:component_options)   { {} }
-  let(:configuration_class) { Librum::Components::Bulma::Configuration }
+RSpec.describe Librum::Components::Bulma::Base,
+  framework: :bulma,
+  type:      :component \
+do
   let(:default_components) do
     Librum::Components::Bulma
   end

@@ -2,13 +2,10 @@
 
 require 'librum/components'
 
-RSpec.describe Librum::Components::Bulma::Box, type: :component do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
-  let(:component_options) { {} }
-
+RSpec.describe Librum::Components::Bulma::Box,
+  framework: :bulma,
+  type:      :component \
+do
   include_deferred 'should be a view component'
 
   include_deferred 'should define component option', :class_name

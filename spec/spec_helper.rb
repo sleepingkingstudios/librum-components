@@ -18,7 +18,8 @@ require 'rspec/sleeping_king_studios/matchers/core/have_aliased_method'
 require 'rspec/sleeping_king_studios/matchers/built_in/respond_to'
 require 'byebug'
 
-require 'librum/components'
+require 'librum/components/rspec/bulma_helpers'
+require 'librum/components/rspec/component_helpers'
 require 'plumbum/rspec/stub_provider'
 
 # Isolated namespace for defining spec-only or transient objects.
@@ -33,8 +34,8 @@ RSpec.configure do |config|
   config.include RSpec::SleepingKingStudios::Examples::PropertyExamples
   config.include Plumbum::RSpec::StubProvider
 
-  config.include Librum::Components::RSpec::Matchers,        type: :component
-  config.include Librum::Components::RSpec::RenderComponent, type: :component
+  config.include Librum::Components::RSpec::BulmaHelpers,     framework: :bulma
+  config.include Librum::Components::RSpec::ComponentHelpers, type: :component
 
   config.disable_monkey_patching!
 

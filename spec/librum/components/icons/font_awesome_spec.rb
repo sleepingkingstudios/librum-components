@@ -3,10 +3,6 @@
 require 'librum/components'
 
 RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
   let(:family) { 'font-awesome-solid' }
   let(:icon)   { 'rainbow' }
   let(:component_options) do

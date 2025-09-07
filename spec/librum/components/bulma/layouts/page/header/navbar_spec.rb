@@ -3,15 +3,9 @@
 require 'librum/components'
 
 RSpec.describe Librum::Components::Bulma::Layouts::Page::Header::Navbar,
-  type: :component \
+  framework: :bulma,
+  type:      :component \
 do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
-  let(:component_options)   { {} }
-  let(:configuration_class) { Librum::Components::Bulma::Configuration }
-
   include_deferred 'should be a view component'
 
   include_deferred 'should define component option',

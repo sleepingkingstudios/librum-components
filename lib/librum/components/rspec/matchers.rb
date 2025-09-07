@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'librum/components'
+require 'librum/components/rspec'
 
 module Librum::Components::RSpec
   # Namespace for shared RSpec matchers.

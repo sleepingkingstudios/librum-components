@@ -2,7 +2,9 @@
 
 require 'rspec/sleeping_king_studios/deferred/provider'
 
-require 'librum/components'
+require 'librum/components/rspec/deferred'
+require 'librum/components/rspec/deferred/configuration_examples'
+require 'librum/components/rspec/deferred/options_examples'
 
 module Librum::Components::RSpec::Deferred
   # Deferred examples for asserting on view components.

@@ -2,16 +2,14 @@
 
 require 'librum/components'
 
-RSpec.describe Librum::Components::Bulma::Icon, type: :component do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
+RSpec.describe Librum::Components::Bulma::Icon,
+  framework: :bulma,
+  type:      :component \
+do
   let(:icon) { { family: 'fa-solid', icon: 'rainbow' } }
   let(:component_options) do
     { icon: }
   end
-  let(:configuration_class) { Librum::Components::Bulma::Configuration }
 
   describe '::ICON_SIZES' do
     include_examples 'should define frozen constant',

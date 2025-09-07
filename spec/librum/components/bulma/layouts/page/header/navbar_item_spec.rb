@@ -3,19 +3,15 @@
 require 'librum/components'
 
 RSpec.describe Librum::Components::Bulma::Layouts::Page::Header::NavbarItem,
-  type: :component \
+  framework: :bulma,
+  type:      :component \
 do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
   let(:component_options) do
     {
       label: 'Click Me',
       url:   '/path/to/resource'
     }
   end
-  let(:configuration_class) { Librum::Components::Bulma::Configuration }
 
   include_deferred 'should be a view component'
 

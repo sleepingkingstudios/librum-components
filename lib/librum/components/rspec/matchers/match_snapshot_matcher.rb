@@ -2,7 +2,8 @@
 
 require 'diffy'
 
-require 'librum/components'
+require 'librum/components/rspec/matchers'
+require 'librum/components/rspec/render_component'
 
 module Librum::Components::RSpec::Matchers
   # Matcher asserting the string or document matches the expected value.

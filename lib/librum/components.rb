@@ -6,7 +6,8 @@ require 'zeitwerk'
 module Librum; end
 
 loader = Zeitwerk::Loader.for_gem_extension(Librum)
-loader.inflector.inflect('rspec' => 'RSpec')
+loader.ignore("#{__dir__}/components/rspec")
+loader.ignore("#{__dir__}/components/rspec.rb")
 loader.enable_reloading if defined?(Rails::Railtie) && Rails.env.development?
 loader.setup
 
