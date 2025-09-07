@@ -341,7 +341,7 @@ module Librum::Components::RSpec::Deferred
     end
 
     deferred_examples 'should validate the presence of option' \
-    do |option_name, string: false|
+    do |option_name, array: false, string: false|
       context "when :#{option_name} is nil" do
         let(:component_options) do
           super().merge(option_name.intern => nil)
@@ -359,6 +359,28 @@ module Librum::Components::RSpec::Deferred
               Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
             )
+        end
+      end
+
+      if array
+        context "when :#{option_name} is an empty Array" do
+          let(:component_options) do
+            super().merge(option_name.intern => [])
+          end
+          let(:error_message) do
+            tools.assertions.error_message_for(
+              'sleeping_king_studios.tools.assertions.presence',
+              as: option_name
+            )
+          end
+
+          it 'should raise an exception' do
+            expect { validate_options }
+              .to raise_error(
+                Librum::Components::Errors::InvalidOptionsError,
+                include(error_message)
+              )
+          end
         end
       end
 
