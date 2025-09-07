@@ -3,10 +3,6 @@
 require 'librum/components'
 
 RSpec.describe Librum::Components::Icon, type: :component do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
   let(:icon) { 'rainbow' }
   let(:component_options) do
     { icon: }
@@ -86,8 +82,6 @@ RSpec.describe Librum::Components::Icon, type: :component do
   end
 
   describe '#call' do
-    let(:rendered) { render_component(component) }
-
     describe 'with family: FontAwesome' do
       let(:component_options) do
         super().merge(family: 'fa-solid')

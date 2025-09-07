@@ -12,8 +12,6 @@ RSpec.describe Librum::Components::Literal, type: :component do
   end
 
   describe '#call' do
-    let(:rendered) { render_component(component) }
-
     it { expect(rendered.to_s).to be == contents }
 
     context 'when the contents contain unsafe HTML' do

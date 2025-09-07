@@ -6,15 +6,12 @@ require 'cuprum/rails'
 require 'librum/components'
 
 RSpec.describe Librum::Components::View, type: :component do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
   subject(:component) do
     described_class.new(**required_keywords, **component_options)
   end
 
   let(:result)            { Cuprum::Result.new }
   let(:required_keywords) { { result: } }
-  let(:component_options) { {} }
 
   include_deferred 'should be an abstract view component',
     described_class,

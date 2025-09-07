@@ -2,17 +2,10 @@
 
 require 'librum/components'
 
-require 'librum/components/rspec/deferred/bulma_examples'
-
-RSpec.describe Librum::Components::Bulma::Link, type: :component do
-  include Librum::Components::RSpec::Deferred::BulmaExamples
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
-  let(:component_options)   { {} }
-  let(:configuration_class) { Librum::Components::Bulma::Configuration }
-
+RSpec.describe Librum::Components::Bulma::Link,
+  framework: :bulma,
+  type:      :component \
+do
   describe '::LINK_TARGETS' do
     include_examples 'should define frozen constant',
       :LINK_TARGETS,

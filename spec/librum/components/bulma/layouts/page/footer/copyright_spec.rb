@@ -3,19 +3,15 @@
 require 'librum/components'
 
 RSpec.describe Librum::Components::Bulma::Layouts::Page::Footer::Copyright,
-  type: :component \
+  framework: :bulma,
+  type:      :component \
 do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
   let(:component_options) do
     {
       holder: 'Example Company',
       year:   '1982'
     }
   end
-  let(:configuration_class) { Librum::Components::Bulma::Configuration }
 
   include_deferred 'with configuration',
     default_icon_family: 'fa-solid',

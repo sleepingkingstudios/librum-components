@@ -2,13 +2,11 @@
 
 require 'librum/components'
 
-RSpec.describe Librum::Components::Bulma::Columns, type: :component do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
-  let(:component_options)   { { columns: } }
-  let(:configuration_class) { Librum::Components::Bulma::Configuration }
+RSpec.describe Librum::Components::Bulma::Columns,
+  framework: :bulma,
+  type:      :component \
+do
+  let(:component_options) { { columns: } }
   let(:columns) do
     [
       Librum::Components::Literal.new('<div>Column 1</div>'),

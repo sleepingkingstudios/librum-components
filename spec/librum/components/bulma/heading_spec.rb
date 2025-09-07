@@ -2,14 +2,10 @@
 
 require 'librum/components'
 
-require 'librum/components/rspec/deferred/bulma_examples'
-
-RSpec.describe Librum::Components::Bulma::Heading, type: :component do
-  include Librum::Components::RSpec::Deferred::BulmaExamples
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
+RSpec.describe Librum::Components::Bulma::Heading,
+  framework: :bulma,
+  type:      :component \
+do
   let(:text) do
     'Greetings, Starfighter'
   end

@@ -3,14 +3,10 @@
 require 'librum/components'
 
 RSpec.describe Librum::Components::Bulma::Layouts::Page::Footer,
-  type: :component \
+  framework: :bulma,
+  type:      :component \
 do
-  include Librum::Components::RSpec::Deferred::ComponentExamples
-
-  subject(:component) { described_class.new(**component_options) }
-
-  let(:component_options)   { { max_width: 'desktop' } }
-  let(:configuration_class) { Librum::Components::Bulma::Configuration }
+  let(:component_options) { { max_width: 'desktop' } }
 
   include_deferred 'should be a view component'
 
