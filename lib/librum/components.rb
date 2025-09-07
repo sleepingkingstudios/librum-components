@@ -5,11 +5,10 @@ require 'zeitwerk'
 # A Ruby application toolkit.
 module Librum; end
 
-unless defined?(Rails::Railtie)
-  loader = Zeitwerk::Loader.for_gem_extension(Librum)
-  loader.inflector.inflect('rspec' => 'RSpec')
-  loader.setup
-end
+loader = Zeitwerk::Loader.for_gem_extension(Librum)
+loader.inflector.inflect('rspec' => 'RSpec')
+loader.enable_reloading if defined?(Rails::Railtie) && Rails.env.development?
+loader.setup
 
 require 'plumbum'
 
@@ -28,10 +27,13 @@ module Librum
       # @return [Plumbum::ManyProvider] a provider for managing component
       #   dependencies.
       def provider
-        @provider ||= Plumbum::ManyProvider.new(
-          write_once: true,
-          values:     PROVIDER_KEYS.to_h { |key| [key, Plumbum::UNDEFINED] } # rubocop:disable Rails/IndexWith
-        )
+        @provider ||=
+          Plumbum::ManyProvider
+          .new(
+            write_once: true,
+            values:     PROVIDER_KEYS.to_h { |key| [key, Plumbum::UNDEFINED] } # rubocop:disable Rails/IndexWith
+          )
+          .extend(Plumbum::Providers::Lazy)
       end
 
       # Sets the provider if it is not already initialized.
