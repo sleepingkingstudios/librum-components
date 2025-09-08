@@ -1,0 +1,40 @@
+<h1>Missing <%= expected_page %></h1>
+
+<p>
+  The expected view component for
+  <code><%= expected_page %></code>
+  was not found.
+</p>
+
+<p>
+  The view was expected to be defined at one of the following paths:
+</p>
+
+<ul>
+  <% view_paths.each do |view_path| %>
+    <li><code><%= view_path %></code></li>
+  <% end %>
+</ul>
+
+<p>
+  The page was rendered from
+  <code><%= controller_name %>#<%= action_name %></code>.
+</p>
+
+<h2>Result</h2>
+
+<p><strong>Status</strong></p>
+
+<pre><%= status.inspect %></pre>
+
+<p><strong>Value</strong></p>
+
+<pre><%= pretty_inspect(value&.as_json)&.strip || '(none)' %></pre>
+
+<p><strong>Error</strong></p>
+
+<pre><%= pretty_inspect(error&.as_json)&.strip || '(none)' %></pre>
+
+<p><strong>Metadata</strong></p>
+
+<pre><%= pretty_inspect(metadata)&.strip || '(none)' %></pre>
