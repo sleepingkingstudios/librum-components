@@ -9,5 +9,7 @@ RSpec.describe Librum::Components::Base do
 
   let(:component_options) { {} }
 
+  include_deferred 'should be a view component'
+
   include_deferred 'should be an abstract view component', described_class
 end

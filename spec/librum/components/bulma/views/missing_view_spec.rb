@@ -11,19 +11,13 @@ do
     described_class.new(**required_keywords, **component_options)
   end
 
-  let(:result)            { Cuprum::Result.new }
-  let(:required_keywords) { { result: } }
   let(:component_options) do
     {
-      action_name:,
-      controller_name:,
       expected_page:,
       view_paths:
     }
   end
-  let(:action_name)     { 'publish' }
-  let(:controller_name) { 'books' }
-  let(:expected_page)   { 'Books#publish' }
+  let(:expected_page) { 'Books#publish' }
   let(:view_paths) do
     [
       'Components::Books::Publish',
@@ -31,7 +25,7 @@ do
     ]
   end
 
-  include_deferred 'should be a view component'
+  include_deferred 'should be a view'
 
   include_deferred 'should define component option',
     :expected_page,
@@ -40,12 +34,6 @@ do
   include_deferred 'should define component option',
     :view_paths,
     value: %w[Components::Messages::Send]
-
-  describe '#action_name' do
-    it { expect(described_class.options.keys).to include 'action_name' }
-
-    it { expect(component.action_name).to be == action_name }
-  end
 
   describe '#call' do
     let(:snapshot) do
@@ -106,7 +94,7 @@ do
           <strong>Metadata</strong>
         </p>
 
-        <pre>{}</pre>
+        <pre>{"action_name" =&gt; "publish", "controller_name" =&gt; "books", "member_action" =&gt; false}</pre>
       HTML
     end
 
@@ -118,7 +106,7 @@ do
           value:    { ok: false },
           status:   :failure,
           error:    Cuprum::Error.new(message: 'Something went wrong'),
-          metadata: { error_code: '15151' }
+          metadata: result_metadata.merge('error_code' => '15151')
         )
       end
       let(:snapshot) do
@@ -179,17 +167,11 @@ do
             <strong>Metadata</strong>
           </p>
 
-          <pre>{error_code: "15151"}</pre>
+          <pre>{"action_name" =&gt; "publish", "controller_name" =&gt; "books", "member_action" =&gt; false, "error_code" =&gt; "15151"}</pre>
         HTML
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
     end
-  end
-
-  describe '#controller_name' do
-    it { expect(described_class.options.keys).to include 'controller_name' }
-
-    it { expect(component.controller_name).to be == controller_name }
   end
 end

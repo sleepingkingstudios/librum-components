@@ -47,6 +47,22 @@ module Librum::Components
       :status,
       :value
 
+    # @return [String] the name of the called action.
+    def action_name
+      metadata.fetch('action_name') { super }
+    end
+
+    # @return [String] the name of the called controller.
+    def controller_name
+      metadata.fetch('controller_name') { super }
+    end
+
+    # @return [true, false] true if the called controller action was a member
+    #   action, otherwise false.
+    def member_action?
+      metadata.fetch('member_action', false)
+    end
+
     # @return [Hash] the result metadata, if any.
     def metadata
       return {} unless result.respond_to?(:metadata)
