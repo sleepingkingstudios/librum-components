@@ -439,6 +439,19 @@ module Librum::Components::RSpec::Deferred
           -> { be == result.metadata }
       end
 
+      describe '#request' do
+        include_examples 'should define reader', :request, nil
+
+        context 'when initialized with a request' do
+          let(:request) { Cuprum::Rails::Request.new(http_method: :patch) }
+          let(:component_options) do
+            super().merge(request:)
+          end
+
+          it { expect(component.request).to be request }
+        end
+      end
+
       describe '#resource' do
         include_examples 'should define reader', :resource, nil
 

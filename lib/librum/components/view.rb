@@ -18,15 +18,21 @@ module Librum::Components
     # @overload initialize(result, resource: nil, **options)
     #   @param result [Cuprum::Result] the result returned by the controller
     #     action.
+    #   @param request [Cuprum::Rails::Request] the request handled by the
+    #     controller.
     #   @param resource [Cuprum::Rails::Resource] the resource for the
     #     controller.
     #   @param options [Hash] additional options for the view.
-    def initialize(result:, resource: nil, **)
+    def initialize(result:, request: nil, resource: nil, **)
+      @request  = request
       @result   = result
       @resource = resource
 
       super(**)
     end
+
+    # @return [Cuprum::Rails::Request] the request handled by the controller.
+    attr_reader :request
 
     # @return [Cuprum::Rails::Resource] the resource for the controller.
     attr_reader :resource
