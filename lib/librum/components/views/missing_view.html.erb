@@ -29,12 +29,12 @@
 
 <p><strong>Value</strong></p>
 
-<pre><%= pretty_inspect(value&.as_json)&.strip || '(none)' %></pre>
+<pre><%= value&.as_json&.pretty_inspect&.strip || '(none)' %></pre>
 
 <p><strong>Error</strong></p>
 
-<pre><%= pretty_inspect(error&.as_json)&.strip || '(none)' %></pre>
+<pre><%= error&.as_json&.pretty_inspect&.strip || '(none)' %></pre>
 
 <p><strong>Metadata</strong></p>
 
-<pre><%= pretty_inspect(metadata)&.strip || '(none)' %></pre>
+<pre><%= metadata&.pretty_inspect&.strip || '(none)' %></pre>
