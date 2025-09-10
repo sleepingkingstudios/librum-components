@@ -22,15 +22,12 @@ module Librum::Components::RSpec::Deferred
       [first, *rest].join
     end
 
-    deferred_examples 'should be an abstract view component' \
-    do |base_class, **options|
+    deferred_examples 'should be an abstract view component' do |base_class|
       deferred_context 'with a component subclass' do
         let(:described_class) { Spec::ExampleComponent }
 
         example_class 'Spec::ExampleComponent', base_class
       end
-
-      include_deferred 'should be a view component', **options
 
       describe '.new' do
         wrap_deferred 'when the component defines options' do
@@ -382,6 +379,115 @@ module Librum::Components::RSpec::Deferred
         include_examples 'should define reader',
           :options,
           -> { an_instance_of(Hash) }
+      end
+    end
+
+    deferred_examples 'should be a view' do
+      let(:result_metadata) do
+        {
+          'action_name'     => 'publish',
+          'controller_name' => 'books',
+          'member_action'   => false
+        }
+      end
+      let(:result) do
+        next super() if defined?(super())
+
+        Cuprum::Rails::Result.new(metadata: result_metadata)
+      end
+      let(:required_keywords) { { result: } }
+
+      include_deferred 'should be a view component',
+        has_required_keywords: true
+
+      describe '#action_name' do
+        let(:expected) { result.metadata['action_name'] }
+
+        it { expect(component.action_name).to be == expected }
+      end
+
+      describe '#controller_name' do
+        let(:expected) { result.metadata['controller_name'] }
+
+        it { expect(component.controller_name).to be == expected }
+      end
+
+      describe '#error' do
+        include_examples 'should define reader', :error, nil
+
+        context 'when initialized with a result with an error' do
+          let(:error)  { Cuprum::Error.new(message: 'Something went wrong') }
+          let(:result) { Cuprum::Result.new(error:) }
+
+          it { expect(component.error).to be error }
+        end
+      end
+
+      describe '#member_action?' do
+        include_examples 'should define predicate', :member_action?, false
+
+        context 'when initialized with metadata: { member_action: true }' do
+          let(:result_metadata) { super().merge('member_action' => true) }
+
+          it { expect(component.member_action?).to be true }
+        end
+      end
+
+      describe '#metadata' do
+        include_examples 'should define reader',
+          :metadata,
+          -> { be == result.metadata }
+      end
+
+      describe '#request' do
+        include_examples 'should define reader', :request, nil
+
+        context 'when initialized with a request' do
+          let(:request) { Cuprum::Rails::Request.new(http_method: :patch) }
+          let(:component_options) do
+            super().merge(request:)
+          end
+
+          it { expect(component.request).to be request }
+        end
+      end
+
+      describe '#resource' do
+        include_examples 'should define reader', :resource, nil
+
+        context 'when initialized with a resource' do
+          let(:resource) { Cuprum::Rails::Resource.new(name: 'books') }
+          let(:component_options) do
+            super().merge(resource:)
+          end
+
+          it { expect(component.resource).to be resource }
+        end
+      end
+
+      describe '#result' do
+        include_examples 'should define reader', :result, -> { result }
+      end
+
+      describe '#status' do
+        include_examples 'should define reader', :status, -> { result.status }
+
+        context 'when initialized with a result with status: :failure' do
+          let(:result) { Cuprum::Result.new(status: :failure) }
+
+          it { expect(component.status).to be :failure }
+        end
+      end
+
+      describe '#value' do
+        include_examples 'should define reader', :value, nil
+
+        context 'when initialized with a result with a value' do
+          let(:value)  { { ok: true } }
+          let(:result) { Cuprum::Result.new(value:) }
+
+          it { expect(component.value).to be value }
+        end
       end
     end
   end

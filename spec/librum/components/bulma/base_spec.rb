@@ -13,6 +13,8 @@ do
     configuration_class.default
   end
 
+  include_deferred 'should be a view component'
+
   include_deferred 'should be an abstract view component', described_class
 
   describe '#bulma_class_names' do

@@ -1,20 +1,10 @@
 # frozen_string_literal: true
 
-module Librum::Components::Bulma::Views
+module Librum::Components::Views
   # View rendered when the expected view is not defined.
   class MissingView < Librum::Components::View
-    option :action_name,     validate: String
-    option :controller_name, validate: String
     option :expected_page,   validate: String
     option :view_paths,      validate: { array: String }
-
-    def action_name
-      options[:action_name]
-    end
-
-    def controller_name
-      options[:controller_name]
-    end
 
     private
 
