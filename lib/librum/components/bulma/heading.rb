@@ -17,7 +17,11 @@ module Librum::Components::Bulma
     def build_action(action)
       return action if action.is_a?(ViewComponent::Base)
 
-      components::Link.build(action)
+      if action[:button]
+        components::Button.build(type: 'link', **action.except(:button))
+      else
+        components::Link.build(action)
+      end
     end
 
     def heading_class_name

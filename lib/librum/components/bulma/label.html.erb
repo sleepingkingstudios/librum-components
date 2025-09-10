@@ -1,6 +1,11 @@
 <%= content_tag(tag, class: label_class_name.presence) do %>
   <% if icon %>
-  <%= render(build_icon) %>
-  <% end %>
+    <%= render(build_icon) %>
+
+    <% if text %>
+      <span><%= text %></span>
+    <% end %>
+  <% else %>
   <%= text %>
+  <% end %>
 <% end %>

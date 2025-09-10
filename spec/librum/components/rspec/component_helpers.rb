@@ -21,6 +21,12 @@ module Librum::Components::RSpec
         end
 
         let(:component_options) { {} }
+
+        define_singleton_method :print_component do
+          # :nocov:
+          fit { puts pretty_render(rendered) } # rubocop:disable RSpec/NoExpectationExample
+          # :nocov:
+        end
       end
     end
 
