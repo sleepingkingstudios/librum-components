@@ -94,7 +94,9 @@ do
           <strong>Metadata</strong>
         </p>
 
-        <pre>{"action_name" =&gt; "publish", "controller_name" =&gt; "books", "member_action" =&gt; false}</pre>
+        <pre>{"action_name" =&gt; "publish",
+         "controller_name" =&gt; "books",
+         "member_action" =&gt; false}</pre>
       HTML
     end
 
@@ -167,7 +169,10 @@ do
             <strong>Metadata</strong>
           </p>
 
-          <pre>{"action_name" =&gt; "publish", "controller_name" =&gt; "books", "member_action" =&gt; false, "error_code" =&gt; "15151"}</pre>
+          <pre>{"action_name" =&gt; "publish",
+           "controller_name" =&gt; "books",
+           "member_action" =&gt; false,
+           "error_code" =&gt; "15151"}</pre>
         HTML
       end
 
