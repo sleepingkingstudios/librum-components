@@ -129,7 +129,7 @@ do
       let(:actions) do
         [
           { text: 'Link' },
-          { text: 'Button', button: true }
+          { text: 'Button', url: '/', button: true }
         ]
       end
       let(:component_options) { super().merge(actions:) }
@@ -148,9 +148,7 @@ do
               </div>
 
               <div class="level-item">
-                <a class="button">
-                  Button
-                </a>
+                <a class="button" href="/">Button</a>
               </div>
             </div>
           </div>
@@ -210,7 +208,7 @@ do
       let(:actions) do
         [
           { text: 'Link' },
-          { text: 'Button', button: true }
+          { text: 'Button', url: '/', button: true }
         ]
       end
       let(:component_options) do
@@ -231,9 +229,7 @@ do
               </div>
 
               <div class="level-item">
-                <a class="button">
-                  Button
-                </a>
+                <a class="button" href="/">Button</a>
               </div>
             </div>
           </div>
