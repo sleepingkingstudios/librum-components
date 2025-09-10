@@ -104,7 +104,7 @@ do
               <i class="fa-solid fa-rainbow"></i>
             </span>
 
-            The More You Know
+            <span>The More You Know</span>
           </span>
         HTML
       end
@@ -167,7 +167,7 @@ do
               <i class="fa-solid fa-rainbow"></i>
             </span>
 
-            The More You Know
+            <span>The More You Know</span>
           </div>
         HTML
       end
@@ -196,7 +196,7 @@ do
                 <i class="fa-solid fa-rainbow"></i>
               </span>
 
-              The More You Know
+              <span>The More You Know</span>
             </div>
           HTML
         end
