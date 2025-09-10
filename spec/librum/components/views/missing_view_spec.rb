@@ -4,7 +4,7 @@ require 'cuprum/rails/result'
 
 require 'librum/components'
 
-RSpec.describe Librum::Components::Bulma::Views::MissingView,
+RSpec.describe Librum::Components::Views::MissingView,
   type: :component \
 do
   subject(:component) do
