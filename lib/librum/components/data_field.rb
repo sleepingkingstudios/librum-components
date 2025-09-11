@@ -8,6 +8,7 @@ module Librum::Components
     include ActionView::Helpers::SanitizeHelper
 
     DEFAULTS = {
+      label:     nil,
       transform: nil,
       truncate:  nil,
       type:      :text
@@ -57,7 +58,12 @@ module Librum::Components
       #   @param key [String] the name of the mapped data column.
       #   @param options [Hash] additional options for the definition.
       def initialize(key:, **)
-        super(key:, **DEFAULTS, **)
+        super(
+          key:,
+          **DEFAULTS,
+          label: key.to_s.titleize,
+          **
+        )
       end
     end
 

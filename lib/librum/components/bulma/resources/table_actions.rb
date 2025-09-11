@@ -24,7 +24,7 @@ module Librum::Components::Bulma::Resources
     def build_destroy_action
       components::Button.new(
         class_name:  bulma_class_names(
-          'has-text-danger is-borderless mx-0 px-1 py-0'
+          'has-text-danger is-borderless is-shadowless mx-0 px-1 py-0'
         ),
         http_method: 'delete',
         text:        'Destroy',
@@ -36,7 +36,7 @@ module Librum::Components::Bulma::Resources
     def build_show_action
       components::Button.new(
         class_name: bulma_class_names(
-          'has-text-info is-borderless mx-0 px-1 py-0'
+          'has-text-info is-borderless is-shadowless mx-0 px-1 py-0'
         ),
         text:       'Show',
         type:       'link',
@@ -47,7 +47,7 @@ module Librum::Components::Bulma::Resources
     def build_update_action
       components::Button.new(
         class_name: bulma_class_names(
-          'has-text-warning is-borderless mx-0 px-1 py-0'
+          'has-text-warning is-borderless is-shadowless mx-0 px-1 py-0'
         ),
         text:       'Update',
         type:       'link',

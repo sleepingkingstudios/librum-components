@@ -28,6 +28,16 @@ RSpec.describe Librum::Components::DataField, type: :component do
       include_examples 'should define reader', :key, -> { key }
     end
 
+    describe '#label' do
+      include_examples 'should define reader', :label, -> { key.to_s.titleize }
+
+      context 'when initialized with label: value' do
+        let(:properties) { super().merge(label: 'Description') }
+
+        it { expect(definition.label).to be == 'Description' }
+      end
+    end
+
     describe '#transform' do
       include_examples 'should define reader', :transform, nil
 

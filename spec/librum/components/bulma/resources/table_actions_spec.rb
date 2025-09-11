@@ -42,9 +42,9 @@ do
     let(:snapshot) do
       <<~HTML
         <div class="buttons is-gapless">
-          <a class="button has-text-info is-borderless mx-0 px-1 py-0" href="/books/0">Show</a>
+          <a class="button has-text-info is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0">Show</a>
 
-          <a class="button has-text-warning is-borderless mx-0 px-1 py-0" href="/books/0/edit">Update</a>
+          <a class="button has-text-warning is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0/edit">Update</a>
 
           <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" data-remote="true" method="post">
             <input name="utf8" type="hidden" value="✓" autocomplete="off">
@@ -53,7 +53,7 @@ do
 
             <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-            <button class="button has-text-danger is-borderless mx-0 px-1 py-0" type="submit">Destroy</button>
+            <button class="button has-text-danger is-borderless is-shadowless mx-0 px-1 py-0" type="submit">Destroy</button>
           </form>
         </div>
       HTML
@@ -82,7 +82,7 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="buttons is-gapless">
-            <a class="button has-text-warning is-borderless mx-0 px-1 py-0" href="/books/0/edit">Update</a>
+            <a class="button has-text-warning is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0/edit">Update</a>
 
             <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" data-remote="true" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
@@ -91,7 +91,7 @@ do
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button has-text-danger is-borderless mx-0 px-1 py-0" type="submit">Destroy</button>
+              <button class="button has-text-danger is-borderless is-shadowless mx-0 px-1 py-0" type="submit">Destroy</button>
             </form>
           </div>
         HTML
@@ -106,7 +106,7 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="buttons is-gapless">
-            <a class="button has-text-info is-borderless mx-0 px-1 py-0" href="/books/0">Show</a>
+            <a class="button has-text-info is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0">Show</a>
 
             <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" data-remote="true" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
@@ -115,7 +115,7 @@ do
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button has-text-danger is-borderless mx-0 px-1 py-0" type="submit">Destroy</button>
+              <button class="button has-text-danger is-borderless is-shadowless mx-0 px-1 py-0" type="submit">Destroy</button>
             </form>
           </div>
         HTML
@@ -130,9 +130,9 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="buttons is-gapless">
-            <a class="button has-text-info is-borderless mx-0 px-1 py-0" href="/books/0">Show</a>
+            <a class="button has-text-info is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0">Show</a>
 
-            <a class="button has-text-warning is-borderless mx-0 px-1 py-0" href="/books/0/edit">Update</a>
+            <a class="button has-text-warning is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0/edit">Update</a>
           </div>
         HTML
       end
