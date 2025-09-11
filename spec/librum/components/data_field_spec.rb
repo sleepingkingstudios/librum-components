@@ -3,8 +3,11 @@
 require 'cuprum/rails'
 
 require 'librum/components/data_field'
+require 'librum/components/rspec/deferred/data_examples'
 
 RSpec.describe Librum::Components::DataField, type: :component do
+  include Librum::Components::RSpec::Deferred::DataExamples
+
   let(:component_options) { { data:, field: } }
   let(:data) do
     {
@@ -19,10 +22,107 @@ RSpec.describe Librum::Components::DataField, type: :component do
   end
 
   describe '::Definition' do
-    subject(:definition) { described_class::Definition.new(**properties) }
+    subject(:definition) { described_class.new(**properties) }
 
+    let(:described_class) { super()::Definition }
     let(:properties) { { key: } }
     let(:key)        { 'title' }
+
+    describe '.normalize' do
+      let(:normalized) { described_class.normalize(value) }
+      let(:expected) do
+        {
+          **described_class.members.index_with { |_| nil },
+          key:,
+          label: key.to_s.titleize,
+          type:  :text
+        }
+      end
+
+      it { expect(described_class).to respond_to(:normalize).with(1).argument }
+
+      describe 'with a Definition' do
+        let(:value) { described_class.new(**properties) }
+
+        it { expect(normalized).to be_a described_class }
+
+        it { expect(normalized.to_h).to be == expected }
+      end
+
+      describe 'with a Hash' do
+        let(:value) { properties }
+
+        it { expect(normalized).to be_a described_class }
+
+        it { expect(normalized.to_h).to be == expected }
+      end
+    end
+
+    describe '.validate' do
+      deferred_examples 'should return an invalid field result' do
+        it { expect(validate_field).to be == error_message }
+      end
+
+      deferred_examples 'should return a valid field result' do
+        it { expect(validate_field).to be nil }
+      end
+
+      define_method :validate_field do
+        described_class.validate(field)
+      end
+
+      it 'should define the class method' do
+        expect(described_class)
+          .to respond_to(:validate)
+          .with(1).argument
+          .and_keywords(:as)
+      end
+
+      include_deferred 'should validate the data field'
+
+      describe 'with as: value' do
+        let(:as) { 'column' }
+
+        define_method :validate_field do
+          described_class.validate(field, as:)
+        end
+
+        include_deferred 'should validate the data field'
+      end
+    end
+
+    describe '.validate_list' do
+      deferred_examples 'should return an invalid field result' do
+        it { expect(validate_list).to be == error_message }
+      end
+
+      deferred_examples 'should return a valid field result' do
+        it { expect(validate_list).to be nil }
+      end
+
+      define_method :validate_list do
+        described_class.validate_list(fields)
+      end
+
+      it 'should define the class method' do
+        expect(described_class)
+          .to respond_to(:validate_list)
+          .with(1).argument
+          .and_keywords(:as)
+      end
+
+      include_deferred 'should validate the data field list'
+
+      describe 'with as: value' do
+        let(:as) { 'columns' }
+
+        define_method :validate_list do
+          described_class.validate_list(fields, as:)
+        end
+
+        include_deferred 'should validate the data field list'
+      end
+    end
 
     describe '#key' do
       include_examples 'should define reader', :key, -> { key }
@@ -67,6 +167,16 @@ RSpec.describe Librum::Components::DataField, type: :component do
         it { expect(definition.type).to be == 'custom' }
       end
     end
+
+    describe '#value' do
+      include_examples 'should define reader', :value, nil
+
+      context 'when initialized with value: value' do
+        let(:properties) { super().merge(value: 'Static Value') }
+
+        it { expect(definition.value).to be == 'Static Value' }
+      end
+    end
   end
 
   include_deferred 'should define component option',
@@ -74,77 +184,26 @@ RSpec.describe Librum::Components::DataField, type: :component do
     value: { 'summary' => 'value' }
 
   describe '.new' do
+    let(:properties) { { key: 'title' } }
+
+    deferred_examples 'should return an invalid field result' do
+      it 'should raise an exception' do
+        expect { described_class.new(**component_options) }
+          .to raise_error ArgumentError, error_message
+      end
+    end
+
+    deferred_examples 'should return a valid field result' do
+      it 'should not raise an exception' do
+        expect { described_class.new(**component_options) }.not_to raise_error
+      end
+    end
+
+    include_deferred 'should validate the data field', required: true
+
     include_deferred 'should validate the presence of option', :data
 
-    describe 'with field: nil' do
-      let(:component_options) { super().merge(field: nil) }
-      let(:error_message) do
-        tools.assertions.error_message_for(
-          'sleeping_king_studios.tools.assertions.presence',
-          as: 'field'
-        )
-      end
-
-      it 'should raise an exception' do
-        expect { described_class.new(**component_options) }
-          .to raise_error ArgumentError, error_message
-      end
-    end
-
-    describe 'with field: an Object' do
-      let(:component_options) { super().merge(field: Object.new.freeze) }
-      let(:error_message) do
-        'field is not a Hash or Definition'
-      end
-
-      it 'should raise an exception' do
-        expect { described_class.new(**component_options) }
-          .to raise_error ArgumentError, error_message
-      end
-    end
-
-    describe 'with field: an empty Hash' do
-      let(:component_options) { super().merge(field: {}) }
-      let(:error_message) do
-        tools.assertions.error_message_for(
-          'sleeping_king_studios.tools.assertions.presence',
-          as: 'field'
-        )
-      end
-
-      it 'should raise an exception' do
-        expect { described_class.new(**component_options) }
-          .to raise_error ArgumentError, error_message
-      end
-    end
-
-    describe 'with field: a Hash with missing keys' do
-      let(:component_options) { super().merge(field: { type: :text }) }
-      let(:error_message) do
-        'field is missing required property :key'
-      end
-
-      it 'should raise an exception' do
-        expect { described_class.new(**component_options) }
-          .to raise_error ArgumentError, error_message
-      end
-    end
-
-    describe 'with field: a Hash with extra keys' do
-      let(:component_options) do
-        super().merge(
-          field: { key: 'title', invalid: 'invalid', other: 'other' }
-        )
-      end
-      let(:error_message) do
-        'field has unknown properties :invalid, :other'
-      end
-
-      it 'should raise an exception' do
-        expect { described_class.new(**component_options) }
-          .to raise_error ArgumentError, error_message
-      end
-    end
+    include_deferred 'should validate the presence of option', :field
   end
 
   describe '#call' do
@@ -329,6 +388,44 @@ RSpec.describe Librum::Components::DataField, type: :component do
 
         it { expect(rendered).to match_snapshot(snapshot) }
       end
+    end
+
+    context 'with field: { value: a String }' do
+      let(:field) { super().merge(value: 'Static Value') }
+
+      it { expect(rendered).to be == 'Static Value' }
+    end
+
+    context 'with field: { value: an HTML string }' do
+      let(:field) { super().merge(value: '<h1>Greetings, Programs!</h1>') }
+
+      it { expect(rendered).to be == 'Greetings, Programs!' }
+    end
+
+    context 'with field: { value: a safe HTML string }' do
+      let(:field) do
+        super().merge(value: '<h1>Greetings, Programs!</h1>'.html_safe)
+      end
+
+      it { expect(rendered).to be == field[:value] }
+    end
+
+    context 'with field: { value: a Proc }' do
+      let(:field) do
+        super().merge(value: ->(data) { data['title'].upcase })
+      end
+
+      it { expect(rendered).to be == data[component.field.key].upcase }
+    end
+
+    context 'with field: { value: a component }' do
+      let(:field) do
+        super().merge(
+          value: Librum::Components::Literal.new('<span>Actions</span>')
+        )
+      end
+
+      it { expect(rendered).to be == '<span>Actions</span>' }
     end
   end
 

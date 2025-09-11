@@ -11,7 +11,8 @@ module Librum::Components
       label:     nil,
       transform: nil,
       truncate:  nil,
-      type:      :text
+      type:      :text,
+      value:     nil
     }.freeze
     private_constant :DEFAULTS
 
@@ -24,10 +25,25 @@ module Librum::Components
     # Definition for a structured data field, such as a table column.
     Definition = Data.define(:key, *DEFINITION_KEYS) do
       class << self
+        # Converts a valid value to a definition instance.
+        #
+        # @param value [Definition, Hash] the value to convert.
+        #
+        # @return [Definition] the definition instance.
         def normalize(value)
           value.is_a?(Definition) ? value : new(**value)
         end
 
+        # Validates a value as a field definition.
+        #
+        # - Verifies that the value is either a Hash or a Definition instance.
+        # - Verifies that a Hash value has the required keys and does not have
+        #   any unknown keys.
+        #
+        # @param value [Object] the value to validate.
+        #
+        # @return [String, nil] the error message, or nil if the value is a
+        #   valid field definition.
         def validate(value, as: 'field')
           return if value.is_a?(Definition)
 
@@ -45,12 +61,49 @@ module Librum::Components
             "#{extra_keys.map(&:inspect).join(', ')}"
         end
 
+        # Validates a list of values as field definitions.
+        #
+        # - Verifies the list is an Array.
+        # - Verifies that each item in the list is a valid field definition.
+        #
+        # @param value [Object] the value to validate.
+        #
+        # @return [String, nil] the error message, or nil if the value is a
+        #   valid field definition.
+        def validate_list(value, as: 'fields')
+          message = validate_list_is_an_array(value, as:)
+
+          return message if message
+
+          value
+            .each
+            .with_index
+            .map { |item, index| validate(item, as: "#{as} item #{index}") }
+            .compact
+            .join(', ')
+            .then { |str| str.empty? ? nil : str }
+        end
+
         private
 
         def find_extra_keys(value)
           value.keys.reject do |key|
             key == :key || DEFINITION_KEYS_SET.include?(key)
           end
+        end
+
+        def tools
+          SleepingKingStudios::Tools::Toolbelt.instance
+        end
+
+        def validate_list_is_an_array(value, as:)
+          return if value.is_a?(Array)
+
+          tools.assertions.error_message_for(
+            'sleeping_king_studios.tools.assertions.instance_of',
+            as:,
+            expected: Array
+          )
         end
       end
 
@@ -84,16 +137,25 @@ module Librum::Components
     #
     # @return [ActiveSupport::SafeBuffer] the presented data.
     def call
+      return sanitize(render_value) if field.value
+
       case field.type.intern
       when :actions then render_actions
       when :boolean then render_boolean
-      when :text    then value
+      when :text    then process_value(raw_value)
       else
         render_invalid
       end
     end
 
     private
+
+    def process_value(value)
+      value
+        .then { |str| transform_value(str) }
+        .then { |str| truncate_value(str) }
+        .then { |str| scrub_value(str) }
+    end
 
     def raw_value
       return data.public_send(field.key) if data.respond_to?(field.key)
@@ -133,6 +195,14 @@ module Librum::Components
       end
     end
 
+    def render_value
+      return field.value.call(data) if field.value.is_a?(Proc)
+
+      return render(field.value) if field.value.is_a?(ViewComponent::Base)
+
+      process_value(field.value)
+    end
+
     def scrub_value(value)
       return if value.nil?
 
@@ -164,12 +234,5 @@ module Librum::Components
     end
 
     def validate_field(value, as: 'field') = Definition.validate(value, as:)
-
-    def value
-      raw_value
-        .then { |str| transform_value(str) }
-        .then { |str| truncate_value(str) }
-        .then { |str| scrub_value(str) }
-    end
   end
 end
