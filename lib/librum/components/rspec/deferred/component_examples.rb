@@ -251,7 +251,7 @@ module Librum::Components::RSpec::Deferred
           it { expect(described_class.build(component)).to be component }
         end
 
-        if described_class.options.any? || !allow_extra_options
+        unless allow_extra_options
           describe 'with invalid options' do
             let(:required_keywords) do
               next super() if defined?(super())

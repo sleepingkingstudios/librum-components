@@ -114,7 +114,10 @@ module Librum::Components::Options
 
       return unless validate
 
-      # Skip additional validation for missing required options.
+      # Allow nil values for validate: Class unless the option is required.
+      return if value.nil? && !required && validate.is_a?(Module)
+
+      # Skip additional validation when there are missing required options.
       return unless aggregator.size == failures
 
       validate_option_value(name:, value:, validate:)

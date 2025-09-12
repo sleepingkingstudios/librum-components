@@ -408,8 +408,8 @@ module Librum::Components::RSpec::Deferred
     end
 
     deferred_examples 'should validate the type of option' \
-    do |option_name, expected:, required: false|
-      unless required
+    do |option_name, expected:, allow_nil: false|
+      unless allow_nil
         context "when :#{option_name} is nil" do
           let(:component_options) do
             super().merge(option_name.intern => nil)

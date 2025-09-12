@@ -122,7 +122,8 @@ RSpec.describe Librum::Components::Options::Validator do
       let(:raw_options) do
         { license: { validate: true } }
       end
-      let(:error_message) { /undefined method 'validate_license'/ }
+      let(:component_options) { super().merge(license: 'value') }
+      let(:error_message)     { /undefined method 'validate_license'/ }
 
       it 'should raise an exception' do
         expect { validate_options }
@@ -311,7 +312,14 @@ RSpec.describe Librum::Components::Options::Validator do
 
       include_deferred 'should validate the type of option',
         :rate_limit,
-        expected: Integer
+        allow_nil: true,
+        expected:  Integer
+
+      context 'when initialized with a nil value' do
+        it 'should not raise an exception' do
+          expect { validate_options }.not_to raise_error
+        end
+      end
     end
 
     context 'with an option with validate: a Proc' do
@@ -592,8 +600,8 @@ RSpec.describe Librum::Components::Options::Validator do
 
       include_deferred 'should validate the type of option',
         :rate_limit,
-        expected: Integer,
-        required: true
+        allow_nil: true,
+        expected:  Integer
     end
 
     context 'with a required option with validate: a Proc' do
@@ -666,8 +674,8 @@ RSpec.describe Librum::Components::Options::Validator do
 
       include_deferred 'should validate the type of option',
         :password,
-        expected: String,
-        required: true
+        allow_nil: true,
+        expected:  String
 
       include_deferred 'should validate the format of option',
         :password,
