@@ -12,7 +12,7 @@ RSpec.describe Librum::Components::DataField, type: :component do
   let(:data) do
     {
       'title'  => 'Gideon the Ninth',
-      'author' => 'Tammsyn Muir'
+      'author' => 'Tamsyn Muir'
     }
   end
   let(:field) { { key: 'title' } }
@@ -126,6 +126,16 @@ RSpec.describe Librum::Components::DataField, type: :component do
 
     describe '#key' do
       include_examples 'should define reader', :key, -> { key }
+    end
+
+    describe '#align' do
+      include_examples 'should define reader', :align, nil
+
+      context 'when initialized with align: value' do
+        let(:properties) { super().merge(align: 'right') }
+
+        it { expect(definition.align).to be == 'right' }
+      end
     end
 
     describe '#label' do

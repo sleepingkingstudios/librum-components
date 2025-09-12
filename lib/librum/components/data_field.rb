@@ -8,6 +8,7 @@ module Librum::Components
     include ActionView::Helpers::SanitizeHelper
 
     DEFAULTS = {
+      align:     nil,
       label:     nil,
       transform: nil,
       truncate:  nil,
