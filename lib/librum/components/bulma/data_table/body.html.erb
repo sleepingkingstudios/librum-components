@@ -1,0 +1,21 @@
+<tbody>
+  <% if data.empty? %>
+    <tr>
+      <td colspan="<%= columns.size %>">
+        <%= render_empty_message %>
+      </td>
+    </tr>
+  <% end %>
+
+  <% data.each do |item| %>
+    <tr>
+      <% columns.each do |column| %>
+        <%=
+          content_tag('td', **table_cell_attributes(column)) do
+            render_item(column:, item:)
+          end
+        %>
+      <% end %>
+    </tr>
+  <% end %>
+</tbody>
