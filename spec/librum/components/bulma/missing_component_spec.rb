@@ -31,7 +31,8 @@ do
   describe '.new' do
     include_deferred 'should validate the type of option',
       :icon,
-      expected: String
+      allow_nil: true,
+      expected:  String
 
     include_deferred 'should validate the presence of option',
       :name,

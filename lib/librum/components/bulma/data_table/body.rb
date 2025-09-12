@@ -13,7 +13,8 @@ module Librum::Components::Bulma
       required: true,
       validate: true
 
-    option :data, validate: Array
+    option :data,
+      validate: { instance_of: Array }
 
     option :empty_message,
       default:  'There are no items matching the criteria.',
