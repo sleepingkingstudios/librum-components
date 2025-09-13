@@ -189,4 +189,33 @@ RSpec.describe Librum::Components::Options::ValidationHelpers do
       end
     end
   end
+
+  describe '#validate_size' do
+    it 'should define the private method' do
+      expect(helpers)
+        .to respond_to(:validate_size, true)
+        .with(1).argument
+        .and_keywords(:as)
+    end
+
+    describe 'with nil' do
+      it { expect(helpers.send(:validate_size, nil)).to be nil }
+    end
+
+    describe 'with a value not in configuration.sizes' do
+      let(:size)    { 'imaginary' }
+      let(:message) { 'size is not a valid size' }
+
+      it { expect(helpers.send(:validate_size, size)).to be == message }
+
+      describe 'with as: value' do
+        let(:as)      { 'scale' }
+        let(:message) { 'scale is not a valid size' }
+
+        it 'should return the error message' do
+          expect(helpers.send(:validate_size, size, as:)).to be == message
+        end
+      end
+    end
+  end
 end
