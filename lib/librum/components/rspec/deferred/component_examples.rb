@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'cuprum/rails'
 require 'rspec/sleeping_king_studios/deferred/provider'
 
 require 'librum/components/rspec/deferred'
@@ -382,7 +383,8 @@ module Librum::Components::RSpec::Deferred
       end
     end
 
-    deferred_examples 'should be a view' do
+    deferred_examples 'should be a view' \
+    do |require_request: false, require_resource: false|
       let(:result_metadata) do
         {
           'action_name'     => 'publish',
@@ -395,7 +397,16 @@ module Librum::Components::RSpec::Deferred
 
         Cuprum::Rails::Result.new(metadata: result_metadata)
       end
-      let(:required_keywords) { { result: } }
+      let(:required_keywords) do
+        next super() if defined?(super())
+
+        hsh = {}
+        hsh[:request]  = request  if require_request
+        hsh[:resource] = resource if require_resource
+        hsh[:result]   = result
+
+        hsh
+      end
 
       include_deferred 'should be a view component',
         has_required_keywords: true
@@ -440,28 +451,36 @@ module Librum::Components::RSpec::Deferred
       end
 
       describe '#request' do
-        include_examples 'should define reader', :request, nil
+        if require_request
+          include_examples 'should define reader', :request, -> { request }
+        else
+          include_examples 'should define reader', :request, nil
 
-        context 'when initialized with a request' do
-          let(:request) { Cuprum::Rails::Request.new(http_method: :patch) }
-          let(:component_options) do
-            super().merge(request:)
+          context 'when initialized with a request' do
+            let(:request) { Cuprum::Rails::Request.new(http_method: :patch) }
+            let(:component_options) do
+              super().merge(request:)
+            end
+
+            it { expect(component.request).to be request }
           end
-
-          it { expect(component.request).to be request }
         end
       end
 
       describe '#resource' do
-        include_examples 'should define reader', :resource, nil
+        if require_resource
+          include_examples 'should define reader', :resource, -> { resource }
+        else
+          include_examples 'should define reader', :resource, nil
 
-        context 'when initialized with a resource' do
-          let(:resource) { Cuprum::Rails::Resource.new(name: 'books') }
-          let(:component_options) do
-            super().merge(resource:)
+          context 'when initialized with a resource' do
+            let(:resource) { Cuprum::Rails::Resource.new(name: 'books') }
+            let(:component_options) do
+              super().merge(resource:)
+            end
+
+            it { expect(component.resource).to be resource }
           end
-
-          it { expect(component.resource).to be resource }
         end
       end
 
@@ -487,6 +506,48 @@ module Librum::Components::RSpec::Deferred
           let(:result) { Cuprum::Result.new(value:) }
 
           it { expect(component.value).to be value }
+        end
+      end
+    end
+
+    deferred_examples 'should be a resource view' do
+      let(:request_options) { {} }
+      let(:request) do
+        next super() if defined?(super())
+
+        Cuprum::Rails::Request.new(**request_options)
+      end
+      let(:resource) do
+        next super() if defined?(super())
+
+        Cuprum::Rails::Resource.new(name: 'books')
+      end
+
+      include_deferred 'should be a view',
+        require_request:  true,
+        require_resource: true
+
+      describe '#routes' do
+        include_examples 'should define reader',
+          :routes,
+          -> { an_instance_of Cuprum::Rails::Routing::PluralRoutes }
+
+        it { expect(component.routes.base_path).to be == '/books' }
+
+        it { expect(component.routes.wildcards).to be == {} }
+
+        context 'when the request has path parameters' do
+          let(:path_params) do
+            { author_id: 'tamsyn-muir' }
+          end
+          let(:request_options) do
+            super().merge(path_params:)
+          end
+          let(:expected) do
+            { 'author_id' => 'tamsyn-muir' }
+          end
+
+          it { expect(component.routes.wildcards).to be == expected }
         end
       end
     end
