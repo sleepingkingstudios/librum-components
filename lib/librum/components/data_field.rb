@@ -138,7 +138,7 @@ module Librum::Components
     #
     # @return [ActiveSupport::SafeBuffer] the presented data.
     def call
-      return sanitize(render_value) if field.value
+      return render_value if field.value
 
       case field.type.intern
       when :actions then render_actions
@@ -197,7 +197,7 @@ module Librum::Components
     end
 
     def render_value # rubocop:disable Metrics/AbcSize
-      return field.value.call(data) if field.value.is_a?(Proc)
+      return sanitize(field.value.call(data)) if field.value.is_a?(Proc)
 
       return render(field.value) if field.value.is_a?(ViewComponent::Base)
 
@@ -205,7 +205,7 @@ module Librum::Components
         return render(field.value.new(**options.except(:field)))
       end
 
-      process_value(field.value)
+      sanitize(process_value(field.value))
     end
 
     def scrub_value(value)

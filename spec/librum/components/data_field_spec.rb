@@ -429,13 +429,25 @@ RSpec.describe Librum::Components::DataField, type: :component do
     end
 
     context 'with field: { value: a component }' do
-      let(:field) do
-        super().merge(
-          value: Librum::Components::Literal.new('<span>Actions</span>')
-        )
+      let(:component) do
+        Librum::Components::Literal.new('<span>Actions</span>')
       end
+      let(:field) { super().merge(value: component) }
 
       it { expect(rendered).to be == '<span>Actions</span>' }
+
+      context 'when the component renders unsafe HTML' do
+        let(:component) do
+          Librum::Components::Literal.new(
+            '<form><button type="submit" value="Click Me"></button></form>'
+          )
+        end
+        let(:expected) do
+          '<form><button type="submit" value="Click Me"></button></form>'
+        end
+
+        it { expect(rendered).to be == expected }
+      end
     end
 
     context 'with field: { value: a component class }' do
@@ -472,6 +484,22 @@ RSpec.describe Librum::Components::DataField, type: :component do
             content_tag('span') do
               "#{data['title']}, by #{data['author']} (topics: " \
                 "#{options['topics'].join(', ')})"
+            end
+          end
+        end
+
+        it { expect(rendered).to be == expected }
+      end
+
+      context 'when the component class renders unsafe HTML' do
+        let(:expected) do
+          '<form><button type="submit" value="Click Me"></button></form>'
+        end
+
+        before(:example) do
+          Spec::DataComponent.define_method(:call) do
+            content_tag('form') do
+              tag.button(type: 'submit', value: 'Click Me')
             end
           end
         end
