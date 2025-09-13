@@ -437,6 +437,48 @@ RSpec.describe Librum::Components::DataField, type: :component do
 
       it { expect(rendered).to be == '<span>Actions</span>' }
     end
+
+    context 'with field: { value: a component class }' do
+      let(:field) do
+        super().merge(value: Spec::DataComponent)
+      end
+      let(:expected) do
+        '<span>Gideon the Ninth, by Tamsyn Muir</span>'
+      end
+
+      example_class 'Spec::DataComponent', Librum::Components::Base do |klass|
+        klass.allow_extra_options
+
+        klass.option :data
+
+        klass.define_method(:call) do
+          content_tag('span') { "#{data['title']}, by #{data['author']}" }
+        end
+      end
+
+      it { expect(rendered).to be == expected }
+
+      context 'when the data field has additional options' do
+        let(:component_options) do
+          super().merge('topics' => %w[necromancy romance])
+        end
+        let(:expected) do
+          '<span>Gideon the Ninth, by Tamsyn Muir (topics: necromancy, ' \
+            'romance)</span>'
+        end
+
+        before(:example) do
+          Spec::DataComponent.define_method(:call) do
+            content_tag('span') do
+              "#{data['title']}, by #{data['author']} (topics: " \
+                "#{options['topics'].join(', ')})"
+            end
+          end
+        end
+
+        it { expect(rendered).to be == expected }
+      end
+    end
   end
 
   describe '#field' do

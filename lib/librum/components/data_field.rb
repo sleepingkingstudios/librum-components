@@ -196,10 +196,14 @@ module Librum::Components
       end
     end
 
-    def render_value
+    def render_value # rubocop:disable Metrics/AbcSize
       return field.value.call(data) if field.value.is_a?(Proc)
 
       return render(field.value) if field.value.is_a?(ViewComponent::Base)
+
+      if field.value.is_a?(Class)
+        return render(field.value.new(**options.except(:field)))
+      end
 
       process_value(field.value)
     end
