@@ -17,7 +17,7 @@ module Librum::Components::RSpec::Utils
     def authenticity_token?(tag)
       return false unless tag.name == 'input'
 
-      tag.attributes['name'].value == 'authenticity_token'
+      tag.attributes['name']&.value == 'authenticity_token'
     end
 
     def child_tags(tag)
