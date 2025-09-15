@@ -23,7 +23,7 @@ module Librum::Components::Bulma::Forms
 
     # Generates the form input.
     #
-    # @return [ActiveSupport::SafeBuffer] the presented data.
+    # @return [ActiveSupport::SafeBuffer] the rendered input.
     def call
       tag.input(**input_attributes)
     end
