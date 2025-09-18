@@ -6,16 +6,16 @@ RSpec.describe Librum::Components::Bulma::Forms::Select,
   framework: :bulma,
   type:      :component \
 do
-  define_method :tools do
-    SleepingKingStudios::Tools::Toolbelt.instance
-  end
-
   let(:component_options) { { values: } }
   let(:values) do
     [
       { label: 'Avalon Heavy Industries',  value: 'ahi' },
       { label: 'Morningstar Technologies', value: 'mst' }
     ]
+  end
+
+  define_method :tools do
+    SleepingKingStudios::Tools::Toolbelt.instance
   end
 
   describe '.validate_options' do
