@@ -42,7 +42,9 @@ do
       let(:snapshot) do
         <<~HTML
           <a class="navbar-item" href="/">
-            <span>Brand</span>
+            <span>
+              Brand
+            </span>
           </a>
         HTML
       end
@@ -114,7 +116,9 @@ do
       let(:snapshot) do
         <<~HTML
           <a class="navbar-item" href="/">
-            <span class="title is-size-4">Example Company</span>
+            <span class="title is-size-4">
+              Example Company
+            </span>
           </a>
         HTML
       end
@@ -127,7 +131,9 @@ do
       let(:snapshot) do
         <<~HTML
           <a class="navbar-item" href="/">
-            <span class="title is-size-4">Example Company</span>
+            <span class="title is-size-4">
+              Example Company
+            </span>
           </a>
         HTML
       end
@@ -147,7 +153,9 @@ do
               <i class="fa-solid fa-radiation fa-2xl"></i>
             </span>
 
-            <span class="title is-size-4">Example Company</span>
+            <span class="title is-size-4">
+              Example Company
+            </span>
           </a>
         HTML
       end
@@ -166,7 +174,9 @@ do
                 <i class="fa-solid fa-radiation fa-2xl"></i>
               </span>
 
-              <span class="title is-size-4">Example Company</span>
+              <span class="title is-size-4">
+                Example Company
+              </span>
             </a>
           HTML
         end

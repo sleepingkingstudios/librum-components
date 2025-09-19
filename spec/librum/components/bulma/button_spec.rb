@@ -225,7 +225,9 @@ do
       let(:component_options) { super().merge(text: 'Click Me') }
       let(:snapshot) do
         <<~HTML
-          <button class="button" type="button">Click Me</button>
+          <button class="button" type="button">
+            Click Me
+          </button>
         HTML
       end
 
@@ -309,7 +311,9 @@ do
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button" type="submit">Click Me</button>
+              <button class="button" type="submit">
+                Click Me
+              </button>
             </form>
           HTML
         end
@@ -340,7 +344,9 @@ do
                   <i class="fa-solid fa-radiation"></i>
                 </span>
 
-                <span>Click Me</span>
+                <span>
+                  Click Me
+                </span>
               </button>
             </form>
           HTML
@@ -384,7 +390,9 @@ do
         let(:component_options) { super().merge(text: 'Click Me') }
         let(:snapshot) do
           <<~HTML
-            <a class="button" href="/path/to/resource">Click Me</a>
+            <a class="button" href="/path/to/resource">
+              Click Me
+            </a>
           HTML
         end
 
@@ -406,7 +414,9 @@ do
                 <i class="fa-solid fa-radiation"></i>
               </span>
 
-              <span>Click Me</span>
+              <span>
+                Click Me
+              </span>
             </a>
           HTML
         end
@@ -456,7 +466,9 @@ do
               <i class="fa-solid fa-radiation"></i>
             </span>
 
-            <span>Click Me</span>
+            <span>
+              Click Me
+            </span>
           </button>
         HTML
       end

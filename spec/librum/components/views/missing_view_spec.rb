@@ -38,12 +38,16 @@ do
   describe '#call' do
     let(:snapshot) do
       <<~HTML
-        <h1>Missing Books#publish</h1>
+        <h1>
+          Missing Books#publish
+        </h1>
 
         <p>
           The expected view component for
 
-          <code>Books#publish</code>
+          <code>
+            Books#publish
+          </code>
 
           was not found.
         </p>
@@ -54,49 +58,73 @@ do
 
         <ul>
           <li>
-            <code>Components::Books::Publish</code>
+            <code>
+              Components::Books::Publish
+            </code>
           </li>
 
           <li>
-            <code>Components::Resources::Publish</code>
+            <code>
+              Components::Resources::Publish
+            </code>
           </li>
         </ul>
 
         <p>
           The page was rendered from
 
-          <code>books#publish</code>
+          <code>
+            books#publish
+          </code>
 
           .
         </p>
 
-        <h2>Result</h2>
+        <h2>
+          Result
+        </h2>
 
         <p>
-          <strong>Status</strong>
+          <strong>
+            Status
+          </strong>
         </p>
 
-        <pre>:success</pre>
+        <pre>
+          :success
+        </pre>
 
         <p>
-          <strong>Value</strong>
+          <strong>
+            Value
+          </strong>
         </p>
 
-        <pre>(none)</pre>
+        <pre>
+          (none)
+        </pre>
 
         <p>
-          <strong>Error</strong>
+          <strong>
+            Error
+          </strong>
         </p>
 
-        <pre>(none)</pre>
+        <pre>
+          (none)
+        </pre>
 
         <p>
-          <strong>Metadata</strong>
+          <strong>
+            Metadata
+          </strong>
         </p>
 
-        <pre>{"action_name" =&gt; "publish",
-         "controller_name" =&gt; "books",
-         "member_action" =&gt; false}</pre>
+        <pre>
+          {"action_name" =&gt; "publish",
+           "controller_name" =&gt; "books",
+           "member_action" =&gt; false}
+        </pre>
       HTML
     end
 
@@ -113,12 +141,16 @@ do
       end
       let(:snapshot) do
         <<~HTML
-          <h1>Missing Books#publish</h1>
+          <h1>
+            Missing Books#publish
+          </h1>
 
           <p>
             The expected view component for
 
-            <code>Books#publish</code>
+            <code>
+              Books#publish
+            </code>
 
             was not found.
           </p>
@@ -129,50 +161,74 @@ do
 
           <ul>
             <li>
-              <code>Components::Books::Publish</code>
+              <code>
+                Components::Books::Publish
+              </code>
             </li>
 
             <li>
-              <code>Components::Resources::Publish</code>
+              <code>
+                Components::Resources::Publish
+              </code>
             </li>
           </ul>
 
           <p>
             The page was rendered from
 
-            <code>books#publish</code>
+            <code>
+              books#publish
+            </code>
 
             .
           </p>
 
-          <h2>Result</h2>
+          <h2>
+            Result
+          </h2>
 
           <p>
-            <strong>Status</strong>
+            <strong>
+              Status
+            </strong>
           </p>
 
-          <pre>:failure</pre>
+          <pre>
+            :failure
+          </pre>
 
           <p>
-            <strong>Value</strong>
+            <strong>
+              Value
+            </strong>
           </p>
 
-          <pre>{"ok" =&gt; false}</pre>
+          <pre>
+            {"ok" =&gt; false}
+          </pre>
 
           <p>
-            <strong>Error</strong>
+            <strong>
+              Error
+            </strong>
           </p>
 
-          <pre>{"data" =&gt; {}, "message" =&gt; "Something went wrong", "type" =&gt; "cuprum.error"}</pre>
+          <pre>
+            {"data" =&gt; {}, "message" =&gt; "Something went wrong", "type" =&gt; "cuprum.error"}
+          </pre>
 
           <p>
-            <strong>Metadata</strong>
+            <strong>
+              Metadata
+            </strong>
           </p>
 
-          <pre>{"action_name" =&gt; "publish",
-           "controller_name" =&gt; "books",
-           "member_action" =&gt; false,
-           "error_code" =&gt; "15151"}</pre>
+          <pre>
+            {"action_name" =&gt; "publish",
+             "controller_name" =&gt; "books",
+             "member_action" =&gt; false,
+             "error_code" =&gt; "15151"}
+          </pre>
         HTML
       end
 

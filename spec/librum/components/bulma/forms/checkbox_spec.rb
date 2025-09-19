@@ -125,7 +125,9 @@ do
 
             <input type="checkbox" value="1">
 
-            <span class="ml-1">Refuel Rocket</span>
+            <span class="ml-1">
+              Refuel Rocket
+            </span>
           </label>
         HTML
       end
@@ -145,7 +147,9 @@ do
 
             <input type="checkbox" value="1">
 
-            <span class="ml-1">Refuel Rocket</span>
+            <span class="ml-1">
+              Refuel Rocket
+            </span>
           </label>
         HTML
       end
@@ -165,7 +169,9 @@ do
 
             <input type="checkbox" value="1">
 
-            <span class="has-text-red">Refuel Rocket</span>
+            <span class="has-text-red">
+              Refuel Rocket
+            </span>
           </label>
         HTML
       end
@@ -187,7 +193,9 @@ do
 
             <input type="checkbox" value="1">
 
-            <span class="has-text-red">Refuel Rocket</span>
+            <span class="has-text-red">
+              Refuel Rocket
+            </span>
           </label>
         HTML
       end
@@ -258,7 +266,9 @@ do
 
             <input id="rocket_refuel" name="rocket[refuel]" type="checkbox" checked="checked" required="required" value="true">
 
-            <span class="ml-1">Refuel Rocket</span>
+            <span class="ml-1">
+              Refuel Rocket
+            </span>
           </label>
         HTML
       end

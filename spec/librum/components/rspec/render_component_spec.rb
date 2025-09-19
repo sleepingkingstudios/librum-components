@@ -20,11 +20,17 @@ RSpec.describe Librum::Components::RSpec::RenderComponent do
     let(:expected) do
       <<~HTML
         <ul>
-          <li>Ichi</li>
+          <li>
+            Ichi
+          </li>
 
-          <li>Ni</li>
+          <li>
+            Ni
+          </li>
 
-          <li>San</li>
+          <li>
+            San
+          </li>
         </ul>
       HTML
     end

@@ -287,9 +287,13 @@ do
       <<~HTML
         <div class="select">
           <select>
-            <option value="ahi">Avalon Heavy Industries</option>
+            <option value="ahi">
+              Avalon Heavy Industries
+            </option>
 
-            <option value="mst">Morningstar Technologies</option>
+            <option value="mst">
+              Morningstar Technologies
+            </option>
           </select>
         </div>
       HTML
@@ -303,9 +307,13 @@ do
         <<~HTML
           <div class="select custom-class">
             <select>
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -320,9 +328,13 @@ do
         <<~HTML
           <div class="select is-red">
             <select>
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -337,9 +349,13 @@ do
         <<~HTML
           <div class="select">
             <select disabled="disabled">
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -354,9 +370,13 @@ do
         <<~HTML
           <div class="select is-block">
             <select>
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -371,9 +391,13 @@ do
         <<~HTML
           <div class="select">
             <select id="game_space_program">
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -388,9 +412,13 @@ do
         <<~HTML
           <div class="select is-multiple">
             <select multiple="multiple">
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -405,9 +433,13 @@ do
         <<~HTML
           <div class="select">
             <select name="game[space_program]">
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -424,11 +456,17 @@ do
         <<~HTML
           <div class="select">
             <select>
-              <option value="" disabled="disabled">Choose Space Program</option>
+              <option value="" disabled="disabled">
+                Choose Space Program
+              </option>
 
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -445,9 +483,13 @@ do
         <<~HTML
           <div class="select">
             <select required="required">
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -462,9 +504,13 @@ do
         <<~HTML
           <div class="select is-max">
             <select>
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -479,9 +525,13 @@ do
         <<~HTML
           <div class="select">
             <select>
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst">Morningstar Technologies</option>
+              <option value="mst">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -496,9 +546,13 @@ do
         <<~HTML
           <div class="select">
             <select>
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst" selected="selected">Morningstar Technologies</option>
+              <option value="mst" selected="selected">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML
@@ -524,11 +578,17 @@ do
         <<~HTML
           <div class="select is-red is-block custom-class">
             <select id="game_space_program" name="game[space_program]" required="required">
-              <option value="" disabled="disabled">Choose Space Program</option>
+              <option value="" disabled="disabled">
+                Choose Space Program
+              </option>
 
-              <option value="ahi">Avalon Heavy Industries</option>
+              <option value="ahi">
+                Avalon Heavy Industries
+              </option>
 
-              <option value="mst" selected="selected">Morningstar Technologies</option>
+              <option value="mst" selected="selected">
+                Morningstar Technologies
+              </option>
             </select>
           </div>
         HTML

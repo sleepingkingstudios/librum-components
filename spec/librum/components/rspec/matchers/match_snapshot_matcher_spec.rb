@@ -107,7 +107,9 @@ RSpec.describe Librum::Components::RSpec::Matchers::MatchSnapshotMatcher do
     describe 'with a non-matching string' do
       let(:actual) do
         <<~HTML
-          <h1>Greetings, Starfighter</h1>
+          <h1>
+            Greetings, Starfighter
+          </h1>
 
           <p>
             You have been recruited by the Star League to defend the frontier
@@ -301,7 +303,9 @@ RSpec.describe Librum::Components::RSpec::Matchers::MatchSnapshotMatcher do
     describe 'with a non-matching string' do
       let(:actual) do
         <<~HTML
-          <h1>Greetings, Starfighter</h1>
+          <h1>
+            Greetings, Starfighter
+          </h1>
 
           <p>
             You have been recruited by the Star League to defend the frontier

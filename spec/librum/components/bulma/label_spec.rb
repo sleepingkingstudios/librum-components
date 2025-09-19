@@ -47,8 +47,7 @@ do
     let(:rendered) { render_component(component) }
     let(:snapshot) do
       <<~HTML
-        <span>
-        </span>
+        <span></span>
       HTML
     end
 
@@ -58,8 +57,7 @@ do
       let(:component_options) { super().merge(class_name: 'custom-class') }
       let(:snapshot) do
         <<~HTML
-          <span class="custom-class">
-          </span>
+          <span class="custom-class"></span>
         HTML
       end
 
@@ -70,8 +68,7 @@ do
       let(:component_options) { super().merge(color: 'indigo') }
       let(:snapshot) do
         <<~HTML
-          <span class="has-text-indigo">
-          </span>
+          <span class="has-text-indigo"></span>
         HTML
       end
 
@@ -104,7 +101,9 @@ do
               <i class="fa-solid fa-rainbow"></i>
             </span>
 
-            <span>The More You Know</span>
+            <span>
+              The More You Know
+            </span>
           </span>
         HTML
       end
@@ -116,8 +115,7 @@ do
       let(:component_options) { super().merge(tag: 'div') }
       let(:snapshot) do
         <<~HTML
-          <div>
-          </div>
+          <div></div>
         HTML
       end
 
@@ -141,8 +139,7 @@ do
       let(:component_options) { super().merge(size: 3) }
       let(:snapshot) do
         <<~HTML
-          <span class="is-size-3">
-          </span>
+          <span class="is-size-3"></span>
         HTML
       end
 
@@ -167,7 +164,9 @@ do
               <i class="fa-solid fa-rainbow"></i>
             </span>
 
-            <span>The More You Know</span>
+            <span>
+              The More You Know
+            </span>
           </div>
         HTML
       end
@@ -196,7 +195,9 @@ do
                 <i class="fa-solid fa-rainbow"></i>
               </span>
 
-              <span>The More You Know</span>
+              <span>
+                The More You Know
+              </span>
             </div>
           HTML
         end

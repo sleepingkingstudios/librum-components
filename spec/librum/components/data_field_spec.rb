@@ -293,7 +293,9 @@ RSpec.describe Librum::Components::DataField, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <span style="color: #f00;">Missing Component Resources::TableActions</span>
+          <span style="color: #f00;">
+            Missing Component Resources::TableActions
+          </span>
         HTML
       end
 
@@ -302,11 +304,17 @@ RSpec.describe Librum::Components::DataField, type: :component do
       wrap_deferred 'with components' do
         let(:snapshot) do
           <<~HTML
-            <a>Show</a>
+            <a>
+              Show
+            </a>
 
-            <a>Edit</a>
+            <a>
+              Edit
+            </a>
 
-            <a>Destroy</a>
+            <a>
+              Destroy
+            </a>
           HTML
         end
 
@@ -366,7 +374,9 @@ RSpec.describe Librum::Components::DataField, type: :component do
 
       let(:snapshot) do
         <<~HTML
-          <span style="color: #f00;">Unknown Type :invalid_type</span>
+          <span style="color: #f00;">
+            Unknown Type :invalid_type
+          </span>
         HTML
       end
 
@@ -375,7 +385,9 @@ RSpec.describe Librum::Components::DataField, type: :component do
       wrap_deferred 'with components' do
         let(:snapshot) do
           <<~HTML
-            <span class="text-danger icon-bug">Unknown Type :invalid_type</span>
+            <span class="text-danger icon-bug">
+              Unknown Type :invalid_type
+            </span>
           HTML
         end
 

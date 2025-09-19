@@ -29,7 +29,9 @@ do
       let(:rendered) { render_component(component) { contents } }
       let(:snapshot) do
         <<~HTML
-          <div class="box">Bigger on the inside?</div>
+          <div class="box">
+            Bigger on the inside?
+          </div>
         HTML
       end
 

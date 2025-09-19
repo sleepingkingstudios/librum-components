@@ -62,8 +62,7 @@ do
         #{render_header.strip}
 
         <main class="section" style="flex: 1;">
-          <div class="container content is-max-desktop">
-          </div>
+          <div class="container content is-max-desktop"></div>
         </main>
       HTML
     end
@@ -102,8 +101,7 @@ do
           #{render_header.strip}
 
           <main class="section" style="flex: 1;">
-            <div class="container content is-max-desktop">
-            </div>
+            <div class="container content is-max-desktop"></div>
           </main>
         HTML
       end
@@ -123,8 +121,7 @@ do
           #{render_header.strip}
 
           <main class="section" style="flex: 1;">
-            <div class="container content is-max-desktop">
-            </div>
+            <div class="container content is-max-desktop"></div>
           </main>
 
           #{render_footer.strip}

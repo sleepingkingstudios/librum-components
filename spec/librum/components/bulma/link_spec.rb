@@ -58,8 +58,7 @@ do
     let(:rendered) { render_component(component) }
     let(:snapshot) do
       <<~HTML
-        <a>
-        </a>
+        <a></a>
       HTML
     end
 
@@ -69,8 +68,7 @@ do
       let(:component_options) { super().merge(button: true) }
       let(:snapshot) do
         <<~HTML
-          <a class="button">
-          </a>
+          <a class="button"></a>
         HTML
       end
 
@@ -81,8 +79,7 @@ do
       let(:component_options) { super().merge(class_name: 'custom-class') }
       let(:snapshot) do
         <<~HTML
-          <a class="custom-class">
-          </a>
+          <a class="custom-class"></a>
         HTML
       end
 
@@ -93,8 +90,7 @@ do
       let(:component_options) { super().merge(color: 'indigo') }
       let(:snapshot) do
         <<~HTML
-          <a class="has-text-indigo">
-          </a>
+          <a class="has-text-indigo"></a>
         HTML
       end
 
@@ -139,8 +135,7 @@ do
       let(:component_options) { super().merge(target: 'blank') }
       let(:snapshot) do
         <<~HTML
-          <a target="_blank">
-          </a>
+          <a target="_blank"></a>
         HTML
       end
 
@@ -164,8 +159,7 @@ do
       let(:component_options) { super().merge(url: 'www.example.com') }
       let(:snapshot) do
         <<~HTML
-          <a href="www.example.com">
-          </a>
+          <a href="www.example.com"></a>
         HTML
       end
 
@@ -176,8 +170,7 @@ do
       let(:component_options) { super().merge(size: 3) }
       let(:snapshot) do
         <<~HTML
-          <a class="is-size-3">
-          </a>
+          <a class="is-size-3"></a>
         HTML
       end
 
@@ -218,8 +211,7 @@ do
         let(:component_options) { super().merge(button: true) }
         let(:snapshot) do
           <<~HTML
-            <a class="bulma-button">
-            </a>
+            <a class="bulma-button"></a>
           HTML
         end
 

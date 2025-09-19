@@ -41,11 +41,17 @@ RSpec.describe Librum::Components::RSpec::Utils::PrettyRender do
       let(:expected) do
         <<~HTML
           <ul>
-            <li>Ichi</li>
+            <li>
+              Ichi
+            </li>
 
-            <li>Ni</li>
+            <li>
+              Ni
+            </li>
 
-            <li>San</li>
+            <li>
+              San
+            </li>
           </ul>
         HTML
       end
@@ -220,6 +226,13 @@ RSpec.describe Librum::Components::RSpec::Utils::PrettyRender do
 
     describe 'with a tag with short text' do
       let(:contents) { '<span>Ichi</span>' }
+      let(:expected) do
+        <<~HTML
+          <span>
+            Ichi
+          </span>
+        HTML
+      end
 
       it { expect(rendered).to be == expected }
 
@@ -249,7 +262,9 @@ RSpec.describe Librum::Components::RSpec::Utils::PrettyRender do
 
             <input type="text" name="username">
 
-            <button type="submit">Submit</button>
+            <button type="submit">
+              Submit
+            </button>
           </form>
         HTML
       end
@@ -267,11 +282,17 @@ RSpec.describe Librum::Components::RSpec::Utils::PrettyRender do
       end
       let(:expected) do
         <<~HTML
-          <span>Ichi</span>
+          <span>
+            Ichi
+          </span>
 
-          <span>Ni</span>
+          <span>
+            Ni
+          </span>
 
-          <span>San</span>
+          <span>
+            San
+          </span>
         HTML
       end
 
@@ -330,22 +351,30 @@ RSpec.describe Librum::Components::RSpec::Utils::PrettyRender do
               <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
                 <ul>
                   <li>
-                    <a href="/">Home</a>
+                    <a href="/">
+                      Home
+                    </a>
                   </li>
 
                   <li>
-                    <a href="/launch_sites">Launch Sites</a>
+                    <a href="/launch_sites">
+                      Launch Sites
+                    </a>
                   </li>
 
                   <li class="is-active">
-                    <a href="/launch_sites/zeppelins" aria-current="page">Zeppelins</a>
+                    <a href="/launch_sites/zeppelins" aria-current="page">
+                      Zeppelins
+                    </a>
                   </li>
                 </ul>
               </nav>
 
               <hr class="is-fancy-hr">
 
-              <p>What Lies Beyond The Farthest Reaches Of The Skies?</p>
+              <p>
+                What Lies Beyond The Farthest Reaches Of The Skies?
+              </p>
             </div>
           </footer>
         HTML

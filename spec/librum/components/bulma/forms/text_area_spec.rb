@@ -206,7 +206,9 @@ do
       let(:component_options) { super().merge(value: description) }
       let(:snapshot) do
         <<~HTML
-          <textarea class="textarea">A second-generation orbital rocket designed for lunar operations.</textarea>
+          <textarea class="textarea">
+            A second-generation orbital rocket designed for lunar operations.
+          </textarea>
         HTML
       end
 
@@ -230,7 +232,9 @@ do
       end
       let(:snapshot) do
         <<~HTML
-          <textarea id="rocket_description" name="rocket[description]" class="textarea is-red is-max custom-class" placeholder="Rocket Description">A second-generation orbital rocket designed for lunar operations.</textarea>
+          <textarea id="rocket_description" name="rocket[description]" class="textarea is-red is-max custom-class" placeholder="Rocket Description">
+            A second-generation orbital rocket designed for lunar operations.
+          </textarea>
         HTML
       end
 

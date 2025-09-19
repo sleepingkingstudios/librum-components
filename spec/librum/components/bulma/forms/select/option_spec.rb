@@ -160,7 +160,9 @@ do
   describe '#call' do
     let(:snapshot) do
       <<~HTML
-        <option>Morningstar Technologies</option>
+        <option>
+          Morningstar Technologies
+        </option>
       HTML
     end
 
@@ -170,7 +172,9 @@ do
       let(:component_options) { super().merge(disabled: true) }
       let(:snapshot) do
         <<~HTML
-          <option disabled="disabled">Morningstar Technologies</option>
+          <option disabled="disabled">
+            Morningstar Technologies
+          </option>
         HTML
       end
 
@@ -181,7 +185,9 @@ do
       let(:component_options) { super().merge(selected: true) }
       let(:snapshot) do
         <<~HTML
-          <option selected="selected">Morningstar Technologies</option>
+          <option selected="selected">
+            Morningstar Technologies
+          </option>
         HTML
       end
 
@@ -192,7 +198,9 @@ do
       let(:component_options) { super().merge(value: 'mst') }
       let(:snapshot) do
         <<~HTML
-          <option value="mst">Morningstar Technologies</option>
+          <option value="mst">
+            Morningstar Technologies
+          </option>
         HTML
       end
 
@@ -203,7 +211,9 @@ do
       let(:component_options) { super().merge(value: 'mst', selected: true) }
       let(:snapshot) do
         <<~HTML
-          <option value="mst" selected="selected">Morningstar Technologies</option>
+          <option value="mst" selected="selected">
+            Morningstar Technologies
+          </option>
         HTML
       end
 
