@@ -11,16 +11,11 @@ do
     { icon: }
   end
 
-  describe '::ICON_SIZES' do
-    include_examples 'should define frozen constant',
-      :ICON_SIZES,
-      Set.new(%w[small medium large])
-  end
-
   include_deferred 'with configuration',
     colors:              %i[red orange yellow green blue indigo violet],
     default_icon_family: 'fa-solid',
-    icon_families:       %i[fa-solid]
+    icon_families:       %i[fa-solid],
+    sizes:               %w[min mid max]
 
   include_deferred 'should be a view component'
 
@@ -32,7 +27,7 @@ do
 
   include_deferred 'should define component option',
     :size,
-    value: 'small'
+    value: 'mid'
 
   describe '.new' do
     include_deferred 'should validate the class_name option'
@@ -46,9 +41,7 @@ do
 
     include_deferred 'should validate that option is a valid icon', :icon
 
-    include_deferred 'should validate the inclusion of option',
-      :size,
-      expected: described_class::ICON_SIZES
+    include_deferred 'should validate that option is a valid size', :size
   end
 
   describe '#call' do
@@ -107,11 +100,11 @@ do
 
     describe 'with size: value' do
       let(:component_options) do
-        super().merge(size: 'medium')
+        super().merge(size: 'max')
       end
       let(:snapshot) do
         <<~HTML
-          <span class="icon is-medium">
+          <span class="icon is-max">
             <i class="fa-solid fa-rainbow"></i>
           </span>
         HTML
@@ -122,11 +115,11 @@ do
 
     context 'with configuration: { bulma_prefix: value }' do
       let(:component_options) do
-        super().merge(color: 'indigo', size: 'medium')
+        super().merge(color: 'indigo', size: 'max')
       end
       let(:snapshot) do
         <<~HTML
-          <span class="bulma-icon bulma-has-text-indigo bulma-is-medium">
+          <span class="bulma-icon bulma-has-text-indigo bulma-is-max">
             <i class="fa-solid fa-rainbow"></i>
           </span>
         HTML
