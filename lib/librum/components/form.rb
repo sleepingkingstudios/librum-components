@@ -8,6 +8,9 @@ module Librum::Components
     BRACKET_PATTERN = /\]?\[/
     private_constant :BRACKET_PATTERN
 
+    ICONLESS_TYPES = Set.new(%w[checkbox select text_area]).freeze
+    private_constant :ICONLESS_TYPES
+
     option :action,      validate: String
     option :http_method, validate: true
 
@@ -24,6 +27,18 @@ module Librum::Components
     # @return [Cuprum::Result] the result returned by the controller action.
     attr_reader :result
 
+    # @overload checkbox(name, **options)
+    #   Builds a checkbox component and maps the result value and errors.
+    #
+    #   @param name [String] the name of the checkbox.
+    #   @param options [Hash] additional options to pass to the checkbox.
+    #
+    #   @return [Librum::Components::Base, ActiveSupport::SafeBuffer] the
+    #     generated component, or a fallback if no component is defined.
+    def checkbox(name, **)
+      input(name, type: 'checkbox', **)
+    end
+
     # Retrieves the errors from the result corresponding to the given path.
     #
     # @param path [String] the relative path of the errors.
@@ -39,6 +54,50 @@ module Librum::Components
 
       matching.map { |err| err[:message] } # rubocop:disable Rails/Pluck
     end
+
+    # Builds an input component and maps the result value and errors.
+    #
+    # @param name [String] the name of the input.
+    # @param type [String] the type of the input. Defaults to "text".
+    # @param options [Hash] additional options to pass to the input.
+    #
+    # @return [Librum::Components::Base, ActiveSupport::SafeBuffer] the
+    #   generated component, or a fallback if no component is defined.
+    def input(name, type: 'text', **options)
+      tools.assertions.validate_name(name, as: 'name')
+
+      value   = value_for(name)
+      errors  = errors_for(name)
+      options = options_for(type:, value:, errors:, **options)
+
+      build_input(name:, type:, options:)
+    end
+
+    # @overload select(name, values:, **options)
+    #   Builds a select component and maps the result value and errors.
+    #
+    #   @param name [String] the name of the input.
+    #   @param values [Array<Hash>] the options for the select input.
+    #   @param options [Hash] additional options to pass to the input.
+    #
+    #   @return [Librum::Components::Base, ActiveSupport::SafeBuffer] the
+    #     generated component, or a fallback if no component is defined.
+    def select(name, values:, **)
+      input(name, type: 'select', values:, **)
+    end
+
+    # @overload text_area(name, **options)
+    #   Builds a textarea component and maps the result value and errors.
+    #
+    #   @param name [String] the name of the input.
+    #   @param options [Hash] additional options to pass to the input.
+    #
+    #   @return [Librum::Components::Base, ActiveSupport::SafeBuffer] the
+    #     generated component, or a fallback if no component is defined.
+    def text_area(name, **)
+      input(name, type: 'textarea', **)
+    end
+    alias textarea text_area
 
     # Retrieves the value from the result corresponding to the given path.
     #
@@ -61,6 +120,48 @@ module Librum::Components
     end
 
     private
+
+    def build_input(name:, options:, type:)
+      return field_component.new(name:, type:, **options) if field_component
+
+      return missing_component.new(name: 'Forms::Field') if missing_component
+
+      content_tag('div', style: 'color: #f00;') do
+        'Missing Component Forms::Field'
+      end
+    end
+
+    def field_component
+      return @field_component if @field_component
+
+      return unless components.const_defined?('Forms::Field')
+
+      @field_component = components.const_get('Forms::Field')
+    end
+
+    def missing_component
+      return @missing_component if @missing_component
+
+      return unless components.const_defined?('MissingComponent')
+
+      @missing_component = components.const_get('MissingComponent')
+    end
+
+    def options_for(errors:, type:, value:, **options)
+      if value && type == 'checkbox'
+        options[:checked] = true
+      elsif value
+        options[:value] = value
+      end
+
+      return options if errors.blank?
+
+      options.merge(options_for_errors(errors:))
+    end
+
+    def options_for_errors(errors:)
+      { message: errors.join(', ') }
+    end
 
     def result_errors
       return @result_errors if @result_errors
