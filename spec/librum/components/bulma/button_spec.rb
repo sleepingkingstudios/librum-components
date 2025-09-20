@@ -13,9 +13,10 @@ do
   end
 
   include_deferred 'with configuration',
-    colors:              %i[red orange yellow green blue indigo violet],
+    colors:              %w[red orange yellow green blue indigo violet],
     default_icon_family: 'fa-solid',
-    icon_families:       %i[fa-solid]
+    icon_families:       %w[fa-solid],
+    sizes:               %w[min mid max]
 
   include_deferred 'should be a view component'
 
@@ -42,7 +43,7 @@ do
 
   include_deferred 'should define component option',
     :size,
-    value: 'large'
+    value: 'mid'
 
   include_deferred 'should define component option',
     :target,
@@ -64,9 +65,7 @@ do
 
     include_deferred 'should validate that option is a valid icon', :icon
 
-    include_deferred 'should validate the inclusion of option',
-      :size,
-      expected: %w[small normal medium large]
+    include_deferred 'should validate that option is a valid size', :size
 
     include_deferred 'should validate the inclusion of option',
       :target,
@@ -212,10 +211,10 @@ do
     end
 
     describe 'with size: value' do
-      let(:component_options) { super().merge(size: 'large') }
+      let(:component_options) { super().merge(size: 'mid') }
       let(:snapshot) do
         <<~HTML
-          <button class="button is-large" type="button"></button>
+          <button class="button is-mid" type="button"></button>
         HTML
       end
 
@@ -226,7 +225,9 @@ do
       let(:component_options) { super().merge(text: 'Click Me') }
       let(:snapshot) do
         <<~HTML
-          <button class="button" type="button">Click Me</button>
+          <button class="button" type="button">
+            Click Me
+          </button>
         HTML
       end
 
@@ -310,7 +311,9 @@ do
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button" type="submit">Click Me</button>
+              <button class="button" type="submit">
+                Click Me
+              </button>
             </form>
           HTML
         end
@@ -341,7 +344,9 @@ do
                   <i class="fa-solid fa-radiation"></i>
                 </span>
 
-                <span>Click Me</span>
+                <span>
+                  Click Me
+                </span>
               </button>
             </form>
           HTML
@@ -385,7 +390,9 @@ do
         let(:component_options) { super().merge(text: 'Click Me') }
         let(:snapshot) do
           <<~HTML
-            <a class="button" href="/path/to/resource">Click Me</a>
+            <a class="button" href="/path/to/resource">
+              Click Me
+            </a>
           HTML
         end
 
@@ -407,7 +414,9 @@ do
                 <i class="fa-solid fa-radiation"></i>
               </span>
 
-              <span>Click Me</span>
+              <span>
+                Click Me
+              </span>
             </a>
           HTML
         end
@@ -445,19 +454,21 @@ do
           color:      'violet',
           disabled:   true,
           icon:       'radiation',
-          size:       'large',
+          size:       'mid',
           text:       'Click Me',
           type:       'submit'
         )
       end
       let(:snapshot) do
         <<~HTML
-          <button class="button is-violet is-large custom-class" disabled="disabled" type="submit">
+          <button class="button is-violet is-mid custom-class" disabled="disabled" type="submit">
             <span class="icon">
               <i class="fa-solid fa-radiation"></i>
             </span>
 
-            <span>Click Me</span>
+            <span>
+              Click Me
+            </span>
           </button>
         HTML
       end

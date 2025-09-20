@@ -26,6 +26,12 @@ module Librum::Components::Bulma
       'default_icon_family' => 'fa-solid',
       'icon_families'       => [
         *Librum::Components::Icons::FontAwesome::ICON_FAMILIES
+      ].freeze,
+      'sizes'               => %w[
+        small
+        normal
+        medium
+        large
       ].freeze
     ).freeze
 

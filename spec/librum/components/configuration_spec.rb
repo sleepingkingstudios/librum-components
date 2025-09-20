@@ -124,4 +124,24 @@ RSpec.describe Librum::Components::Configuration do
       it { expect(configuration.options).to be == expected }
     end
   end
+
+  describe '#sizes' do
+    let(:expected) { Set.new(described_class::DEFAULTS['sizes']) }
+
+    include_examples 'should define reader', :sizes, -> { expected }
+
+    context 'when initialized with colors: value' do
+      let(:sizes)    { %i[min mid max] }
+      let(:options)  { super().merge(sizes:) }
+      let(:expected) { Set.new(sizes.map(&:to_s)) }
+
+      it { expect(configuration.sizes).to be == expected }
+    end
+
+    context 'when the configuration is frozen' do
+      before(:example) { configuration.freeze }
+
+      it { expect(configuration.sizes).to be == expected }
+    end
+  end
 end

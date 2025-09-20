@@ -185,7 +185,9 @@ do
               #{component.label}
             </span>
 
-            <p>#{component.message}</p>
+            <p>
+              #{component.message}
+            </p>
           </div>
         HTML
       end
@@ -213,7 +215,9 @@ do
               #{component.label}
             </span>
 
-            <p>#{component.message}</p>
+            <p>
+              #{component.message}
+            </p>
           </div>
         HTML
       end

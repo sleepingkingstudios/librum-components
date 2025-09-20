@@ -34,15 +34,21 @@ do
       <<~HTML
         <div class="columns">
           <div class="column">
-            <div>Column 1</div>
+            <div>
+              Column 1
+            </div>
           </div>
 
           <div class="column">
-            <div>Column 2</div>
+            <div>
+              Column 2
+            </div>
           </div>
 
           <div class="column">
-            <div>Column 3</div>
+            <div>
+              Column 3
+            </div>
           </div>
         </div>
       HTML
@@ -55,15 +61,21 @@ do
         <<~HTML
           <div class="bulma-columns">
             <div class="bulma-column">
-              <div>Column 1</div>
+              <div>
+                Column 1
+              </div>
             </div>
 
             <div class="bulma-column">
-              <div>Column 2</div>
+              <div>
+                Column 2
+              </div>
             </div>
 
             <div class="bulma-column">
-              <div>Column 3</div>
+              <div>
+                Column 3
+              </div>
             </div>
           </div>
         HTML

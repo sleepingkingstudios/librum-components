@@ -17,11 +17,17 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
   describe '#call' do
     let(:snapshot) do
       <<~HTML
-        <h1>Books</h1>
+        <h1>
+          Books
+        </h1>
 
-        <button>Create Book</button>
+        <button>
+          Create Book
+        </button>
 
-        <div>Missing Component Books::Table</div>
+        <div>
+          Missing Component Books::Table
+        </div>
       HTML
     end
 
@@ -71,9 +77,13 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
       let(:resource_options) { super().merge(actions:) }
       let(:snapshot) do
         <<~HTML
-          <h1>Books</h1>
+          <h1>
+            Books
+          </h1>
 
-          <div>Missing Component Books::Table</div>
+          <div>
+            Missing Component Books::Table
+          </div>
         HTML
       end
 
@@ -86,11 +96,17 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <h1>Books</h1>
+          <h1>
+            Books
+          </h1>
 
-          <button>Create Book</button>
+          <button>
+            Create Book
+          </button>
 
-          <div>There are 0 books.</div>
+          <div>
+            There are 0 books.
+          </div>
         HTML
       end
 
@@ -138,11 +154,17 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
         end
         let(:snapshot) do
           <<~HTML
-            <h1>Books</h1>
+            <h1>
+              Books
+            </h1>
 
-            <button>Create Book</button>
+            <button>
+              Create Book
+            </button>
 
-            <div>There are 4 books.</div>
+            <div>
+              There are 4 books.
+            </div>
           HTML
         end
 

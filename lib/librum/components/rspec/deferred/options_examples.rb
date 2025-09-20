@@ -648,5 +648,25 @@ module Librum::Components::RSpec::Deferred
         end
       end
     end
+
+    deferred_examples 'should validate that option is a valid size' \
+    do |option_name|
+      context "when :#{option_name} is an invalid size" do
+        let(:component_options) do
+          super().merge(option_name.intern => 'imaginary')
+        end
+        let(:error_message) do
+          "#{option_name} is not a valid size"
+        end
+
+        it 'should raise an exception' do
+          expect { validate_options }
+            .to raise_error(
+              Librum::Components::Errors::InvalidOptionsError,
+              error_message
+            )
+        end
+      end
+    end
   end
 end

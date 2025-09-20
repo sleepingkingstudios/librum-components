@@ -63,11 +63,17 @@ do
         <table>
           <thead>
             <tr>
-              <th>Title</th>
+              <th>
+                Title
+              </th>
 
-              <th>Author Name</th>
+              <th>
+                Author Name
+              </th>
 
-              <th>Published</th>
+              <th>
+                Published
+              </th>
 
               <th></th>
             </tr>

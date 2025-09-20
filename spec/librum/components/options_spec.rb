@@ -153,6 +153,103 @@ RSpec.describe Librum::Components::Options do
     end
   end
 
+  describe '.filter_options' do
+    it 'should define the class method' do
+      expect(described_class).to respond_to(:filter_options).with(1).argument
+    end
+
+    describe 'with an empty Hash' do
+      let(:value) { {} }
+
+      it { expect(described_class.filter_options(value)).to be == {} }
+    end
+
+    describe 'with a Hash with invalid options' do
+      let(:value) { { invalid: 'invalid', other: true } }
+
+      it { expect(described_class.filter_options(value)).to be == {} }
+    end
+
+    wrap_context 'when the component defines options' do
+      describe 'with an empty Hash' do
+        let(:value) { {} }
+
+        it { expect(described_class.filter_options(value)).to be == {} }
+      end
+
+      describe 'with a Hash with invalid options' do
+        let(:value) { { invalid: 'invalid', other: true } }
+
+        it { expect(described_class.filter_options(value)).to be == {} }
+      end
+
+      describe 'with a Hash with valid options' do
+        let(:value) { { label: 'Launch', checked: true } }
+
+        it { expect(described_class.filter_options(value)).to be == value }
+      end
+
+      describe 'with a Hash with mixed valid and invalid options' do
+        let(:value) do
+          {
+            label:   'Launch',
+            checked: true,
+            invalid: 'invalid',
+            other:   true
+          }
+        end
+        let(:expected) { { label: 'Launch', checked: true } }
+
+        it { expect(described_class.filter_options(value)).to be == expected }
+      end
+
+      context 'when the component allows extra options' do
+        before(:example) { described_class.allow_extra_options }
+
+        describe 'with a Hash with invalid options' do
+          let(:value) { { invalid: 'invalid', other: true } }
+
+          it { expect(described_class.filter_options(value)).to be == value }
+        end
+
+        describe 'with a Hash with valid options' do
+          let(:value) { { label: 'Launch', checked: true } }
+
+          it { expect(described_class.filter_options(value)).to be == value }
+        end
+
+        describe 'with a Hash with mixed valid and invalid options' do
+          let(:value) do
+            {
+              label:   'Launch',
+              checked: true,
+              invalid: 'invalid',
+              other:   true
+            }
+          end
+
+          it { expect(described_class.filter_options(value)).to be == value }
+        end
+      end
+    end
+
+    context 'when the component allows extra options' do
+      before(:example) { described_class.allow_extra_options }
+
+      describe 'with an empty Hash' do
+        let(:value) { {} }
+
+        it { expect(described_class.filter_options(value)).to be == {} }
+      end
+
+      describe 'with a Hash with invalid options' do
+        let(:value) { { invalid: 'invalid', other: true } }
+
+        it { expect(described_class.filter_options(value)).to be == value }
+      end
+    end
+  end
+
   describe '.option' do
     deferred_context 'when the option is defined' do
       before(:example) { described_class.option(name, **meta_options) }

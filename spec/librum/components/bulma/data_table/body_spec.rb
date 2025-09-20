@@ -112,50 +112,82 @@ do
           <table>
             <tbody>
               <tr>
-                <td>Gideon the Ninth</td>
+                <td>
+                  Gideon the Ninth
+                </td>
 
-                <td>Tamsyn Muir</td>
+                <td>
+                  Tamsyn Muir
+                </td>
 
-                <td>True</td>
+                <td>
+                  True
+                </td>
 
                 <td class="has-text-right">
-                  <span>Actions</span>
+                  <span>
+                    Actions
+                  </span>
                 </td>
               </tr>
 
               <tr>
-                <td>Harrow the Ninth</td>
+                <td>
+                  Harrow the Ninth
+                </td>
 
-                <td>Tamsyn Muir</td>
+                <td>
+                  Tamsyn Muir
+                </td>
 
-                <td>True</td>
+                <td>
+                  True
+                </td>
 
                 <td class="has-text-right">
-                  <span>Actions</span>
+                  <span>
+                    Actions
+                  </span>
                 </td>
               </tr>
 
               <tr>
-                <td>Nona the Ninth</td>
+                <td>
+                  Nona the Ninth
+                </td>
 
-                <td>Tamsyn Muir</td>
+                <td>
+                  Tamsyn Muir
+                </td>
 
-                <td>True</td>
+                <td>
+                  True
+                </td>
 
                 <td class="has-text-right">
-                  <span>Actions</span>
+                  <span>
+                    Actions
+                  </span>
                 </td>
               </tr>
 
               <tr>
-                <td>Alecto the Ninth</td>
+                <td>
+                  Alecto the Ninth
+                </td>
 
-                <td>Tamsyn Muir</td>
+                <td>
+                  Tamsyn Muir
+                </td>
 
-                <td>False</td>
+                <td>
+                  False
+                </td>
 
                 <td class="has-text-right">
-                  <span>Actions</span>
+                  <span>
+                    Actions
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -220,7 +252,9 @@ do
             <tbody>
               <tr>
                 <td colspan="4">
-                  <span class="has-text-danger">This is not a place of honor.</span>
+                  <span class="has-text-danger">
+                    This is not a place of honor.
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -244,7 +278,9 @@ do
             <tbody>
               <tr>
                 <td colspan="4">
-                  <span class="has-text-danger">This is not a place of honor.</span>
+                  <span class="has-text-danger">
+                    This is not a place of honor.
+                  </span>
                 </td>
               </tr>
             </tbody>

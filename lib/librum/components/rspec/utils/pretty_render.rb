@@ -4,7 +4,13 @@ require 'librum/components'
 
 module Librum::Components::RSpec::Utils
   # Utility class for rendering HTML documents with a consistent format.
-  class PrettyRender
+  class PrettyRender # rubocop:disable Metrics/ClassLength
+    LINE_LEADING_WHITESPACE_PATTERN = /\A( *)[^\s]/
+    private_constant :LINE_LEADING_WHITESPACE_PATTERN
+
+    TRAILING_WHITESPACE_PATTERN = /\n( +)\z/
+    private_constant :TRAILING_WHITESPACE_PATTERN
+
     # @param document [Nokogiri::XML::Node] the document or tag to render.
     #
     # @return [String] the rendered HTML.
@@ -17,7 +23,7 @@ module Librum::Components::RSpec::Utils
     def authenticity_token?(tag)
       return false unless tag.name == 'input'
 
-      tag.attributes['name'].value == 'authenticity_token'
+      tag.attributes['name']&.value == 'authenticity_token'
     end
 
     def child_tags(tag)
@@ -61,20 +67,49 @@ module Librum::Components::RSpec::Utils
         .join
     end
 
+    def minimum_indent(text)
+      min = text.length
+      rxp = LINE_LEADING_WHITESPACE_PATTERN
+
+      text.each_line do |line|
+        indent = line.match(rxp)&.[](1)&.size
+
+        next unless indent
+
+        min = indent if indent < min
+      end
+
+      min == text.length ? 0 : min
+    end
+
     def opening_tag(tag)
       return "<#{tag.name}>" if tag.attributes.empty?
 
       "<#{tag.name} #{format_attributes(tag)}>"
     end
 
-    def realign_text(text)
-      match = text.match(/\n( +)\z/)
+    def realign_text(text) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      # First, try to align the text with the close tag on a following line.
+      match  = text.match(TRAILING_WHITESPACE_PATTERN)
+      offset = match&.[](1)&.size
 
-      return text unless match
+      if offset
+        text =
+          text
+          .each_line
+          .map { |line| line.sub(/\A#{' ' * offset}/, '') }
+          .join
 
-      offset = match[1].size
+        return text
+      end
 
-      text.each_line.map { |line| line.sub(/\A#{' ' * offset}/, '') }.join
+      # Next, we try and identify the smallest indent for a line that contains
+      # non-whitespace characters.
+      offset = match ? match[1].size : minimum_indent(text)
+
+      # The smallest indentation after the realignment should be two spaces,
+      # with relative indentation unchanged.
+      text.each_line.map { |line| line.sub(/\A#{' ' * offset}/, '  ') }.join
     end
 
     def render_authenticity_token
@@ -117,9 +152,12 @@ module Librum::Components::RSpec::Utils
     end
 
     def render_text(tag)
-      text = join_text(tag)
+      text     = join_text(tag)
+      stripped = text.strip
 
-      return text unless text.include?("\n")
+      return '' if stripped.empty?
+
+      return "\n  #{stripped}\n" unless stripped.include?("\n")
 
       # Aligns the text content with the closing tag.
       text = realign_text(text)
@@ -127,8 +165,8 @@ module Librum::Components::RSpec::Utils
       # Remove extra whitespace from empty lines.
       text = text.gsub(/^\n\s+$/, "\n")
 
-      # Trim leading and trailing newlines
-      text.sub(/\A\n+/, "\n").sub(/\n+\z/, "\n")
+      # Restore leading and trailing newlines.
+      text.sub(/\A\n*/, "\n").sub(/\n*\z/, "\n")
     end
   end
 end

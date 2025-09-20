@@ -38,5 +38,12 @@ module Librum::Components::Options
 
       "#{as} is not included in the list"
     end
+
+    def validate_size(value, as: 'size')
+      return if value.nil?
+      return if configuration.sizes.include?(value)
+
+      "#{as} is not a valid size"
+    end
   end
 end

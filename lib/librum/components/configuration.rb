@@ -15,7 +15,8 @@ module Librum::Components
     DEFAULTS = {
       'colors'              => [].freeze,
       'default_icon_family' => nil,
-      'icon_families'       => [].freeze
+      'icon_families'       => [].freeze,
+      'sizes'               => [].freeze
     }.freeze
 
     # @param options [Hash] initialization options for the configuration.
@@ -44,6 +45,7 @@ module Librum::Components
       # Ensure memoized values are hydrated before freezing.
       colors
       icon_families
+      sizes
 
       super
     end
@@ -51,6 +53,11 @@ module Librum::Components
     # @return [Array<String>] the icon families defined for the component set.
     def icon_families
       @icon_families ||= Set.new(@options['icon_families'].map(&:to_s))
+    end
+
+    # @return [Array<String>] the sizes defined for the component set.
+    def sizes
+      @sizes ||= Set.new(@options['sizes'].map(&:to_s))
     end
 
     private

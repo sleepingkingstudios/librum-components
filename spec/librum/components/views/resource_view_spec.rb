@@ -12,7 +12,9 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
   describe '#call' do
     let(:snapshot) do
       <<~HTML
-        <h1>Publish Books</h1>
+        <h1>
+          Publish Books
+        </h1>
       HTML
     end
 
@@ -54,9 +56,13 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <h1>Publish Books</h1>
+          <h1>
+            Publish Books
+          </h1>
 
-          <p>Resource Content</p>
+          <p>
+            Resource Content
+          </p>
         HTML
       end
 
@@ -70,9 +76,13 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <h1>Publish Books</h1>
+          <h1>
+            Publish Books
+          </h1>
 
-          <span>There are 0 items.</span>
+          <span>
+            There are 0 items.
+          </span>
         HTML
       end
 
@@ -130,9 +140,13 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
         end
         let(:snapshot) do
           <<~HTML
-            <h1>Publish Books</h1>
+            <h1>
+              Publish Books
+            </h1>
 
-            <span>There are 4 items.</span>
+            <span>
+              There are 4 items.
+            </span>
           HTML
         end
 
@@ -147,9 +161,13 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <h1>Publish Book</h1>
+          <h1>
+            Publish Book
+          </h1>
 
-          <span>There is not an item.</span>
+          <span>
+            There is not an item.
+          </span>
         HTML
       end
 
@@ -179,9 +197,13 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
         end
         let(:snapshot) do
           <<~HTML
-            <h1>Publish Book</h1>
+            <h1>
+              Publish Book
+            </h1>
 
-            <span>There is an item.</span>
+            <span>
+              There is an item.
+            </span>
           HTML
         end
 
@@ -199,9 +221,13 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
       end
       let(:snapshot) do
         <<~HTML
-          <h1>Publish Book</h1>
+          <h1>
+            Publish Book
+          </h1>
 
-          <span>There is not an item.</span>
+          <span>
+            There is not an item.
+          </span>
         HTML
       end
 
@@ -231,9 +257,13 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
         end
         let(:snapshot) do
           <<~HTML
-            <h1>Publish Book</h1>
+            <h1>
+              Publish Book
+            </h1>
 
-            <span>There is an item.</span>
+            <span>
+              There is an item.
+            </span>
           HTML
         end
 
@@ -245,11 +275,17 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
       let(:described_class) { Spec::ExampleView }
       let(:snapshot) do
         <<~HTML
-          <h1>Publish Books</h1>
+          <h1>
+            Publish Books
+          </h1>
 
-          <span>Cancel</span>
+          <span>
+            Cancel
+          </span>
 
-          <button>Confirm</button>
+          <button>
+            Confirm
+          </button>
         HTML
       end
 
@@ -269,9 +305,13 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
       let(:described_class) { Spec::ExampleView }
       let(:snapshot) do
         <<~HTML
-          <h1>Publish Books</h1>
+          <h1>
+            Publish Books
+          </h1>
 
-          <p>After Content</p>
+          <p>
+            After Content
+          </p>
         HTML
       end
 
@@ -289,11 +329,17 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
         end
         let(:snapshot) do
           <<~HTML
-            <h1>Publish Books</h1>
+            <h1>
+              Publish Books
+            </h1>
 
-            <p>Resource Content</p>
+            <p>
+              Resource Content
+            </p>
 
-            <p>After Content</p>
+            <p>
+              After Content
+            </p>
           HTML
         end
 
@@ -305,9 +351,13 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
       let(:described_class) { Spec::ExampleView }
       let(:snapshot) do
         <<~HTML
-          <h1>Publish Books</h1>
+          <h1>
+            Publish Books
+          </h1>
 
-          <p>Before Content</p>
+          <p>
+            Before Content
+          </p>
         HTML
       end
 
@@ -325,11 +375,17 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
         end
         let(:snapshot) do
           <<~HTML
-            <h1>Publish Books</h1>
+            <h1>
+              Publish Books
+            </h1>
 
-            <p>Before Content</p>
+            <p>
+              Before Content
+            </p>
 
-            <p>Resource Content</p>
+            <p>
+              Resource Content
+            </p>
           HTML
         end
 
@@ -341,11 +397,17 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
       let(:described_class) { Spec::ExampleView }
       let(:snapshot) do
         <<~HTML
-          <h1>Publish Books</h1>
+          <h1>
+            Publish Books
+          </h1>
 
-          <p>Before Content</p>
+          <p>
+            Before Content
+          </p>
 
-          <p>After Content</p>
+          <p>
+            After Content
+          </p>
         HTML
       end
 
@@ -367,13 +429,21 @@ RSpec.describe Librum::Components::Views::ResourceView, type: :component do
         end
         let(:snapshot) do
           <<~HTML
-            <h1>Publish Books</h1>
+            <h1>
+              Publish Books
+            </h1>
 
-            <p>Before Content</p>
+            <p>
+              Before Content
+            </p>
 
-            <p>Resource Content</p>
+            <p>
+              Resource Content
+            </p>
 
-            <p>After Content</p>
+            <p>
+              After Content
+            </p>
           HTML
         end
 

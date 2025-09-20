@@ -22,8 +22,7 @@ module Librum::Components::Bulma
       validate: { inclusion: HTTP_METHODS }
     option :icon,        validate: true
     option :loading,     boolean:  true
-    option :size,
-      validate: { inclusion: Set.new(%w[small medium normal large]) }
+    option :size,        validate: true
     option :target, validate: { inclusion: LINK_TARGETS }
     option :text
     option :type,

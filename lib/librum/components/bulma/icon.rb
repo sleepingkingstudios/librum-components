@@ -9,12 +9,9 @@ module Librum::Components::Bulma
   class Icon < Librum::Components::Bulma::Base
     include Librum::Components::Options::ClassName
 
-    # The valid icon sizes for a Bulma icon.
-    ICON_SIZES = Set.new(%w[small medium large]).freeze
-
     option :color, validate: true
     option :icon,  required: true, validate: true
-    option :size,  validate: { inclusion: ICON_SIZES }
+    option :size,  validate: true
 
     # @return [ActiveSupport::SafeBuffer] the rendered component.
     def call

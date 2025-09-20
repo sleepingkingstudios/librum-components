@@ -53,6 +53,14 @@ RSpec.describe Librum::Components::Bulma::Configuration do
         expect(described_class::DEFAULTS['icon_families']).to be == expected
       end
     end
+
+    describe 'sizes' do
+      let(:expected) do
+        %w[small normal medium large]
+      end
+
+      it { expect(described_class::DEFAULTS['sizes']).to be == expected }
+    end
   end
 
   describe '.default' do

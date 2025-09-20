@@ -88,7 +88,9 @@ do
     let(:rendered) { render_component(component) }
     let(:snapshot) do
       <<~HTML
-        <span class="title is-block mb-5">Greetings, Starfighter</span>
+        <span class="title is-block mb-5">
+          Greetings, Starfighter
+        </span>
       HTML
     end
 
@@ -106,16 +108,22 @@ do
         <<~HTML
           <div class="level mb-5">
             <div class="level-left">
-              <span class="title">Greetings, Starfighter</span>
+              <span class="title">
+                Greetings, Starfighter
+              </span>
             </div>
 
             <div class="level-right">
               <div class="level-item">
-                <a>Link</a>
+                <a>
+                  Link
+                </a>
               </div>
 
               <div class="level-item">
-                <a class="button">Button</a>
+                <a class="button">
+                  Button
+                </a>
               </div>
             </div>
           </div>
@@ -137,7 +145,9 @@ do
         <<~HTML
           <div class="level mb-5">
             <div class="level-left">
-              <span class="title">Greetings, Starfighter</span>
+              <span class="title">
+                Greetings, Starfighter
+              </span>
             </div>
 
             <div class="level-right">
@@ -148,7 +158,9 @@ do
               </div>
 
               <div class="level-item">
-                <a class="button" href="/">Button</a>
+                <a class="button" href="/">
+                  Button
+                </a>
               </div>
             </div>
           </div>
@@ -162,7 +174,9 @@ do
       let(:component_options) { super().merge(class_name: 'custom-heading') }
       let(:snapshot) do
         <<~HTML
-          <span class="title is-block mb-5 custom-heading">Greetings, Starfighter</span>
+          <span class="title is-block mb-5 custom-heading">
+            Greetings, Starfighter
+          </span>
         HTML
       end
 
@@ -173,7 +187,9 @@ do
       let(:component_options) { super().merge(level: 2) }
       let(:snapshot) do
         <<~HTML
-          <h2>Greetings, Starfighter</h2>
+          <h2>
+            Greetings, Starfighter
+          </h2>
         HTML
       end
 
@@ -186,7 +202,9 @@ do
       end
       let(:snapshot) do
         <<~HTML
-          <h2 class="custom-heading">Greetings, Starfighter</h2>
+          <h2 class="custom-heading">
+            Greetings, Starfighter
+          </h2>
         HTML
       end
 
@@ -197,7 +215,9 @@ do
       let(:component_options) { super().merge(size: 3) }
       let(:snapshot) do
         <<~HTML
-          <span class="title is-block mb-5 is-size-3">Greetings, Starfighter</span>
+          <span class="title is-block mb-5 is-size-3">
+            Greetings, Starfighter
+          </span>
         HTML
       end
 
@@ -218,7 +238,9 @@ do
         <<~HTML
           <div class="level mb-5">
             <div class="level-left">
-              <h2 class="mb-0 is-size-3 custom-heading">Greetings, Starfighter</h2>
+              <h2 class="mb-0 is-size-3 custom-heading">
+                Greetings, Starfighter
+              </h2>
             </div>
 
             <div class="level-right">
@@ -229,7 +251,9 @@ do
               </div>
 
               <div class="level-item">
-                <a class="button" href="/">Button</a>
+                <a class="button" href="/">
+                  Button
+                </a>
               </div>
             </div>
           </div>

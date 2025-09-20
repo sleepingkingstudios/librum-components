@@ -31,6 +31,17 @@ module Librum::Components
       #   raising an exception.
       def allow_extra_options? = @allow_extra_options || false
 
+      # Returns the subset of the options that are defined for the component.
+      #
+      # @param value [Hash] the options to filter.
+      #
+      # @return [Hash] the filtered options.
+      def filter_options(value)
+        return value if allow_extra_options?
+
+        value.slice(*options_keys)
+      end
+
       # Defines an option for the component.
       #
       # A note on defaults and validation: options can have a default value that
@@ -253,6 +264,10 @@ module Librum::Components
           "defined on #{parent_component}"
 
         raise Librum::Components::Errors::DuplicateOptionError, message
+      end
+
+      def options_keys
+        @options_keys ||= Set.new(options.keys.map(&:intern))
       end
     end
 
