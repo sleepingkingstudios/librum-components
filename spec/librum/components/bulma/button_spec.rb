@@ -59,9 +59,8 @@ do
   describe '.new' do
     include_deferred 'should validate that option is a valid color', :color
 
-    include_deferred 'should validate the inclusion of option',
-      :http_method,
-      expected: %w[delete get patch post put]
+    include_deferred 'should validate that option is a valid http method',
+      :http_method
 
     include_deferred 'should validate that option is a valid icon', :icon
 

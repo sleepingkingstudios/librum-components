@@ -570,6 +570,105 @@ module Librum::Components::RSpec::Deferred
       end
     end
 
+    deferred_examples 'should validate that option is a valid http method' \
+    do |option_name|
+      context "when :#{option_name} is an Object" do
+        let(:component_options) do
+          super().merge(option_name.intern => Object.new.freeze)
+        end
+        let(:error_message) do
+          tools.assertions.error_message_for(
+            'sleeping_king_studios.tools.assertions.name',
+            as: option_name
+          )
+        end
+
+        it 'should raise an exception' do
+          expect { validate_options }
+            .to raise_error(
+              Librum::Components::Errors::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+
+      context "when :#{option_name} is an empty String" do
+        let(:component_options) do
+          super().merge(option_name.intern => '')
+        end
+        let(:error_message) do
+          tools.assertions.error_message_for(
+            'sleeping_king_studios.tools.assertions.presence',
+            as: option_name
+          )
+        end
+
+        it 'should raise an exception' do
+          expect { validate_options }
+            .to raise_error(
+              Librum::Components::Errors::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+
+      context "when :#{option_name} is an empty Symbol" do
+        let(:component_options) do
+          super().merge(option_name.intern => :'')
+        end
+        let(:error_message) do
+          tools.assertions.error_message_for(
+            'sleeping_king_studios.tools.assertions.presence',
+            as: option_name
+          )
+        end
+
+        it 'should raise an exception' do
+          expect { validate_options }
+            .to raise_error(
+              Librum::Components::Errors::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+
+      context "when :#{option_name} is an invalid String" do
+        let(:component_options) do
+          super().merge(option_name.intern => 'explode')
+        end
+        let(:error_message) do
+          'http_method is not a valid http method - valid values are ' \
+            "#{described_class::HTTP_METHODS.map(&:upcase).join(', ')}"
+        end
+
+        it 'should raise an exception' do
+          expect { validate_options }
+            .to raise_error(
+              Librum::Components::Errors::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+
+      context "when :#{option_name} is an invalid Symbol" do
+        let(:component_options) do
+          super().merge(option_name.intern => :explode)
+        end
+        let(:error_message) do
+          'http_method is not a valid http method - valid values are ' \
+            "#{described_class::HTTP_METHODS.map(&:upcase).join(', ')}"
+        end
+
+        it 'should raise an exception' do
+          expect { validate_options }
+            .to raise_error(
+              Librum::Components::Errors::InvalidOptionsError,
+              include(error_message)
+            )
+        end
+      end
+    end
+
     deferred_examples 'should validate that option is a valid icon' \
     do |option_name|
       context "when :#{option_name} is an Object" do

@@ -16,6 +16,16 @@ RSpec.describe Librum::Components::Options::ValidationHelpers do
     klass.include Librum::Components::Options::ValidationHelpers # rubocop:disable RSpec/DescribedClass
   end
 
+  describe '::HTTP_METHODS' do
+    let(:expected) { Set.new(%w[delete get head patch post put]) }
+
+    include_examples 'should define immutable constant',
+      :HTTP_METHODS,
+      -> { an_instance_of(Set) }
+
+    it { expect(described_class::HTTP_METHODS).to be == expected }
+  end
+
   describe '#validate_color' do
     it 'should define the private method' do
       expect(helpers)
@@ -90,6 +100,189 @@ RSpec.describe Librum::Components::Options::ValidationHelpers do
       let(:component) { Librum::Components::Literal.new('<img />') }
 
       it { expect(helpers.send(:validate_component, component)).to be nil }
+    end
+  end
+
+  describe '#validate_http_method' do
+    it 'should define the private method' do
+      expect(helpers)
+        .to respond_to(:validate_http_method, true)
+        .with(1).argument
+        .and_keywords(:as)
+    end
+
+    it { expect(helpers.send(:validate_http_method, nil)).to be nil }
+
+    describe 'with an Object' do
+      let(:value) { Object.new.freeze }
+      let(:error_message) do
+        SleepingKingStudios::Tools::Toolbelt
+          .instance
+          .assertions
+          .error_message_for(
+            'sleeping_king_studios.tools.assertions.name',
+            as: 'http_method'
+          )
+      end
+
+      it 'should return the error message' do
+        expect(helpers.send(:validate_http_method, value))
+          .to be == error_message
+      end
+
+      describe 'with as: value' do
+        let(:as) { 'value' }
+        let(:error_message) do
+          SleepingKingStudios::Tools::Toolbelt
+            .instance
+            .assertions
+            .error_message_for(
+              'sleeping_king_studios.tools.assertions.name',
+              as: 'value'
+            )
+        end
+
+        it 'should return the error message' do
+          expect(helpers.send(:validate_http_method, value, as:))
+            .to be == error_message
+        end
+      end
+    end
+
+    describe 'with an empty String' do
+      let(:value) { '' }
+      let(:error_message) do
+        SleepingKingStudios::Tools::Toolbelt
+          .instance
+          .assertions
+          .error_message_for(
+            'sleeping_king_studios.tools.assertions.presence',
+            as: 'http_method'
+          )
+      end
+
+      it 'should return the error message' do
+        expect(helpers.send(:validate_http_method, value))
+          .to be == error_message
+      end
+
+      describe 'with as: value' do
+        let(:as) { 'value' }
+        let(:error_message) do
+          SleepingKingStudios::Tools::Toolbelt
+            .instance
+            .assertions
+            .error_message_for(
+              'sleeping_king_studios.tools.assertions.presence',
+              as: 'value'
+            )
+        end
+
+        it 'should return the error message' do
+          expect(helpers.send(:validate_http_method, value, as:))
+            .to be == error_message
+        end
+      end
+    end
+
+    describe 'with an empty Symbol' do
+      let(:value) { :'' }
+      let(:error_message) do
+        SleepingKingStudios::Tools::Toolbelt
+          .instance
+          .assertions
+          .error_message_for(
+            'sleeping_king_studios.tools.assertions.presence',
+            as: 'http_method'
+          )
+      end
+
+      it 'should return the error message' do
+        expect(helpers.send(:validate_http_method, value))
+          .to be == error_message
+      end
+
+      describe 'with as: value' do
+        let(:as) { 'value' }
+        let(:error_message) do
+          SleepingKingStudios::Tools::Toolbelt
+            .instance
+            .assertions
+            .error_message_for(
+              'sleeping_king_studios.tools.assertions.presence',
+              as: 'value'
+            )
+        end
+
+        it 'should return the error message' do
+          expect(helpers.send(:validate_http_method, value, as:))
+            .to be == error_message
+        end
+      end
+    end
+
+    describe 'with an invalid String' do
+      let(:value) { 'explode' }
+      let(:error_message) do
+        'http_method is not a valid http method - valid values are ' \
+          "#{described_class::HTTP_METHODS.map(&:upcase).join(', ')}"
+      end
+
+      it 'should return the error message' do
+        expect(helpers.send(:validate_http_method, value))
+          .to be == error_message
+      end
+
+      describe 'with as: value' do
+        let(:as) { 'value' }
+        let(:error_message) do
+          'value is not a valid http method - valid values are ' \
+            "#{described_class::HTTP_METHODS.map(&:upcase).join(', ')}"
+        end
+
+        it 'should return the error message' do
+          expect(helpers.send(:validate_http_method, value, as:))
+            .to be == error_message
+        end
+      end
+    end
+
+    describe 'with an invalid Symbol' do
+      let(:value) { :explode }
+      let(:error_message) do
+        'http_method is not a valid http method - valid values are ' \
+          "#{described_class::HTTP_METHODS.map(&:upcase).join(', ')}"
+      end
+
+      it 'should return the error message' do
+        expect(helpers.send(:validate_http_method, value))
+          .to be == error_message
+      end
+
+      describe 'with as: value' do
+        let(:as) { 'value' }
+        let(:error_message) do
+          'value is not a valid http method - valid values are ' \
+            "#{described_class::HTTP_METHODS.map(&:upcase).join(', ')}"
+        end
+
+        it 'should return the error message' do
+          expect(helpers.send(:validate_http_method, value, as:))
+            .to be == error_message
+        end
+      end
+    end
+
+    describe 'with a valid String' do
+      let(:value) { 'DELETE' }
+
+      it { expect(helpers.send(:validate_http_method, value)).to be nil }
+    end
+
+    describe 'with a valid Symbol' do
+      let(:value) { :delete }
+
+      it { expect(helpers.send(:validate_http_method, value)).to be nil }
     end
   end
 
