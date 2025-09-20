@@ -6,7 +6,7 @@ module Librum::Components::Bulma::Forms
   # Renders a form select input.
   #
   # @see https://bulma.io/documentation/form/input/
-  class Select < Librum::Components::Bulma::Base
+  class Select < Librum::Components::Bulma::Base # rubocop:disable Metrics/ClassLength
     include Librum::Components::Options::ClassName
 
     NO_SELECTION = Object.new.freeze
@@ -97,7 +97,14 @@ module Librum::Components::Bulma::Forms
     end
 
     def render_placeholder
-      render_value(label: placeholder, value: '', disabled: true)
+      component = Librum::Components::Bulma::Forms::Select::Option.new(
+        label:    placeholder,
+        value:    '',
+        disabled: false,
+        selected: selected_value == NO_SELECTION
+      )
+
+      render(component)
     end
 
     def render_value(label:, value: nil, disabled: false)

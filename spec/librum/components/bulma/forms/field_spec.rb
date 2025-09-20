@@ -577,7 +577,7 @@ do
               <div class="control">
                 <div class="select is-danger is-block">
                   <select name="game[space_program]" required="required">
-                    <option value="" disabled="disabled">
+                    <option value="">
                       Space Program
                     </option>
 

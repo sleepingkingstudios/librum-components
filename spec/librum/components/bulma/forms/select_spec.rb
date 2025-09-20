@@ -456,7 +456,7 @@ do
         <<~HTML
           <div class="select">
             <select>
-              <option value="" disabled="disabled">
+              <option value="" selected="selected">
                 Choose Space Program
               </option>
 
@@ -578,7 +578,7 @@ do
         <<~HTML
           <div class="select is-red is-block custom-class">
             <select id="game_space_program" name="game[space_program]" required="required">
-              <option value="" disabled="disabled">
+              <option value="">
                 Choose Space Program
               </option>
 
