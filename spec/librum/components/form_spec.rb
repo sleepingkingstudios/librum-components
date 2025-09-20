@@ -10,7 +10,7 @@ RSpec.describe Librum::Components::Form, type: :component do
   end
 
   deferred_context 'when the field component is defined' do
-    before(:example) do
+    prepend_before(:example) do
       stub_provider(
         Librum::Components.provider,
         :components,
@@ -19,8 +19,15 @@ RSpec.describe Librum::Components::Form, type: :component do
     end
 
     example_class 'Spec::Components::Forms::Field', Librum::Components::Base \
-    do |klass| # rubocop:disable Style/SymbolProc
+    do |klass|
       klass.allow_extra_options
+
+      klass.option :name
+      klass.option :type
+
+      klass.define_method :call do
+        %(<input name="#{name}" type="#{type}" />).html_safe # rubocop:disable Rails/OutputSafety
+      end
     end
   end
 
@@ -147,6 +154,153 @@ RSpec.describe Librum::Components::Form, type: :component do
 
     include_deferred 'should validate that option is a valid http method',
       :http_method
+  end
+
+  describe '#build' do
+    let(:block) do
+      ->(_) {}
+    end
+    let(:builder) do
+      be_a(described_class::Builder).and have_attributes(form: component)
+    end
+
+    it { expect(component).to respond_to(:build).with(0).arguments.and_a_block }
+
+    it { expect(component.build(&block)).to be component }
+
+    it 'should create and yield a builder' do
+      expect { |block| component.build(&block) }.to yield_with_args(builder)
+    end
+  end
+
+  describe '#call' do
+    let(:snapshot) do
+      <<~HTML
+        <form></form>
+      HTML
+    end
+
+    before(:example) do
+      allow(component).to receive_messages( # rubocop:disable RSpec/SubjectStub
+        form_authenticity_token:  '12345',
+        protect_against_forgery?: true
+      )
+    end
+
+    include_deferred 'when the field component is defined'
+
+    it { expect(rendered).to match_snapshot(snapshot) }
+
+    describe 'with action: value' do
+      let(:component_options) { super().merge(action: '/rockets') }
+      let(:snapshot) do
+        <<~HTML
+          <form action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
+            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with action: value and http_method: value' do
+      let(:component_options) do
+        super().merge(action: '/rockets/imp-vi', http_method: 'patch')
+      end
+      let(:snapshot) do
+        <<~HTML
+          <form action="/rockets/imp-vi" accept-charset="UTF-8" data-remote="true" method="post">
+            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+            <input type="hidden" name="_method" value="patch" autocomplete="off">
+
+            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with action: value and contents' do
+      let(:contents) do
+        component.content_tag('div') { 'Form Inputs' }
+      end
+      let(:component) do
+        super().with_content(contents)
+      end
+      let(:component_options) { super().merge(action: '/rockets') }
+      let(:snapshot) do
+        <<~HTML
+          <form action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
+            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+            <div>
+              Form Inputs
+            </div>
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with contents' do
+      let(:contents) do
+        component.content_tag('div') { 'Form Inputs' }
+      end
+      let(:component) do
+        super().with_content(contents)
+      end
+      let(:snapshot) do
+        <<~HTML
+          <form>
+            <div>
+              Form Inputs
+            </div>
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with fields from a form builder' do
+      let(:block) do
+        lambda do |builder|
+          builder.fields << component.content_tag('h1') { 'Form Heading' }
+
+          builder.input('rocket[name]')
+
+          builder.checkbox('rocket[refuel]')
+
+          builder.text_area('rocket[description]')
+        end
+      end
+      let(:component) { super().build(&block) }
+      let(:snapshot) do
+        <<~HTML
+          <form>
+            <h1>
+              Form Heading
+            </h1>
+
+            <input name="rocket[name]" type="text">
+
+            <input name="rocket[refuel]" type="checkbox">
+
+            <input name="rocket[description]" type="textarea">
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
   end
 
   describe '#checkbox' do

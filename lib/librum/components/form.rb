@@ -4,7 +4,9 @@ require 'librum/components'
 
 module Librum::Components
   # Builds and renders a form using form field components.
-  class Form < Librum::Components::Base
+  class Form < Librum::Components::Base # rubocop:disable Metrics/ClassLength
+    include ActionView::Helpers::SanitizeHelper
+
     BRACKET_PATTERN = /\]?\[/
     private_constant :BRACKET_PATTERN
 
@@ -17,12 +19,42 @@ module Librum::Components
     #   @param options [Hash] additional options for the form.
     def initialize(result:, **)
       @result = result
+      @fields = []
 
       super(**)
     end
 
     # @return [Cuprum::Result] the result returned by the controller action.
     attr_reader :result
+
+    # Generates the form contents, replacing any value in #content.
+    #
+    # @yield the block used to generate the contents.
+    # @yieldparam builder [Librum::Components::Form::Builder] the builder used
+    #   to generate the contents. Provides wrapper methods for defining form
+    #   fields, including #input, #checkbox, #select, and #text_area.
+    #
+    # @return [self] the form.
+    def build(&block)
+      builder = self.class::Builder.new(fields:, form: self)
+
+      block.call(builder)
+
+      self
+    end
+
+    # Generates the form.
+    #
+    # @return [ActiveSupport::SafeBuffer] the rendered form.
+    def call
+      with_content(render_fields) unless fields.empty?
+
+      if action
+        form_with(url: action, method: http_method) { content }
+      else
+        content_tag('form') { content }
+      end
+    end
 
     # @overload checkbox(name, **options)
     #   Builds a checkbox component and maps the result value and errors.
@@ -118,6 +150,8 @@ module Librum::Components
 
     private
 
+    attr_reader :fields
+
     def build_input(name:, options:, type:)
       return field_component.new(name:, type:, **options) if field_component
 
@@ -158,6 +192,24 @@ module Librum::Components
 
     def options_for_errors(errors:, **options)
       options.merge(message: errors.join(', '))
+    end
+
+    def render_field(field)
+      return render(field) if field.is_a?(ViewComponent::Base)
+
+      return field if field.is_a?(ActiveSupport::SafeBuffer)
+
+      # :nocov:
+      return sanitize(field, attributes: [], tags: []) if field.is_a?(String)
+
+      raise ArgumentError, 'field is not a String or a component'
+      # :nocov:
+    end
+
+    def render_fields
+      fields.reduce(ActiveSupport::SafeBuffer.new) do |buffer, field|
+        buffer << render_field(field) << "\n"
+      end
     end
 
     def result_errors
