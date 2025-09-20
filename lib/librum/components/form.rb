@@ -8,9 +8,6 @@ module Librum::Components
     BRACKET_PATTERN = /\]?\[/
     private_constant :BRACKET_PATTERN
 
-    ICONLESS_TYPES = Set.new(%w[checkbox select text_area]).freeze
-    private_constant :ICONLESS_TYPES
-
     option :action,      validate: String
     option :http_method, validate: true
 
@@ -156,11 +153,11 @@ module Librum::Components
 
       return options if errors.blank?
 
-      options.merge(options_for_errors(errors:))
+      options_for_errors(errors:, type:, **options)
     end
 
-    def options_for_errors(errors:)
-      { message: errors.join(', ') }
+    def options_for_errors(errors:, **options)
+      options.merge(message: errors.join(', '))
     end
 
     def result_errors

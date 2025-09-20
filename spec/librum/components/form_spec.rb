@@ -9,6 +9,21 @@ RSpec.describe Librum::Components::Form, type: :component do
     described_class.new(**required_keywords, **component_options)
   end
 
+  deferred_context 'when the field component is defined' do
+    before(:example) do
+      stub_provider(
+        Librum::Components.provider,
+        :components,
+        Spec::Components
+      )
+    end
+
+    example_class 'Spec::Components::Forms::Field', Librum::Components::Base \
+    do |klass| # rubocop:disable Style/SymbolProc
+      klass.allow_extra_options
+    end
+  end
+
   deferred_examples 'should handle an undefined component' do
     context 'when the component is not defined' do
       let(:expected) do
@@ -154,26 +169,13 @@ RSpec.describe Librum::Components::Form, type: :component do
 
     include_deferred 'should handle an undefined component'
 
-    context 'when the field component is defined' do
+    wrap_deferred 'when the field component is defined' do
       let(:expected_options) do
         {
           name:,
           type: 'checkbox'
         }
           .merge(options)
-      end
-
-      before(:example) do
-        stub_provider(
-          Librum::Components.provider,
-          :components,
-          Spec::Components
-        )
-      end
-
-      example_class 'Spec::Components::Forms::Field', Librum::Components::Base \
-      do |klass| # rubocop:disable Style/SymbolProc
-        klass.allow_extra_options
       end
 
       it { expect(input).to be_a Spec::Components::Forms::Field }
@@ -390,26 +392,13 @@ RSpec.describe Librum::Components::Form, type: :component do
 
     include_deferred 'should handle an undefined component'
 
-    context 'when the field component is defined' do
+    wrap_deferred 'when the field component is defined' do
       let(:expected_options) do
         {
           name:,
           type: 'text'
         }
           .merge(options)
-      end
-
-      before(:example) do
-        stub_provider(
-          Librum::Components.provider,
-          :components,
-          Spec::Components
-        )
-      end
-
-      example_class 'Spec::Components::Forms::Field', Librum::Components::Base \
-      do |klass| # rubocop:disable Style/SymbolProc
-        klass.allow_extra_options
       end
 
       it { expect(input).to be_a Spec::Components::Forms::Field }
@@ -561,9 +550,9 @@ RSpec.describe Librum::Components::Form, type: :component do
         end
       end
 
-      describe 'with type: text_area' do
+      describe 'with type: textarea' do
         let(:name)    { 'rocket[description]' }
-        let(:options) { super().merge(type: 'text_area') }
+        let(:options) { super().merge(type: 'textarea') }
 
         it { expect(input.options).to be == expected_options }
 
@@ -638,26 +627,13 @@ RSpec.describe Librum::Components::Form, type: :component do
 
     include_deferred 'should handle an undefined component'
 
-    context 'when the field component is defined' do
+    wrap_deferred 'when the field component is defined' do
       let(:expected_options) do
         {
           name:,
           type: 'select'
         }
           .merge(options)
-      end
-
-      before(:example) do
-        stub_provider(
-          Librum::Components.provider,
-          :components,
-          Spec::Components
-        )
-      end
-
-      example_class 'Spec::Components::Forms::Field', Librum::Components::Base \
-      do |klass| # rubocop:disable Style/SymbolProc
-        klass.allow_extra_options
       end
 
       it { expect(input).to be_a Spec::Components::Forms::Field }
@@ -728,26 +704,13 @@ RSpec.describe Librum::Components::Form, type: :component do
 
     include_deferred 'should handle an undefined component'
 
-    context 'when the field component is defined' do
+    wrap_deferred 'when the field component is defined' do
       let(:expected_options) do
         {
           name:,
           type: 'textarea'
         }
           .merge(options)
-      end
-
-      before(:example) do
-        stub_provider(
-          Librum::Components.provider,
-          :components,
-          Spec::Components
-        )
-      end
-
-      example_class 'Spec::Components::Forms::Field', Librum::Components::Base \
-      do |klass| # rubocop:disable Style/SymbolProc
-        klass.allow_extra_options
       end
 
       it { expect(input).to be_a Spec::Components::Forms::Field }
