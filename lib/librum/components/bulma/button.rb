@@ -9,21 +9,16 @@ module Librum::Components::Bulma
   class Button < Librum::Components::Bulma::Base
     include Librum::Components::Options::ClassName
 
-    # The valid options for the :http_method option.
-    HTTP_METHODS = Set.new(%w[delete get patch post put]).freeze
-
     # The valid option values for the :target option.
     LINK_TARGETS = Set.new(%w[blank self]).freeze
 
     option :color,       validate: true
-    option :disabled,    boolean: true
-    option :http_method,
-      default:  'post',
-      validate: { inclusion: HTTP_METHODS }
+    option :disabled,    boolean:  true
+    option :http_method, default:  'post', validate: true
     option :icon,        validate: true
     option :loading,     boolean:  true
     option :size,        validate: true
-    option :target, validate: { inclusion: LINK_TARGETS }
+    option :target,      validate: { inclusion: LINK_TARGETS }
     option :text
     option :type,
       default:  'button',
