@@ -40,6 +40,7 @@ module Librum::Components::Views::Resources
     def render_table
       component = table_component.new(
         data:     resource_data,
+        result:,
         resource:,
         routes:
       )
@@ -48,13 +49,7 @@ module Librum::Components::Views::Resources
     end
 
     def table_component
-      return nil unless resource.respond_to?(:components)
-
-      components = resource.components
-
-      return nil unless components.const_defined?(:Table)
-
-      components.const_get(:Table)
+      resource_component(:Table)
     end
   end
 end
