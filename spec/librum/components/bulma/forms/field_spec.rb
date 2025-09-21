@@ -29,6 +29,11 @@ do
     :icon_right,
     value: 'radiation'
 
+  include_deferred 'should define component option',
+    :inline,
+    boolean: true,
+    default: true
+
   include_deferred 'should define component option', :label
 
   include_deferred 'should define component option', :message
@@ -479,6 +484,33 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with inline: false' do
+        let(:component_options) { super().merge(inline: false) }
+        let(:snapshot) do
+          <<~HTML
+            <div class="field">
+              <label class="label">
+                &nbsp;
+              </label>
+
+              <div class="control px-1 py-2">
+                <label class="checkbox">
+                  <input autocomplete="off" name="rocket[refuel]" type="hidden" value="0">
+
+                  <input name="rocket[refuel]" type="checkbox" value="1">
+
+                  <span class="ml-1">
+                    Refuel
+                  </span>
+                </label>
+              </div>
+            </div>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
 
       describe 'with multiple options' do
         let(:component_options) do
