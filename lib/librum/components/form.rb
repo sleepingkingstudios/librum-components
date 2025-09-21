@@ -6,6 +6,7 @@ module Librum::Components
   # Builds and renders a form using form field components.
   class Form < Librum::Components::Base # rubocop:disable Metrics/ClassLength
     include ActionView::Helpers::SanitizeHelper
+    include Librum::Components::Options::ClassName
 
     BRACKET_PATTERN = /\]?\[/
     private_constant :BRACKET_PATTERN
@@ -61,9 +62,11 @@ module Librum::Components
       with_content(render_fields) unless fields.empty?
 
       if action
-        form_with(url: action, method: http_method) { content }
+        form_with(url: action, method: http_method, **form_attributes) do
+          render_content
+        end
       else
-        content_tag('form') { content }
+        content_tag('form', **form_attributes) { render_content }
       end
     end
 
@@ -199,6 +202,14 @@ module Librum::Components
       @field_component = components.const_get('Forms::Field')
     end
 
+    def form_attributes
+      form_class_name.blank? ? {} : { class: form_class_name }
+    end
+
+    def form_class_name
+      class_name
+    end
+
     def missing_component
       return @missing_component if @missing_component
 
@@ -221,6 +232,10 @@ module Librum::Components
 
     def options_for_errors(errors:, **options)
       options.merge(message: errors.join(', '))
+    end
+
+    def render_content
+      content
     end
 
     def render_field(field)

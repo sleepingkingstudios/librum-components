@@ -14,6 +14,7 @@ module Librum::Components::Bulma::Forms
     option :color,      validate: true
     option :icon_left,  validate: :icon
     option :icon_right, validate: :icon
+    option :inline?,    boolean:  true, default: true
     option :label,      validate: true
     option :message,    validate: :label
     option :name,       validate: String, required: true
@@ -81,7 +82,8 @@ module Librum::Components::Bulma::Forms
       bulma_class_names(
         'control',
         icon_left  ? 'has-icons-left'  : nil,
-        icon_right ? 'has-icons-right' : nil
+        icon_right ? 'has-icons-right' : nil,
+        type == 'checkbox' && !inline? ? 'px-1 py-2' : nil
       )
     end
 
@@ -115,6 +117,10 @@ module Librum::Components::Bulma::Forms
       end
     end
 
+    def render_empty_label
+      content_tag('label', class: bulma_class_names('label')) { "\u00A0" }
+    end
+
     def render_icon(icon, direction)
       return unless icon
 
@@ -138,8 +144,10 @@ module Librum::Components::Bulma::Forms
       render(component) if component
     end
 
-    def render_label
-      return if type == 'checkbox'
+    def render_label # rubocop:disable Metrics/AbcSize
+      return if type == 'checkbox' && inline?
+
+      return render_empty_label if type == 'checkbox'
 
       return render(label) if label.is_a?(ViewComponent::Base)
 

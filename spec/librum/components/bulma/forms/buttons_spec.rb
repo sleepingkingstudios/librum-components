@@ -23,6 +23,8 @@ do
     :cancel_url,
     value: '/rockets'
 
+  include_deferred 'should define component option', :class_name
+
   describe '.new' do
     include_deferred 'should validate the inclusion of option',
       :alignment,
@@ -37,6 +39,8 @@ do
       :cancel_url,
       allow_nil: true,
       expected:  String
+
+    include_deferred 'should validate the class_name option'
   end
 
   describe '#call' do
@@ -158,6 +162,23 @@ do
 
         it { expect(rendered).to match_snapshot(snapshot) }
       end
+    end
+
+    describe 'with class_name: value' do
+      let(:component_options) { super().merge(class_name: 'custom-class') }
+      let(:snapshot) do
+        <<~HTML
+          <div class="field is-grouped custom-class">
+            <p class="control">
+              <button class="button is-link" type="submit">
+                Submit
+              </button>
+            </p>
+          </div>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
     end
 
     describe 'with multiple options' do

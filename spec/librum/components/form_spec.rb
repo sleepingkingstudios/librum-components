@@ -139,6 +139,8 @@ RSpec.describe Librum::Components::Form, type: :component do
 
   include_deferred 'should define component option', :action
 
+  include_deferred 'should define component option', :class_name
+
   include_deferred 'should define component option',
     :http_method,
     value: 'get'
@@ -152,6 +154,8 @@ RSpec.describe Librum::Components::Form, type: :component do
       :action,
       allow_nil: true,
       expected:  String
+
+    include_deferred 'should validate the class_name option'
 
     include_deferred 'should validate that option is a valid http method',
       :http_method
@@ -256,6 +260,23 @@ RSpec.describe Librum::Components::Form, type: :component do
       it { expect(rendered).to match_snapshot(snapshot) }
     end
 
+    describe 'with action: value and class_name: value' do
+      let(:component_options) do
+        super().merge(action: '/rockets', class_name: 'custom-class')
+      end
+      let(:snapshot) do
+        <<~HTML
+          <form class="custom-class" action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
+            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
     describe 'with action: value and http_method: value' do
       let(:component_options) do
         super().merge(action: '/rockets/imp-vi', http_method: 'patch')
@@ -294,6 +315,17 @@ RSpec.describe Librum::Components::Form, type: :component do
               Form Inputs
             </div>
           </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with class_name: value' do
+      let(:component_options) { super().merge(class_name: 'custom-class') }
+      let(:snapshot) do
+        <<~HTML
+          <form class="custom-class"></form>
         HTML
       end
 
