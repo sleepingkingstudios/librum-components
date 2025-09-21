@@ -204,7 +204,7 @@ module Librum::Components::RSpec::Deferred
         end
 
         it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
+          expect { validate_options }
             .to raise_error(
               Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
@@ -221,7 +221,7 @@ module Librum::Components::RSpec::Deferred
         end
 
         it 'should raise an exception' do
-          expect { described_class.new(**component_options) }
+          expect { validate_options }
             .to raise_error(
               Librum::Components::Errors::InvalidOptionsError,
               include(error_message)
