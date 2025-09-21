@@ -5,6 +5,8 @@ module Librum::Components::Bulma::Forms
   #
   # @see https://bulma.io/documentation/form/general/#complete-form-example
   class Buttons < Librum::Components::Bulma::Base
+    include Librum::Components::Options::ClassName
+
     allow_extra_options
 
     option :alignment,
@@ -23,7 +25,8 @@ module Librum::Components::Bulma::Forms
       bulma_class_names(
         'field',
         'is-grouped',
-        alignment && alignment != 'left' ? "is-grouped-#{alignment}" : nil
+        alignment && alignment != 'left' ? "is-grouped-#{alignment}" : nil,
+        class_name
       )
     end
 
@@ -46,7 +49,7 @@ module Librum::Components::Bulma::Forms
       component = components::Button.new(
         color: 'link',
         text:  'Submit',
-        **options.except(:alignment, :cancel_options, :cancel_url),
+        **options.except(:alignment, :cancel_options, :cancel_url, :class_name),
         type:  'submit'
       )
 
