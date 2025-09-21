@@ -31,11 +31,12 @@ RSpec.describe Librum::Components::Form, type: :component do
     end
   end
 
-  deferred_examples 'should handle an undefined component' do
+  deferred_examples 'should handle an undefined component' \
+  do |component_name = 'Forms::Field'|
     context 'when the component is not defined' do
       let(:expected) do
         <<~HTML.strip
-          <div style="color: #f00;">Missing Component Forms::Field</div>
+          <div style="color: #f00;">Missing Component #{component_name}</div>
         HTML
       end
 
@@ -61,7 +62,7 @@ RSpec.describe Librum::Components::Form, type: :component do
 
       it { expect(build_input).to be_a Spec::Components::MissingComponent }
 
-      it { expect(build_input.name).to be == 'Forms::Field' }
+      it { expect(build_input.name).to be == component_name }
     end
   end
 
@@ -170,6 +171,55 @@ RSpec.describe Librum::Components::Form, type: :component do
 
     it 'should create and yield a builder' do
       expect { |block| component.build(&block) }.to yield_with_args(builder)
+    end
+  end
+
+  describe '#buttons' do
+    let(:options) { {} }
+    let(:buttons) { component.buttons(**options) }
+
+    define_method :build_input do
+      component.buttons(**options)
+    end
+
+    it 'should define the method' do
+      expect(component)
+        .to respond_to(:buttons)
+        .with_any_keywords
+    end
+
+    include_deferred 'should handle an undefined component', 'Forms::Buttons'
+
+    context 'when the buttons component is defined' do
+      let(:expected_options) { options }
+
+      prepend_before(:example) do
+        stub_provider(
+          Librum::Components.provider,
+          :components,
+          Spec::Components
+        )
+      end
+
+      example_class 'Spec::Components::Forms::Buttons',
+        Librum::Components::Base \
+      do |klass|
+        klass.allow_extra_options
+
+        klass.option :text
+      end
+
+      it { expect(buttons).to be_a Spec::Components::Forms::Buttons }
+
+      it { expect(buttons.options).to be == expected_options }
+
+      describe 'with options' do
+        let(:options) do
+          super().merge(color: 'danger', text: 'Launch Rocket')
+        end
+
+        it { expect(buttons.options).to be == expected_options }
+      end
     end
   end
 

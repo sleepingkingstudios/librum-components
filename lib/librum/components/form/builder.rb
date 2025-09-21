@@ -18,6 +18,18 @@ module Librum::Components
     # @return [Librum::Components::Form] the form used to generate inputs.
     attr_reader :form
 
+    # @overload buttons(**options)
+    #   Generates the form buttons and appends them to the form fields.
+    #
+    #   @param options [Hash] additional options to pass to the buttons.
+    #
+    #   @return [self] the builder instance.
+    def buttons(**)
+      fields << form.buttons(**)
+
+      self
+    end
+
     # @overload checkbox(name, **options)
     #   Generates a checkbox input and appends it to the form fields.
     #
