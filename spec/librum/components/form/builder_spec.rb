@@ -8,6 +8,7 @@ RSpec.describe Librum::Components::Form::Builder do
   let(:form) do
     instance_double(
       Librum::Components::Form,
+      buttons:   '<button type="submit">Submit</button>',
       checkbox:  '<input type="checkbox" />',
       input:     '<input />',
       select:    '<input type="select" />',
@@ -22,6 +23,44 @@ RSpec.describe Librum::Components::Form::Builder do
         .to be_constructible
         .with(0).arguments
         .and_keywords(:fields, :form)
+    end
+  end
+
+  describe '#buttons' do
+    let(:options) { {} }
+
+    it 'should define the method' do
+      expect(builder)
+        .to respond_to(:buttons)
+        .with_any_keywords
+    end
+
+    it { expect(builder.buttons(**options)).to be builder }
+
+    it 'should delegate to the form' do
+      builder.buttons(**options)
+
+      expect(form).to have_received(:buttons).with(no_args)
+    end
+
+    it 'should add the buttons to the form fields', :aggregate_failures do
+      expect { builder.buttons(**options) }
+        .to change(fields, :count)
+        .by(1)
+
+      expect(fields.last).to be == form.buttons(**options)
+    end
+
+    describe 'with options' do
+      let(:options) do
+        super().merge(color: 'danger', text: 'Launch Rocket')
+      end
+
+      it 'should delegate to the form' do
+        builder.buttons(**options)
+
+        expect(form).to have_received(:buttons).with(**options)
+      end
     end
   end
 
