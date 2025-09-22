@@ -24,7 +24,8 @@ module Librum::Components::Bulma::Resources
     def build_destroy_action
       components::Button.new(
         class_name:  bulma_class_names(
-          'has-text-danger is-borderless is-shadowless mx-0 px-1 py-0'
+          "has-text-#{configuration.danger_color}",
+          'is-borderless is-shadowless mx-0 px-1 py-0'
         ),
         http_method: 'delete',
         text:        'Destroy',

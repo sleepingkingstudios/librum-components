@@ -47,7 +47,7 @@ module Librum::Components::Bulma
 
     def options_for_errors(errors:, type:, **options)
       super.tap do |hsh|
-        hsh[:color] = 'danger'
+        hsh[:color] = configuration.danger_color
 
         unless ICONLESS_TYPES.include?(type)
           hsh[:icon_right] = 'exclamation-triangle'
