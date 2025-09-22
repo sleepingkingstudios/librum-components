@@ -11,5 +11,11 @@ module Librum::Components
     def components
       options.fetch(:components, Librum::Components::Empty)
     end
+
+    # @return [String, nil] the name of the attribute used to represent the
+    #   resource, or nil if no attribute is selected.
+    def title_attribute
+      options[:title_attribute]
+    end
   end
 end

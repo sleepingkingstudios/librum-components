@@ -31,4 +31,14 @@ RSpec.describe Librum::Components::Resource do
       it { expect(resource.components).to be components }
     end
   end
+
+  describe '#title_attribute' do
+    include_examples 'should define reader', :title_attribute, nil
+
+    context 'when initialized with title_attribute: value' do
+      let(:constructor_options) { super().merge(title_attribute: 'label') }
+
+      it { expect(resource.title_attribute).to be == 'label' }
+    end
+  end
 end
