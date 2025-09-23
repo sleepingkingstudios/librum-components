@@ -69,6 +69,10 @@ module Librum::Components::Views
       result.value&.[](resource_name)
     end
 
+    def resource_id
+      resource_data&.then { |data| data['slug'] || data['id'] }
+    end
+
     def resource_name
       return resource.singular_name if resource.singular? || member_action?
 

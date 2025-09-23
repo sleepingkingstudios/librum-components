@@ -60,6 +60,16 @@ module Librum::Components::RSpec::Deferred
         end
       end
 
+      example_class 'Spec::Components::Resources::DestroyButton',
+        Librum::Components::Base \
+      do |klass|
+        klass.allow_extra_options
+
+        klass.define_method :call do
+          render Spec::Components::Button.new(**options, type: 'form')
+        end
+      end
+
       before(:example) do
         stub_provider(
           Librum::Components.provider,
