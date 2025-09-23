@@ -222,6 +222,8 @@ module Librum::Components
     end
 
     def transform_value(value) # rubocop:disable Metrics/AbcSize
+      return if value.nil?
+
       return value unless field.transform
 
       if field.transform.is_a?(String) || field.transform.is_a?(Symbol)
