@@ -27,24 +27,7 @@ RSpec.describe Librum::Components::Views::Resources::New, type: :component do
       HTML
     end
 
-    example_class 'Spec::Components::Heading', Librum::Components::Base \
-    do |klass|
-      klass.option :actions
-      klass.option :level
-      klass.option :text
-
-      klass.define_method :call do
-        content_tag("h#{level}") { text }
-      end
-    end
-
-    before(:example) do
-      stub_provider(
-        Librum::Components.provider,
-        :components,
-        Spec::Components
-      )
-    end
+    include_deferred 'with component stubs for a resource view'
 
     it { expect(rendered).to match_snapshot(snapshot) }
 

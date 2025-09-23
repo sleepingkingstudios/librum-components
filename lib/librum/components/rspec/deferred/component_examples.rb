@@ -23,6 +23,52 @@ module Librum::Components::RSpec::Deferred
       [first, *rest].join
     end
 
+    deferred_context 'with component stubs for a resource view' do
+      example_class 'Spec::Components::Button', Librum::Components::Base \
+      do |klass|
+        klass.allow_extra_options
+        klass.option :icon
+        klass.option :text
+        klass.option :type
+        klass.option :url
+
+        klass.define_method :call do
+          content_tag('button', type:, url:) do
+            icon ? "[#{icon}] #{text}" : text
+          end
+        end
+      end
+
+      example_class 'Spec::Components::Heading', Librum::Components::Base \
+      do |klass|
+        klass.option :actions
+        klass.option :level
+        klass.option :text
+
+        klass.define_method :call do
+          buffer = content_tag("h#{level}") { text }
+
+          return buffer if actions.blank?
+
+          actions.each do |action|
+            next buffer << render(action) if action.is_a?(ViewComponent::Base)
+
+            buffer << render(Spec::Components::Button.new(**action))
+          end
+
+          buffer
+        end
+      end
+
+      before(:example) do
+        stub_provider(
+          Librum::Components.provider,
+          :components,
+          Spec::Components
+        )
+      end
+    end
+
     deferred_examples 'should be an abstract view component' do |base_class|
       deferred_context 'with a component subclass' do
         let(:described_class) { Spec::ExampleComponent }

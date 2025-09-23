@@ -21,8 +21,8 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
           Books
         </h1>
 
-        <button>
-          Create Book
+        <button type="link" url="/books/new">
+          [plus] Create Book
         </button>
 
         <div style="color: #f00;">
@@ -31,34 +31,7 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
       HTML
     end
 
-    example_class 'Spec::Components::Heading', Librum::Components::Base \
-    do |klass|
-      klass.option :actions
-      klass.option :level
-      klass.option :text
-
-      klass.define_method :call do
-        buffer = content_tag("h#{level}") { text }
-
-        return buffer if actions.blank?
-
-        actions.each do |action|
-          tag_name = action[:button] ? 'button' : 'span'
-
-          buffer << content_tag(tag_name) { action[:text] } << "\n"
-        end
-
-        buffer
-      end
-    end
-
-    before(:example) do
-      stub_provider(
-        Librum::Components.provider,
-        :components,
-        Spec::Components
-      )
-    end
+    include_deferred 'with component stubs for a resource view'
 
     it { expect(rendered).to match_snapshot(snapshot) }
 
@@ -90,8 +63,8 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
             Books
           </h1>
 
-          <button>
-            Create Book
+          <button type="link" url="/books/new">
+            [plus] Create Book
           </button>
 
           <div>
@@ -148,8 +121,8 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
               Books
             </h1>
 
-            <button>
-              Create Book
+            <button type="link" url="/books/new">
+              [plus] Create Book
             </button>
 
             <div>
