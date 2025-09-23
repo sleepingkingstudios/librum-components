@@ -2,18 +2,18 @@
 
 module Librum::Components::Views::Resources
   # Generic view for displaying a resource New action.
-  class New < Librum::Components::Views::ResourceView
+  class Edit < Librum::Components::Views::ResourceView
     private
 
     def heading_text
-      "Create #{resource_name.titleize}"
+      "Update #{resource_name.titleize}"
     end
 
     def render_content # rubocop:disable Metrics/MethodLength
       component = build_component(
-        'CreateForm',
+        'UpdateForm',
         'Form',
-        action:   'new',
+        action:   'edit',
         data:     resource_data,
         result:,
         resource:,
