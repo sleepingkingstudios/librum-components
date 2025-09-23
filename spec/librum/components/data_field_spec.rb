@@ -219,6 +219,42 @@ RSpec.describe Librum::Components::DataField, type: :component do
   describe '#call' do
     it { expect(rendered).to be == data[component.field.key] }
 
+    describe 'with value: nil' do
+      let(:data)     { super().merge('title' => nil) }
+      let(:expected) { "\u00A0" }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with value: false' do
+      let(:data)     { super().merge('title' => false) }
+      let(:expected) { 'false' }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with value: true' do
+      let(:data)     { super().merge('title' => true) }
+      let(:expected) { 'true' }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with value: an Object' do
+      let(:value)    { Object.new.freeze }
+      let(:data)     { super().merge('title' => value) }
+      let(:expected) { value.to_s.tr('<>', '()') }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with value: an Integer' do
+      let(:data)     { super().merge('title' => 13) }
+      let(:expected) { '13' }
+
+      it { expect(rendered).to be == expected }
+    end
+
     describe 'with value: an HTML string' do
       let(:value)    { '<h1>Greetings, Programs!</h1>' }
       let(:data)     { super().merge('title' => value) }
