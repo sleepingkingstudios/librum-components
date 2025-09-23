@@ -211,13 +211,25 @@ RSpec.describe Librum::Components::DataField, type: :component do
 
     include_deferred 'should validate the data field', required: true
 
-    include_deferred 'should validate the presence of option', :data
-
     include_deferred 'should validate the presence of option', :field
   end
 
   describe '#call' do
     it { expect(rendered).to be == data[component.field.key] }
+
+    describe 'with data: nil' do
+      let(:data)     { nil }
+      let(:expected) { "\u00A0" }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with data: an empty Hash' do
+      let(:data)     { {} }
+      let(:expected) { "\u00A0" }
+
+      it { expect(rendered).to be == expected }
+    end
 
     describe 'with value: nil' do
       let(:data)     { super().merge('title' => nil) }
