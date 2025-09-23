@@ -18,7 +18,9 @@ do
     describe 'with brand: an Object' do
       let(:component_options) { super().merge(brand: Object.new.freeze) }
       let(:error_message) do
-        'brand is not a Hash or a Component'
+        failure_message = 'brand is not a Hash or a Component'
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do

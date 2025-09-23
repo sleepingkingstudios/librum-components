@@ -84,17 +84,18 @@ module Librum::Components::Options
     end
 
     def invalid_options_message(extra_keys:, failure_message:)
-      return failure_message if extra_keys.empty?
+      message = "invalid options for #{component_name} - #{failure_message}"
+
+      return message if extra_keys.empty?
 
       if options.empty?
-        "#{failure_message} - #{component_name} does not define any valid " \
-          'options'
+        "#{message} (#{component_name} does not define any valid options)"
       else
         valid_options = options.keys.sort.map { |key| ":#{key}" }
         valid_options = tools.array_tools.humanize_list(valid_options)
 
-        "#{failure_message} - valid options for #{component_name} are " \
-          "#{valid_options}"
+        "#{failure_message} (valid options for #{component_name} are " \
+          "#{valid_options})"
       end
     end
 

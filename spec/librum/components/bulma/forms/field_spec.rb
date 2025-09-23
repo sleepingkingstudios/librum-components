@@ -61,7 +61,9 @@ do
     describe 'with label: an Object' do
       let(:component_options) { super().merge(label: Object.new.freeze) }
       let(:error_message) do
-        'label is not a String or a component'
+        failure_message = 'label is not a String or a component'
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do
@@ -73,7 +75,9 @@ do
     describe 'with message: an Object' do
       let(:component_options) { super().merge(message: Object.new.freeze) }
       let(:error_message) do
-        'message is not a String or a component'
+        failure_message = 'message is not a String or a component'
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do

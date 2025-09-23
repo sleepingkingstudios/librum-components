@@ -76,10 +76,12 @@ do
       describe 'with url: nil' do
         let(:component_options) { super().merge(url: nil) }
         let(:error_message) do
-          tools.assertions.error_message_for(
+          failure_message = tools.assertions.error_message_for(
             'sleeping_king_studios.tools.assertions.presence',
             as: 'url'
           )
+
+          "invalid options for #{described_class.name} - #{failure_message}"
         end
 
         it 'should raise an exception' do
@@ -91,11 +93,13 @@ do
       describe 'with url: an Object' do
         let(:component_options) { super().merge(url: Object.new.freeze) }
         let(:error_message) do
-          tools.assertions.error_message_for(
+          failure_message = tools.assertions.error_message_for(
             'sleeping_king_studios.tools.assertions.instance_of',
             as:       'url',
             expected: String
           )
+
+          "invalid options for #{described_class.name} - #{failure_message}"
         end
 
         it 'should raise an exception' do
@@ -111,10 +115,12 @@ do
       describe 'with url: nil' do
         let(:component_options) { super().merge(url: nil) }
         let(:error_message) do
-          tools.assertions.error_message_for(
+          failure_message = tools.assertions.error_message_for(
             'sleeping_king_studios.tools.assertions.presence',
             as: 'url'
           )
+
+          "invalid options for #{described_class.name} - #{failure_message}"
         end
 
         it 'should raise an exception' do
@@ -126,11 +132,13 @@ do
       describe 'with url: an Object' do
         let(:component_options) { super().merge(url: Object.new.freeze) }
         let(:error_message) do
-          tools.assertions.error_message_for(
+          failure_message = tools.assertions.error_message_for(
             'sleeping_king_studios.tools.assertions.instance_of',
             as:       'url',
             expected: String
           )
+
+          "invalid options for #{described_class.name} - #{failure_message}"
         end
 
         it 'should raise an exception' do

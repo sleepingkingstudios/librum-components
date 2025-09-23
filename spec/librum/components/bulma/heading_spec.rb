@@ -40,7 +40,9 @@ do
         super().merge(level: Object.new.freeze)
       end
       let(:error_message) do
-        'level is not an instance of Integer'
+        failure_message = 'level is not an instance of Integer'
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do
@@ -56,7 +58,9 @@ do
         super().merge(level: 0)
       end
       let(:error_message) do
-        'level is outside the range of 1 to 6'
+        failure_message = 'level is outside the range of 1 to 6'
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do
@@ -72,7 +76,9 @@ do
         super().merge(level: 7)
       end
       let(:error_message) do
-        'level is outside the range of 1 to 6'
+        failure_message = 'level is outside the range of 1 to 6'
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do

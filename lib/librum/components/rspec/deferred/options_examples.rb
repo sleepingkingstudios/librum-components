@@ -508,11 +508,13 @@ module Librum::Components::RSpec::Deferred
     deferred_examples 'should validate that option is a valid color' \
     do |option_name|
       context "when :#{option_name} is an invalid color" do
+        let(:component_class) { defined?(super()) ? super() : described_class }
         let(:component_options) do
           super().merge(option_name.intern => 'octarine')
         end
         let(:error_message) do
-          "#{option_name} is not a valid color name"
+          "invalid options for #{component_class.name} - #{option_name} is " \
+            'not a valid color name'
         end
 
         it 'should raise an exception' do
@@ -755,7 +757,8 @@ module Librum::Components::RSpec::Deferred
           super().merge(option_name.intern => 'imaginary')
         end
         let(:error_message) do
-          "#{option_name} is not a valid size"
+          "invalid options for #{described_class.name} - #{option_name} is " \
+            'not a valid size'
         end
 
         it 'should raise an exception' do

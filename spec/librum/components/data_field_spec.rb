@@ -60,7 +60,7 @@ RSpec.describe Librum::Components::DataField, type: :component do
 
     describe '.validate' do
       deferred_examples 'should return an invalid field result' do
-        it { expect(validate_field).to be == error_message }
+        it { expect(validate_field).to match error_message }
       end
 
       deferred_examples 'should return a valid field result' do
@@ -93,7 +93,7 @@ RSpec.describe Librum::Components::DataField, type: :component do
 
     describe '.validate_list' do
       deferred_examples 'should return an invalid field result' do
-        it { expect(validate_list).to be == error_message }
+        it { expect(validate_list).to match error_message }
       end
 
       deferred_examples 'should return a valid field result' do

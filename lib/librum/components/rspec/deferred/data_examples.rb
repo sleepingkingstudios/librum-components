@@ -16,7 +16,7 @@ module Librum::Components::RSpec::Deferred
           let(:field) { nil }
           let(:as)    { defined?(super()) ? super() : field_name }
           let(:error_message) do
-            "#{as} is not a Hash or Definition"
+            /#{as} is not a Hash or Definition/
           end
 
           include_deferred 'should return an invalid field result'
@@ -26,7 +26,7 @@ module Librum::Components::RSpec::Deferred
           let(:field) { {} }
           let(:as)    { defined?(super()) ? super() : field_name }
           let(:error_message) do
-            "#{as} is missing required property :key"
+            /#{as} is missing required property :key/
           end
 
           include_deferred 'should return an invalid field result'
@@ -37,7 +37,7 @@ module Librum::Components::RSpec::Deferred
         let(:field) { Object.new.freeze }
         let(:as)    { defined?(super()) ? super() : field_name }
         let(:error_message) do
-          "#{as} is not a Hash or Definition"
+          /#{as} is not a Hash or Definition/
         end
 
         include_deferred 'should return an invalid field result'
@@ -55,7 +55,7 @@ module Librum::Components::RSpec::Deferred
         let(:field) { { key: 'title', invalid: 'invalid', other: 'other' } }
         let(:as)    { defined?(super()) ? super() : field_name }
         let(:error_message) do
-          "#{as} has unknown properties :invalid, :other"
+          /#{as} has unknown properties :invalid, :other/
         end
 
         include_deferred 'should return an invalid field result'
@@ -75,7 +75,7 @@ module Librum::Components::RSpec::Deferred
           let(:fields) { nil }
           let(:as)     { defined?(super()) ? super() : field_name }
           let(:error_message) do
-            "#{as} is not an instance of Array"
+            /#{as} is not an instance of Array/
           end
 
           include_deferred 'should return an invalid field result'
@@ -124,7 +124,7 @@ module Librum::Components::RSpec::Deferred
         end
         let(:as) { defined?(super()) ? super() : field_name }
         let(:error_message) do
-          "#{as} item 1 is not a Hash or Definition"
+          /#{as} item 1 is not a Hash or Definition/
         end
 
         include_deferred 'should return an invalid field result'
@@ -141,7 +141,7 @@ module Librum::Components::RSpec::Deferred
         end
         let(:as) { defined?(super()) ? super() : field_name }
         let(:error_message) do
-          "#{as} item 1 is not a Hash or Definition"
+          /#{as} item 1 is not a Hash or Definition/
         end
 
         include_deferred 'should return an invalid field result'
@@ -158,7 +158,7 @@ module Librum::Components::RSpec::Deferred
         end
         let(:as) { defined?(super()) ? super() : field_name }
         let(:error_message) do
-          "#{as} item 1 is missing required property :key"
+          /#{as} item 1 is missing required property :key/
         end
 
         include_deferred 'should return an invalid field result'
@@ -175,7 +175,7 @@ module Librum::Components::RSpec::Deferred
         end
         let(:as) { defined?(super()) ? super() : field_name }
         let(:error_message) do
-          "#{as} item 1 has unknown properties :invalid, :other"
+          /#{as} item 1 has unknown properties :invalid, :other/
         end
 
         include_deferred 'should return an invalid field result'
@@ -194,9 +194,12 @@ module Librum::Components::RSpec::Deferred
         end
         let(:as) { defined?(super()) ? super() : field_name }
         let(:error_message) do
-          "#{as} item 1 is not a Hash or Definition, " \
+          failure_message =
+            "#{as} item 1 is not a Hash or Definition, " \
             "#{as} item 3 is missing required property :key, " \
             "#{as} item 5 has unknown properties :invalid, :other"
+
+          /#{failure_message}/
         end
 
         include_deferred 'should return an invalid field result'

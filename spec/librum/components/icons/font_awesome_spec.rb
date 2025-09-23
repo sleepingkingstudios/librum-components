@@ -79,8 +79,12 @@ RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
       string: true
 
     describe 'with family: an invalid value' do
-      let(:family)        { 'bootstrap' }
-      let(:error_message) { 'family is not a FontAwesome icon family' }
+      let(:family) { 'bootstrap' }
+      let(:error_message) do
+        failure_message = 'family is not a FontAwesome icon family'
+
+        "invalid options for #{described_class.name} - #{failure_message}"
+      end
 
       it 'should raise an exception' do
         expect { described_class.new(**component_options) }
@@ -92,7 +96,11 @@ RSpec.describe Librum::Components::Icons::FontAwesome, type: :component do
     describe 'with size: an invalid value' do
       let(:size)              { 'tiny' }
       let(:component_options) { super().merge(size:) }
-      let(:error_message)     { 'size is not a valid size' }
+      let(:error_message) do
+        failure_message = 'size is not a valid size'
+
+        "invalid options for #{described_class.name} - #{failure_message}"
+      end
 
       it 'should raise an exception' do
         expect { described_class.new(**component_options) }
