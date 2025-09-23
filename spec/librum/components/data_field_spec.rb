@@ -60,7 +60,7 @@ RSpec.describe Librum::Components::DataField, type: :component do
 
     describe '.validate' do
       deferred_examples 'should return an invalid field result' do
-        it { expect(validate_field).to be == error_message }
+        it { expect(validate_field).to match error_message }
       end
 
       deferred_examples 'should return a valid field result' do
@@ -93,7 +93,7 @@ RSpec.describe Librum::Components::DataField, type: :component do
 
     describe '.validate_list' do
       deferred_examples 'should return an invalid field result' do
-        it { expect(validate_list).to be == error_message }
+        it { expect(validate_list).to match error_message }
       end
 
       deferred_examples 'should return a valid field result' do
@@ -211,13 +211,61 @@ RSpec.describe Librum::Components::DataField, type: :component do
 
     include_deferred 'should validate the data field', required: true
 
-    include_deferred 'should validate the presence of option', :data
-
     include_deferred 'should validate the presence of option', :field
   end
 
   describe '#call' do
     it { expect(rendered).to be == data[component.field.key] }
+
+    describe 'with data: nil' do
+      let(:data)     { nil }
+      let(:expected) { "\u00A0" }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with data: an empty Hash' do
+      let(:data)     { {} }
+      let(:expected) { "\u00A0" }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with value: nil' do
+      let(:data)     { super().merge('title' => nil) }
+      let(:expected) { "\u00A0" }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with value: false' do
+      let(:data)     { super().merge('title' => false) }
+      let(:expected) { 'false' }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with value: true' do
+      let(:data)     { super().merge('title' => true) }
+      let(:expected) { 'true' }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with value: an Object' do
+      let(:value)    { Object.new.freeze }
+      let(:data)     { super().merge('title' => value) }
+      let(:expected) { value.to_s.tr('<>', '()') }
+
+      it { expect(rendered).to be == expected }
+    end
+
+    describe 'with value: an Integer' do
+      let(:data)     { super().merge('title' => 13) }
+      let(:expected) { '13' }
+
+      it { expect(rendered).to be == expected }
+    end
 
     describe 'with value: an HTML string' do
       let(:value)    { '<h1>Greetings, Programs!</h1>' }

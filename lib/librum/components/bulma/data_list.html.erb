@@ -1,0 +1,9 @@
+<div class="<%= grid_class_names %>">
+  <div class="<%= bulma_class_names('grid') %>">
+    <% fields.each do |field| %>
+      <%= render_label(field:) %>
+
+      <%= render_item(field:) %>
+    <% end %>
+  </div>
+</div>

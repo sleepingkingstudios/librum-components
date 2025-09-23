@@ -53,7 +53,9 @@ do
         super().merge(empty_message: Object.new.freeze)
       end
       let(:error_message) do
-        'empty_message is not a String or a component'
+        failure_message = 'empty_message is not a String or a component'
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do

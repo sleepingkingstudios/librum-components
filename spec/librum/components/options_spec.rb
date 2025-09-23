@@ -106,7 +106,11 @@ RSpec.describe Librum::Components::Options do
 
         context 'when initialized with an invalid value' do
           let(:component_options) { super().merge(license: 'whatever') }
-          let(:error_message)     { 'license is not a valid license' }
+          let(:error_message) do
+            failure_message = 'license is not a valid license'
+
+            "invalid options for #{described_class.name} - #{failure_message}"
+          end
 
           it 'should raise an exception' do
             expect { described_class.new(**component_options) }

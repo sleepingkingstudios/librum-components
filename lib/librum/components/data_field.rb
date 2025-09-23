@@ -130,7 +130,7 @@ module Librum::Components
 
     allow_extra_options
 
-    option :data,  required: true
+    option :data
 
     option :field, required: true, validate: true
 
@@ -159,6 +159,8 @@ module Librum::Components
     end
 
     def raw_value
+      return if data.blank?
+
       return data.public_send(field.key) if data.respond_to?(field.key)
 
       data[field.key]
@@ -209,9 +211,12 @@ module Librum::Components
     end
 
     def scrub_value(value)
-      return if value.nil?
+      return "\u00A0" if value.nil?
 
       return value if value.is_a?(ActiveSupport::SafeBuffer)
+
+      value = value.to_s
+      value = value.tr('<>', '()') if value.start_with?('#<')
 
       sanitize(value, attributes: [], tags: [])
     end

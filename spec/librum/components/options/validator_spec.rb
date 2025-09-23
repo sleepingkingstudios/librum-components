@@ -57,7 +57,8 @@ RSpec.describe Librum::Components::Options::Validator do
   end
 
   describe '#call' do
-    let(:component)         { Spec::ExampleComponent.new }
+    let(:component_class)   { Spec::ExampleComponent }
+    let(:component)         { component_class.new }
     let(:component_options) { {} }
 
     define_method :component_name do
@@ -142,7 +143,11 @@ RSpec.describe Librum::Components::Options::Validator do
 
         context 'when initialized with an invalid value' do
           let(:component_options) { super().merge(license: 'whatever') }
-          let(:error_message)     { 'license is not a valid license' }
+          let(:error_message) do
+            failure_message = 'license is not a valid license'
+
+            "invalid options for #{component_class.name} - #{failure_message}"
+          end
 
           it 'should raise an exception' do
             expect { validate_options }
@@ -282,7 +287,11 @@ RSpec.describe Librum::Components::Options::Validator do
 
         context 'when initialized with an invalid value' do
           let(:component_options) { super().merge(license: 'whatever') }
-          let(:error_message)     { 'license is not a valid license' }
+          let(:error_message) do
+            failure_message = 'license is not a valid license'
+
+            "invalid options for #{component_class.name} - #{failure_message}"
+          end
 
           it 'should raise an exception' do
             expect { validate_options }
@@ -336,7 +345,11 @@ RSpec.describe Librum::Components::Options::Validator do
 
       context 'when initialized with an invalid value' do
         let(:component_options) { super().merge(text_color: 'whatever') }
-        let(:error_message)     { 'option is not a valid color' }
+        let(:error_message) do
+          failure_message = 'option is not a valid color'
+
+          "invalid options for #{component_class.name} - #{failure_message}"
+        end
 
         it 'should raise an exception' do
           expect { validate_options }
@@ -368,7 +381,11 @@ RSpec.describe Librum::Components::Options::Validator do
 
         context 'when initialized with an invalid value' do
           let(:component_options) { super().merge(text_color: 'whatever') }
-          let(:error_message)     { 'text_color is not a valid color' }
+          let(:error_message) do
+            failure_message = 'text_color is not a valid color'
+
+            "invalid options for #{component_class.name} - #{failure_message}"
+          end
 
           it 'should raise an exception' do
             expect { validate_options }
@@ -391,7 +408,11 @@ RSpec.describe Librum::Components::Options::Validator do
 
         context 'when initialized with an invalid value' do
           let(:component_options) { super().merge(text_color: 'whatever') }
-          let(:error_message)     { 'text_color is not a valid color' }
+          let(:error_message) do
+            failure_message = 'text_color is not a valid color'
+
+            "invalid options for #{component_class.name} - #{failure_message}"
+          end
 
           it 'should raise an exception' do
             expect { validate_options }
@@ -496,7 +517,11 @@ RSpec.describe Librum::Components::Options::Validator do
 
         context 'when initialized with an invalid value' do
           let(:component_options) { super().merge(license: 'whatever') }
-          let(:error_message)     { 'license is not a valid license' }
+          let(:error_message) do
+            failure_message = 'license is not a valid license'
+
+            "invalid options for #{component_class.name} - #{failure_message}"
+          end
 
           it 'should raise an exception' do
             expect { validate_options }
@@ -561,7 +586,11 @@ RSpec.describe Librum::Components::Options::Validator do
 
         context 'when initialized with an invalid value' do
           let(:component_options) { super().merge(license: 'whatever') }
-          let(:error_message)     { 'license is not a valid license' }
+          let(:error_message) do
+            failure_message = 'license is not a valid license'
+
+            "invalid options for #{component_class.name} - #{failure_message}"
+          end
 
           it 'should raise an exception' do
             expect { validate_options }
@@ -626,7 +655,11 @@ RSpec.describe Librum::Components::Options::Validator do
 
       context 'when initialized with an invalid value' do
         let(:component_options) { super().merge(text_color: 'whatever') }
-        let(:error_message)     { 'option is not a valid color' }
+        let(:error_message) do
+          failure_message = 'option is not a valid color'
+
+          "invalid options for #{component_class.name} - #{failure_message}"
+        end
 
         it 'should raise an exception' do
           expect { validate_options }

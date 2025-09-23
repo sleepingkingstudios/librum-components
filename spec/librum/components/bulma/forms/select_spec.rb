@@ -206,10 +206,12 @@ do
       end
       let(:as) { 'values' }
       let(:error_message) do
-        tools.assertions.error_message_for(
+        failure_message = tools.assertions.error_message_for(
           'sleeping_king_studios.tools.assertions.presence',
           as:
         )
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do
@@ -224,11 +226,13 @@ do
       end
       let(:as) { 'values' }
       let(:error_message) do
-        tools.assertions.error_message_for(
+        failure_message = tools.assertions.error_message_for(
           'sleeping_king_studios.tools.assertions.instance_of',
           as:,
           expected: Array
         )
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do
@@ -243,10 +247,12 @@ do
       end
       let(:as) { 'values' }
       let(:error_message) do
-        tools.assertions.error_message_for(
+        failure_message = tools.assertions.error_message_for(
           'sleeping_king_studios.tools.assertions.presence',
           as:
         )
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do
@@ -271,8 +277,11 @@ do
       end
       let(:as) { 'values' }
       let(:error_message) do
-        "#{as} item 1 is not an instance of Hash, #{as} item 3 is missing " \
+        failure_message =
+          "#{as} item 1 is not an instance of Hash, #{as} item 3 is missing " \
           "required property :label, #{as} item 5 has unknown property :secret"
+
+        "invalid options for #{described_class.name} - #{failure_message}"
       end
 
       it 'should raise an exception' do
