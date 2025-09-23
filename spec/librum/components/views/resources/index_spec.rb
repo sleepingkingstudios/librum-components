@@ -25,8 +25,8 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
           Create Book
         </button>
 
-        <div>
-          Missing Component Books::Table
+        <div style="color: #f00;">
+          Missing Component Table
         </div>
       HTML
     end
@@ -52,16 +52,6 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
       end
     end
 
-    example_class 'Spec::Components::MissingComponent',
-      Librum::Components::Base \
-    do |klass|
-      klass.option :name
-
-      klass.define_method :call do
-        content_tag('div') { "Missing Component #{name}" }
-      end
-    end
-
     before(:example) do
       stub_provider(
         Librum::Components.provider,
@@ -81,8 +71,8 @@ RSpec.describe Librum::Components::Views::Resources::Index, type: :component do
             Books
           </h1>
 
-          <div>
-            Missing Component Books::Table
+          <div style="color: #f00;">
+            Missing Component Table
           </div>
         HTML
       end

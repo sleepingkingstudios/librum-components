@@ -551,5 +551,17 @@ module Librum::Components::RSpec::Deferred
         end
       end
     end
+
+    deferred_examples 'should return a missing component' \
+    do |component_name, display: 'block'|
+      it 'should return a MissingComponent' do
+        expect(build_component)
+          .to be_a Librum::Components::Base::MissingComponent
+      end
+
+      it { expect(build_component.display).to be == display }
+
+      it { expect(build_component.name).to be == component_name }
+    end
   end
 end

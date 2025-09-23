@@ -16,9 +16,9 @@ do
   include_deferred 'should be a view component'
 
   include_deferred 'should define component option',
-    :block,
-    boolean: true,
-    default: true
+    :display,
+    default: 'block',
+    value:   'inline'
 
   include_deferred 'should define component option',
     :icon,
@@ -56,9 +56,17 @@ do
 
     it { expect(rendered).to match_snapshot(snapshot) }
 
-    describe 'with block: false' do
+    describe 'with display: "block"' do
       let(:component_options) do
-        super().merge(block: false)
+        super().merge(display: 'block')
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with display: "inline"' do
+      let(:component_options) do
+        super().merge(display: 'inline')
       end
       let(:snapshot) do
         <<~HTML

@@ -44,13 +44,12 @@ module Librum::Components
       self
     end
 
-    # @overload buttons(**options)
-    #   Builds the form buttons component.
+    # Builds the form buttons component.
     #
-    #   @param options [Hash] options to pass to the buttons.
+    # @param options [Hash] options to pass to the buttons.
     #
-    #   @return [Librum::Components::Base, ActiveSupport::SafeBuffer] the
-    #     generated component, or a fallback if no component is defined.
+    # @return [Librum::Components::Base, ActiveSupport::SafeBuffer] the
+    #   generated component, or a fallback if no component is defined.
     def buttons(**options)
       build_buttons(options:)
     end
@@ -113,7 +112,7 @@ module Librum::Components
       errors  = errors_for(name)
       options = options_for(type:, value:, errors:, **options)
 
-      build_input(name:, type:, options:)
+      build_input(name:, options:, type:)
     end
 
     # @overload select(name, values:, **options)
@@ -167,39 +166,11 @@ module Librum::Components
     attr_reader :fields
 
     def build_buttons(options:)
-      return buttons_component.new(**options) if buttons_component
-
-      return missing_component.new(name: 'Forms::Buttons') if missing_component
-
-      content_tag('div', style: 'color: #f00;') do
-        'Missing Component Forms::Buttons'
-      end
+      build_component('Forms::Buttons', **options)
     end
 
     def build_input(name:, options:, type:)
-      return field_component.new(name:, type:, **options) if field_component
-
-      return missing_component.new(name: 'Forms::Field') if missing_component
-
-      content_tag('div', style: 'color: #f00;') do
-        'Missing Component Forms::Field'
-      end
-    end
-
-    def buttons_component
-      return @buttons_component if @buttons_component
-
-      return unless components.const_defined?('Forms::Buttons')
-
-      @buttons_component = components.const_get('Forms::Buttons')
-    end
-
-    def field_component
-      return @field_component if @field_component
-
-      return unless components.const_defined?('Forms::Field')
-
-      @field_component = components.const_get('Forms::Field')
+      build_component('Forms::Field', name:, type:, **options)
     end
 
     def form_attributes
@@ -208,14 +179,6 @@ module Librum::Components
 
     def form_class_name
       class_name
-    end
-
-    def missing_component
-      return @missing_component if @missing_component
-
-      return unless components.const_defined?('MissingComponent')
-
-      @missing_component = components.const_get('MissingComponent')
     end
 
     def options_for(errors:, type:, value:, **options)

@@ -28,28 +28,16 @@ module Librum::Components::Views::Resources
     end
 
     def render_content
-      return render_table if table_component
-
-      component = components::MissingComponent.new(
-        name: "#{resource.plural_name.titleize}::Table"
-      )
-
-      render(component)
-    end
-
-    def render_table
-      component = table_component.new(
+      component = build_component(
+        'Table',
         data:     resource_data,
         result:,
         resource:,
-        routes:
+        routes:,
+        _scope:   resource_components
       )
 
       render(component)
-    end
-
-    def table_component
-      resource_component(:Table)
     end
   end
 end

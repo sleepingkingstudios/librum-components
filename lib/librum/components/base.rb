@@ -16,6 +16,38 @@ module Librum::Components
     include Plumbum::Consumer
     prepend Plumbum::Parameters
 
+    # Fallback component to render when an expected component is missing.
+    class MissingComponent < ViewComponent::Base
+      # @param display [String] the display type of the expected component.
+      #   Defaults to "block".
+      # @param name [String] the name of the expected component.
+      def initialize(display:, name:, **)
+        super()
+
+        @display = display
+        @name    = name
+      end
+
+      # @return [String] the display type of the expected component.
+      attr_reader :display
+
+      # @return [String] the name of the expected component.
+      attr_reader :name
+
+      # Renders the component.
+      def call
+        content_tag(block? ? 'div' : 'span', style: 'color: #f00;') do
+          "Missing Component #{@name}"
+        end
+      end
+
+      private
+
+      def block?
+        display == 'block'
+      end
+    end
+
     provider Librum::Components.provider
 
     dependency :components,    optional: true
@@ -83,6 +115,36 @@ module Librum::Components
       end
     end
 
+    # @overload build_component(name, _display: 'block', _scope: nil, **options)
+    #   Builds an instance of the requested component, if defined.
+    #
+    #   If the component is not defined, builds and returns a missing component,
+    #   either defined in the components scope or using a default value.
+    #
+    #   @param names [Array<String>] the names of the expected component.
+    #   @param _display [String] the display type of the expected component.
+    #     Defaults to "block".
+    #   @param _scope [Module] the components scope to search. Defaults to the
+    #     configured components.
+    #   @param options [Hash] additional options to pass to the matched
+    #     component, if any.
+    #
+    #   @return [ViewComponent::Base] the matched component, or the missing
+    #     component if no matching component was defined.
+    def build_component(*names, _display: 'block', _scope: nil, **) # rubocop:disable Lint/UnderscorePrefixedVariableName
+      scope ||= _scope || components
+
+      names
+        .find { |name| scope.const_defined?(name) }
+        &.then { |name| return scope.const_get(name).new(**) }
+
+      build_missing_component(
+        display: _display,
+        name:    names.first,
+        scope:   _scope
+      )
+    end
+
     # @overload class_names(*args, prefix: nil)
     #   Combines the given class names and applies a prefix, if any.
     #
@@ -127,6 +189,16 @@ module Librum::Components
     def is_layout? = false # rubocop:disable Naming/PredicatePrefix
 
     private
+
+    def build_missing_component(display:, name:, scope:)
+      if scope&.const_defined?('MissingComponent')
+        scope.const_get('MissingComponent').new(display:, name:)
+      elsif components.const_defined?('MissingComponent')
+        components.const_get('MissingComponent').new(display:, name:)
+      else
+        MissingComponent.new(display:, name:)
+      end
+    end
 
     def default_components
       Librum::Components::Empty

@@ -59,14 +59,10 @@ module Librum::Components::Views
       render(component)
     end
 
-    def resource_component(*names)
-      return nil unless resource.respond_to?(:components)
+    def resource_components
+      return Librum::Components::Empty unless resource.respond_to?(:components)
 
-      components = resource.components
-
-      names
-        .find { |name| components.const_defined?(name) }
-        &.then { |name| components.const_get(name) }
+      resource.components
     end
 
     def resource_data

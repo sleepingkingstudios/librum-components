@@ -21,8 +21,8 @@ RSpec.describe Librum::Components::Views::Resources::New, type: :component do
           Create Book
         </h1>
 
-        <div>
-          Missing Component Books::Form
+        <div style="color: #f00;">
+          Missing Component CreateForm
         </div>
       HTML
     end
@@ -35,16 +35,6 @@ RSpec.describe Librum::Components::Views::Resources::New, type: :component do
 
       klass.define_method :call do
         content_tag("h#{level}") { text }
-      end
-    end
-
-    example_class 'Spec::Components::MissingComponent',
-      Librum::Components::Base \
-    do |klass|
-      klass.option :name
-
-      klass.define_method :call do
-        content_tag('div') { "Missing Component #{name}" }
       end
     end
 
