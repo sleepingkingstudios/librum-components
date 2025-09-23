@@ -236,6 +236,12 @@ RSpec.describe Librum::Components::DataField, type: :component do
       let(:expected) { "\u00A0" }
 
       it { expect(rendered).to be == expected }
+
+      context 'with field: { transform: value }' do
+        let(:field) { super().merge(transform: 'upcase') }
+
+        it { expect(rendered).to be == expected }
+      end
     end
 
     describe 'with value: false' do
