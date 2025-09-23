@@ -14,6 +14,7 @@ module Librum::Components
     # Default options for configuration.
     DEFAULTS = {
       'colors'              => [].freeze,
+      'error_color'         => nil,
       'default_icon_family' => nil,
       'icon_families'       => [].freeze,
       'sizes'               => [].freeze
@@ -36,6 +37,10 @@ module Librum::Components
     def colors
       @colors ||= Set.new(@options['colors'].map(&:to_s))
     end
+
+    # @return [String, nil] the color used to indicate a dangerous action, such
+    #   as a delete.
+    def danger_color = @options['danger_color']
 
     # @return [String] the name of the default icon family, if any.
     def default_icon_family = @options['default_icon_family']

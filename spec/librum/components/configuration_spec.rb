@@ -55,6 +55,8 @@ RSpec.describe Librum::Components::Configuration do
     end
   end
 
+  include_deferred 'should define option', :danger_color
+
   include_deferred 'should define option', :default_icon_family
 
   describe '#colors' do

@@ -5,30 +5,19 @@ module Librum::Components::Views::Resources
   class New < Librum::Components::Views::ResourceView
     private
 
-    def form_component
-      resource_component(:CreateForm, :Form)
-    end
-
     def heading_text
       "Create #{resource_name.titleize}"
     end
 
     def render_content
-      return render_form if form_component
-
-      component = components::MissingComponent.new(
-        name: "#{resource.plural_name.titleize}::Form"
-      )
-
-      render(component)
-    end
-
-    def render_form
-      component = form_component.new(
+      component = build_component(
+        'CreateForm',
+        'Form',
         data:     resource_data,
         result:,
         resource:,
-        routes:
+        routes:,
+        _scope:   resource_components
       )
 
       render(component)

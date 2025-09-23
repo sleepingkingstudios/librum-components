@@ -5,10 +5,7 @@ module Librum::Components::Bulma
   class MissingComponent < Librum::Components::Bulma::Base
     include Librum::Components::Options::ClassName
 
-    option :block,
-      boolean:  true,
-      default:  true,
-      validate: :boolean
+    option :display, default: 'block', required: true, validate: String
 
     option :icon, default: 'bug', validate: String
 

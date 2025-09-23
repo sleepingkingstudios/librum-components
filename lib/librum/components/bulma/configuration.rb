@@ -23,6 +23,7 @@ module Librum::Components::Bulma
         warning
         danger
       ].freeze,
+      'danger_color'        => 'danger',
       'default_icon_family' => 'fa-solid',
       'icon_families'       => [
         *Librum::Components::Icons::FontAwesome::ICON_FAMILIES

@@ -21,40 +21,13 @@ RSpec.describe Librum::Components::Views::Resources::New, type: :component do
           Create Book
         </h1>
 
-        <div>
-          Missing Component Books::Form
+        <div style="color: #f00;">
+          Missing Component CreateForm
         </div>
       HTML
     end
 
-    example_class 'Spec::Components::Heading', Librum::Components::Base \
-    do |klass|
-      klass.option :actions
-      klass.option :level
-      klass.option :text
-
-      klass.define_method :call do
-        content_tag("h#{level}") { text }
-      end
-    end
-
-    example_class 'Spec::Components::MissingComponent',
-      Librum::Components::Base \
-    do |klass|
-      klass.option :name
-
-      klass.define_method :call do
-        content_tag('div') { "Missing Component #{name}" }
-      end
-    end
-
-    before(:example) do
-      stub_provider(
-        Librum::Components.provider,
-        :components,
-        Spec::Components
-      )
-    end
+    include_deferred 'with component stubs for a resource view'
 
     it { expect(rendered).to match_snapshot(snapshot) }
 

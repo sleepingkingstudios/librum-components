@@ -31,41 +31,6 @@ RSpec.describe Librum::Components::Form, type: :component do
     end
   end
 
-  deferred_examples 'should handle an undefined component' \
-  do |component_name = 'Forms::Field'|
-    context 'when the component is not defined' do
-      let(:expected) do
-        <<~HTML.strip
-          <div style="color: #f00;">Missing Component #{component_name}</div>
-        HTML
-      end
-
-      it { expect(build_input).to be_a ActiveSupport::SafeBuffer }
-
-      it { expect(build_input).to be == expected }
-    end
-
-    context 'when the missing component is defined' do
-      before(:example) do
-        stub_provider(
-          Librum::Components.provider,
-          :components,
-          Spec::Components
-        )
-      end
-
-      example_class 'Spec::Components::MissingComponent',
-        Librum::Components::Base \
-      do |klass|
-        klass.option :name
-      end
-
-      it { expect(build_input).to be_a Spec::Components::MissingComponent }
-
-      it { expect(build_input.name).to be == component_name }
-    end
-  end
-
   deferred_examples 'should require a valid name' do
     describe 'with nil' do
       let(:name) { nil }
@@ -77,7 +42,7 @@ RSpec.describe Librum::Components::Form, type: :component do
       end
 
       it 'should raise an exception' do
-        expect { build_input }.to raise_error ArgumentError, error_message
+        expect { build_component }.to raise_error ArgumentError, error_message
       end
     end
 
@@ -91,7 +56,7 @@ RSpec.describe Librum::Components::Form, type: :component do
       end
 
       it 'should raise an exception' do
-        expect { build_input }
+        expect { build_component }
           .to raise_error ArgumentError, error_message
       end
     end
@@ -106,7 +71,7 @@ RSpec.describe Librum::Components::Form, type: :component do
       end
 
       it 'should raise an exception' do
-        expect { build_input }
+        expect { build_component }
           .to raise_error ArgumentError, error_message
       end
     end
@@ -121,7 +86,7 @@ RSpec.describe Librum::Components::Form, type: :component do
       end
 
       it 'should raise an exception' do
-        expect { build_input }
+        expect { build_component }
           .to raise_error ArgumentError, error_message
       end
     end
@@ -182,7 +147,7 @@ RSpec.describe Librum::Components::Form, type: :component do
     let(:options) { {} }
     let(:buttons) { component.buttons(**options) }
 
-    define_method :build_input do
+    define_method :build_component do
       component.buttons(**options)
     end
 
@@ -192,7 +157,7 @@ RSpec.describe Librum::Components::Form, type: :component do
         .with_any_keywords
     end
 
-    include_deferred 'should handle an undefined component', 'Forms::Buttons'
+    include_deferred 'should return a missing component', 'Forms::Buttons'
 
     context 'when the buttons component is defined' do
       let(:expected_options) { options }
@@ -390,7 +355,7 @@ RSpec.describe Librum::Components::Form, type: :component do
     let(:options) { {} }
     let(:input)   { component.checkbox(name, **options) }
 
-    define_method :build_input do
+    define_method :build_component do
       component.checkbox(name, **options)
     end
 
@@ -403,7 +368,7 @@ RSpec.describe Librum::Components::Form, type: :component do
 
     include_deferred 'should require a valid name'
 
-    include_deferred 'should handle an undefined component'
+    include_deferred 'should return a missing component', 'Forms::Field'
 
     wrap_deferred 'when the field component is defined' do
       let(:expected_options) do
@@ -612,7 +577,7 @@ RSpec.describe Librum::Components::Form, type: :component do
     let(:options) { {} }
     let(:input)   { component.input(name, **options) }
 
-    define_method :build_input do
+    define_method :build_component do
       component.input(name, **options)
     end
 
@@ -626,7 +591,7 @@ RSpec.describe Librum::Components::Form, type: :component do
 
     include_deferred 'should require a valid name'
 
-    include_deferred 'should handle an undefined component'
+    include_deferred 'should return a missing component', 'Forms::Field'
 
     wrap_deferred 'when the field component is defined' do
       let(:expected_options) do
@@ -847,7 +812,7 @@ RSpec.describe Librum::Components::Form, type: :component do
     let(:options) { { values: } }
     let(:input)   { component.select(name, **options) }
 
-    define_method :build_input do
+    define_method :build_component do
       component.select(name, **options)
     end
 
@@ -861,7 +826,7 @@ RSpec.describe Librum::Components::Form, type: :component do
 
     include_deferred 'should require a valid name'
 
-    include_deferred 'should handle an undefined component'
+    include_deferred 'should return a missing component', 'Forms::Field'
 
     wrap_deferred 'when the field component is defined' do
       let(:expected_options) do
@@ -921,7 +886,7 @@ RSpec.describe Librum::Components::Form, type: :component do
     let(:options) { {} }
     let(:input)   { component.text_area(name, **options) }
 
-    define_method :build_input do
+    define_method :build_component do
       component.text_area(name, **options)
     end
 
@@ -938,7 +903,7 @@ RSpec.describe Librum::Components::Form, type: :component do
 
     include_deferred 'should require a valid name'
 
-    include_deferred 'should handle an undefined component'
+    include_deferred 'should return a missing component', 'Forms::Field'
 
     wrap_deferred 'when the field component is defined' do
       let(:expected_options) do
