@@ -13,6 +13,7 @@ module Librum::Components
 
     option :action,      validate: String
     option :http_method, validate: true
+    option :fields,      default:  []
 
     # @overload initialize(result:, **options)
     #   @param result [Cuprum::Result] the result returned by the controller
@@ -20,29 +21,19 @@ module Librum::Components
     #   @param options [Hash] additional options for the form.
     def initialize(result:, **)
       @result = result
-      @fields = []
 
       super(**)
+
+      options[:fields] =
+        if fields.is_a?(Proc)
+          evaluate_fields(options[:fields])
+        else
+          fields.dup
+        end
     end
 
     # @return [Cuprum::Result] the result returned by the controller action.
     attr_reader :result
-
-    # Generates the form contents, replacing any value in #content.
-    #
-    # @yield the block used to generate the contents.
-    # @yieldparam builder [Librum::Components::Form::Builder] the builder used
-    #   to generate the contents. Provides wrapper methods for defining form
-    #   fields, including #input, #checkbox, #select, and #text_area.
-    #
-    # @return [self] the form.
-    def build(&block)
-      builder = self.class::Builder.new(fields:, form: self)
-
-      block.call(builder)
-
-      self
-    end
 
     # Builds the form buttons component.
     #
@@ -163,8 +154,6 @@ module Librum::Components
 
     private
 
-    attr_reader :fields
-
     def build_buttons(options:)
       build_component('Forms::Buttons', **options)
     end
@@ -175,6 +164,15 @@ module Librum::Components
 
     def form_attributes
       form_class_name.blank? ? {} : { class: form_class_name }
+    end
+
+    def evaluate_fields(block)
+      fields  = []
+      builder = self.class::Builder.new(fields:, form: self)
+
+      block.call(builder)
+
+      fields
     end
 
     def form_class_name

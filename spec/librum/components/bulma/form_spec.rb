@@ -141,9 +141,10 @@ do
       end
 
       describe 'with fields from a form builder' do
-        let(:block) do
+        let(:tag_helper) { ViewComponent::Base.new }
+        let(:fields) do
           lambda do |builder|
-            builder.fields << component.content_tag('h1') { 'Form Heading' }
+            builder.fields << tag_helper.content_tag('h1') { 'Form Heading' }
 
             builder.input('rocket[name]', colspan: 2)
 
@@ -152,7 +153,7 @@ do
             builder.text_area('rocket[description]', colspan: 3)
           end
         end
-        let(:component) { super().build(&block) }
+        let(:component_options) { super().merge(fields:) }
         let(:snapshot) do
           <<~HTML
             <form class="fixed-grid has-3-cols">

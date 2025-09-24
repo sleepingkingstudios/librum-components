@@ -126,23 +126,6 @@ RSpec.describe Librum::Components::Form, type: :component do
       :http_method
   end
 
-  describe '#build' do
-    let(:block) do
-      ->(_) {}
-    end
-    let(:builder) do
-      be_a(described_class::Builder).and have_attributes(form: component)
-    end
-
-    it { expect(component).to respond_to(:build).with(0).arguments.and_a_block }
-
-    it { expect(component.build(&block)).to be component }
-
-    it 'should create and yield a builder' do
-      expect { |block| component.build(&block) }.to yield_with_args(builder)
-    end
-  end
-
   describe '#buttons' do
     let(:options) { {} }
     let(:buttons) { component.buttons(**options) }
@@ -317,10 +300,36 @@ RSpec.describe Librum::Components::Form, type: :component do
       it { expect(rendered).to match_snapshot(snapshot) }
     end
 
-    describe 'with fields from a form builder' do
-      let(:block) do
+    describe 'with fields: an Array' do
+      let(:tag_helper) { ViewComponent::Base.new }
+      let(:fields) do
+        [
+          tag_helper.tag.input(name: 'rocket[name]'),
+          tag_helper.tag.input(name: 'rocket[refuel]', type: 'checkbox'),
+          tag_helper.tag.textarea(name: 'rocket[description]')
+        ]
+      end
+      let(:component_options) { super().merge(fields:) }
+      let(:snapshot) do
+        <<~HTML
+          <form>
+            <input name="rocket[name]">
+
+            <input name="rocket[refuel]" type="checkbox">
+
+            <textarea name="rocket[description]"></textarea>
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with fields: a block' do
+      let(:tag_helper) { ViewComponent::Base.new }
+      let(:fields) do
         lambda do |builder|
-          builder.fields << component.content_tag('h1') { 'Form Heading' }
+          builder.fields << tag_helper.content_tag('h1') { 'Form Heading' }
 
           builder.input('rocket[name]')
 
@@ -329,7 +338,7 @@ RSpec.describe Librum::Components::Form, type: :component do
           builder.text_area('rocket[description]')
         end
       end
-      let(:component) { super().build(&block) }
+      let(:component_options) { super().merge(fields:) }
       let(:snapshot) do
         <<~HTML
           <form>
