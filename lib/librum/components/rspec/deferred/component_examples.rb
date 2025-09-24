@@ -440,7 +440,11 @@ module Librum::Components::RSpec::Deferred
     end
 
     deferred_examples 'should be a view' \
-    do |require_request: false, require_resource: false|
+    do |
+      allow_extra_options: false,
+      require_request:     false,
+      require_resource:    false
+    |
       let(:result_metadata) do
         {
           'action_name'     => 'publish',
@@ -465,6 +469,7 @@ module Librum::Components::RSpec::Deferred
       end
 
       include_deferred 'should be a view component',
+        allow_extra_options:,
         has_required_keywords: true
 
       describe '#action_name' do
@@ -608,8 +613,28 @@ module Librum::Components::RSpec::Deferred
       end
     end
 
+    deferred_examples 'should render a missing component' \
+    do |component_name, display: 'block'|
+      let(:snapshot) do
+        pretty_render(
+          render_component(
+            Librum::Components::Base::MissingComponent.new(
+              display:,
+              name:    component_name
+            )
+          )
+        )
+      end
+
+      it { expect(rendered.strip).to match_snapshot(snapshot) }
+    end
+
     deferred_examples 'should return a missing component' \
     do |component_name, display: 'block'|
+      define_method :build_component do
+        defined?(super()) ? super() : component
+      end
+
       it 'should return a MissingComponent' do
         expect(build_component)
           .to be_a Librum::Components::Base::MissingComponent
