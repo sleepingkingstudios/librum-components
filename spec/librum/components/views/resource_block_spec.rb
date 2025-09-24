@@ -138,6 +138,33 @@ RSpec.describe Librum::Components::Views::ResourceBlock, type: :component do
         before(:example) { Spec::Component.const_set(:FIELDS, fields) }
 
         it { expect(component.send(:fields)).to be == fields }
+
+        context 'when the fieldset is a block' do
+          let(:fields) do
+            lambda do
+              [
+                { key: 'title' },
+                { key: 'author', label: 'Author Name' },
+                { key: 'published', type: :boolean },
+                { key: 'secret', value: secret_key }
+              ]
+            end
+          end
+          let(:expected) do
+            [
+              { key: 'title' },
+              { key: 'author', label: 'Author Name' },
+              { key: 'published', type: :boolean },
+              { key: 'secret', value: '12345' }
+            ]
+          end
+
+          before(:example) do
+            Spec::Component.define_method(:secret_key) { '12345' }
+          end
+
+          it { expect(component.send(:fields)).to be == expected }
+        end
       end
     end
   end

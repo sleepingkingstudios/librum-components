@@ -14,12 +14,20 @@ module Librum::Components::Views
 
     private
 
+    def evaluate_fields(value)
+      return value unless value.is_a?(Proc)
+
+      instance_exec(&value)
+    end
+
     def render_block
       render build_component('DataList', fields:, **options)
     end
 
     def fields
-      return self.class.const_get(:FIELDS) if self.class.const_defined?(:FIELDS)
+      if self.class.const_defined?(:FIELDS)
+        return evaluate_fields(self.class.const_get(:FIELDS))
+      end
 
       message =
         "#{self.class.name} is an abstract class - implement a subclass and " \
