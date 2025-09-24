@@ -445,9 +445,10 @@ module Librum::Components::RSpec::Deferred
       require_request:     false,
       require_resource:    false
     |
+      let(:action_name) { 'publish' }
       let(:result_metadata) do
         {
-          'action_name'     => 'publish',
+          'action_name'     => action_name,
           'controller_name' => 'books',
           'member_action'   => false
         }

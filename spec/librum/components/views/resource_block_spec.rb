@@ -15,6 +15,8 @@ RSpec.describe Librum::Components::Views::ResourceBlock, type: :component do
 
   include_deferred 'should be a view', allow_extra_options: true
 
+  include_deferred 'should define component option', :data
+
   describe '#call' do
     let(:fields) do
       [

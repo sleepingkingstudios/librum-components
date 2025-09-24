@@ -55,7 +55,7 @@ module Librum::Components
 
     # @return [String] the name of the called action.
     def action_name
-      metadata.fetch('action_name') { super }
+      metadata.fetch('action_name') { super }&.to_s
     end
 
     # @return [String] the name of the called controller.

@@ -9,11 +9,10 @@ module Librum::Components::Views::Resources
       "Update #{resource_name.titleize}"
     end
 
-    def render_content # rubocop:disable Metrics/MethodLength
+    def render_content
       component = build_component(
         'UpdateForm',
         'Form',
-        action:   'edit',
         data:     resource_data,
         result:,
         resource:,
