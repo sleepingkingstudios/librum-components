@@ -39,6 +39,11 @@ do
     default: 'There are no items matching the criteria.',
     value:   'This is not a place of honor.'
 
+  include_deferred 'should define component option',
+    :row_component,
+    default: Librum::Components::Bulma::DataTable::Row,
+    value:   Class.new(ViewComponent::Base)
+
   describe '.new' do
     include_deferred 'should validate the presence of option',
       :columns,
@@ -47,6 +52,11 @@ do
     include_deferred 'should validate the type of option',
       :data,
       expected: Array
+
+    include_deferred 'should validate the type of option',
+      :row_component,
+      allow_nil: true,
+      expected:  Class
 
     describe 'with empty_message: an Object' do
       let(:component_options) do
@@ -291,6 +301,90 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with row_component: value' do
+      let(:component_options) do
+        super().merge(row_component: Spec::RowComponent)
+      end
+
+      example_class 'Spec::RowComponent', Librum::Components::Base do |klass|
+        klass.allow_extra_options
+
+        klass.option :columns
+
+        klass.option :data
+
+        klass.define_method(:call) do
+          content_tag('tr') do
+            content_tag('td', colspan: columns.size) do
+              "Title: #{data&.[]('title')}"
+            end
+          end
+        end
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with data: a non-empty Array' do
+        let(:data) do
+          [
+            {
+              'title'     => 'Gideon the Ninth',
+              'author'    => 'Tamsyn Muir',
+              'published' => true
+            },
+            {
+              'title'     => 'Harrow the Ninth',
+              'author'    => 'Tamsyn Muir',
+              'published' => true
+            },
+            {
+              'title'     => 'Nona the Ninth',
+              'author'    => 'Tamsyn Muir',
+              'published' => true
+            },
+            {
+              'title'     => 'Alecto the Ninth',
+              'author'    => 'Tamsyn Muir',
+              'published' => false
+            }
+          ]
+        end
+        let(:snapshot) do
+          <<~HTML
+            <table>
+              <tbody>
+                <tr>
+                  <td colspan="4">
+                    Title: Gideon the Ninth
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="4">
+                    Title: Harrow the Ninth
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="4">
+                    Title: Nona the Ninth
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="4">
+                    Title: Alecto the Ninth
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
     end
   end
 end

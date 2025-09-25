@@ -35,6 +35,10 @@ module Librum::Components::Bulma
       default:  -> { DataTable::Header },
       validate: Class
 
+    option :row_component,
+      default:  -> { DataTable::Row },
+      validate: Class
+
     # @param options [Hash] additional options passed to the component.
     def initialize(**options)
       super
