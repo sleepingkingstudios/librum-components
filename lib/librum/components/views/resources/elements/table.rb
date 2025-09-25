@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Librum::Components::Views
+module Librum::Components::Views::Resources::Elements
   # Generic component for rendering a resource list's data fields.
-  class ResourceTable < Librum::Components::View
+  class Table < Librum::Components::View
     allow_extra_options
 
     option :data,   validate: Array

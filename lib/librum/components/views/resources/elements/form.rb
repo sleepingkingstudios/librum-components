@@ -2,9 +2,9 @@
 
 require 'librum/components'
 
-module Librum::Components::Views
+module Librum::Components::Views::Resources::Elements
   # Generic component for rendering a form for a resource entity.
-  class ResourceForm < Librum::Components::View
+  class Form < Librum::Components::View
     allow_extra_options
 
     option :action,      validate: String

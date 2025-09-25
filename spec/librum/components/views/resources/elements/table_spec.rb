@@ -2,9 +2,11 @@
 
 require 'cuprum/rails'
 
-require 'librum/components/views/resource_table'
+require 'librum/components'
 
-RSpec.describe Librum::Components::Views::ResourceTable, type: :component do
+RSpec.describe Librum::Components::Views::Resources::Elements::Table,
+  type: :component \
+do
   subject(:component) do
     described_class.new(**required_keywords, **component_options)
   end
@@ -12,7 +14,8 @@ RSpec.describe Librum::Components::Views::ResourceTable, type: :component do
   deferred_context 'with a component subclass' do
     let(:described_class) { Spec::Component }
 
-    example_class 'Spec::Component', Librum::Components::Views::ResourceTable # rubocop:disable RSpec/DescribedClass
+    example_class 'Spec::Component',
+      Librum::Components::Views::Resources::Elements::Table # rubocop:disable RSpec/DescribedClass
   end
 
   let(:component_options) { { routes: } }

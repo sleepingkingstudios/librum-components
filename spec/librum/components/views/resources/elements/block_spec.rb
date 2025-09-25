@@ -2,7 +2,9 @@
 
 require 'librum/components'
 
-RSpec.describe Librum::Components::Views::ResourceBlock, type: :component do
+RSpec.describe Librum::Components::Views::Resources::Elements::Block,
+  type: :component \
+do
   subject(:component) do
     described_class.new(**required_keywords, **component_options)
   end
@@ -10,7 +12,8 @@ RSpec.describe Librum::Components::Views::ResourceBlock, type: :component do
   deferred_context 'with a component subclass' do
     let(:described_class) { Spec::Component }
 
-    example_class 'Spec::Component', Librum::Components::Views::ResourceBlock # rubocop:disable RSpec/DescribedClass
+    example_class 'Spec::Component',
+      Librum::Components::Views::Resources::Elements::Block # rubocop:disable RSpec/DescribedClass
   end
 
   include_deferred 'should be a view', allow_extra_options: true

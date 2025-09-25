@@ -4,7 +4,9 @@ require 'cuprum/rails'
 
 require 'librum/components'
 
-RSpec.describe Librum::Components::Views::ResourceForm, type: :component do
+RSpec.describe Librum::Components::Views::Resources::Elements::Form,
+  type: :component \
+do
   subject(:component) do
     described_class.new(**required_keywords, **component_options)
   end
@@ -12,7 +14,8 @@ RSpec.describe Librum::Components::Views::ResourceForm, type: :component do
   deferred_context 'with a component subclass' do
     let(:described_class) { Spec::Component }
 
-    example_class 'Spec::Component', Librum::Components::Views::ResourceForm # rubocop:disable RSpec/DescribedClass
+    example_class 'Spec::Component',
+      Librum::Components::Views::Resources::Elements::Form # rubocop:disable RSpec/DescribedClass
   end
 
   deferred_context 'with component stubs' do
