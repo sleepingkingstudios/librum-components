@@ -20,10 +20,6 @@ module Librum::Components::Views
       instance_exec(&value)
     end
 
-    def render_block
-      render build_component('DataList', fields:, **options)
-    end
-
     def fields
       if self.class.const_defined?(:FIELDS)
         return evaluate_fields(self.class.const_get(:FIELDS))
@@ -34,6 +30,10 @@ module Librum::Components::Views
         'define a #fields method'
 
       raise message
+    end
+
+    def render_block
+      render build_component('DataList', fields:, **options)
     end
   end
 end
