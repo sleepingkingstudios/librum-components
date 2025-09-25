@@ -11,7 +11,7 @@ module Librum::Components::Views
       end
     end
 
-    # @overload initialize(result, resource: nil, **options)
+    # @overload initialize(request:, resource: nil, result:, **options)
     #   @param result [Cuprum::Result] the result returned by the controller
     #     action.
     #   @param request [Cuprum::Rails::Request] the request handled by the

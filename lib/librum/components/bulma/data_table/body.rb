@@ -20,6 +20,10 @@ module Librum::Components::Bulma
       default:  'There are no items matching the criteria.',
       validate: true
 
+    option :row_component,
+      default:  -> { DataTable::Row },
+      validate: Class
+
     private
 
     def render_empty_message
@@ -30,26 +34,10 @@ module Librum::Components::Bulma
       sanitize(empty_message, attributes: [], tags: [])
     end
 
-    def render_item(column:, item:)
-      component = Librum::Components::DataField.new(
-        data:  item,
-        field: column,
-        **options.except(:columns, :data)
-      )
+    def render_row(item:)
+      component = row_component.new(**options, data: item)
 
-      render(component)
-    end
-
-    def table_cell_attributes(column)
-      class_name = table_cell_class(column)
-
-      class_name ? { class: class_name } : {}
-    end
-
-    def table_cell_class(column)
-      return nil unless column.align
-
-      bulma_class_names("has-text-#{column.align}")
+      render component
     end
 
     def validate_columns(value, as: 'columns')
