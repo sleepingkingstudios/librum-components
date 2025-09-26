@@ -110,6 +110,8 @@ RSpec.describe Librum::Components::Form, type: :component do
     :http_method,
     value: 'get'
 
+  include_deferred 'should define component option', :remote
+
   describe '.new' do
     define_method :validate_options do
       described_class.new(**required_keywords, **component_options)
@@ -197,7 +199,7 @@ RSpec.describe Librum::Components::Form, type: :component do
       let(:component_options) { super().merge(action: '/rockets') }
       let(:snapshot) do
         <<~HTML
-          <form action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
+          <form action="/rockets" accept-charset="UTF-8" method="post">
             <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
             <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
@@ -206,67 +208,105 @@ RSpec.describe Librum::Components::Form, type: :component do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
-    end
 
-    describe 'with action: value and class_name: value' do
-      let(:component_options) do
-        super().merge(action: '/rockets', class_name: 'custom-class')
-      end
-      let(:snapshot) do
-        <<~HTML
-          <form class="custom-class" action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
-            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+      describe 'with class_name: value' do
+        let(:component_options) do
+          super().merge(class_name: 'custom-class')
+        end
+        let(:snapshot) do
+          <<~HTML
+            <form class="custom-class" action="/rockets" accept-charset="UTF-8" method="post">
+              <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
-            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
-          </form>
-        HTML
-      end
+              <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+            </form>
+          HTML
+        end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
-    end
-
-    describe 'with action: value and http_method: value' do
-      let(:component_options) do
-        super().merge(action: '/rockets/imp-vi', http_method: 'patch')
-      end
-      let(:snapshot) do
-        <<~HTML
-          <form action="/rockets/imp-vi" accept-charset="UTF-8" data-remote="true" method="post">
-            <input name="utf8" type="hidden" value="✓" autocomplete="off">
-
-            <input type="hidden" name="_method" value="patch" autocomplete="off">
-
-            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
-          </form>
-        HTML
+        it { expect(rendered).to match_snapshot(snapshot) }
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
-    end
+      describe 'with http_method: value' do
+        let(:component_options) do
+          super().merge(action: '/rockets/imp-vi', http_method: 'patch')
+        end
+        let(:snapshot) do
+          <<~HTML
+            <form action="/rockets/imp-vi" accept-charset="UTF-8" method="post">
+              <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
-    describe 'with action: value and contents' do
-      let(:contents) do
-        component.content_tag('div') { 'Form Inputs' }
-      end
-      let(:component) do
-        super().with_content(contents)
-      end
-      let(:component_options) { super().merge(action: '/rockets') }
-      let(:snapshot) do
-        <<~HTML
-          <form action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
-            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="_method" value="patch" autocomplete="off">
 
-            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+              <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+            </form>
+          HTML
+        end
 
-            <div>
-              Form Inputs
-            </div>
-          </form>
-        HTML
+        it { expect(rendered).to match_snapshot(snapshot) }
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      describe 'with remote: false' do
+        let(:component_options) { super().merge(remote: false) }
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      describe 'with remote: true' do
+        let(:component_options) { super().merge(remote: true) }
+        let(:snapshot) do
+          <<~HTML
+            <form action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
+              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+              <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+            </form>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      describe 'with contents' do
+        let(:contents) do
+          component.content_tag('div') { 'Form Inputs' }
+        end
+        let(:component) do
+          super().with_content(contents)
+        end
+        let(:snapshot) do
+          <<~HTML
+            <form action="/rockets" accept-charset="UTF-8" method="post">
+              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+              <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+              <div>
+                Form Inputs
+              </div>
+            </form>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: false do
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+        let(:snapshot) do
+          <<~HTML
+            <form action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
+              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+              <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+            </form>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
     end
 
     describe 'with class_name: value' do
@@ -802,6 +842,46 @@ RSpec.describe Librum::Components::Form, type: :component do
 
           it { expect(input.options).to be == expected_options }
         end
+      end
+    end
+  end
+
+  describe '#remote?' do
+    include_examples 'should define predicate', :remote?, false
+
+    wrap_deferred 'with configuration', remote_forms: false do
+      it { expect(component.remote?).to be false }
+    end
+
+    wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+      it { expect(component.remote?).to be true }
+    end
+
+    context 'when initialized with remote: false' do
+      let(:component_options) { super().merge(remote: false) }
+
+      it { expect(component.remote?).to be false }
+
+      wrap_deferred 'with configuration', remote_forms: false do
+        it { expect(component.remote?).to be false }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+        it { expect(component.remote?).to be false }
+      end
+    end
+
+    context 'when initialized with remote: true' do
+      let(:component_options) { super().merge(remote: true) }
+
+      it { expect(component.remote?).to be true }
+
+      wrap_deferred 'with configuration', remote_forms: false do
+        it { expect(component.remote?).to be true }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+        it { expect(component.remote?).to be true }
       end
     end
   end

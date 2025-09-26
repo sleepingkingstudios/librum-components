@@ -86,7 +86,7 @@ do
       let(:component_options) { super().merge(action: '/rockets', columns: 3) }
       let(:snapshot) do
         <<~HTML
-          <form class="fixed-grid has-3-cols" action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
+          <form class="fixed-grid has-3-cols" action="/rockets" accept-charset="UTF-8" method="post">
             <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
             <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">

@@ -14,6 +14,7 @@ module Librum::Components
     option :action,      validate: String
     option :http_method, validate: true
     option :fields,      default:  []
+    option :remote
 
     # @overload initialize(result:, **options)
     #   @param result [Cuprum::Result] the result returned by the controller
@@ -48,11 +49,16 @@ module Librum::Components
     # Generates the form.
     #
     # @return [ActiveSupport::SafeBuffer] the rendered form.
-    def call
+    def call # rubocop:disable Metrics/MethodLength
       with_content(render_fields) unless fields.empty?
 
       if action
-        form_with(url: action, method: http_method, **form_attributes) do
+        form_with(
+          url:    action,
+          method: http_method,
+          local:  !remote?,
+          **form_attributes
+        ) do
           render_content
         end
       else
@@ -104,6 +110,12 @@ module Librum::Components
       options = options_for(type:, value:, errors:, **options)
 
       build_input(name:, options:, type:)
+    end
+
+    # @return [true, false] if true, configures the form to perform a remote
+    #   request. i.e. an XHR or Turbo request.
+    def remote?
+      !!options.fetch(:remote, configuration.remote_forms)
     end
 
     # @overload select(name, values:, **options)
