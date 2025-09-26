@@ -59,6 +59,8 @@ RSpec.describe Librum::Components::Configuration do
 
   include_deferred 'should define option', :default_icon_family
 
+  include_deferred 'should define option', :remote_forms, true
+
   describe '#colors' do
     let(:expected) { Set.new(described_class::DEFAULTS['colors']) }
 
@@ -124,6 +126,14 @@ RSpec.describe Librum::Components::Configuration do
       let(:options) { { key: 'value' } }
 
       it { expect(configuration.options).to be == expected }
+    end
+  end
+
+  describe '#remote_forms?' do
+    it 'should alias the method' do
+      expect(configuration)
+        .to have_aliased_method(:remote_forms)
+        .as(:remote_forms?)
     end
   end
 
