@@ -9,6 +9,16 @@ module Librum::Components::Bulma::Resources
     option :resource, required: true
     option :routes,   required: true
 
+    # @return [true, false] if true, configures the form to perform a remote
+    #   request. i.e. an XHR or Turbo request.
+    def remote?
+      if resource.respond_to?(:remote_forms)
+        resource.remote_forms.then { |value| return value unless value.nil? }
+      end
+
+      configuration.remote_forms
+    end
+
     private
 
     def actions
@@ -21,13 +31,14 @@ module Librum::Components::Bulma::Resources
       actions
     end
 
-    def build_destroy_action
+    def build_destroy_action # rubocop:disable Metrics/MethodLength
       components::Button.new(
         class_name:  bulma_class_names(
           "has-text-#{configuration.danger_color}",
           'is-borderless is-shadowless mx-0 px-1 py-0'
         ),
         http_method: 'delete',
+        remote:      remote?,
         text:        'Destroy',
         type:        'form',
         url:         routes.destroy_path(resource_id)

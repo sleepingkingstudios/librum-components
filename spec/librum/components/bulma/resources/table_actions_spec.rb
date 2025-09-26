@@ -18,7 +18,7 @@ do
   let(:data)             { { 'id' => 0 } }
   let(:resource_options) { {} }
   let(:resource) do
-    Cuprum::Rails::Resource.new(name: 'books', **resource_options)
+    Librum::Components::Resource.new(name: 'books', **resource_options)
   end
   let(:routes) do
     Cuprum::Rails::Routing::PluralRoutes.new(base_path: '/books')
@@ -50,7 +50,7 @@ do
             Update
           </a>
 
-          <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" data-remote="true" method="post">
+          <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" method="post">
             <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
             <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -92,7 +92,7 @@ do
               Update
             </a>
 
-            <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" data-remote="true" method="post">
+            <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -120,7 +120,7 @@ do
               Show
             </a>
 
-            <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" data-remote="true" method="post">
+            <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -156,6 +156,77 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with a resource with remote_forms: true' do
+      let(:resource_options) { super().merge(remote_forms: true) }
+      let(:snapshot) do
+        <<~HTML
+          <div class="buttons is-right is-gapless">
+            <a class="button has-text-info is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0">
+              Show
+            </a>
+
+            <a class="button has-text-warning is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0/edit">
+              Update
+            </a>
+
+            <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" data-remote="true" method="post">
+              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+              <input type="hidden" name="_method" value="delete" autocomplete="off">
+
+              <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+              <button class="button has-text-danger is-borderless is-shadowless mx-0 px-1 py-0" type="submit">
+                Destroy
+              </button>
+            </form>
+          </div>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+  end
+
+  describe '#remote?' do
+    include_examples 'should define predicate', :remote?, false
+
+    wrap_deferred 'with configuration', remote_forms: false do
+      it { expect(component.remote?).to be false }
+    end
+
+    wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+      it { expect(component.remote?).to be true }
+    end
+
+    describe 'with a resource with remote_forms: false' do
+      let(:resource_options) { super().merge(remote_forms: false) }
+
+      it { expect(component.remote?).to be false }
+
+      wrap_deferred 'with configuration', remote_forms: false do
+        it { expect(component.remote?).to be false }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+        it { expect(component.remote?).to be false }
+      end
+    end
+
+    describe 'with a resource with remote_forms: true' do
+      let(:resource_options) { super().merge(remote_forms: true) }
+
+      it { expect(component.remote?).to be true }
+
+      wrap_deferred 'with configuration', remote_forms: false do
+        it { expect(component.remote?).to be true }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+        it { expect(component.remote?).to be true }
+      end
     end
   end
 end

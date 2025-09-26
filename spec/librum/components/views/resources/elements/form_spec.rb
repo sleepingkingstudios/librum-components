@@ -55,8 +55,9 @@ do
   end
 
   let(:component_options) { { routes: } }
+  let(:resource_options)  { {} }
   let(:resource) do
-    Cuprum::Rails::Resource.new(name: 'books')
+    Librum::Components::Resource.new(name: 'books', **resource_options)
   end
   let(:routes) do
     Cuprum::Rails::Routing::PluralRoutes
@@ -128,10 +129,10 @@ do
 
       include_deferred 'should render a missing component', 'Form'
 
-      context 'when the DataList component is defined' do
+      context 'when the Form component is defined' do
         let(:snapshot) do
           <<~HTML
-            <form action="/books" accept-charset="UTF-8" data-remote="true" method="post">
+            <form action="/books" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
@@ -165,6 +166,29 @@ do
         include_deferred 'with component stubs'
 
         it { expect(rendered).to match_snapshot(snapshot) }
+
+        describe 'with a resource with remote_forms: true' do
+          let(:resource_options) { super().merge(remote_forms: true) }
+          let(:snapshot) do
+            <<~HTML
+              <form action="/books" accept-charset="UTF-8" data-remote="true" method="post">
+                <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+                <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+                <input name="book[title]">
+
+                <input name="book[author]">
+
+                <button>
+                  Create Book
+                </button>
+              </form>
+            HTML
+          end
+
+          it { expect(rendered).to match_snapshot(snapshot) }
+        end
       end
     end
 
@@ -173,10 +197,10 @@ do
 
       include_deferred 'should render a missing component', 'Form'
 
-      context 'when the DataList component is defined' do
+      context 'when the Form component is defined' do
         let(:snapshot) do
           <<~HTML
-            <form action="/books/example-book" accept-charset="UTF-8" data-remote="true" method="post">
+            <form action="/books/example-book" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="patch" autocomplete="off">
@@ -212,6 +236,31 @@ do
         include_deferred 'with component stubs'
 
         it { expect(rendered).to match_snapshot(snapshot) }
+
+        describe 'with a resource with remote_forms: true' do
+          let(:resource_options) { super().merge(remote_forms: true) }
+          let(:snapshot) do
+            <<~HTML
+              <form action="/books/example-book" accept-charset="UTF-8" data-remote="true" method="post">
+                <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+                <input type="hidden" name="_method" value="patch" autocomplete="off">
+
+                <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+                <input name="book[title]">
+
+                <input name="book[author]">
+
+                <button>
+                  Update Book
+                </button>
+              </form>
+            HTML
+          end
+
+          it { expect(rendered).to match_snapshot(snapshot) }
+        end
       end
     end
   end
@@ -395,6 +444,46 @@ do
 
       it 'should raise an exception' do
         expect { component.form_http_method }.to raise_error error_message
+      end
+    end
+  end
+
+  describe '#remote?' do
+    include_examples 'should define predicate', :remote?, false
+
+    wrap_deferred 'with configuration', remote_forms: false do
+      it { expect(component.remote?).to be false }
+    end
+
+    wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+      it { expect(component.remote?).to be true }
+    end
+
+    describe 'with a resource with remote_forms: false' do
+      let(:resource_options) { super().merge(remote_forms: false) }
+
+      it { expect(component.remote?).to be false }
+
+      wrap_deferred 'with configuration', remote_forms: false do
+        it { expect(component.remote?).to be false }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+        it { expect(component.remote?).to be false }
+      end
+    end
+
+    describe 'with a resource with remote_forms: true' do
+      let(:resource_options) { super().merge(remote_forms: true) }
+
+      it { expect(component.remote?).to be true }
+
+      wrap_deferred 'with configuration', remote_forms: false do
+        it { expect(component.remote?).to be true }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+        it { expect(component.remote?).to be true }
       end
     end
   end

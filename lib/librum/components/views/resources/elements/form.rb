@@ -36,6 +36,16 @@ module Librum::Components::Views::Resources::Elements
       end
     end
 
+    # @return [true, false] if true, configures the form to perform a remote
+    #   request. i.e. an XHR or Turbo request.
+    def remote?
+      if resource.respond_to?(:remote_forms)
+        resource.remote_forms.then { |value| return value unless value.nil? }
+      end
+
+      configuration.remote_forms
+    end
+
     # @return [String] the path submitted to by the form.
     def form_action
       return action if action
@@ -97,6 +107,7 @@ module Librum::Components::Views::Resources::Elements
         action:      form_action,
         fields:,
         http_method: form_http_method,
+        remote:      remote?,
         result:
       }
     end

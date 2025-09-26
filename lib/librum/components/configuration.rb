@@ -17,6 +17,7 @@ module Librum::Components
       'error_color'         => nil,
       'default_icon_family' => nil,
       'icon_families'       => [].freeze,
+      'remote_forms'        => false,
       'sizes'               => [].freeze
     }.freeze
 
@@ -59,6 +60,11 @@ module Librum::Components
     def icon_families
       @icon_families ||= Set.new(@options['icon_families'].map(&:to_s))
     end
+
+    # @return [true, false] true if the default form behavior is remote, i.e. an
+    #   XHR or Turbo request.
+    def remote_forms = options['remote_forms']
+    alias remote_forms? remote_forms
 
     # @return [Array<String>] the sizes defined for the component set.
     def sizes

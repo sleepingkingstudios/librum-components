@@ -41,6 +41,8 @@ do
     default: false,
     boolean: true
 
+  include_deferred 'should define component option', :remote
+
   include_deferred 'should define component option',
     :size,
     value: 'mid'
@@ -250,7 +252,7 @@ do
       end
       let(:snapshot) do
         <<~HTML
-          <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" data-remote="true" method="post">
+          <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
             <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
             <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
@@ -273,7 +275,7 @@ do
         let(:component_options) { super().merge(http_method: 'delete') }
         let(:snapshot) do
           <<~HTML
-            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" data-remote="true" method="post">
+            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -292,7 +294,7 @@ do
         let(:component_options) { super().merge(icon: 'radiation') }
         let(:snapshot) do
           <<~HTML
-            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" data-remote="true" method="post">
+            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
@@ -309,11 +311,34 @@ do
         it { expect(rendered).to match_snapshot(snapshot) }
       end
 
+      describe 'with remote: false' do
+        let(:component_options) { super().merge(remote: false) }
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      describe 'with remote: true' do
+        let(:component_options) { super().merge(remote: true) }
+        let(:snapshot) do
+          <<~HTML
+            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" data-remote="true" method="post">
+              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+              <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+              <button class="button" type="submit"></button>
+            </form>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
       describe 'with text: value' do
         let(:component_options) { super().merge(text: 'Click Me') }
         let(:snapshot) do
           <<~HTML
-            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" data-remote="true" method="post">
+            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
@@ -339,7 +364,7 @@ do
         end
         let(:snapshot) do
           <<~HTML
-            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" data-remote="true" method="post">
+            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -355,6 +380,26 @@ do
                   Click Me
                 </span>
               </button>
+            </form>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: false do
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+        let(:snapshot) do
+          <<~HTML
+            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" data-remote="true" method="post">
+              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+              <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+              <button class="button" type="submit"></button>
             </form>
           HTML
         end
@@ -481,6 +526,46 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+    end
+  end
+
+  describe '#remote?' do
+    include_examples 'should define predicate', :remote?, false
+
+    wrap_deferred 'with configuration', remote_forms: false do
+      it { expect(component.remote?).to be false }
+    end
+
+    wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+      it { expect(component.remote?).to be true }
+    end
+
+    context 'when initialized with remote: false' do
+      let(:component_options) { super().merge(remote: false) }
+
+      it { expect(component.remote?).to be false }
+
+      wrap_deferred 'with configuration', remote_forms: false do
+        it { expect(component.remote?).to be false }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+        it { expect(component.remote?).to be false }
+      end
+    end
+
+    context 'when initialized with remote: true' do
+      let(:component_options) { super().merge(remote: true) }
+
+      it { expect(component.remote?).to be true }
+
+      wrap_deferred 'with configuration', remote_forms: false do
+        it { expect(component.remote?).to be true }
+      end
+
+      wrap_deferred 'with configuration', remote_forms: true do # rubocop:disable RSpec/MetadataStyle
+        it { expect(component.remote?).to be true }
+      end
     end
   end
 end
