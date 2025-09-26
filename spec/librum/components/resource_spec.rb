@@ -32,6 +32,22 @@ RSpec.describe Librum::Components::Resource do
     end
   end
 
+  describe '#remote_forms' do
+    include_examples 'should define reader', :remote_forms, nil
+
+    context 'when initialized with remote_forms: false' do
+      let(:constructor_options) { super().merge(remote_forms: false) }
+
+      it { expect(resource.remote_forms).to be false }
+    end
+
+    context 'when initialized with remote_forms: true' do
+      let(:constructor_options) { super().merge(remote_forms: true) }
+
+      it { expect(resource.remote_forms).to be true }
+    end
+  end
+
   describe '#title_attribute' do
     include_examples 'should define reader', :title_attribute, nil
 

@@ -17,5 +17,12 @@ module Librum::Components
     def title_attribute
       options[:title_attribute]
     end
+
+    # @return [true, false, nil] true if the default form behavior is remote,
+    #   i.e. an XHR or Turbo request. A nil value indicates that the form should
+    #   default to the global configuration value.
+    def remote_forms
+      options[:remote_forms]
+    end
   end
 end
