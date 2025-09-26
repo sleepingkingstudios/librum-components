@@ -44,7 +44,7 @@ do
   describe '#call' do
     let(:snapshot) do
       <<~HTML
-        <form class="is-inline-block" action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
+        <form class="is-inline-block" action="/rockets" accept-charset="UTF-8" method="post">
           <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
           <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -89,7 +89,7 @@ do
       let(:component_options) { super().merge(icon: 'bomb') }
       let(:snapshot) do
         <<~HTML
-          <form class="is-inline-block" action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
+          <form class="is-inline-block" action="/rockets" accept-charset="UTF-8" method="post">
             <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
             <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -116,7 +116,7 @@ do
       let(:component_options) { super().merge(text: 'Self-Destruct') }
       let(:snapshot) do
         <<~HTML
-          <form class="is-inline-block" action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
+          <form class="is-inline-block" action="/rockets" accept-charset="UTF-8" method="post">
             <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
             <input type="hidden" name="_method" value="delete" autocomplete="off">

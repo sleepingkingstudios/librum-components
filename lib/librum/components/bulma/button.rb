@@ -17,6 +17,7 @@ module Librum::Components::Bulma
     option :http_method, default:  'post', validate: true
     option :icon,        validate: true
     option :loading,     boolean:  true
+    option :remote
     option :size,        validate: true
     option :target,      validate: { inclusion: LINK_TARGETS }
     option :text
@@ -25,6 +26,9 @@ module Librum::Components::Bulma
       validate: { inclusion: Set.new(%w[button link form reset submit]) }
     option :url, validate: true
 
+    # Generates the button.
+    #
+    # @return [ActiveSupport::SafeBuffer] the rendered button.
     def call
       case type
       when 'button', 'reset', 'submit'
@@ -34,6 +38,12 @@ module Librum::Components::Bulma
       else
         render_form
       end
+    end
+
+    # @return [true, false] if true, configures the form to perform a remote
+    #   request. i.e. an XHR or Turbo request.
+    def remote?
+      !!options.fetch(:remote, configuration.remote_forms)
     end
 
     private
@@ -60,6 +70,7 @@ module Librum::Components::Bulma
       form_with(
         class:  bulma_class_names('is-inline-block'),
         method: http_method,
+        local:  !remote?,
         url:
       ) { render_button(type: 'submit') }
     end
