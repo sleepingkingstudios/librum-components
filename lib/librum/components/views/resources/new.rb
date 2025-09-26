@@ -9,11 +9,10 @@ module Librum::Components::Views::Resources
       "Create #{resource_name.titleize}"
     end
 
-    def render_content # rubocop:disable Metrics/MethodLength
+    def render_content
       component = build_component(
         'CreateForm',
         'Form',
-        action:   'new',
         data:     resource_data,
         result:,
         resource:,
