@@ -60,7 +60,7 @@ RSpec.describe Librum::Components::Views::Resources::Show, type: :component do
 
       describe 'with a result with non-empty data' do
         let(:confirm_message) do
-          "This will permanently delete book 0.\n\nConfirm deletion?"
+          'This will permanently delete book 0.\n\nConfirm deletion?'
         end
         let(:data) do
           {
@@ -152,7 +152,7 @@ RSpec.describe Librum::Components::Views::Resources::Show, type: :component do
 
       describe 'with a result with non-empty data' do
         let(:confirm_message) do
-          "This will permanently delete book Gideon the Ninth.\n\n" \
+          'This will permanently delete book Gideon the Ninth.\n\n' \
             'Confirm deletion?'
         end
         let(:data) do
