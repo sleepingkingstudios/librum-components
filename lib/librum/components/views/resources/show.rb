@@ -8,10 +8,18 @@ module Librum::Components::Views::Resources
     def destroy_action
       build_component(
         'Resources::DestroyButton',
-        text:     "Destroy #{resource.singular_name.titleize}",
-        url:      routes.destroy_path(resource_id),
-        _display: 'inline'
+        confirm_message: destroy_message,
+        text:            "Destroy #{resource.singular_name.titleize}",
+        url:             routes.destroy_path(resource_id),
+        _display:        'inline'
       )
+    end
+
+    def destroy_message
+      title = resource_title || resource_data&.[]('id')
+
+      "This will permanently delete #{resource.singular_name} #{title}.\n\n" \
+        'Confirm deletion?'
     end
 
     def heading_actions
