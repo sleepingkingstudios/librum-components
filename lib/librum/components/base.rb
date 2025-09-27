@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'loofah/helpers'
 require 'rails'
 require 'view_component'
 
@@ -14,6 +13,7 @@ module Librum::Components
   # Abstract base class for component objects.
   class Base < ViewComponent::Base
     include Librum::Components::Options
+    include Librum::Components::Sanitize
     include Plumbum::Consumer
     prepend Plumbum::Parameters
 
@@ -188,30 +188,6 @@ module Librum::Components
     # @return [true, false] if true, indicates that the component represents a
     #   full-page layout. Defaults to false.
     def is_layout? = false # rubocop:disable Naming/PredicatePrefix
-
-    # Removes unsafe HTML tags and attributes.
-    #
-    # @param raw [String, nil] the value to sanitize.
-    #
-    # @return [String, nil] the sanitized value.
-    def sanitize(raw)
-      return if raw.nil?
-      return '' if raw.empty?
-
-      Loofah::Helpers.sanitize(raw).html_safe # rubocop:disable Rails/OutputSafety
-    end
-
-    # Removes all HTML tags and attributes.
-    #
-    # @param raw [String, nil] the value to sanitize.
-    #
-    # @return [String, nil] the sanitized value.
-    def strip_tags(raw)
-      return if raw.nil?
-      return '' if raw.empty?
-
-      Loofah::Helpers.strip_tags(raw).html_safe # rubocop:disable Rails/OutputSafety
-    end
 
     private
 
