@@ -35,6 +35,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'cuprum-rails',    '~> 0.2'
   gem.add_dependency 'diffy',           '~> 3.4'
+  gem.add_dependency 'loofah',          '~> 2.24'
   gem.add_dependency 'plumbum',         '>= 0.1.0.alpha'
   gem.add_dependency 'rails',           '>= 7.0', '< 9'
   gem.add_dependency 'view_component',  '~> 3.21'

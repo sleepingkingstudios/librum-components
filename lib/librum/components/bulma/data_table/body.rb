@@ -5,8 +5,6 @@ require 'librum/components'
 module Librum::Components::Bulma
   # Component class rendering the header for a data table.
   class DataTable::Body < Librum::Components::Bulma::Base
-    include ActionView::Helpers::SanitizeHelper
-
     allow_extra_options
 
     option :columns,
@@ -31,7 +29,7 @@ module Librum::Components::Bulma
 
       return empty_message if empty_message.is_a?(ActiveSupport::SafeBuffer)
 
-      sanitize(empty_message, attributes: [], tags: [])
+      strip_tags(empty_message)
     end
 
     def render_row(item:)

@@ -5,8 +5,6 @@ require 'librum/components'
 module Librum::Components
   # Component displaying a structured data field, such as a table cell.
   class DataField < Librum::Components::Base # rubocop:disable Metrics/ClassLength
-    include ActionView::Helpers::SanitizeHelper
-
     DEFAULTS = {
       align:     nil,
       label:     nil,
@@ -218,7 +216,7 @@ module Librum::Components
       value = value.to_s
       value = value.tr('<>', '()') if value.start_with?('#<')
 
-      sanitize(value, attributes: [], tags: [])
+      strip_tags(value)
     end
 
     def transform_value(value) # rubocop:disable Metrics/AbcSize
