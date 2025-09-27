@@ -12,6 +12,11 @@ do
   include_deferred 'should be a view component'
 
   include_deferred 'should define component option',
+    :confirm_message,
+    default: 'Are you sure?',
+    value:   'Self-Destruct Sequence Initiated'
+
+  include_deferred 'should define component option',
     :icon,
     default: 'eraser',
     value:   'bomb'
@@ -26,6 +31,11 @@ do
     value: '/facility/self-destruct'
 
   describe '.new' do
+    include_deferred 'should validate the type of option',
+      :confirm_message,
+      allow_nil: true,
+      expected:  String
+
     include_deferred 'should validate that option is a valid icon', :icon
 
     include_deferred 'should validate the type of option',
@@ -42,9 +52,15 @@ do
   end
 
   describe '#call' do
+    let(:confirm_message) { 'Are you sure?' }
+    let(:data_attributes) do
+      <<~TEXT.strip
+        data-action="submit->librum-components-confirm-form#submit" data-controller="librum-components-confirm-form" data-librum-components-confirm-form-message-value="#{confirm_message}"
+      TEXT
+    end
     let(:snapshot) do
       <<~HTML
-        <form class="is-inline-block" action="/rockets" accept-charset="UTF-8" method="post">
+        <form class="is-inline-block" #{data_attributes} action="/rockets" accept-charset="UTF-8" method="post">
           <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
           <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -85,11 +101,18 @@ do
 
     it { expect(rendered).to match_snapshot(snapshot) }
 
+    describe 'with confirm_message: value' do
+      let(:confirm_message)   { 'Self-Destruct Sequence Initiated' }
+      let(:component_options) { super().merge(confirm_message:) }
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
     describe 'with icon: value' do
       let(:component_options) { super().merge(icon: 'bomb') }
       let(:snapshot) do
         <<~HTML
-          <form class="is-inline-block" action="/rockets" accept-charset="UTF-8" method="post">
+          <form class="is-inline-block" #{data_attributes} action="/rockets" accept-charset="UTF-8" method="post">
             <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
             <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -116,7 +139,7 @@ do
       let(:component_options) { super().merge(text: 'Self-Destruct') }
       let(:snapshot) do
         <<~HTML
-          <form class="is-inline-block" action="/rockets" accept-charset="UTF-8" method="post">
+          <form class="is-inline-block" #{data_attributes} action="/rockets" accept-charset="UTF-8" method="post">
             <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
             <input type="hidden" name="_method" value="delete" autocomplete="off">
