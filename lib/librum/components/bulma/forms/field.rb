@@ -154,7 +154,7 @@ module Librum::Components::Bulma::Forms
       return label if label.is_a?(ActiveSupport::SafeBuffer)
 
       content_tag('label', class: bulma_class_names('label')) do
-        sanitize(label || extract_label, attributes: [], tags: [])
+        strip_tags(label || extract_label)
       end
     end
 
@@ -164,7 +164,7 @@ module Librum::Components::Bulma::Forms
       return message if message.is_a?(ActiveSupport::SafeBuffer)
 
       content_tag('p', class: message_class_name) do
-        sanitize(message, attributes: [], tags: [])
+        strip_tags(message)
       end
     end
 

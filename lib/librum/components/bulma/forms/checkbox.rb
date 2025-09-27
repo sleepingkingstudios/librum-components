@@ -7,8 +7,6 @@ module Librum::Components::Bulma::Forms
   #
   # @see https://bulma.io/documentation/form/checkbox/
   class Checkbox < Librum::Components::Bulma::Base
-    include ActionView::Helpers::SanitizeHelper
-
     option :checked,  boolean:  true
     option :disabled, boolean:  true
     option :id,       validate: String
@@ -68,7 +66,7 @@ module Librum::Components::Bulma::Forms
       return label if label.is_a?(ActiveSupport::SafeBuffer)
 
       content_tag('span', class: bulma_class_names('ml-1')) do
-        sanitize(label, attributes: [], tags: [])
+        strip_tags(label)
       end
     end
 

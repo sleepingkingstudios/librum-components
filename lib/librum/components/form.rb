@@ -5,7 +5,6 @@ require 'librum/components'
 module Librum::Components
   # Builds and renders a form using form field components.
   class Form < Librum::Components::Base # rubocop:disable Metrics/ClassLength
-    include ActionView::Helpers::SanitizeHelper
     include Librum::Components::Options::ClassName
 
     BRACKET_PATTERN = /\]?\[/

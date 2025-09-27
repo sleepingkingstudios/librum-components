@@ -13,6 +13,7 @@ module Librum::Components
   # Abstract base class for component objects.
   class Base < ViewComponent::Base
     include Librum::Components::Options
+    include Librum::Components::Sanitize
     include Plumbum::Consumer
     prepend Plumbum::Parameters
 
