@@ -134,20 +134,8 @@ RSpec.describe Librum::Components::Options::DataAttributes do
     end
   end
 
-  describe '#flatten_data' do
-    let(:flattened) { component.flatten_data }
-
-    it { expect(component).to respond_to(:flatten_data).with(0).arguments }
-
-    it { expect(flattened).to be == {} }
-
-    context 'with data: an empty Hash' do
-      let(:component_options) { super().merge(data: {}) }
-
-      it { expect(flattened).to be == {} }
-    end
-
-    context 'with data: a Hash with String keys' do
+  describe '#data' do
+    context 'when initialized with data: a Hash with String keys' do
       let(:component_options) { super().merge(data:) }
       let(:data) do
         {
@@ -158,13 +146,13 @@ RSpec.describe Librum::Components::Options::DataAttributes do
       end
       let(:expected) do
         {
-          'data-controller'        => 'countdown',
-          'data-action'            => 'submit->countdown#start',
-          'data-countdown-message' => 'Self-Destruct Sequence Initiated'
+          'action'            => 'submit->countdown#start',
+          'controller'        => 'countdown',
+          'countdown-message' => 'Self-Destruct Sequence Initiated'
         }
       end
 
-      it { expect(flattened).to be == expected }
+      it { expect(component.data).to be == expected }
 
       context 'with a nested Hash' do
         let(:data) do
@@ -185,17 +173,17 @@ RSpec.describe Librum::Components::Options::DataAttributes do
         end
         let(:expected) do
           super().merge(
-            'data-countdown-timer-seconds'               => '10',
-            'data-countdown-cancellation-data-status-ok' => 'false',
-            'data-countdown-cancellation-message'        => 'Out Of Order'
+            'countdown-cancellation-data-status-ok' => 'false',
+            'countdown-cancellation-message'        => 'Out Of Order',
+            'countdown-timer-seconds'               => '10'
           )
         end
 
-        it { expect(flattened).to deep_match expected }
+        it { expect(component.data).to deep_match expected }
       end
     end
 
-    context 'with data: a Hash with Symbol keys' do
+    context 'when initialized with data: a Hash with Symbol keys' do
       let(:component_options) { super().merge(data:) }
       let(:data) do
         {
@@ -206,13 +194,13 @@ RSpec.describe Librum::Components::Options::DataAttributes do
       end
       let(:expected) do
         {
-          'data-controller'        => 'countdown',
-          'data-action'            => 'submit->countdown#start',
-          'data-countdown-message' => 'Self-Destruct Sequence Initiated'
+          'action'            => 'submit->countdown#start',
+          'controller'        => 'countdown',
+          'countdown-message' => 'Self-Destruct Sequence Initiated'
         }
       end
 
-      it { expect(flattened).to be == expected }
+      it { expect(component.data).to be == expected }
 
       context 'with a nested Hash' do
         let(:data) do
@@ -233,13 +221,13 @@ RSpec.describe Librum::Components::Options::DataAttributes do
         end
         let(:expected) do
           super().merge(
-            'data-countdown-timer-seconds'               => '10',
-            'data-countdown-cancellation-data-status-ok' => 'false',
-            'data-countdown-cancellation-message'        => 'Out Of Order'
+            'countdown-cancellation-data-status-ok' => 'false',
+            'countdown-cancellation-message'        => 'Out Of Order',
+            'countdown-timer-seconds'               => '10'
           )
         end
 
-        it { expect(flattened).to deep_match expected }
+        it { expect(component.data).to deep_match expected }
       end
     end
   end
