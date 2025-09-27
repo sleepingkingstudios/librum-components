@@ -40,8 +40,14 @@ module Librum::Components::RSpec::Utils
       tag
         .attributes
         .each_value
-        .map { |attribute| %(#{attribute.name}="#{attribute.value}") }
+        .map do |attribute|
+          %(#{attribute.name}="#{format_attribute_value(attribute.value)}")
+        end
         .join(' ')
+    end
+
+    def format_attribute_value(value)
+      value.gsub("\n", '\n')
     end
 
     def has_children?(tag) # rubocop:disable Naming/PredicatePrefix
@@ -134,7 +140,11 @@ module Librum::Components::RSpec::Utils
       return render_tag_with_text(tag)     if has_text?(tag)
       return render_authenticity_token     if authenticity_token?(tag)
 
-      tag.to_s.strip
+      return tag.to_s.strip if tag.attributes.empty?
+
+      return opening_tag(tag) unless tag.to_s.end_with?("</#{tag.name}>")
+
+      "#{opening_tag(tag)}#{closing_tag(tag)}"
     end
 
     def render_tag_with_children(tag)

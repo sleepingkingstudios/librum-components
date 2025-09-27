@@ -26,6 +26,27 @@ RSpec.describe Librum::Components::RSpec::Utils::PrettyRender do
       let(:contents) { '<hr class="is-fancy-hr" id="fancy-line">' }
 
       it { expect(rendered).to be == expected }
+
+      context 'when the attribute values include newlines' do
+        let(:contents) do
+          %(<div data-message="So...\n\nCome here often?"></div>)
+        end
+        let(:expected) do
+          <<~HTML
+            #{contents.strip.gsub("\n", '\n')}
+          HTML
+        end
+
+        it { expect(rendered).to be == expected }
+
+        context 'when the tag is self-closing' do
+          let(:contents) do
+            %(<hr data-message="So...\n\nCome here often?">)
+          end
+
+          it { expect(rendered).to be == expected }
+        end
+      end
     end
 
     describe 'with a tag with children' do

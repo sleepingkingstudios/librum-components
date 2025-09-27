@@ -33,7 +33,10 @@ module Librum::Components::Options
 
       def normalize_key(key, prefix:)
         key = key.to_s.tr('_', '-')
-        key = key[5..] if prefix == 'data-' && key.start_with?('data-')
+
+        if (prefix == '' || prefix == 'data-') && key.start_with?('data-') # rubocop:disable Style/MultipleComparison
+          key = key[5..]
+        end
 
         "#{prefix}#{key}"
       end
@@ -41,11 +44,13 @@ module Librum::Components::Options
 
     option :data, validate: Hash
 
-    # Flattens the nested data hash to a flat hash with String keys and values.
-    #
-    # @return [Hash{String => String}] the flattened data.
-    def flatten_data
-      DataAttributes.flatten_hash(data)
+    # @return [Hash{String => Object}] the flattened data attributes.
+    def data
+      return @data if @data
+
+      return if options[:data].nil?
+
+      @data ||= DataAttributes.flatten_hash(options[:data], prefix: '')
     end
 
     # Generates HTML data attributes from a data hash.
@@ -54,7 +59,8 @@ module Librum::Components::Options
     def render_data
       return nil if data.blank?
 
-      flatten_data
+      DataAttributes
+        .flatten_hash(data, prefix: 'data-')
         .map { |key, value| sanitize_data_attribute(key, value) }
         .join
         .html_safe # rubocop:disable Rails/OutputSafety

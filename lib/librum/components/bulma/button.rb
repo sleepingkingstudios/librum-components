@@ -6,8 +6,9 @@ module Librum::Components::Bulma
   # Flexible button component.
   #
   # @see https://bulma.io/documentation/elements/button/
-  class Button < Librum::Components::Bulma::Base
+  class Button < Librum::Components::Bulma::Base # rubocop:disable Metrics/ClassLength
     include Librum::Components::Options::ClassName
+    include Librum::Components::Options::DataAttributes
 
     # The valid option values for the :target option.
     LINK_TARGETS = Set.new(%w[blank self]).freeze
@@ -48,6 +49,17 @@ module Librum::Components::Bulma
 
     private
 
+    def button_attributes
+      attributes = {
+        class:    button_class,
+        disabled: disabled?
+      }
+
+      return attributes if type == 'form'
+
+      attributes.merge(data:)
+    end
+
     def button_class
       class_names(
         bulma_class_names(
@@ -60,19 +72,24 @@ module Librum::Components::Bulma
       )
     end
 
+    def form_attributes
+      {
+        class:  bulma_class_names('is-inline-block'),
+        data:,
+        method: http_method,
+        local:  !remote?,
+        url:
+      }
+    end
+
     def render_button(type:)
-      content_tag('button', class: button_class, disabled: disabled?, type:) do
+      content_tag('button', **button_attributes, type:) do
         render_label
       end
     end
 
     def render_form
-      form_with(
-        class:  bulma_class_names('is-inline-block'),
-        method: http_method,
-        local:  !remote?,
-        url:
-      ) { render_button(type: 'submit') }
+      form_with(**form_attributes) { render_button(type: 'submit') }
     end
 
     def render_icon

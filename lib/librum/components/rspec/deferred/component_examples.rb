@@ -27,13 +27,17 @@ module Librum::Components::RSpec::Deferred
       example_class 'Spec::Components::Button', Librum::Components::Base \
       do |klass|
         klass.allow_extra_options
+        klass.option :confirm_message
         klass.option :icon
         klass.option :text
         klass.option :type
         klass.option :url
 
         klass.define_method :call do
-          content_tag('button', type:, url:) do
+          opts = {}
+          opts[:data] = { confirm: confirm_message } if confirm_message
+
+          content_tag('button', type:, url:, **opts) do
             icon ? "[#{icon}] #{text}" : text
           end
         end

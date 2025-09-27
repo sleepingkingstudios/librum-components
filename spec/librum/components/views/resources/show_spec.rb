@@ -59,6 +59,9 @@ RSpec.describe Librum::Components::Views::Resources::Show, type: :component do
       it { expect(rendered).to match_snapshot(snapshot) }
 
       describe 'with a result with non-empty data' do
+        let(:confirm_message) do
+          'This will permanently delete book 0.\n\nConfirm deletion?'
+        end
         let(:data) do
           {
             'id'        => 0,
@@ -84,7 +87,7 @@ RSpec.describe Librum::Components::Views::Resources::Show, type: :component do
               [pencil] Update Book
             </button>
 
-            <button type="form" url="/books/gideon-the-ninth">
+            <button type="form" url="/books/gideon-the-ninth" data-confirm="#{confirm_message}">
               Destroy Book
             </button>
 
@@ -127,7 +130,7 @@ RSpec.describe Librum::Components::Views::Resources::Show, type: :component do
                 Show Book
               </h1>
 
-              <button type="form" url="/books/gideon-the-ninth">
+              <button type="form" url="/books/gideon-the-ninth" data-confirm="#{confirm_message}">
                 Destroy Book
               </button>
 
@@ -148,6 +151,10 @@ RSpec.describe Librum::Components::Views::Resources::Show, type: :component do
       it { expect(rendered).to match_snapshot(snapshot) }
 
       describe 'with a result with non-empty data' do
+        let(:confirm_message) do
+          'This will permanently delete book Gideon the Ninth.\n\n' \
+            'Confirm deletion?'
+        end
         let(:data) do
           {
             'id'        => 0,
@@ -173,7 +180,7 @@ RSpec.describe Librum::Components::Views::Resources::Show, type: :component do
               [pencil] Update Book
             </button>
 
-            <button type="form" url="/books/gideon-the-ninth">
+            <button type="form" url="/books/gideon-the-ninth" data-confirm="#{confirm_message}">
               Destroy Book
             </button>
 

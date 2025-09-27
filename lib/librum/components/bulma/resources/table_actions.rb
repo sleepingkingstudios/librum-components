@@ -37,6 +37,7 @@ module Librum::Components::Bulma::Resources
           "has-text-#{configuration.danger_color}",
           'is-borderless is-shadowless mx-0 px-1 py-0'
         ),
+        data:        destroy_button_data,
         http_method: 'delete',
         remote:      remote?,
         text:        'Destroy',
@@ -67,10 +68,37 @@ module Librum::Components::Bulma::Resources
       )
     end
 
+    def destroy_button_data
+      {
+        action:            'submit->librum-components-confirm-form#submit',
+        controller:        'librum-components-confirm-form',
+        librum_components: {
+          confirm_form: {
+            message_value: destroy_message
+          }
+        }
+      }
+    end
+
+    def destroy_message
+      title = resource_title || data&.[]('id')
+
+      "This will permanently delete #{resource.singular_name} #{title}.\n\n" \
+        'Confirm deletion?'
+    end
+
     def resource_id
       return @resource_id if @resource_id
 
       @resource_id = data['slug'] || data['id']
+    end
+
+    def resource_title
+      return unless resource.respond_to?(:title_attribute)
+
+      attribute = resource.title_attribute
+
+      data&.[](attribute)
     end
   end
 end

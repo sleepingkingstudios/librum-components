@@ -25,6 +25,10 @@ do
     value: 'violet'
 
   include_deferred 'should define component option',
+    :data,
+    value: { 'option' => 'value' }
+
+  include_deferred 'should define component option',
     :disabled,
     default: false,
     boolean: true
@@ -182,6 +186,23 @@ do
       it { expect(rendered).to match_snapshot(snapshot) }
     end
 
+    describe 'with data: value' do
+      let(:data) do
+        {
+          option: 'value',
+          custom: { ok: true }
+        }
+      end
+      let(:component_options) { super().merge(data:) }
+      let(:snapshot) do
+        <<~HTML
+          <button class="button" data-option="value" data-custom-ok="true" type="button"></button>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
     describe 'with disabled: true' do
       let(:component_options) { super().merge(disabled: true) }
       let(:snapshot) do
@@ -270,6 +291,29 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with data: value' do
+        let(:data) do
+          {
+            option: 'value',
+            custom: { ok: true }
+          }
+        end
+        let(:component_options) { super().merge(data:) }
+        let(:snapshot) do
+          <<~HTML
+            <form class="is-inline-block" data-option="value" data-custom-ok="true" action="/path/to/resource" accept-charset="UTF-8" method="post">
+              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+              <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+              <button class="button" type="submit"></button>
+            </form>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
 
       describe 'with http_method: value' do
         let(:component_options) { super().merge(http_method: 'delete') }
