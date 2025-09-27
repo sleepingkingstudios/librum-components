@@ -39,6 +39,14 @@ do
   end
 
   describe '#call' do
+    let(:confirm_message) do
+      'This will permanently delete book 0.\n\nConfirm deletion?'
+    end
+    let(:data_attributes) do
+      <<~TEXT.strip
+        data-action="submit->librum-components-confirm-form#submit" data-controller="librum-components-confirm-form" data-librum-components-confirm-form-message-value="#{confirm_message}"
+      TEXT
+    end
     let(:snapshot) do
       <<~HTML
         <div class="buttons is-right is-gapless">
@@ -50,7 +58,7 @@ do
             Update
           </a>
 
-          <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" method="post">
+          <form class="is-inline-block" #{data_attributes} action="/books/0" accept-charset="UTF-8" method="post">
             <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
             <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -92,7 +100,7 @@ do
               Update
             </a>
 
-            <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" method="post">
+            <form class="is-inline-block" #{data_attributes} action="/books/0" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -120,7 +128,7 @@ do
               Show
             </a>
 
-            <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" method="post">
+            <form class="is-inline-block" #{data_attributes} action="/books/0" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -171,7 +179,7 @@ do
               Update
             </a>
 
-            <form class="is-inline-block" action="/books/0" accept-charset="UTF-8" data-remote="true" method="post">
+            <form class="is-inline-block" #{data_attributes} action="/books/0" accept-charset="UTF-8" data-remote="true" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
@@ -184,6 +192,17 @@ do
             </form>
           </div>
         HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with a resource with title_attribute: value' do
+      let(:resource_options) { super().merge(title_attribute: 'title') }
+      let(:data)             { { 'id' => 0, 'title' => 'Gideon the Ninth' } }
+      let(:confirm_message) do
+        'This will permanently delete book Gideon the Ninth.\n\n' \
+          'Confirm deletion?'
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
