@@ -284,6 +284,13 @@ module Librum::Components::RSpec::Deferred
       end
     end
 
+    deferred_examples 'should validate the data option' do
+      include_deferred 'should validate the type of option',
+        :data,
+        allow_nil: true,
+        expected:  Hash
+    end
+
     deferred_examples 'should validate the format of option' \
     do |option_name, expected:, invalid_value:|
       context "when :#{option_name} does not match the format" do
