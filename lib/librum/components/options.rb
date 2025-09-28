@@ -29,7 +29,21 @@ module Librum::Components
 
       # @return [true, false] if true, ignores unexpected options rather than
       #   raising an exception.
-      def allow_extra_options? = @allow_extra_options || false
+      def allow_extra_options?
+        return @allow_extra_options unless @allow_extra_options.nil?
+
+        if superclass.respond_to?(:allow_extra_options?)
+          return @allow_extra_options = superclass.allow_extra_options?
+        end
+
+        @allow_extra_options = false
+      end
+
+      # Flags the component as forbidding unexpected options.
+      #
+      # If called, updates #allow_extra_options? to false. Unexpected options
+      # passed to the constructor will raise an exception.
+      def disallow_extra_options = @allow_extra_options = false
 
       # Returns the subset of the options that are defined for the component.
       #

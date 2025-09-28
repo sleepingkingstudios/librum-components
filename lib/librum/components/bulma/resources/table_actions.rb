@@ -5,6 +5,8 @@ require 'librum/components'
 module Librum::Components::Bulma::Resources
   # Utility component rendering the actions for a table component.
   class TableActions < Librum::Components::Bulma::Base
+    allow_extra_options
+
     option :data
     option :resource, required: true
     option :routes,   required: true
