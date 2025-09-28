@@ -155,6 +155,73 @@ RSpec.describe Librum::Components::Options do
         .to define_predicate(:allow_extra_options?)
         .with_value(false)
     end
+
+    context 'with a parent class that does not allow extra options' do
+      let(:described_class) { Spec::ChildComponent }
+
+      example_class 'Spec::ChildComponent', 'Spec::ExampleComponent'
+
+      before(:example) { Spec::ExampleComponent.disallow_extra_options }
+
+      it { expect(described_class.allow_extra_options?).to be false }
+
+      describe 'with allow_extra_options' do
+        before(:example) { described_class.allow_extra_options }
+
+        it { expect(described_class.allow_extra_options?).to be true }
+      end
+
+      describe 'with disallow_extra_options' do
+        before(:example) { described_class.disallow_extra_options }
+
+        it { expect(described_class.allow_extra_options?).to be false }
+      end
+    end
+
+    context 'with a parent class that allows extra options' do
+      let(:described_class) { Spec::ChildComponent }
+
+      example_class 'Spec::ChildComponent', 'Spec::ExampleComponent'
+
+      before(:example) { Spec::ExampleComponent.allow_extra_options }
+
+      it { expect(described_class.allow_extra_options?).to be true }
+
+      describe 'with allow_extra_options' do
+        before(:example) { described_class.allow_extra_options }
+
+        it { expect(described_class.allow_extra_options?).to be true }
+      end
+
+      describe 'with disallow_extra_options' do
+        before(:example) { described_class.disallow_extra_options }
+
+        it { expect(described_class.allow_extra_options?).to be false }
+      end
+    end
+  end
+
+  describe '.disallow_extra_options' do
+    it 'should define the class method' do
+      expect(described_class)
+        .to respond_to(:disallow_extra_options)
+        .with(0).arguments
+    end
+
+    it 'should not update the flag' do
+      expect { described_class.disallow_extra_options }
+        .not_to change(described_class, :allow_extra_options?)
+    end
+
+    context 'when the class allows extra options' do
+      before(:example) { described_class.allow_extra_options }
+
+      it 'should update the flag' do
+        expect { described_class.disallow_extra_options }
+          .to change(described_class, :allow_extra_options?)
+          .to be false
+      end
+    end
   end
 
   describe '.filter_options' do

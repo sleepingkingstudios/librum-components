@@ -24,7 +24,8 @@ do
     Cuprum::Rails::Routing::PluralRoutes.new(base_path: '/books')
   end
 
-  include_deferred 'should be a view component'
+  include_deferred 'should be a view component',
+    allow_extra_options: true
 
   include_deferred 'should define component option', :data
 
