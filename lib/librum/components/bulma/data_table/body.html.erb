@@ -1,4 +1,4 @@
-<tbody>
+<tbody<%= body_attributes.map { |key, value| %( #{key}=#{value}) }.join %>>
   <% if data.empty? %>
     <tr>
       <td colspan="<%= columns.size %>">

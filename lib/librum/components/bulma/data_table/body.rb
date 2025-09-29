@@ -3,8 +3,10 @@
 require 'librum/components'
 
 module Librum::Components::Bulma
-  # Component class rendering the header for a data table.
+  # Component class rendering the body for a data table.
   class DataTable::Body < Librum::Components::Bulma::Base
+    include Librum::Components::Options::ClassName
+
     allow_extra_options
 
     option :columns,
@@ -18,11 +20,17 @@ module Librum::Components::Bulma
       default:  'There are no items matching the criteria.',
       validate: true
 
+    option :row_class_name, validate: String
+
     option :row_component,
       default:  -> { DataTable::Row },
       validate: Class
 
     private
+
+    def body_attributes
+      { class: class_name }.compact
+    end
 
     def render_empty_message
       return render(empty_message) if empty_message.is_a?(ViewComponent::Base)
@@ -33,7 +41,8 @@ module Librum::Components::Bulma
     end
 
     def render_row(item:)
-      component = row_component.new(**options, data: item)
+      component =
+        row_component.new(**options, class_name: row_class_name, data: item)
 
       render component
     end
