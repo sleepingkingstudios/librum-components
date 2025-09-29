@@ -1,4 +1,4 @@
-<thead>
+<thead<%= header_attributes.map { |key, value| %( #{key}=#{value}) }.join %>>
   <tr>
     <% columns.each do |column| %>
       <%= render_item(column) %>
