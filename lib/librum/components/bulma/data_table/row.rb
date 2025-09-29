@@ -5,6 +5,8 @@ require 'librum/components'
 module Librum::Components::Bulma
   # Component class rendering a row for a data table.
   class DataTable::Row < Librum::Components::Bulma::Base
+    include Librum::Components::Options::ClassName
+
     allow_extra_options
 
     option :columns,
@@ -23,6 +25,10 @@ module Librum::Components::Bulma
       )
 
       render(component)
+    end
+
+    def row_attributes
+      { class: class_name }.compact
     end
 
     def table_cell_attributes(column)

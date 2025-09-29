@@ -25,6 +25,8 @@ do
   include_deferred 'should be a view component',
     allow_extra_options: true
 
+  include_deferred 'should define component option', :class_name
+
   include_deferred 'should define component option',
     :columns,
     value: [{ key: 'title' }]
@@ -32,6 +34,8 @@ do
   include_deferred 'should define component option', :data
 
   describe '.new' do
+    include_deferred 'should validate the class_name option'
+
     include_deferred 'should validate the presence of option',
       :columns,
       array: true
@@ -69,6 +73,39 @@ do
     end
 
     it { expect(rendered).to match_snapshot(snapshot) }
+
+    describe 'with class_name: value' do
+      let(:component_options) { super().merge(class_name: 'custom-class') }
+      let(:snapshot) do
+        <<~HTML
+          <table>
+            <tbody>
+              <tr class="custom-class">
+                <td>
+                  &nbsp;
+                </td>
+
+                <td>
+                  &nbsp;
+                </td>
+
+                <td>
+                  False
+                </td>
+
+                <td class="has-text-right">
+                  <span>
+                    Actions
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
 
     describe 'with data: a Hash with values' do
       let(:data) do
