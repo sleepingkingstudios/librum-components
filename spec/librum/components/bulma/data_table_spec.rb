@@ -26,10 +26,14 @@ do
   include_deferred 'should be a view component',
     allow_extra_options: true
 
+  include_deferred 'should define component option', :body_class_name
+
   include_deferred 'should define component option',
     :body_component,
     default: described_class::Body,
     value:   Class.new(ViewComponent::Base)
+
+  include_deferred 'should define component option', :class_name
 
   include_deferred 'should define component option',
     :columns,
@@ -43,6 +47,8 @@ do
     :empty_message,
     value: 'This is not a place of honor.'
 
+  include_deferred 'should define component option', :footer_class_name
+
   include_deferred 'should define component option',
     :footer_component,
     value: Class.new(ViewComponent::Base)
@@ -52,10 +58,14 @@ do
     boolean: true,
     default: true
 
+  include_deferred 'should define component option', :header_class_name
+
   include_deferred 'should define component option',
     :header_component,
     default: described_class::Header,
     value:   Class.new(ViewComponent::Base)
+
+  include_deferred 'should define component option', :row_class_name
 
   include_deferred 'should define component option',
     :row_component,
@@ -64,9 +74,16 @@ do
 
   describe '.new' do
     include_deferred 'should validate the type of option',
+      :body_class_name,
+      allow_nil: true,
+      expected:  String
+
+    include_deferred 'should validate the type of option',
       :body_component,
       allow_nil: true,
       expected:  Class
+
+    include_deferred 'should validate the class_name option'
 
     include_deferred 'should validate the presence of option',
       :columns,
@@ -77,14 +94,29 @@ do
       expected: Array
 
     include_deferred 'should validate the type of option',
+      :footer_class_name,
+      allow_nil: true,
+      expected:  String
+
+    include_deferred 'should validate the type of option',
       :footer_component,
       allow_nil: true,
       expected:  Class
 
     include_deferred 'should validate the type of option',
+      :header_class_name,
+      allow_nil: true,
+      expected:  String
+
+    include_deferred 'should validate the type of option',
       :header_component,
       allow_nil: true,
       expected:  Class
+
+    include_deferred 'should validate the type of option',
+      :row_class_name,
+      allow_nil: true,
+      expected:  String
 
     include_deferred 'should validate the type of option',
       :row_component,
@@ -126,6 +158,43 @@ do
     end
 
     it { expect(rendered).to match_snapshot(snapshot) }
+
+    describe 'with body_class_name: value' do
+      let(:component_options) { super().merge(body_class_name: 'custom-body') }
+      let(:snapshot) do
+        <<~HTML
+          <table class="table is-fullwidth">
+            <thead>
+              <tr>
+                <th>
+                  Title
+                </th>
+
+                <th>
+                  Author Name
+                </th>
+
+                <th>
+                  Published
+                </th>
+
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody class="custom-body">
+              <tr>
+                <td colspan="4">
+                  There are no items matching the criteria.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
 
     describe 'with body_component: value' do
       let(:component_options) do
@@ -177,6 +246,43 @@ do
             end
           end
         end
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with class_name: value' do
+      let(:component_options) { super().merge(class_name: 'custom-table') }
+      let(:snapshot) do
+        <<~HTML
+          <table class="table is-fullwidth custom-table">
+            <thead>
+              <tr>
+                <th>
+                  Title
+                </th>
+
+                <th>
+                  Author Name
+                </th>
+
+                <th>
+                  Published
+                </th>
+
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td colspan="4">
+                  There are no items matching the criteria.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        HTML
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
@@ -355,6 +461,14 @@ do
       it { expect(rendered).to match_snapshot(snapshot) }
     end
 
+    describe 'with footer_class_name: value' do
+      let(:component_options) do
+        super().merge(footer_class_name: 'custom-footer')
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
     describe 'with footer_component: value' do
       let(:component_options) do
         super().merge(footer_component: Spec::FooterComponent)
@@ -388,13 +502,13 @@ do
               </tr>
             </tbody>
 
-            <tbody>
+            <tfoot>
               <tr>
                 <td colspan="4">
                   There are 0 items.
                 </td>
               </tr>
-            </tbody>
+            </tfoot>
           </table>
         HTML
       end
@@ -402,17 +516,107 @@ do
       example_class 'Spec::FooterComponent', Librum::Components::Base do |klass|
         klass.allow_extra_options
 
+        klass.option :class_name
+
         klass.option :columns
 
         klass.option :data
 
         klass.define_method(:call) do
-          content_tag('tr') do
-            content_tag('td', colspan: columns.size) do
-              "There are #{data.count} items."
+          content_tag('tfoot', class: class_name) do
+            content_tag('tr') do
+              content_tag('td', colspan: columns.size) do
+                "There are #{data.count} items."
+              end
             end
           end
         end
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with footer_class_name: value' do
+        let(:component_options) do
+          super().merge(footer_class_name: 'custom-footer')
+        end
+        let(:snapshot) do
+          <<~HTML
+            <table class="table is-fullwidth">
+              <thead>
+                <tr>
+                  <th>
+                    Title
+                  </th>
+
+                  <th>
+                    Author Name
+                  </th>
+
+                  <th>
+                    Published
+                  </th>
+
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td colspan="4">
+                    There are no items matching the criteria.
+                  </td>
+                </tr>
+              </tbody>
+
+              <tfoot class="custom-footer">
+                <tr>
+                  <td colspan="4">
+                    There are 0 items.
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+    end
+
+    describe 'with header_class_name: value' do
+      let(:component_options) do
+        super().merge(header_class_name: 'custom-header')
+      end
+      let(:snapshot) do
+        <<~HTML
+          <table class="table is-fullwidth">
+            <thead class="custom-header">
+              <tr>
+                <th>
+                  Title
+                </th>
+
+                <th>
+                  Author Name
+                </th>
+
+                <th>
+                  Published
+                </th>
+
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td colspan="4">
+                  There are no items matching the criteria.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        HTML
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
@@ -461,6 +665,71 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with row_class_name: value' do
+      let(:component_options) { super().merge(row_class_name: 'custom-row') }
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with data: a non-empty Array' do
+        let(:data) do
+          [
+            {
+              'title'     => 'Gideon the Ninth',
+              'author'    => 'Tamsyn Muir',
+              'published' => true
+            }
+          ]
+        end
+        let(:snapshot) do
+          <<~HTML
+            <table class="table is-fullwidth">
+              <thead>
+                <tr>
+                  <th>
+                    Title
+                  </th>
+
+                  <th>
+                    Author Name
+                  </th>
+
+                  <th>
+                    Published
+                  </th>
+
+                  <th></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr class="custom-row">
+                  <td>
+                    Gideon the Ninth
+                  </td>
+
+                  <td>
+                    Tamsyn Muir
+                  </td>
+
+                  <td>
+                    True
+                  </td>
+
+                  <td class="has-text-right">
+                    <span>
+                      Actions
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
     end
 
     describe 'with row_component: value' do

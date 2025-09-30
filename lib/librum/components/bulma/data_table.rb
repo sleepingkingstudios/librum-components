@@ -24,16 +24,24 @@ module Librum::Components::Bulma
       boolean: true,
       default: true
 
+    option :body_class_name, validate: String
+
     option :body_component,
       default:  -> { DataTable::Body },
       validate: Class
 
+    option :footer_class_name, validate: String
+
     option :footer_component,
       validate: Class
+
+    option :header_class_name, validate: String
 
     option :header_component,
       default:  -> { DataTable::Header },
       validate: Class
+
+    option :row_class_name, validate: String
 
     option :row_component,
       default:  -> { DataTable::Row },
@@ -51,7 +59,7 @@ module Librum::Components::Bulma
     private
 
     def render_body
-      component = body_component.new(**options)
+      component = body_component.new(**options, class_name: body_class_name)
 
       render(component)
     end
@@ -59,13 +67,13 @@ module Librum::Components::Bulma
     def render_footer
       return unless footer_component
 
-      component = footer_component.new(**options)
+      component = footer_component.new(**options, class_name: footer_class_name)
 
       render(component)
     end
 
     def render_header
-      component = header_component.new(**options)
+      component = header_component.new(**options, class_name: header_class_name)
 
       render(component)
     end
