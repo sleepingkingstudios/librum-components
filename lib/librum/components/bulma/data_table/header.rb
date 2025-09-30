@@ -5,6 +5,8 @@ require 'librum/components'
 module Librum::Components::Bulma
   # Component class rendering the header for a data table.
   class DataTable::Header < Librum::Components::Bulma::Base
+    include Librum::Components::Options::ClassName
+
     allow_extra_options
 
     option :columns,
@@ -12,6 +14,10 @@ module Librum::Components::Bulma
       validate: true
 
     private
+
+    def header_attributes
+      { class: class_name }.compact
+    end
 
     def render_item(column)
       content_tag('th') { column.label }

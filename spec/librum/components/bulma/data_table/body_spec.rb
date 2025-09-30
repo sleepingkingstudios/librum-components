@@ -26,6 +26,8 @@ do
   include_deferred 'should be a view component',
     allow_extra_options: true
 
+  include_deferred 'should define component option', :class_name
+
   include_deferred 'should define component option',
     :columns,
     value: [{ key: 'title' }]
@@ -39,12 +41,16 @@ do
     default: 'There are no items matching the criteria.',
     value:   'This is not a place of honor.'
 
+  include_deferred 'should define component option', :row_class_name
+
   include_deferred 'should define component option',
     :row_component,
     default: Librum::Components::Bulma::DataTable::Row,
     value:   Class.new(ViewComponent::Base)
 
   describe '.new' do
+    include_deferred 'should validate the class_name option'
+
     include_deferred 'should validate the presence of option',
       :columns,
       array: true
@@ -52,6 +58,11 @@ do
     include_deferred 'should validate the type of option',
       :data,
       expected: Array
+
+    include_deferred 'should validate the type of option',
+      :row_class_name,
+      allow_nil: true,
+      expected:  String
 
     include_deferred 'should validate the type of option',
       :row_component,
@@ -93,6 +104,66 @@ do
     end
 
     it { expect(rendered).to match_snapshot(snapshot) }
+
+    describe 'with class_name: value' do
+      let(:component_options) { super().merge(class_name: 'custom-body') }
+      let(:snapshot) do
+        <<~HTML
+          <table>
+            <tbody class="custom-body">
+              <tr>
+                <td colspan="4">
+                  There are no items matching the criteria.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with data: a non-empty Array' do
+        let(:data) do
+          [
+            {
+              'title'     => 'Gideon the Ninth',
+              'author'    => 'Tamsyn Muir',
+              'published' => true
+            }
+          ]
+        end
+        let(:snapshot) do
+          <<~HTML
+            <table>
+              <tbody class="custom-body">
+                <tr>
+                  <td>
+                    Gideon the Ninth
+                  </td>
+
+                  <td>
+                    Tamsyn Muir
+                  </td>
+
+                  <td>
+                    True
+                  </td>
+
+                  <td class="has-text-right">
+                    <span>
+                      Actions
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+    end
 
     describe 'with data: a non-empty Array' do
       let(:data) do
@@ -301,6 +372,66 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with row_class_name: value' do
+      let(:component_options) { super().merge(row_class_name: 'custom-row') }
+      let(:snapshot) do
+        <<~HTML
+          <table>
+            <tbody>
+              <tr>
+                <td colspan="4">
+                  There are no items matching the criteria.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with data: a non-empty Array' do
+        let(:data) do
+          [
+            {
+              'title'     => 'Gideon the Ninth',
+              'author'    => 'Tamsyn Muir',
+              'published' => true
+            }
+          ]
+        end
+        let(:snapshot) do
+          <<~HTML
+            <table>
+              <tbody>
+                <tr class="custom-row">
+                  <td>
+                    Gideon the Ninth
+                  </td>
+
+                  <td>
+                    Tamsyn Muir
+                  </td>
+
+                  <td>
+                    True
+                  </td>
+
+                  <td class="has-text-right">
+                    <span>
+                      Actions
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
     end
 
     describe 'with row_component: value' do

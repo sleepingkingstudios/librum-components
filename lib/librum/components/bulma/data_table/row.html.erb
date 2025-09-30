@@ -1,4 +1,4 @@
-<tr>
+<tr<%= row_attributes.map { |key, value| %( #{key}=#{value}) }.join %>>
   <% columns.each do |column| %>
     <%=
       content_tag('td', **table_cell_attributes(column)) do
