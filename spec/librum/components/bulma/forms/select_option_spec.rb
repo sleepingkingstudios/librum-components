@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'librum/components/bulma/forms/select/option'
+require 'librum/components'
 
-RSpec.describe Librum::Components::Bulma::Forms::Select::Option,
+RSpec.describe Librum::Components::Bulma::Forms::SelectOption,
   type: :component \
 do
   let(:component_options) { { label: } }

@@ -4,7 +4,7 @@ require 'librum/components'
 
 module Librum::Components::Bulma::Forms
   # Renders a form select option.
-  class Select::Option < Librum::Components::Bulma::Base
+  class SelectOption < Librum::Components::Bulma::Base
     PERMITTED_KEYS = Set.new(%i[label value disabled selected]).freeze
     private_constant :PERMITTED_KEYS
 

@@ -32,7 +32,7 @@ module Librum::Components::Bulma::Forms
           .each
           .with_index
           .map do |item, index|
-            Librum::Components::Bulma::Forms::Select::Option
+            Librum::Components::Bulma::Forms::SelectOption
               .validate_option(item, as: "#{as} item #{index}")
           end
           .compact
@@ -97,7 +97,7 @@ module Librum::Components::Bulma::Forms
     end
 
     def render_placeholder
-      component = Librum::Components::Bulma::Forms::Select::Option.new(
+      component = Librum::Components::Bulma::Forms::SelectOption.new(
         label:    placeholder,
         value:    '',
         disabled: false,
@@ -108,7 +108,7 @@ module Librum::Components::Bulma::Forms
     end
 
     def render_value(label:, value: nil, disabled: false)
-      component = Librum::Components::Bulma::Forms::Select::Option.new(
+      component = Librum::Components::Bulma::Forms::SelectOption.new(
         label:,
         value:,
         disabled:,
