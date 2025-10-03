@@ -73,17 +73,21 @@ module Librum::Components::Bulma::Forms
     option :required,    boolean:  true
     option :size,        validate: true
     option :value,       validate: String
-    option :values,      required: true, validate: true
+    option :values,      validate: true
 
     # Generates the form select input.
     #
     # @return [ActiveSupport::SafeBuffer] the rendered input.
-    def call
+    def call # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       content_tag('div', class: div_class_name) do
         content_tag('select', **select_attributes) do
           buffer = ActiveSupport::SafeBuffer.new
 
           buffer << render_placeholder << "\n" if placeholder
+
+          if values.blank? && !placeholder
+            buffer << content_tag('option', value: '') { "\u00A0" }
+          end
 
           values.each { |item| buffer << render_value(item) << "\n" }
 

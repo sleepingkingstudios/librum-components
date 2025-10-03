@@ -251,8 +251,9 @@ do
       let(:as) { 'values' }
       let(:error_message) do
         failure_message = tools.assertions.error_message_for(
-          'sleeping_king_studios.tools.assertions.presence',
-          as:
+          'sleeping_king_studios.tools.assertions.instance_of',
+          as:,
+          expected: Array
         )
 
         "invalid options for #{described_class.name} - #{failure_message}"
@@ -274,26 +275,6 @@ do
           'sleeping_king_studios.tools.assertions.instance_of',
           as:,
           expected: Array
-        )
-
-        "invalid options for #{described_class.name} - #{failure_message}"
-      end
-
-      it 'should raise an exception' do
-        expect { described_class.new(**component_options) }
-          .to raise_error ArgumentError, error_message
-      end
-    end
-
-    describe 'with values: an empty Array' do
-      let(:component_options) do
-        super().merge(values: [])
-      end
-      let(:as) { 'values' }
-      let(:error_message) do
-        failure_message = tools.assertions.error_message_for(
-          'sleeping_king_studios.tools.assertions.presence',
-          as:
         )
 
         "invalid options for #{described_class.name} - #{failure_message}"
@@ -612,6 +593,42 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with values: an empty Array' do
+      let(:values) { [] }
+      let(:snapshot) do
+        <<~HTML
+          <div class="select">
+            <select>
+              <option value="">
+                &nbsp;
+              </option>
+            </select>
+          </div>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with placeholder: value' do
+        let(:component_options) do
+          super().merge(placeholder: 'Open Save File')
+        end
+        let(:snapshot) do
+          <<~HTML
+            <div class="select">
+              <select>
+                <option value="" selected="selected">
+                  Open Save File
+                </option>
+              </select>
+            </div>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
     end
 
     describe 'with values: grouped options' do
