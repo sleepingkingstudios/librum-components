@@ -17,10 +17,10 @@ module Librum::Components::Bulma::Forms
       #
       # @param value [Object] the value to validate.
       # @param as [String] the name of the value to validate. Defaults to
-      #   "option".
+      #   "options".
       #
       # @return [String, nil] the error message, or nil if the value is a
-      #   valid option.
+      #   valid options list.
       def validate_options(value, as: 'options')
         invalid_type_error(value, as:) || invalid_items_error(value, as:)
       end
@@ -31,10 +31,7 @@ module Librum::Components::Bulma::Forms
         value
           .each
           .with_index
-          .map do |item, index|
-            Librum::Components::Bulma::Forms::SelectOption
-              .validate_option(item, as: "#{as} item #{index}")
-          end
+          .map { |item, index| validate_item(item, as:, index:) }
           .compact
           .join(', ')
           .presence
@@ -51,6 +48,18 @@ module Librum::Components::Bulma::Forms
             as:,
             expected: Array
           )
+      end
+
+      def validate_item(item, as:, index:)
+        return if item == :hr
+
+        if item.is_a?(Hash) && item.key?(:items)
+          Librum::Components::Bulma::Forms::SelectOptionGroup
+            .validate_option_group(item, as: "#{as} item #{index}")
+        else
+          Librum::Components::Bulma::Forms::SelectOption
+            .validate_option(item, as: "#{as} item #{index}")
+        end
       end
     end
 
@@ -76,7 +85,7 @@ module Librum::Components::Bulma::Forms
 
           buffer << render_placeholder << "\n" if placeholder
 
-          values.each { |item| buffer << render_value(**item) << "\n" }
+          values.each { |item| buffer << render_value(item) << "\n" }
 
           buffer
         end
@@ -96,6 +105,39 @@ module Librum::Components::Bulma::Forms
       )
     end
 
+    def flatten_options
+      return @flatten_options if @flatten_options
+
+      @flatten_options = values.reduce([]) do |ary, item|
+        next ary unless item.is_a?(Hash)
+
+        next ary.concat(item[:items]) if item.key?(:items)
+
+        ary << item
+      end
+    end
+
+    def render_option(label:, value: nil, disabled: false)
+      component = Librum::Components::Bulma::Forms::SelectOption.new(
+        label:,
+        value:,
+        disabled:,
+        selected: selected_value == (value || label)
+      )
+
+      render(component)
+    end
+
+    def render_option_group(items:, label:)
+      component = Librum::Components::Bulma::Forms::SelectOptionGroup.new(
+        label:,
+        selected_value: selected_value == NO_SELECTION ? nil : selected_value,
+        values:         items
+      )
+
+      render(component)
+    end
+
     def render_placeholder
       component = Librum::Components::Bulma::Forms::SelectOption.new(
         label:    placeholder,
@@ -107,15 +149,12 @@ module Librum::Components::Bulma::Forms
       render(component)
     end
 
-    def render_value(label:, value: nil, disabled: false)
-      component = Librum::Components::Bulma::Forms::SelectOption.new(
-        label:,
-        value:,
-        disabled:,
-        selected: selected_value == (value || label)
-      )
+    def render_value(item)
+      return tag.hr if item == :hr
 
-      render(component)
+      return render_option(**item) unless item.key?(:items)
+
+      render_option_group(**item)
     end
 
     def select_attributes
@@ -131,13 +170,18 @@ module Librum::Components::Bulma::Forms
     def selected_value
       return @selected_value if @selected_value
 
-      selected = values.find { |hsh| hsh[:selected] }
+      options = flatten_options
+
+      selected = options.find { |hsh| hsh[:selected] }
 
       return @selected_value = selected.fetch(:value, :label) if selected
 
-      matching = values.find { |hsh| hsh.fetch(:value, :label) == value }
+      matching =
+        options.find { |hsh| hsh.fetch(:value, hsh[:label]) == value }
 
-      return @selected_value = matching.fetch(:value, :label) if matching
+      if matching
+        return @selected_value = matching.fetch(:value, matching[:label])
+      end
 
       @selected_value = NO_SELECTION
     end

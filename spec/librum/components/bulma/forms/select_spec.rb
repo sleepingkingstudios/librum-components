@@ -80,19 +80,7 @@ do
       it { expect(described_class.validate_options([])).to be nil }
     end
 
-    describe 'with a Array with valid options' do
-      let(:value) do
-        [
-          { label: 'Avalon Heavy Industries',  value: 'ahi' },
-          { label: 'Morningstar Technologies', value: 'mst', selected: true },
-          { label: 'Greased Lightning Agency', value: 'gla', disabled: true }
-        ]
-      end
-
-      it { expect(described_class.validate_options(value)).to be nil }
-    end
-
-    describe 'with a Array with invalid keys' do
+    describe 'with an Array with invalid keys' do
       let(:value) do
         [
           { label: 'Avalon Heavy Industries', value: 'ahi' },
@@ -120,6 +108,62 @@ do
             .to be == error_message
         end
       end
+    end
+
+    describe 'with an Array with horizontal rules' do
+      let(:value) do
+        %i[hr hr]
+      end
+
+      it { expect(described_class.validate_options(value)).to be nil }
+    end
+
+    describe 'with an Array with options' do
+      let(:value) do
+        [
+          { label: 'Avalon Heavy Industries',  value: 'ahi' },
+          { label: 'Morningstar Technologies', value: 'mst', selected: true },
+          { label: 'Greased Lightning Agency', value: 'gla', disabled: true }
+        ]
+      end
+
+      it { expect(described_class.validate_options(value)).to be nil }
+    end
+
+    describe 'with an Array with grouped options' do
+      let(:value) do
+        [
+          {
+            label: 'Select Space Program',
+            items: [
+              { label: 'Avalon Heavy Industries',  value: 'ahi' },
+              { label: 'Morningstar Technologies', value: 'mst' },
+              { label: 'Greased Lightning Agency', value: 'gla' }
+            ]
+          }
+        ]
+      end
+
+      it { expect(described_class.validate_options(value)).to be nil }
+    end
+
+    describe 'with an Array with mixed options' do
+      let(:value) do
+        [
+          { label: 'Console Space Program' },
+          :hr,
+          {
+            label: 'Select Space Program',
+            items: [
+              { label: 'Avalon Heavy Industries',  value: 'ahi' },
+              { label: 'Morningstar Technologies', value: 'mst' },
+              { label: 'Greased Lightning Agency', value: 'gla' }
+            ]
+          }
+        ]
+      end
+
+      it { expect(described_class.validate_options(value)).to be nil }
     end
   end
 
@@ -568,6 +612,167 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with values: grouped options' do
+      let(:values) do
+        [
+          { label: 'Console Space Program' },
+          :hr,
+          {
+            label: 'Select Space Program',
+            items: [
+              { label: 'Avalon Heavy Industries',  value: 'ahi' },
+              { label: 'Morningstar Technologies', value: 'mst' },
+              { label: 'Greased Lightning Agency', value: 'gla' }
+            ]
+          }
+        ]
+      end
+      let(:snapshot) do
+        <<~HTML
+          <div class="select">
+            <select>
+              <option>
+                Console Space Program
+              </option>
+
+              <hr>
+
+              <optgroup label="Select Space Program">
+                <option value="ahi">
+                  Avalon Heavy Industries
+                </option>
+
+                <option value="mst">
+                  Morningstar Technologies
+                </option>
+
+                <option value="gla">
+                  Greased Lightning Agency
+                </option>
+              </optgroup>
+            </select>
+          </div>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with placeholder: value' do
+        let(:component_options) do
+          super().merge(placeholder: 'Open Save File')
+        end
+        let(:snapshot) do
+          <<~HTML
+            <div class="select">
+              <select>
+                <option value="" selected="selected">
+                  Open Save File
+                </option>
+
+                <option>
+                  Console Space Program
+                </option>
+
+                <hr>
+
+                <optgroup label="Select Space Program">
+                  <option value="ahi">
+                    Avalon Heavy Industries
+                  </option>
+
+                  <option value="mst">
+                    Morningstar Technologies
+                  </option>
+
+                  <option value="gla">
+                    Greased Lightning Agency
+                  </option>
+                </optgroup>
+              </select>
+            </div>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      describe 'with value: non-matching value' do
+        let(:component_options) { super().merge(value: 'ksp') }
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      describe 'with value: matching value' do
+        let(:component_options) do
+          super().merge(value: 'Console Space Program')
+        end
+        let(:snapshot) do
+          <<~HTML
+            <div class="select">
+              <select>
+                <option selected="selected">
+                  Console Space Program
+                </option>
+
+                <hr>
+
+                <optgroup label="Select Space Program">
+                  <option value="ahi">
+                    Avalon Heavy Industries
+                  </option>
+
+                  <option value="mst">
+                    Morningstar Technologies
+                  </option>
+
+                  <option value="gla">
+                    Greased Lightning Agency
+                  </option>
+                </optgroup>
+              </select>
+            </div>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      describe 'with value: grouped value' do
+        let(:component_options) do
+          super().merge(value: 'mst')
+        end
+        let(:snapshot) do
+          <<~HTML
+            <div class="select">
+              <select>
+                <option>
+                  Console Space Program
+                </option>
+
+                <hr>
+
+                <optgroup label="Select Space Program">
+                  <option value="ahi">
+                    Avalon Heavy Industries
+                  </option>
+
+                  <option value="mst" selected="selected">
+                    Morningstar Technologies
+                  </option>
+
+                  <option value="gla">
+                    Greased Lightning Agency
+                  </option>
+                </optgroup>
+              </select>
+            </div>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
     end
 
     describe 'with multiple options' do
