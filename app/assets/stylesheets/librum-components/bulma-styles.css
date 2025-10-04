@@ -4,6 +4,8 @@
 
 .is-borderless { border: 0; }
 
+.is-overflow-hidden { overflow: hidden; }
+
 .has-text-overflow-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -16,6 +18,8 @@
 .buttons.is-gapless { gap: 0; }
 
 .column { min-width: 0; }
+
+.level .level-shrink { flex-shrink: 1; }
 
 /*******************************************************************************
  * FORMS

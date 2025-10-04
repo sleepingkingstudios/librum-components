@@ -29,7 +29,8 @@ module Librum::Components::Bulma
         bulma_class_names(
           level ? nil : 'title',
           render_actions? && level ? 'mb-0' : nil,
-          !render_actions? && !level ? 'is-block mb-5 title' : nil
+          !render_actions? && !level ? 'is-block mb-5 title' : nil,
+          'has-text-overflow-ellipsis'
         ),
         typography_class,
         class_name

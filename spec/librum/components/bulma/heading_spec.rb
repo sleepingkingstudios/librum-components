@@ -94,7 +94,7 @@ do
     let(:rendered) { render_component(component) }
     let(:snapshot) do
       <<~HTML
-        <span class="title is-block mb-5">
+        <span class="title is-block mb-5 has-text-overflow-ellipsis">
           Greetings, Starfighter
         </span>
       HTML
@@ -113,8 +113,8 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="level mb-5">
-            <div class="level-left">
-              <span class="title">
+            <div class="level-left level-shrink is-overflow-hidden">
+              <span class="title has-text-overflow-ellipsis">
                 Greetings, Starfighter
               </span>
             </div>
@@ -150,8 +150,8 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="level mb-5">
-            <div class="level-left">
-              <span class="title">
+            <div class="level-left level-shrink is-overflow-hidden">
+              <span class="title has-text-overflow-ellipsis">
                 Greetings, Starfighter
               </span>
             </div>
@@ -180,7 +180,7 @@ do
       let(:component_options) { super().merge(class_name: 'custom-heading') }
       let(:snapshot) do
         <<~HTML
-          <span class="title is-block mb-5 custom-heading">
+          <span class="title is-block mb-5 has-text-overflow-ellipsis custom-heading">
             Greetings, Starfighter
           </span>
         HTML
@@ -193,7 +193,7 @@ do
       let(:component_options) { super().merge(level: 2) }
       let(:snapshot) do
         <<~HTML
-          <h2>
+          <h2 class="has-text-overflow-ellipsis">
             Greetings, Starfighter
           </h2>
         HTML
@@ -208,7 +208,7 @@ do
       end
       let(:snapshot) do
         <<~HTML
-          <h2 class="custom-heading">
+          <h2 class="has-text-overflow-ellipsis custom-heading">
             Greetings, Starfighter
           </h2>
         HTML
@@ -221,7 +221,7 @@ do
       let(:component_options) { super().merge(size: 3) }
       let(:snapshot) do
         <<~HTML
-          <span class="title is-block mb-5 is-size-3">
+          <span class="title is-block mb-5 has-text-overflow-ellipsis is-size-3">
             Greetings, Starfighter
           </span>
         HTML
@@ -243,8 +243,8 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="level mb-5">
-            <div class="level-left">
-              <h2 class="mb-0 is-size-3 custom-heading">
+            <div class="level-left level-shrink is-overflow-hidden">
+              <h2 class="mb-0 has-text-overflow-ellipsis is-size-3 custom-heading">
                 Greetings, Starfighter
               </h2>
             </div>
