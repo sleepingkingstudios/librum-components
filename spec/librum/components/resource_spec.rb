@@ -12,8 +12,13 @@ RSpec.describe Librum::Components::Resource do
 
   subject(:resource) { described_class.new(**constructor_options) }
 
+  let(:described_class)     { Spec::ComponentsResource }
   let(:name)                { 'books' }
   let(:constructor_options) { { name: } }
+
+  example_class 'Spec::ComponentsResource', Cuprum::Rails::Resource do |klass|
+    klass.include Librum::Components::Resource # rubocop:disable RSpec/DescribedClass
+  end
 
   include_deferred 'should be a Rails Resource'
 
