@@ -8,8 +8,13 @@ RSpec.describe Librum::Components::Views::Resources::Show, type: :component do
   end
 
   let(:resource_options) { {} }
+  let(:resource_class) do
+    Class
+      .new(Cuprum::Rails::Resource)
+      .tap { |klass| klass.include Librum::Components::Resource }
+  end
   let(:resource) do
-    Librum::Components::Resource.new(name: 'books', **resource_options)
+    resource_class.new(name: 'books', **resource_options)
   end
 
   include_deferred 'should be a resource view'
