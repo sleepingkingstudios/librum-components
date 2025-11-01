@@ -1,0 +1,21 @@
+<div class="<%= level_class_name %>">
+  <% if left_items.present? %>
+    <div class="<%= bulma_class_names('level-left') %>">
+      <% left_items.each do |item| %>
+        <div class="<%= bulma_class_names('level-item') %>">
+          <%= render_item(item) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if right_items.present? %>
+    <div class="<%= bulma_class_names('level-right') %>">
+      <% right_items.each do |item| %>
+        <div class="<%= bulma_class_names('level-item') %>">
+          <%= render_item(item) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

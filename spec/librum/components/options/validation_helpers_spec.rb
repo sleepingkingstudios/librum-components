@@ -383,6 +383,54 @@ RSpec.describe Librum::Components::Options::ValidationHelpers do
     end
   end
 
+  describe '#validate_renderable' do
+    it 'should define the private method' do
+      expect(helpers)
+        .to respond_to(:validate_renderable, true)
+        .with(1).argument
+        .and_keywords(:as)
+    end
+
+    describe 'with nil' do
+      it { expect(helpers.send(:validate_renderable, nil)).to be nil }
+    end
+
+    describe 'with an Object' do
+      let(:message) { 'value is not a component or HTML string' }
+
+      it 'should return the error message' do
+        expect(helpers.send(:validate_renderable, Object.new.freeze))
+          .to be == message
+      end
+
+      describe 'with as: value' do
+        let(:as)      { 'logo' }
+        let(:message) { 'logo is not a component or HTML string' }
+
+        it 'should return the error message' do
+          expect(helpers.send(:validate_renderable, Object.new.freeze, as:))
+            .to be == message
+        end
+      end
+    end
+
+    describe 'with an empty String' do
+      it { expect(helpers.send(:validate_renderable, '')).to be nil }
+    end
+
+    describe 'with a non-empty String' do
+      let(:value) { 'Greetings, programs!' }
+
+      it { expect(helpers.send(:validate_renderable, value)).to be nil }
+    end
+
+    describe 'with a component' do
+      let(:component) { Librum::Components::Literal.new('<img />') }
+
+      it { expect(helpers.send(:validate_renderable, component)).to be nil }
+    end
+  end
+
   describe '#validate_size' do
     it 'should define the private method' do
       expect(helpers)

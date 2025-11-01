@@ -265,6 +265,15 @@ RSpec.describe Librum::Components::Options::Validator do
         string: true
     end
 
+    context 'with an option with validate: :renderable' do
+      let(:raw_options) do
+        { disclaimer: { validate: :renderable } }
+      end
+
+      include_deferred 'should validate that option is renderable',
+        :disclaimer
+    end
+
     context 'with an option with validate: a custom method' do
       let(:raw_options) do
         { license: { validate: :warranty } }
