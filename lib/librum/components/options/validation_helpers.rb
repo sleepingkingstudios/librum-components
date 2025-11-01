@@ -68,6 +68,14 @@ module Librum::Components::Options
       "#{as} is not included in the list"
     end
 
+    def validate_renderable(value, as: 'value')
+      return if value.nil?
+      return if value.is_a?(String)
+      return if value.is_a?(::ViewComponent::Base)
+
+      "#{as} is not a component or HTML string"
+    end
+
     def validate_size(value, as: 'size')
       return if value.nil?
       return if configuration.sizes.include?(value)
