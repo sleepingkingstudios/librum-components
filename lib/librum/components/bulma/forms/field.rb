@@ -25,11 +25,11 @@ module Librum::Components::Bulma::Forms
     # @return [ActiveSupport::SafeBuffer] the rendered input.
     def call
       content_tag('div', class: field_class_name) do
-        buffer = ActiveSupport::SafeBuffer.new
-        buffer << render_label << "\n"
-        buffer << render_control
-        buffer << render_message if message
-        buffer
+        safe_buffer do |buffer|
+          buffer << render_label << "\n"
+          buffer << render_control
+          buffer << render_message if message
+        end
       end
     end
 
@@ -107,13 +107,11 @@ module Librum::Components::Bulma::Forms
 
     def render_control
       content_tag('div', class: control_class_name) do
-        buffer = ActiveSupport::SafeBuffer.new
-
-        buffer << render_input
-        buffer << render_icon(icon_left, 'left')
-        buffer << render_icon(icon_right, 'right')
-
-        buffer
+        safe_buffer do |buffer|
+          buffer << render_input
+          buffer << render_icon(icon_left, 'left')
+          buffer << render_icon(icon_right, 'right')
+        end
       end
     end
 
@@ -151,7 +149,7 @@ module Librum::Components::Bulma::Forms
 
       return render(label) if label.is_a?(ViewComponent::Base)
 
-      return label if label.is_a?(ActiveSupport::SafeBuffer)
+      return label if safe_buffer?(label)
 
       content_tag('label', class: bulma_class_names('label')) do
         strip_tags(label || extract_label)
@@ -161,7 +159,7 @@ module Librum::Components::Bulma::Forms
     def render_message
       return render(message) if message.is_a?(ViewComponent::Base)
 
-      return message if message.is_a?(ActiveSupport::SafeBuffer)
+      return message if safe_buffer?(message)
 
       content_tag('p', class: message_class_name) do
         strip_tags(message)
@@ -171,7 +169,7 @@ module Librum::Components::Bulma::Forms
     def validate_label(value, as: 'label')
       return if value.nil?
       return if value.is_a?(String)
-      return if value.is_a?(ActiveSupport::SafeBuffer)
+      return if safe_buffer?(value)
       return if value.is_a?(ViewComponent::Base)
 
       "#{as} is not a String or a component"

@@ -81,17 +81,15 @@ module Librum::Components::Bulma::Forms
     def call # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       content_tag('div', class: div_class_name) do
         content_tag('select', **select_attributes) do
-          buffer = ActiveSupport::SafeBuffer.new
+          safe_buffer do |buffer|
+            buffer << render_placeholder << "\n" if placeholder
 
-          buffer << render_placeholder << "\n" if placeholder
+            if values.blank? && !placeholder
+              buffer << content_tag('option', value: '') { "\u00A0" }
+            end
 
-          if values.blank? && !placeholder
-            buffer << content_tag('option', value: '') { "\u00A0" }
+            values.each { |item| buffer << render_value(item) << "\n" }
           end
-
-          values.each { |item| buffer << render_value(item) << "\n" }
-
-          buffer
         end
       end
     end

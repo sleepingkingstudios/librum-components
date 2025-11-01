@@ -20,11 +20,11 @@ module Librum::Components::Bulma::Forms
     # @return [ActiveSupport::SafeBuffer] the rendered input.
     def call
       content_tag('label', class: bulma_class_names('checkbox')) do
-        buffer = ActiveSupport::SafeBuffer.new
-        buffer << render_hidden_input << "\n"
-        buffer << render_checkbox
-        buffer << render_label if label
-        buffer
+        safe_buffer do |buffer|
+          buffer << render_hidden_input << "\n"
+          buffer << render_checkbox
+          buffer << render_label if label
+        end
       end
     end
 
@@ -63,7 +63,7 @@ module Librum::Components::Bulma::Forms
     def render_label
       return render(label) if label.is_a?(ViewComponent::Base)
 
-      return label if label.is_a?(ActiveSupport::SafeBuffer)
+      return label if safe_buffer?(label)
 
       content_tag('span', class: bulma_class_names('ml-1')) do
         strip_tags(label)
@@ -73,7 +73,7 @@ module Librum::Components::Bulma::Forms
     def validate_label(value, as: 'label')
       return if value.nil?
       return if value.is_a?(String)
-      return if value.is_a?(ActiveSupport::SafeBuffer)
+      return if safe_buffer?(value)
       return if value.is_a?(ViewComponent::Base)
 
       "#{as} is not a String or a component"

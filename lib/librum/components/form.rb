@@ -213,7 +213,7 @@ module Librum::Components
     def render_field(field)
       return render(field) if field.is_a?(ViewComponent::Base)
 
-      return field if field.is_a?(ActiveSupport::SafeBuffer)
+      return field if safe_buffer?(field)
 
       # :nocov:
       return sanitize(field, attributes: [], tags: []) if field.is_a?(String)
@@ -223,7 +223,7 @@ module Librum::Components
     end
 
     def render_fields
-      fields.reduce(ActiveSupport::SafeBuffer.new) do |buffer, field|
+      fields.reduce(safe_buffer) do |buffer, field|
         buffer << render_field(field) << "\n"
       end
     end

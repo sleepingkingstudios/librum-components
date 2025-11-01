@@ -111,23 +111,21 @@ do
 
         klass.define_method :call do # rubocop:disable Metrics/MethodLength
           content_tag('table') do
-            table = ActiveSupport::SafeBuffer.new
-
-            table << content_tag('tr') do
-              columns.reduce(ActiveSupport::SafeBuffer.new) do |cells, column|
-                cells << content_tag('th') { column[:key] }
+            safe_buffer do |table|
+              table << content_tag('tr') do
+                columns.reduce(safe_buffer) do |cells, column|
+                  cells << content_tag('th') { column[:key] }
+                end
               end
-            end
 
-            table << data&.reduce(ActiveSupport::SafeBuffer.new) do |rows, item|
-              rows << content_tag('tr') do
-                columns.reduce(ActiveSupport::SafeBuffer.new) do |cells, column|
-                  cells << content_tag('td') { item&.[](column[:key]).to_s }
+              table << data&.reduce(safe_buffer) do |rows, item|
+                rows << content_tag('tr') do
+                  columns.reduce(safe_buffer) do |cells, column|
+                    cells << content_tag('td') { item&.[](column[:key]).to_s }
+                  end
                 end
               end
             end
-
-            table
           end
         end
       end
