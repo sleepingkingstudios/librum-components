@@ -71,7 +71,7 @@ do
 
         klass.define_method :call do
           content_tag('ul') do
-            fields.reduce(ActiveSupport::SafeBuffer.new) do |buffer, field|
+            fields.reduce(safe_buffer) do |buffer, field|
               buffer << content_tag('li') do
                 "#{field[:key].titleize}: #{data&.[](field[:key])}"
               end

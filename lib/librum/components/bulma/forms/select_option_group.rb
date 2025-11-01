@@ -105,11 +105,9 @@ module Librum::Components::Bulma::Forms
     # Renders the component.
     def call
       content_tag('optgroup', label:) do
-        buffer = ActiveSupport::SafeBuffer.new
-
-        values.each { |item| buffer << render_value(**item) << "\n" }
-
-        buffer
+        safe_buffer do |buffer|
+          values.each { |item| buffer << render_value(**item) << "\n" }
+        end
       end
     end
 

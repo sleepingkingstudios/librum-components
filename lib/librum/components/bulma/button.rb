@@ -98,10 +98,9 @@ module Librum::Components::Bulma
 
     def render_label
       if icon && text
-        buffer = ActiveSupport::SafeBuffer.new
-        buffer << render_icon
-        buffer << "\n"
-        buffer << content_tag('span') { text }
+        safe_buffer do |buffer|
+          buffer << render_icon << "\n" << content_tag('span') { text }
+        end
       elsif icon
         render_icon
       else

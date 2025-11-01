@@ -50,6 +50,13 @@ module Librum::Components::Bulma
       )
     end
 
+    def render_content
+      safe_buffer do |buffer|
+        buffer << render(build_icon) if icon.present?
+        buffer << text if text.present?
+      end
+    end
+
     def validate_url(value, as:)
       return if value.nil?
       return if value.is_a?(String) && value.present?

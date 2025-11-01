@@ -35,7 +35,7 @@ module Librum::Components::Bulma
     def render_empty_message
       return render(empty_message) if empty_message.is_a?(ViewComponent::Base)
 
-      return empty_message if empty_message.is_a?(ActiveSupport::SafeBuffer)
+      return empty_message if safe_buffer?(empty_message)
 
       strip_tags(empty_message)
     end

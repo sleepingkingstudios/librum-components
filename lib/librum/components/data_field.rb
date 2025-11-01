@@ -211,7 +211,7 @@ module Librum::Components
     def scrub_value(value)
       return "\u00A0" if value.nil?
 
-      return value if value.is_a?(ActiveSupport::SafeBuffer)
+      return value if safe_buffer?(value)
 
       value = value.to_s
       value = value.tr('<>', '()') if value.start_with?('#<')
