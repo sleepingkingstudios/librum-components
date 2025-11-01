@@ -6,12 +6,6 @@ RSpec.describe Librum::Components::Bulma::Button,
   framework: :bulma,
   type:      :component \
 do
-  include ViewComponent::TestHelpers
-
-  define_method :tools do
-    SleepingKingStudios::Tools::Toolbelt.instance
-  end
-
   include_deferred 'with configuration',
     colors:              %w[red orange yellow green blue indigo violet],
     default_icon_family: 'fa-solid',
@@ -39,6 +33,11 @@ do
     value:   'get'
 
   include_deferred 'should define component option', :icon
+
+  include_deferred 'should define component option',
+    :link,
+    default: false,
+    boolean: true
 
   include_deferred 'should define component option',
     :loading,
@@ -184,6 +183,17 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with link: true' do
+        let(:component_options) { super().merge(link: true) }
+        let(:snapshot) do
+          <<~HTML
+            <button class="button has-text-violet is-backgroundless is-borderless is-shadowless m-0 p-0" type="button"></button>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
     end
 
     describe 'with data: value' do
@@ -223,6 +233,17 @@ do
               <i class="fa-solid fa-radiation"></i>
             </span>
           </button>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with link: true' do
+      let(:component_options) { super().merge(link: true) }
+      let(:snapshot) do
+        <<~HTML
+          <button class="button is-backgroundless is-borderless is-shadowless m-0 p-0" type="button"></button>
         HTML
       end
 
@@ -355,6 +376,23 @@ do
         it { expect(rendered).to match_snapshot(snapshot) }
       end
 
+      describe 'with link: true' do
+        let(:component_options) { super().merge(link: true) }
+        let(:snapshot) do
+          <<~HTML
+            <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
+              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+              <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+              <button class="button is-backgroundless is-borderless is-shadowless m-0 p-0" type="submit"></button>
+            </form>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
       describe 'with remote: false' do
         let(:component_options) { super().merge(remote: false) }
 
@@ -478,6 +516,12 @@ do
             </a>
           HTML
         end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+
+      describe 'with link: true' do
+        let(:component_options) { super().merge(link: true) }
 
         it { expect(rendered).to match_snapshot(snapshot) }
       end
