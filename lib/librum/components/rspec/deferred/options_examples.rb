@@ -89,9 +89,14 @@ module Librum::Components::RSpec::Deferred
           }
 
         context "when the component is initialized with #{name}: value" do
-          let(:component_options) { super().merge(name.intern => value) }
+          let(:configured_value) do
+            value.is_a?(Proc) ? instance_exec(&value) : value
+          end
+          let(:component_options) do
+            super().merge(name.intern => configured_value)
+          end
 
-          it { expect(component.send(name)).to be == value }
+          it { expect(component.send(name)).to be == configured_value }
         end
       end
     end
