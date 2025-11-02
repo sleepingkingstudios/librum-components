@@ -3,12 +3,20 @@
 module Librum::Components::Bulma::Resources
   # Utility component for rendering the destroy button for a resource.
   class DestroyButton < Librum::Components::Bulma::Base
+    include Librum::Components::Options::ClassName
+
+    option :confirm,
+      boolean: true,
+      default: true
     option :confirm_message,
       default:  'Are you sure?',
       validate: String
     option :icon,
       default:  'eraser',
       validate: true
+    option :link,
+      boolean: true,
+      default: false
     option :text,
       default:  'Destroy',
       validate: String
@@ -24,10 +32,15 @@ module Librum::Components::Bulma::Resources
     private
 
     def button_class_name
-      bulma_class_names('is-outlined')
+      class_names(
+        bulma_class_names('is-outlined'),
+        class_name
+      )
     end
 
     def button_data
+      return {} unless confirm?
+
       {
         action:            'submit->librum-components-confirm-form#submit',
         controller:        'librum-components-confirm-form',
@@ -39,13 +52,14 @@ module Librum::Components::Bulma::Resources
       }
     end
 
-    def button_options
+    def button_options # rubocop:disable Metrics/MethodLength
       {
         color:       configuration.danger_color,
         class_name:  button_class_name,
         data:        button_data,
         http_method: 'delete',
         icon:,
+        link:        link?,
         text:,
         type:        'form',
         url:

@@ -33,18 +33,14 @@ module Librum::Components::Bulma::Resources
       actions
     end
 
-    def build_destroy_action # rubocop:disable Metrics/MethodLength
-      components::Button.new(
-        class_name:  bulma_class_names(
-          "has-text-#{configuration.danger_color}",
-          'is-borderless is-shadowless mx-0 px-1 py-0'
-        ),
-        data:        destroy_button_data,
-        http_method: 'delete',
-        remote:      remote?,
-        text:        'Destroy',
-        type:        'form',
-        url:         routes.destroy_path(resource_id)
+    def build_destroy_action
+      components::Resources::DestroyButton.new(
+        class_name:      bulma_class_names('px-1'),
+        confirm_message: destroy_message,
+        icon:            nil,
+        link:            true,
+        text:            'Destroy',
+        url:             routes.destroy_path(resource_id)
       )
     end
 
@@ -68,18 +64,6 @@ module Librum::Components::Bulma::Resources
         type:       'link',
         url:        routes.edit_path(resource_id)
       )
-    end
-
-    def destroy_button_data
-      {
-        action:            'submit->librum-components-confirm-form#submit',
-        controller:        'librum-components-confirm-form',
-        librum_components: {
-          confirm_form: {
-            message_value: destroy_message
-          }
-        }
-      }
     end
 
     def destroy_message

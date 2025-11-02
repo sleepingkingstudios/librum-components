@@ -71,7 +71,7 @@ do
 
             <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-            <button class="button has-text-danger is-borderless is-shadowless mx-0 px-1 py-0" type="submit">
+            <button class="button has-text-danger is-backgroundless is-borderless is-shadowless m-0 p-0 is-outlined px-1" type="submit">
               Destroy
             </button>
           </form>
@@ -113,7 +113,7 @@ do
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button has-text-danger is-borderless is-shadowless mx-0 px-1 py-0" type="submit">
+              <button class="button has-text-danger is-backgroundless is-borderless is-shadowless m-0 p-0 is-outlined px-1" type="submit">
                 Destroy
               </button>
             </form>
@@ -141,7 +141,7 @@ do
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button has-text-danger is-borderless is-shadowless mx-0 px-1 py-0" type="submit">
+              <button class="button has-text-danger is-backgroundless is-borderless is-shadowless m-0 p-0 is-outlined px-1" type="submit">
                 Destroy
               </button>
             </form>
@@ -185,14 +185,14 @@ do
               Update
             </a>
 
-            <form class="is-inline-block" #{data_attributes} action="/books/0" accept-charset="UTF-8" data-remote="true" method="post">
+            <form class="is-inline-block" #{data_attributes} action="/books/0" accept-charset="UTF-8" method="post">
               <input name="utf8" type="hidden" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button has-text-danger is-borderless is-shadowless mx-0 px-1 py-0" type="submit">
+              <button class="button has-text-danger is-backgroundless is-borderless is-shadowless m-0 p-0 is-outlined px-1" type="submit">
                 Destroy
               </button>
             </form>

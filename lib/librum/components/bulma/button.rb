@@ -17,6 +17,7 @@ module Librum::Components::Bulma
     option :disabled,    boolean:  true
     option :http_method, default:  'post', validate: true
     option :icon,        validate: true
+    option :link,        boolean:  true
     option :loading,     boolean:  true
     option :remote
     option :size,        validate: true
@@ -64,12 +65,21 @@ module Librum::Components::Bulma
       class_names(
         bulma_class_names(
           'button',
-          color    ? "is-#{color}" : nil,
+          button_color_class,
           loading? ? 'is-loading'  : nil,
-          size     ? "is-#{size}"  : nil
+          size     ? "is-#{size}"  : nil,
+          *link_button_classes
         ),
         class_name
       )
+    end
+
+    def button_color_class
+      return if color.blank?
+
+      return "has-text-#{color}" if link?
+
+      "is-#{color}"
     end
 
     def form_attributes
@@ -80,6 +90,19 @@ module Librum::Components::Bulma
         local:  !remote?,
         url:
       }
+    end
+
+    def link_button_classes
+      return [] unless link?
+      return [] if type == 'link'
+
+      %w[
+        is-backgroundless
+        is-borderless
+        is-shadowless
+        m-0
+        p-0
+      ]
     end
 
     def render_button(type:)
