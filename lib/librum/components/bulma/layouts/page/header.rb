@@ -9,6 +9,8 @@ module Librum::Components::Bulma::Layouts
     option :color,     validate: true
     option :max_width, required: true
     option :navigation
+    option :session
+    option :session_component, validate: Class
     option :title
 
     private
@@ -20,6 +22,12 @@ module Librum::Components::Bulma::Layouts
         brand:,
         title:
       })
+    end
+
+    def build_session
+      return unless session_component
+
+      @build_session ||= session_component.new(session:)
     end
 
     def container_class_name
@@ -46,6 +54,14 @@ module Librum::Components::Bulma::Layouts
         .build({ navigation: })
 
       render(component)
+    end
+
+    def render_session
+      render(build_session)
+    end
+
+    def render_session?
+      build_session&.render?
     end
   end
 end

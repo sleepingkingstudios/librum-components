@@ -10,6 +10,8 @@ module Librum::Components::Bulma::Layouts
     option :copyright
     option :max_width, default: 'desktop'
     option :navigation
+    option :session
+    option :session_component, validate: Class
     option :tagline
     option :title
 
@@ -33,6 +35,8 @@ module Librum::Components::Bulma::Layouts
         color:,
         max_width:,
         navigation:,
+        session:,
+        session_component:,
         title:
       )
     end

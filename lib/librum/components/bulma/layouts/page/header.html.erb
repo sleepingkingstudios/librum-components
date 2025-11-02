@@ -14,3 +14,9 @@
     <%= render_navigation %>
   </div>
 </nav>
+
+<% if render_session? %>
+  <div class="<%= container_class_name %> is-flex-grow-0 my-2">
+    <%= render_session %>
+  </div>
+<% end %>
