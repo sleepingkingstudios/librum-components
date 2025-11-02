@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'plumbum/rspec/stub_provider'
 require 'rspec/sleeping_king_studios/deferred/provider'
 
 require 'librum/components/rspec/deferred'
@@ -7,6 +8,7 @@ require 'librum/components/rspec/deferred'
 module Librum::Components::RSpec::Deferred
   # Deferred examples for stubbing provider values.
   module ConfigurationExamples
+    include Plumbum::RSpec::StubProvider
     include RSpec::SleepingKingStudios::Deferred::Provider
 
     deferred_context 'with components' do |configured_components = Module.new|

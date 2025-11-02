@@ -46,7 +46,7 @@ do
     let(:render_header) do
       options   =
         options_with_defaults
-        .slice(:brand, :color, :max_width, :navigation, :title)
+        .slice(:brand, :color, :max_width, :navigation, :session, :title)
       component = described_class::Header.new(**options)
 
       pretty_render(component)
@@ -93,6 +93,7 @@ do
           brand:      { icon: 'radiation' },
           color:      'red',
           navigation: [{ label: 'Home', url: '/' }],
+          session:    { user_name: 'Alan Bradley' },
           title:      'Example Company'
         )
       end
@@ -160,6 +161,18 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+    end
+  end
+
+  describe '#session' do
+    # Can't assert on #respond_to? because it delegates to the controller.
+    it { expect(component.session).to be nil }
+
+    describe 'with session: value' do
+      let(:session)           { { user_name: 'Alan Bradley' } }
+      let(:component_options) { super().merge(session:) }
+
+      it { expect(component.session).to be session }
     end
   end
 end
