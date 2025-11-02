@@ -11,6 +11,13 @@ do
 
   include_deferred 'should be a view component'
 
+  include_deferred 'should define component option', :class_name
+
+  include_deferred 'should define component option',
+    :confirm,
+    boolean: true,
+    default: true
+
   include_deferred 'should define component option',
     :confirm_message,
     default: 'Are you sure?',
@@ -22,6 +29,11 @@ do
     value:   'bomb'
 
   include_deferred 'should define component option',
+    :link,
+    boolean: true,
+    default: false
+
+  include_deferred 'should define component option',
     :text,
     default: 'Destroy',
     value:   'Self-Destruct'
@@ -31,6 +43,8 @@ do
     value: '/facility/self-destruct'
 
   describe '.new' do
+    include_deferred 'should validate the class_name option'
+
     include_deferred 'should validate the type of option',
       :confirm_message,
       allow_nil: true,
@@ -101,9 +115,84 @@ do
 
     it { expect(rendered).to match_snapshot(snapshot) }
 
+    describe 'with confirm: false' do
+      let(:component_options) { super().merge(confirm: false) }
+      let(:snapshot) do
+        <<~HTML
+          <form class="is-inline-block" action="/rockets" accept-charset="UTF-8" method="post">
+            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+            <input type="hidden" name="_method" value="delete" autocomplete="off">
+
+            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+            <button class="button is-danger is-outlined" type="submit">
+              <span class="icon">
+                <i class="fa-solid fa-eraser"></i>
+              </span>
+
+              <span>
+                Destroy
+              </span>
+            </button>
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with class_name: value' do
+      let(:component_options) { super().merge(class_name: 'custom-class') }
+      let(:snapshot) do
+        <<~HTML
+          <form class="is-inline-block" #{data_attributes} action="/rockets" accept-charset="UTF-8" method="post">
+            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+            <input type="hidden" name="_method" value="delete" autocomplete="off">
+
+            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+            <button class="button is-danger is-outlined custom-class" type="submit">
+              <span class="icon">
+                <i class="fa-solid fa-eraser"></i>
+              </span>
+
+              <span>
+                Destroy
+              </span>
+            </button>
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
     describe 'with confirm_message: value' do
       let(:confirm_message)   { 'Self-Destruct Sequence Initiated' }
       let(:component_options) { super().merge(confirm_message:) }
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with icon: nil' do
+      let(:component_options) { super().merge(icon: nil) }
+      let(:snapshot) do
+        <<~HTML
+          <form class="is-inline-block" #{data_attributes} action="/rockets" accept-charset="UTF-8" method="post">
+            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+            <input type="hidden" name="_method" value="delete" autocomplete="off">
+
+            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+            <button class="button is-danger is-outlined" type="submit">
+              Destroy
+            </button>
+          </form>
+        HTML
+      end
 
       it { expect(rendered).to match_snapshot(snapshot) }
     end
@@ -122,6 +211,33 @@ do
             <button class="button is-danger is-outlined" type="submit">
               <span class="icon">
                 <i class="fa-solid fa-bomb"></i>
+              </span>
+
+              <span>
+                Destroy
+              </span>
+            </button>
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with link: true' do
+      let(:component_options) { super().merge(link: true) }
+      let(:snapshot) do
+        <<~HTML
+          <form class="is-inline-block" #{data_attributes} action="/rockets" accept-charset="UTF-8" method="post">
+            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+
+            <input type="hidden" name="_method" value="delete" autocomplete="off">
+
+            <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
+
+            <button class="button has-text-danger is-backgroundless is-borderless is-shadowless m-0 p-0 is-outlined" type="submit">
+              <span class="icon">
+                <i class="fa-solid fa-eraser"></i>
               </span>
 
               <span>
