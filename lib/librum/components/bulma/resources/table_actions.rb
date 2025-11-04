@@ -39,6 +39,7 @@ module Librum::Components::Bulma::Resources
         confirm_message: destroy_message,
         icon:            nil,
         link:            true,
+        outline:         false,
         text:            'Destroy',
         url:             routes.destroy_path(resource_id)
       )
@@ -46,9 +47,9 @@ module Librum::Components::Bulma::Resources
 
     def build_show_action
       components::Button.new(
-        class_name: bulma_class_names(
-          'has-text-info is-borderless is-shadowless mx-0 px-1 py-0'
-        ),
+        class_name: bulma_class_names('px-1'),
+        color:      'info',
+        link:       true,
         text:       'Show',
         type:       'link',
         url:        routes.show_path(resource_id)
@@ -57,9 +58,9 @@ module Librum::Components::Bulma::Resources
 
     def build_update_action
       components::Button.new(
-        class_name: bulma_class_names(
-          'has-text-warning is-borderless is-shadowless mx-0 px-1 py-0'
-        ),
+        class_name: bulma_class_names('px-1'),
+        color:      'warning',
+        link:       true,
         text:       'Update',
         type:       'link',
         url:        routes.edit_path(resource_id)

@@ -56,11 +56,11 @@ do
     let(:snapshot) do
       <<~HTML
         <div class="buttons is-right is-gapless">
-          <a class="button has-text-info is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0">
+          <a class="button has-text-info is-borderless is-shadowless m-0 p-0 px-1" href="/books/0">
             Show
           </a>
 
-          <a class="button has-text-warning is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0/edit">
+          <a class="button has-text-warning is-borderless is-shadowless m-0 p-0 px-1" href="/books/0/edit">
             Update
           </a>
 
@@ -71,7 +71,7 @@ do
 
             <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-            <button class="button has-text-danger is-backgroundless is-borderless is-shadowless m-0 p-0 is-outlined px-1" type="submit">
+            <button class="button has-text-danger is-borderless is-shadowless m-0 p-0 px-1" type="submit">
               Destroy
             </button>
           </form>
@@ -102,7 +102,7 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="buttons is-right is-gapless">
-            <a class="button has-text-warning is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0/edit">
+            <a class="button has-text-warning is-borderless is-shadowless m-0 p-0 px-1" href="/books/0/edit">
               Update
             </a>
 
@@ -113,7 +113,7 @@ do
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button has-text-danger is-backgroundless is-borderless is-shadowless m-0 p-0 is-outlined px-1" type="submit">
+              <button class="button has-text-danger is-borderless is-shadowless m-0 p-0 px-1" type="submit">
                 Destroy
               </button>
             </form>
@@ -130,7 +130,7 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="buttons is-right is-gapless">
-            <a class="button has-text-info is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0">
+            <a class="button has-text-info is-borderless is-shadowless m-0 p-0 px-1" href="/books/0">
               Show
             </a>
 
@@ -141,7 +141,7 @@ do
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button has-text-danger is-backgroundless is-borderless is-shadowless m-0 p-0 is-outlined px-1" type="submit">
+              <button class="button has-text-danger is-borderless is-shadowless m-0 p-0 px-1" type="submit">
                 Destroy
               </button>
             </form>
@@ -158,11 +158,11 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="buttons is-right is-gapless">
-            <a class="button has-text-info is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0">
+            <a class="button has-text-info is-borderless is-shadowless m-0 p-0 px-1" href="/books/0">
               Show
             </a>
 
-            <a class="button has-text-warning is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0/edit">
+            <a class="button has-text-warning is-borderless is-shadowless m-0 p-0 px-1" href="/books/0/edit">
               Update
             </a>
           </div>
@@ -177,11 +177,11 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="buttons is-right is-gapless">
-            <a class="button has-text-info is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0">
+            <a class="button has-text-info is-borderless is-shadowless m-0 p-0 px-1" href="/books/0">
               Show
             </a>
 
-            <a class="button has-text-warning is-borderless is-shadowless mx-0 px-1 py-0" href="/books/0/edit">
+            <a class="button has-text-warning is-borderless is-shadowless m-0 p-0 px-1" href="/books/0/edit">
               Update
             </a>
 
@@ -192,7 +192,7 @@ do
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button has-text-danger is-backgroundless is-borderless is-shadowless m-0 p-0 is-outlined px-1" type="submit">
+              <button class="button has-text-danger is-borderless is-shadowless m-0 p-0 px-1" type="submit">
                 Destroy
               </button>
             </form>
