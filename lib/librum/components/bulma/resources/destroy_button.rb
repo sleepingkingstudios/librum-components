@@ -17,6 +17,9 @@ module Librum::Components::Bulma::Resources
     option :link,
       boolean: true,
       default: false
+    option :outline,
+      boolean: true,
+      default: true
     option :text,
       default:  'Destroy',
       validate: String
@@ -30,13 +33,6 @@ module Librum::Components::Bulma::Resources
     end
 
     private
-
-    def button_class_name
-      class_names(
-        bulma_class_names('is-outlined'),
-        class_name
-      )
-    end
 
     def button_data
       return {} unless confirm?
@@ -55,11 +51,12 @@ module Librum::Components::Bulma::Resources
     def button_options # rubocop:disable Metrics/MethodLength
       {
         color:       configuration.danger_color,
-        class_name:  button_class_name,
+        class_name:,
         data:        button_data,
         http_method: 'delete',
         icon:,
         link:        link?,
+        outline:     outline?,
         text:,
         type:        'form',
         url:

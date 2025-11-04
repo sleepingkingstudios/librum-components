@@ -34,6 +34,11 @@ do
     default: false
 
   include_deferred 'should define component option',
+    :outline,
+    boolean: true,
+    default: true
+
+  include_deferred 'should define component option',
     :text,
     default: 'Destroy',
     value:   'Self-Destruct'
@@ -235,7 +240,7 @@ do
 
             <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-            <button class="button has-text-danger is-backgroundless is-borderless is-shadowless m-0 p-0 is-outlined" type="submit">
+            <button class="button has-text-danger is-outlined is-borderless is-shadowless m-0 p-0" type="submit">
               <span class="icon">
                 <i class="fa-solid fa-eraser"></i>
               </span>

@@ -19,6 +19,7 @@ module Librum::Components::Bulma
     option :icon,        validate: true
     option :link,        boolean:  true
     option :loading,     boolean:  true
+    option :outline,     boolean:  true
     option :remote
     option :size,        validate: true
     option :target,      validate: { inclusion: LINK_TARGETS }
@@ -61,12 +62,13 @@ module Librum::Components::Bulma
       attributes.merge(data:)
     end
 
-    def button_class
+    def button_class # rubocop:disable Metrics/MethodLength
       class_names(
         bulma_class_names(
           'button',
           button_color_class,
           loading? ? 'is-loading'  : nil,
+          outline? ? 'is-outlined' : nil,
           size     ? "is-#{size}"  : nil,
           *link_button_classes
         ),
@@ -94,10 +96,8 @@ module Librum::Components::Bulma
 
     def link_button_classes
       return [] unless link?
-      return [] if type == 'link'
 
       %w[
-        is-backgroundless
         is-borderless
         is-shadowless
         m-0

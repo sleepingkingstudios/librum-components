@@ -44,6 +44,11 @@ do
     default: false,
     boolean: true
 
+  include_deferred 'should define component option',
+    :outline,
+    default: false,
+    boolean: true
+
   include_deferred 'should define component option', :remote
 
   include_deferred 'should define component option',
@@ -188,7 +193,7 @@ do
         let(:component_options) { super().merge(link: true) }
         let(:snapshot) do
           <<~HTML
-            <button class="button has-text-violet is-backgroundless is-borderless is-shadowless m-0 p-0" type="button"></button>
+            <button class="button has-text-violet is-borderless is-shadowless m-0 p-0" type="button"></button>
           HTML
         end
 
@@ -243,7 +248,7 @@ do
       let(:component_options) { super().merge(link: true) }
       let(:snapshot) do
         <<~HTML
-          <button class="button is-backgroundless is-borderless is-shadowless m-0 p-0" type="button"></button>
+          <button class="button is-borderless is-shadowless m-0 p-0" type="button"></button>
         HTML
       end
 
@@ -255,6 +260,17 @@ do
       let(:snapshot) do
         <<~HTML
           <button class="button is-loading" type="button"></button>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
+
+    describe 'with outline: true' do
+      let(:component_options) { super().merge(outline: 'true') }
+      let(:snapshot) do
+        <<~HTML
+          <button class="button is-outlined" type="button"></button>
         HTML
       end
 
@@ -385,7 +401,7 @@ do
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
-              <button class="button is-backgroundless is-borderless is-shadowless m-0 p-0" type="submit"></button>
+              <button class="button is-borderless is-shadowless m-0 p-0" type="submit"></button>
             </form>
           HTML
         end
@@ -522,6 +538,11 @@ do
 
       describe 'with link: true' do
         let(:component_options) { super().merge(link: true) }
+        let(:snapshot) do
+          <<~HTML
+            <a class="button is-borderless is-shadowless m-0 p-0" href="/path/to/resource"></a>
+          HTML
+        end
 
         it { expect(rendered).to match_snapshot(snapshot) }
       end
