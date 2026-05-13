@@ -11,9 +11,6 @@ module Librum::Components::RSpec
     PRETTY_RENDERER = Librum::Components::RSpec::Utils::PrettyRender.new.freeze
     private_constant :PRETTY_RENDERER
 
-    VIEW_CONTEXT = ActionController::Base.new.view_context.freeze
-    private_constant :VIEW_CONTEXT
-
     # Generates a normalized representating of a component or fragment.
     #
     # @param component
@@ -44,7 +41,7 @@ module Librum::Components::RSpec
     def render_component(component, &)
       validate_component!(component)
 
-      VIEW_CONTEXT.render(component, &)
+      view_context.render(component, &)
     end
 
     # Renders a component to a Nokogiri document fragment.
@@ -68,5 +65,7 @@ module Librum::Components::RSpec
         message,
         caller(1..)
     end
+
+    def view_context = ActionController::Base.new.view_context
   end
 end
