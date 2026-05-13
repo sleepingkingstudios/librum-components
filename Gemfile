@@ -21,11 +21,11 @@ group :development, :test do
   gem 'rspec-sleeping_king_studios', '~> 2.8', '>= 2.8.2'
   gem 'simplecov', '~> 0.22'
 
-  gem 'rubocop', '~> 1.79'
-  gem 'rubocop-factory_bot', '~> 2.27'
-  gem 'rubocop-rails', '~> 2.33'
-  gem 'rubocop-rspec', '~> 3.6'
-  gem 'rubocop-rspec_rails', '~> 2.31'
+  gem 'rubocop', '~> 1.86'
+  gem 'rubocop-factory_bot', '~> 2.28'
+  gem 'rubocop-rails', '~> 2.35'
+  gem 'rubocop-rspec', '~> 3.9'
+  gem 'rubocop-rspec_rails', '~> 2.32'
 
   gem 'sleeping_king_studios-tasks',
     git: 'https://github.com/sleepingkingstudios/sleeping_king_studios-tasks'
