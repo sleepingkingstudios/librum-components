@@ -6,6 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'rails', '~> 8.1'
+gem 'view_component', '~> 4.10'
 
 gem 'plumbum',
   git: 'https://github.com/sleepingkingstudios/plumbum'
