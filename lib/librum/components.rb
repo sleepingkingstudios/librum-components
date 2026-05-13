@@ -13,7 +13,7 @@ loader.setup
 
 require 'plumbum'
 
-module Librum
+module Librum # rubocop:disable Style/OneClassPerFile
   # Component library for Librum applications.
   module Components
     # Required keys for the base components provider.

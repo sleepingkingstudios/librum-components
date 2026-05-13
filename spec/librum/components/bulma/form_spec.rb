@@ -87,7 +87,7 @@ do
       let(:snapshot) do
         <<~HTML
           <form class="fixed-grid has-3-cols" action="/rockets" accept-charset="UTF-8" method="post">
-            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+            <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
             <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 

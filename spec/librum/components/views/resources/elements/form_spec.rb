@@ -138,7 +138,7 @@ do
         let(:snapshot) do
           <<~HTML
             <form action="/books" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
@@ -177,7 +177,7 @@ do
           let(:snapshot) do
             <<~HTML
               <form action="/books" accept-charset="UTF-8" data-remote="true" method="post">
-                <input name="utf8" type="hidden" value="✓" autocomplete="off">
+                <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
                 <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
@@ -206,7 +206,7 @@ do
         let(:snapshot) do
           <<~HTML
             <form action="/books/example-book" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="patch" autocomplete="off">
 
@@ -247,7 +247,7 @@ do
           let(:snapshot) do
             <<~HTML
               <form action="/books/example-book" accept-charset="UTF-8" data-remote="true" method="post">
-                <input name="utf8" type="hidden" value="✓" autocomplete="off">
+                <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
                 <input type="hidden" name="_method" value="patch" autocomplete="off">
 

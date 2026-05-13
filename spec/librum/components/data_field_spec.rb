@@ -380,7 +380,7 @@ RSpec.describe Librum::Components::DataField, type: :component do
           klass.option :resource
 
           klass.define_method :call do
-            <<~HTML.html_safe # rubocop:disable Rails/OutputSafety
+            <<~HTML.html_safe
               <a>Show</a>
 
               <a>Edit</a>

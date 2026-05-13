@@ -65,7 +65,7 @@ do
           </a>
 
           <form class="is-inline-block" #{data_attributes} action="/books/0" accept-charset="UTF-8" method="post">
-            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+            <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
             <input type="hidden" name="_method" value="delete" autocomplete="off">
 
@@ -107,7 +107,7 @@ do
             </a>
 
             <form class="is-inline-block" #{data_attributes} action="/books/0" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
 
@@ -135,7 +135,7 @@ do
             </a>
 
             <form class="is-inline-block" #{data_attributes} action="/books/0" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
 
@@ -186,7 +186,7 @@ do
             </a>
 
             <form class="is-inline-block" #{data_attributes} action="/books/0" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
 

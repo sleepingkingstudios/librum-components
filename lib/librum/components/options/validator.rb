@@ -70,12 +70,14 @@ module Librum::Components::Options
     def call_validation_method(method_name:, name:, value:, validate: nil, **)
       if array_validation?(validate)
         validate_option_array(name:, value:, validate:)
-      elsif aggregator.respond_to?(method_name)
-        aggregator.public_send(method_name, value, as: name, **)
-      else
+      elsif component.respond_to?(method_name, true)
         message = component.send(method_name, value, as: name, **)
 
         aggregator << message if message.present?
+      elsif aggregator.respond_to?(method_name)
+        aggregator.public_send(method_name, value, as: name, **)
+      else
+        component.send(method_name, value, as: name, **)
       end
     end
 

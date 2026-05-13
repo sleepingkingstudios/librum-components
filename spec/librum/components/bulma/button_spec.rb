@@ -311,7 +311,7 @@ do
       let(:snapshot) do
         <<~HTML
           <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
-            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+            <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
             <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
@@ -340,7 +340,7 @@ do
         let(:snapshot) do
           <<~HTML
             <form class="is-inline-block" data-option="value" data-custom-ok="true" action="/path/to/resource" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
@@ -357,7 +357,7 @@ do
         let(:snapshot) do
           <<~HTML
             <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
 
@@ -376,7 +376,7 @@ do
         let(:snapshot) do
           <<~HTML
             <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
@@ -397,7 +397,7 @@ do
         let(:snapshot) do
           <<~HTML
             <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
@@ -420,7 +420,7 @@ do
         let(:snapshot) do
           <<~HTML
             <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" data-remote="true" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
@@ -437,7 +437,7 @@ do
         let(:snapshot) do
           <<~HTML
             <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
@@ -463,7 +463,7 @@ do
         let(:snapshot) do
           <<~HTML
             <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="delete" autocomplete="off">
 
@@ -493,7 +493,7 @@ do
         let(:snapshot) do
           <<~HTML
             <form class="is-inline-block" action="/path/to/resource" accept-charset="UTF-8" data-remote="true" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
