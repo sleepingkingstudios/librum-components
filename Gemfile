@@ -9,7 +9,7 @@ gem 'rails', '~> 8.1'
 
 gem 'plumbum',
   git: 'https://github.com/sleepingkingstudios/plumbum'
-gem 'sleeping_king_studios-tools', '~> 1.2'
+gem 'sleeping_king_studios-tools', '~> 1.3'
 
 group :development, :test do
   gem 'byebug', '~> 11.1'
@@ -18,7 +18,7 @@ group :development, :test do
     git: 'https://github.com/sleepingkingstudios/cuprum-rails'
 
   gem 'rspec', '~> 3.13'
-  gem 'rspec-sleeping_king_studios', '~> 2.8', '>= 2.8.2'
+  gem 'rspec-sleeping_king_studios', '~> 2.8', '>= 2.8.4'
   gem 'simplecov', '~> 0.22'
 
   gem 'rubocop', '~> 1.86'
