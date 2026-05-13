@@ -200,7 +200,7 @@ RSpec.describe Librum::Components::Form, type: :component do
       let(:snapshot) do
         <<~HTML
           <form action="/rockets" accept-charset="UTF-8" method="post">
-            <input name="utf8" type="hidden" value="✓" autocomplete="off">
+            <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
             <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
           </form>
@@ -216,7 +216,7 @@ RSpec.describe Librum::Components::Form, type: :component do
         let(:snapshot) do
           <<~HTML
             <form class="custom-class" action="/rockets" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
             </form>
@@ -233,7 +233,7 @@ RSpec.describe Librum::Components::Form, type: :component do
         let(:snapshot) do
           <<~HTML
             <form action="/rockets/imp-vi" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="_method" value="patch" autocomplete="off">
 
@@ -256,7 +256,7 @@ RSpec.describe Librum::Components::Form, type: :component do
         let(:snapshot) do
           <<~HTML
             <form action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
             </form>
@@ -276,7 +276,7 @@ RSpec.describe Librum::Components::Form, type: :component do
         let(:snapshot) do
           <<~HTML
             <form action="/rockets" accept-charset="UTF-8" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
 
@@ -298,7 +298,7 @@ RSpec.describe Librum::Components::Form, type: :component do
         let(:snapshot) do
           <<~HTML
             <form action="/rockets" accept-charset="UTF-8" data-remote="true" method="post">
-              <input name="utf8" type="hidden" value="✓" autocomplete="off">
+              <input type="hidden" name="utf8" value="✓" autocomplete="off">
 
               <input type="hidden" name="authenticity_token" value="[token]" autocomplete="off">
             </form>

@@ -5,6 +5,8 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in librum-components.gemspec.
 gemspec
 
+gem 'rails', '~> 8.1'
+
 gem 'plumbum',
   git: 'https://github.com/sleepingkingstudios/plumbum'
 gem 'sleeping_king_studios-tools', '~> 1.2'
