@@ -8,8 +8,7 @@ gemspec
 gem 'rails', '~> 8.1'
 gem 'view_component', '~> 4.10'
 
-gem 'plumbum',
-  git: 'https://github.com/sleepingkingstudios/plumbum'
+gem 'plumbum', '~> 0.1'
 gem 'sleeping_king_studios-tools', '~> 1.3'
 
 group :development, :test do

@@ -52,8 +52,8 @@ module Librum::Components
 
     provider Librum::Components.provider
 
-    dependency :components,    optional: true
-    dependency :configuration, optional: true
+    dependency :components,    default: -> { default_components }
+    dependency :configuration, default: -> { default_configuration }
 
     class << self
       # @return [true, false] true if the component class is an abstract class;
@@ -171,19 +171,6 @@ module Librum::Components
       return super(*) if prefix.blank?
 
       super(*).split.map { |str| "#{prefix}#{str}" }.join(' ')
-    end
-
-    # @return [Module] the class scope for the component library.
-    def components
-      # @todo: Replace this with dependency(default:).
-      super || default_components
-    end
-
-    # @return [Librum::Core::Configuration] the configuration for the component
-    #   library.
-    def configuration
-      # @todo: Replace this with dependency(default:).
-      super || default_configuration
     end
 
     # @return [true, false] if true, indicates that the component represents a
