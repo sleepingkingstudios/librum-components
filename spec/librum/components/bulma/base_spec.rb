@@ -12,6 +12,9 @@ do
   let(:default_configuration) do
     configuration_class.default
   end
+  let(:default_theme) do
+    theme_class.default
+  end
 
   include_deferred 'should be a view component'
 

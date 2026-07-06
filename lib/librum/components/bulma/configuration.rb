@@ -5,12 +5,6 @@ require 'librum/components'
 module Librum::Components::Bulma
   # Configuration object for Librum::Components using the Bulma framework.
   class Configuration < Librum::Components::Configuration
-    class << self
-      # @return [Librum::Components::Bulma::Configuration] a configuration
-      #   instance with default settings.
-      def default = @default ||= new
-    end
-
     # Default options for configuration for a Bulma application.
     DEFAULTS = Librum::Components::Configuration::DEFAULTS.merge(
       # See https://bulma.io/documentation/helpers/palette-helpers/

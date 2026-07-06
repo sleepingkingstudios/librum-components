@@ -13,6 +13,7 @@ module Librum::Components::RSpec
 
       other.instance_eval do
         let(:configuration_class) { Librum::Components::Bulma::Configuration }
+        let(:theme_class)         { Librum::Components::Bulma::Theme }
       end
     end
   end

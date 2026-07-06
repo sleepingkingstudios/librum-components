@@ -42,7 +42,7 @@ RSpec.describe Librum::Components::Bulma::Configuration do
     end
 
     describe 'default_icon_family' do
-      it 'should configured the default icon family' do
+      it 'should configure the default icon family' do
         expect(described_class::DEFAULTS['default_icon_family'])
           .to be == 'fa-solid'
       end
@@ -53,7 +53,7 @@ RSpec.describe Librum::Components::Bulma::Configuration do
         Librum::Components::Icons::FontAwesome::ICON_FAMILIES.to_a
       end
 
-      it 'should configured the icon families' do
+      it 'should configure the icon families' do
         expect(described_class::DEFAULTS['icon_families']).to be == expected
       end
     end
