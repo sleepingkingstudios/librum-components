@@ -50,7 +50,7 @@ module Librum::Components::Bulma::Resources
 
     def button_options # rubocop:disable Metrics/MethodLength
       {
-        color:       configuration.danger_color,
+        color:       theme.danger_color,
         class_name:,
         data:        button_data,
         http_method: 'delete',

@@ -185,7 +185,7 @@ module Librum::Components
     def render_invalid # rubocop:disable Metrics/MethodLength
       if components.const_defined?('Label')
         render components::Label.new(
-          color: configuration.danger_color,
+          color: theme.error_color,
           icon:  'bug',
           text:  "Unknown Type #{field.type.inspect}"
         )
