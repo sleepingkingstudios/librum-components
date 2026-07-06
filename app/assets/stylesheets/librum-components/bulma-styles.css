@@ -15,6 +15,14 @@
  * COMPONENTS
  ******************************************************************************/
 
+.alert {
+  border-radius: var(--bulma-radius);
+  border-style: solid;
+  border-width: var(--bulma-control-border-width);
+
+  padding: calc(0.5em - var(--bulma-control-border-width))
+}
+
 .buttons.is-gapless { gap: 0; }
 
 .column { min-width: 0; }
