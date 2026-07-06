@@ -37,10 +37,6 @@ RSpec.describe Librum::Components::Bulma::Configuration do
       it { expect(described_class::DEFAULTS['colors']).to be == expected }
     end
 
-    describe 'danger_color' do
-      it { expect(described_class::DEFAULTS['danger_color']).to be == 'danger' }
-    end
-
     describe 'default_icon_family' do
       it 'should configure the default icon family' do
         expect(described_class::DEFAULTS['default_icon_family'])

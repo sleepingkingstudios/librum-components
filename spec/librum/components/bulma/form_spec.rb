@@ -280,7 +280,7 @@ do
         let(:expected_options) do
           super().merge(
             color:      'danger',
-            icon_right: 'exclamation-triangle',
+            icon_right: 'circle-xmark',
             message:    'is taken, is invalid'
           )
         end

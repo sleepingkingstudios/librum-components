@@ -462,7 +462,7 @@ RSpec.describe Librum::Components::DataField, type: :component do
           namespace.const_set(:Label, Spec::Label)
         end
 
-        include_deferred 'with configuration', danger_color: 'danger'
+        include_deferred 'with theme', error_color: 'danger'
 
         it { expect(rendered).to match_snapshot(snapshot) }
       end
