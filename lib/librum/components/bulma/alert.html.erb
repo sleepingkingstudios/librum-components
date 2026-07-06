@@ -1,5 +1,9 @@
-<div class="<%= class_name %>">
+<%= content_tag('div', class: class_name, **dismissable_attributes) do %>
   <%= render(build_icon) %>
 
   <%= message %>
-</div>
+
+  <% if dismissable? %>
+    <%= dismiss_button %>
+  <% end %>
+<% end %>

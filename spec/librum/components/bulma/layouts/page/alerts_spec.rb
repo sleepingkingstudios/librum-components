@@ -13,9 +13,10 @@ do
         type:    'warning'
       },
       {
-        icon:    'radiation',
-        message: 'Meltdown imminent',
-        type:    'danger'
+        dismissable: false,
+        icon:        'radiation',
+        message:     'Meltdown imminent',
+        type:        'danger'
       }
     ]
   end
@@ -119,12 +120,18 @@ do
     let(:snapshot) do
       <<~HTML
         <div class="block">
-          <div class="alert has-text-warning is-warning mb-1">
+          <div class="alert has-text-warning is-warning mb-1" x-on:close="open = false" x-data="{ open: true }" x-show="open">
             <span class="icon has-text-weight-bold">
               <i class="fa-solid fa-#{theme.warning_icon}"></i>
             </span>
 
             Reactor temperature critical
+
+            <button class="is-pulled-right" x-on:click="$dispatch('close')">
+              <span class="icon">
+                <i class="fa-solid fa-circle-xmark"></i>
+              </span>
+            </button>
           </div>
 
           <div class="alert has-text-danger is-danger mb-1">

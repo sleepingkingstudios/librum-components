@@ -5,9 +5,10 @@ require 'librum/components'
 module Librum::Components::Bulma
   # Alert component with icon and message.
   class Alert < Librum::Components::Bulma::Base
-    option :icon,    validate: true
-    option :message, required: true
-    option :type,    required: true
+    option :dismissable, boolean:  true, default: true
+    option :icon,        validate: true
+    option :message,     required: true
+    option :type,        required: true
 
     # @return [String] the configured icon, or the default alert icon for the
     #   specified alert type.
@@ -36,6 +37,28 @@ module Librum::Components::Bulma
 
     def color
       theme.options["#{type}_color"]
+    end
+
+    def dismiss_button
+      class_name = bulma_class_names('is-pulled-right')
+      attributes = {
+        class:        class_name,
+        'x-on:click': "$dispatch('close')"
+      }
+
+      content_tag('button', **attributes) do
+        render components::Icon.new(icon: 'circle-xmark')
+      end
+    end
+
+    def dismissable_attributes
+      return unless dismissable?
+
+      {
+        'x-on:close': 'open = false',
+        'x-data':     '{ open: true }',
+        'x-show':     'open'
+      }
     end
 
     def icon_class_name
