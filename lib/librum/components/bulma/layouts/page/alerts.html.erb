@@ -1,0 +1,5 @@
+<div class="<%= class_name %>">
+  <% alerts&.each do |alert| %>
+    <%= render(build_alert(alert)) %>
+  <% end %>
+</div>

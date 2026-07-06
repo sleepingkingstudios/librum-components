@@ -1,7 +1,9 @@
 <%= render(build_header) %>
 
-<main class="section" style="flex: 1;">
+<main class="section pt-5" style="flex: 1;">
   <div class="<%= container_class_name %>">
+    <%= render_alerts %>
+
     <%= content %>
   </div>
 </main>

@@ -43,6 +43,12 @@ do
     let(:options_with_defaults) do
       { max_width: 'desktop' }.merge(component_options)
     end
+    let(:render_alerts) do
+      component = described_class::Alerts.new(alerts:)
+      rendered  = pretty_render(component)
+
+      indent(rendered, 4)
+    end
     let(:render_header) do
       options   =
         options_with_defaults
@@ -61,10 +67,19 @@ do
       <<~HTML
         #{render_header.strip}
 
-        <main class="section" style="flex: 1;">
+        <main class="section pt-5" style="flex: 1;">
           <div class="container content is-max-desktop"></div>
         </main>
       HTML
+    end
+
+    define_method :indent do |str, count|
+      offset = ' ' * count
+
+      str
+        .lines
+        .map { |line| line.start_with?("\n") ? line : "#{offset}#{line}" }
+        .join
     end
 
     it { expect(rendered).to match_snapshot(snapshot) }
@@ -76,7 +91,7 @@ do
         <<~HTML
           #{render_header.strip}
 
-          <main class="section" style="flex: 1;">
+          <main class="section pt-5" style="flex: 1;">
             <div class="container content is-max-desktop">
               Page Content
             </div>
@@ -85,6 +100,68 @@ do
       end
 
       it { expect(rendered).to match_snapshot(snapshot) }
+
+      describe 'with alerts' do
+        let(:alerts) do
+          [
+            {
+              message: 'Reactor temperature critical',
+              type:    'warning'
+            },
+            {
+              icon:    'radiation',
+              message: 'Meltdown imminent',
+              type:    'danger'
+            }
+          ]
+        end
+        let(:component_options) { super().merge(alerts:) }
+        let(:snapshot) do
+          <<~HTML
+            #{render_header.strip}
+
+            <main class="section pt-5" style="flex: 1;">
+              <div class="container content is-max-desktop">
+                #{render_alerts.strip}
+
+                Page Content
+              </div>
+            </main>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot }
+      end
+    end
+
+    describe 'with alerts' do
+      let(:alerts) do
+        [
+          {
+            message: 'Reactor temperature critical',
+            type:    'warning'
+          },
+          {
+            icon:    'radiation',
+            message: 'Meltdown imminent',
+            type:    'danger'
+          }
+        ]
+      end
+      let(:component_options) { super().merge(alerts:) }
+      let(:snapshot) do
+        <<~HTML
+          #{render_header.strip}
+
+          <main class="section pt-5" style="flex: 1;">
+            <div class="container content is-max-desktop">
+              #{render_alerts.strip}
+            </div>
+          </main>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with options for the page header' do
@@ -101,7 +178,7 @@ do
         <<~HTML
           #{render_header.strip}
 
-          <main class="section" style="flex: 1;">
+          <main class="section pt-5" style="flex: 1;">
             <div class="container content is-max-desktop"></div>
           </main>
         HTML
@@ -121,7 +198,7 @@ do
         <<~HTML
           #{render_header.strip}
 
-          <main class="section" style="flex: 1;">
+          <main class="section pt-5" style="flex: 1;">
             <div class="container content is-max-desktop"></div>
           </main>
 
@@ -150,7 +227,7 @@ do
         <<~HTML
           #{render_header.strip}
 
-          <main class="section" style="flex: 1;">
+          <main class="section pt-5" style="flex: 1;">
             <div class="container content is-max-tablet">
               Page Content
             </div>
