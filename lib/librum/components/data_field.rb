@@ -7,6 +7,7 @@ module Librum::Components
   class DataField < Librum::Components::Base # rubocop:disable Metrics/ClassLength
     DEFAULTS = {
       align:     nil,
+      color:     nil,
       label:     nil,
       transform: nil,
       truncate:  nil,
@@ -141,13 +142,17 @@ module Librum::Components
       case field.type.intern
       when :actions then render_actions
       when :boolean then render_boolean
-      when :text    then process_value(raw_value)
+      when :text    then render_text
       else
         render_invalid
       end
     end
 
     private
+
+    def color
+      field.color.is_a?(Proc) ? field.color.call(raw_value) : field.color
+    end
 
     def process_value(value)
       value
@@ -196,16 +201,45 @@ module Librum::Components
       end
     end
 
-    def render_value # rubocop:disable Metrics/AbcSize
-      return sanitize(field.value.call(data)) if field.value.is_a?(Proc)
+    def render_label(value)
+      if components.const_defined?('Label')
+        render components::Label.new(
+          color:,
+          text:  value
+        )
+      else
+        content_tag('span', style: 'color: #f00;') do
+          'Missing Component Label'
+        end
+      end
+    end
 
+    def render_label?
+      field.color.present?
+    end
+
+    def render_text
+      value = process_value(raw_value)
+
+      return value unless render_label?
+
+      render_label(value)
+    end
+
+    def render_value # rubocop:disable Metrics/AbcSize
       return render(field.value) if field.value.is_a?(ViewComponent::Base)
 
       if field.value.is_a?(Class)
         return render(field.value.new(**options.except(:field)))
       end
 
-      sanitize(process_value(field.value))
+      value = field.value
+      value = value.is_a?(Proc) ? value.call(data) : process_value(value)
+      value = sanitize(value)
+
+      return value unless render_label?
+
+      render_label(value)
     end
 
     def scrub_value(value)

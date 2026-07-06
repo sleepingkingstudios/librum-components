@@ -138,6 +138,16 @@ RSpec.describe Librum::Components::DataField, type: :component do
       end
     end
 
+    describe '#color' do
+      include_examples 'should define reader', :color, nil
+
+      context 'when initialized with color: value' do
+        let(:properties) { super().merge(color: 'danger') }
+
+        it { expect(definition.color).to be == 'danger' }
+      end
+    end
+
     describe '#label' do
       include_examples 'should define reader', :label, -> { key.to_s.titleize }
 
@@ -286,6 +296,95 @@ RSpec.describe Librum::Components::DataField, type: :component do
       let(:data)  { super().merge('title' => value) }
 
       it { expect(rendered).to be == data[component.field.key] }
+    end
+
+    context 'with field: { color: a Proc }' do
+      let(:color) { ->(*) { 'danger' } }
+      let(:field) { super().merge(color:) }
+      let(:snapshot) do
+        <<~HTML
+          <span style="color: #f00;">
+            Missing Component Label
+          </span>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+
+      wrap_deferred 'with components' do
+        let(:snapshot) do
+          <<~HTML
+            <span text-color="#{component.field.color.call}">
+              #{data[component.field.key]}
+            </span>
+          HTML
+        end
+
+        example_class 'Spec::Label', Librum::Components::Base do |klass|
+          klass.option :color
+          klass.option :icon
+          klass.option :text
+
+          klass.define_method :call do
+            # rubocop:disable Rails/OutputSafety
+            <<~HTML.html_safe
+              <span text-color="#{color}">#{text}</span>
+            HTML
+            # rubocop:enable Rails/OutputSafety
+          end
+        end
+
+        before(:example) do
+          namespace = Librum::Components.provider.get('components')
+          namespace.const_set(:Label, Spec::Label)
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
+    end
+
+    context 'with field: { color: a String }' do
+      let(:field) { super().merge(color: 'danger') }
+      let(:snapshot) do
+        <<~HTML
+          <span style="color: #f00;">
+            Missing Component Label
+          </span>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+
+      wrap_deferred 'with components' do
+        let(:snapshot) do
+          <<~HTML
+            <span text-color="#{component.field.color}">
+              #{data[component.field.key]}
+            </span>
+          HTML
+        end
+
+        example_class 'Spec::Label', Librum::Components::Base do |klass|
+          klass.option :color
+          klass.option :icon
+          klass.option :text
+
+          klass.define_method :call do
+            # rubocop:disable Rails/OutputSafety
+            <<~HTML.html_safe
+              <span text-color="#{color}">#{text}</span>
+            HTML
+            # rubocop:enable Rails/OutputSafety
+          end
+        end
+
+        before(:example) do
+          namespace = Librum::Components.provider.get('components')
+          namespace.const_set(:Label, Spec::Label)
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+      end
     end
 
     context 'with field: { transform: a Proc }' do
@@ -472,6 +571,95 @@ RSpec.describe Librum::Components::DataField, type: :component do
       let(:field) { super().merge(value: 'Static Value') }
 
       it { expect(rendered).to be == 'Static Value' }
+
+      context 'with field: { color: a Proc }' do
+        let(:color) { ->(*) { 'danger' } }
+        let(:field) { super().merge(color:) }
+        let(:snapshot) do
+          <<~HTML
+            <span style="color: #f00;">
+              Missing Component Label
+            </span>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+
+        wrap_deferred 'with components' do
+          let(:snapshot) do
+            <<~HTML
+              <span text-color="#{component.field.color.call}">
+                #{component.field.value}
+              </span>
+            HTML
+          end
+
+          example_class 'Spec::Label', Librum::Components::Base do |klass|
+            klass.option :color
+            klass.option :icon
+            klass.option :text
+
+            klass.define_method :call do
+              # rubocop:disable Rails/OutputSafety
+              <<~HTML.html_safe
+                <span text-color="#{color}">#{text}</span>
+              HTML
+              # rubocop:enable Rails/OutputSafety
+            end
+          end
+
+          before(:example) do
+            namespace = Librum::Components.provider.get('components')
+            namespace.const_set(:Label, Spec::Label)
+          end
+
+          it { expect(rendered).to match_snapshot(snapshot) }
+        end
+      end
+
+      context 'with field: { color: a String }' do
+        let(:field) { super().merge(color: 'danger') }
+        let(:snapshot) do
+          <<~HTML
+            <span style="color: #f00;">
+              Missing Component Label
+            </span>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot(snapshot) }
+
+        wrap_deferred 'with components' do
+          let(:snapshot) do
+            <<~HTML
+              <span text-color="#{component.field.color}">
+                #{component.field.value}
+              </span>
+            HTML
+          end
+
+          example_class 'Spec::Label', Librum::Components::Base do |klass|
+            klass.option :color
+            klass.option :icon
+            klass.option :text
+
+            klass.define_method :call do
+              # rubocop:disable Rails/OutputSafety
+              <<~HTML.html_safe
+                <span text-color="#{color}">#{text}</span>
+              HTML
+              # rubocop:enable Rails/OutputSafety
+            end
+          end
+
+          before(:example) do
+            namespace = Librum::Components.provider.get('components')
+            namespace.const_set(:Label, Spec::Label)
+          end
+
+          it { expect(rendered).to match_snapshot(snapshot) }
+        end
+      end
     end
 
     context 'with field: { value: an HTML string }' do
