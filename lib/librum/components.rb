@@ -17,7 +17,7 @@ module Librum # rubocop:disable Style/OneClassPerFile
   # Component library for Librum applications.
   module Components
     # Required keys for the base components provider.
-    PROVIDER_KEYS = %w[components configuration routes].freeze
+    PROVIDER_KEYS = %w[components configuration routes theme].freeze
 
     class << self
       # @return [Pathname] the javascript path for the gem.

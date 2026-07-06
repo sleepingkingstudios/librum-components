@@ -70,5 +70,35 @@ module Librum::Components::RSpec::Deferred
         )
       end
     end
+
+    deferred_context 'with theme' do |**values|
+      let(:theme_class) do
+        next super() if defined?(super())
+
+        Librum::Components::Theme
+      end
+      let(:theme) do
+        previous_options = defined?(super()) ? super().options : {}
+
+        theme_class.new(
+          **theme_class::DEFAULTS,
+          **previous_options,
+          **values
+        )
+      end
+      let(:expected_theme) do
+        next super() if defined?(super())
+
+        theme
+      end
+
+      before(:example) do
+        stub_provider(
+          Librum::Components.provider,
+          :theme,
+          theme
+        )
+      end
+    end
   end
 end

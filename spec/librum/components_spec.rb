@@ -8,7 +8,7 @@ RSpec.describe Librum::Components do
   end
 
   describe '::PROVIDER_KEYS' do
-    let(:expected) { %w[components configuration routes] }
+    let(:expected) { %w[components configuration routes theme] }
 
     include_examples 'should define immutable constant',
       :PROVIDER_KEYS,
@@ -143,7 +143,8 @@ RSpec.describe Librum::Components do
         values = {
           components:    Module.new,
           configuration: Librum::Components::Configuration.default,
-          routes:        Struct.new(:root_path).new('/')
+          routes:        Struct.new(:root_path).new('/'),
+          theme:         Librum::Components::Theme.default
         }
 
         Plumbum::ManyProvider.new(values:)

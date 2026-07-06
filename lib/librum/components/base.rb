@@ -54,6 +54,7 @@ module Librum::Components
 
     dependency :components,    default: -> { default_components }
     dependency :configuration, default: -> { default_configuration }
+    dependency :theme,         default: -> { default_theme }
 
     class << self
       # @return [true, false] true if the component class is an abstract class;
@@ -195,6 +196,10 @@ module Librum::Components
 
     def default_configuration
       Librum::Components::Configuration.default
+    end
+
+    def default_theme
+      Librum::Components::Theme.default
     end
 
     def present?(value)
