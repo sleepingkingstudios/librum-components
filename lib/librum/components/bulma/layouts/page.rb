@@ -5,6 +5,7 @@ require 'librum/components'
 module Librum::Components::Bulma::Layouts
   # Flexible layout component used to render a full content page.
   class Page < Librum::Components::Bulma::Base
+    option :alerts, default: []
     option :brand
     option :color, validate: true
     option :copyright
@@ -20,6 +21,12 @@ module Librum::Components::Bulma::Layouts
     def is_layout? = true # rubocop:disable Naming/PredicatePrefix
 
     private
+
+    def build_alerts
+      return if alerts.nil? || alerts.empty? # rubocop:disable Rails/Blank
+
+      Librum::Components::Bulma::Layouts::Page::Alerts.new(alerts:)
+    end
 
     def build_footer
       Librum::Components::Bulma::Layouts::Page::Footer.new(
@@ -47,6 +54,12 @@ module Librum::Components::Bulma::Layouts
         'content',
         "is-max-#{max_width}"
       )
+    end
+
+    def render_alerts
+      return if alerts.nil? || alerts.empty? # rubocop:disable Rails/Blank
+
+      render(build_alerts)
     end
   end
 end
