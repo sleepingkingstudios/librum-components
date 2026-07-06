@@ -52,8 +52,9 @@ module Librum::Components
 
     provider Librum::Components.provider
 
-    dependency :components,    optional: true
-    dependency :configuration, optional: true
+    dependency :components,    default: -> { default_components }
+    dependency :configuration, default: -> { default_configuration }
+    dependency :theme,         default: -> { default_theme }
 
     class << self
       # @return [true, false] true if the component class is an abstract class;
@@ -173,19 +174,6 @@ module Librum::Components
       super(*).split.map { |str| "#{prefix}#{str}" }.join(' ')
     end
 
-    # @return [Module] the class scope for the component library.
-    def components
-      # @todo: Replace this with dependency(default:).
-      super || default_components
-    end
-
-    # @return [Librum::Core::Configuration] the configuration for the component
-    #   library.
-    def configuration
-      # @todo: Replace this with dependency(default:).
-      super || default_configuration
-    end
-
     # @return [true, false] if true, indicates that the component represents a
     #   full-page layout. Defaults to false.
     def is_layout? = false # rubocop:disable Naming/PredicatePrefix
@@ -208,6 +196,10 @@ module Librum::Components
 
     def default_configuration
       Librum::Components::Configuration.default
+    end
+
+    def default_theme
+      Librum::Components::Theme.default
     end
 
     def present?(value)

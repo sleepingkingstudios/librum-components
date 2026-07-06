@@ -219,6 +219,22 @@ module Librum::Components::RSpec::Deferred
           end
         end
       end
+
+      describe '#theme' do
+        let(:default_theme) do
+          next super() if defined?(super())
+
+          Librum::Components::Theme.default
+        end
+
+        include_examples 'should define reader',
+          :theme,
+          -> { match(default_theme) }
+
+        wrap_deferred 'with theme', custom_key: 'custom_value' do
+          it { expect(subject.theme).to match(expected_theme) }
+        end
+      end
     end
 
     deferred_examples 'should be a view component' \
@@ -685,6 +701,12 @@ module Librum::Components::RSpec::Deferred
 
           it { expect(component.strip_tags(raw_string)).to be == expected }
         end
+      end
+
+      describe '#theme' do
+        include_examples 'should define reader',
+          :theme,
+          -> { be_a(Librum::Components::Theme) }
       end
     end
 

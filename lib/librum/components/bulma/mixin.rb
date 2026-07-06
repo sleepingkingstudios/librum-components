@@ -26,5 +26,9 @@ module Librum::Components::Bulma
     def default_configuration
       Librum::Components::Bulma::Configuration.default
     end
+
+    def default_theme
+      Librum::Components::Bulma::Theme.default
+    end
   end
 end

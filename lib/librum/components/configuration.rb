@@ -5,12 +5,6 @@ require 'librum/components'
 module Librum::Components
   # Configuration object for Librum::Components.
   class Configuration
-    class << self
-      # @return [Librum::Components::Configuration] a configuration instance
-      #   with default settings.
-      def default = @default ||= new
-    end
-
     # Default options for configuration.
     DEFAULTS = {
       'colors'              => [].freeze,
@@ -21,9 +15,24 @@ module Librum::Components
       'sizes'               => [].freeze
     }.freeze
 
+    class << self
+      # @return [Librum::Components::Theme] a theme instance with default
+      #   settings.
+      def default = @default ||= new
+    end
+
     # @param options [Hash] initialization options for the configuration.
     #
-    # @option colors [Array<String>] the colors defined for the component set.
+    # @option options colors [Array<String>] the colors defined for the
+    #   component set.
+    # @option options default_icon_family [String] the name of the default icon
+    #   family, if any.
+    # @option options icon_families [Array<String>] the icon families defined
+    #   for the component set.
+    # @option options remote_forms [true, false] true if the default form
+    #   behavior is remote, i.e. an XHR or Turbo request.
+    # @option options sizes [Array<String>] the sizes defined for the component
+    #   set.
     def initialize(**options)
       @options =
         self.class::DEFAULTS
