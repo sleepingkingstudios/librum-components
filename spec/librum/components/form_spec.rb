@@ -473,6 +473,13 @@ RSpec.describe Librum::Components::Form, type: :component do
         it { expect(input.options).to be == expected_options }
       end
 
+      describe 'with name: a symbol' do
+        let(:name)             { :refuel_rocket }
+        let(:expected_options) { super().merge(name: name.to_s) }
+
+        it { expect(input.options).to be == expected_options }
+      end
+
       describe 'with options' do
         let(:options) do
           super().merge(label: 'Refuel Rocket', required: true)
