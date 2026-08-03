@@ -106,7 +106,7 @@ do
       let(:component_options) { super().merge(id: 'rocket_refuel') }
       let(:snapshot) do
         <<~HTML
-          <label class="checkbox">
+          <label class="checkbox" for="rocket_refuel">
             <input autocomplete="off" type="hidden" value="0">
 
             <input id="rocket_refuel" type="checkbox" value="1">
@@ -263,7 +263,7 @@ do
       end
       let(:snapshot) do
         <<~HTML
-          <label class="checkbox">
+          <label class="checkbox" for="rocket_refuel">
             <input autocomplete="off" name="rocket[refuel]" type="hidden" value="0">
 
             <input id="rocket_refuel" name="rocket[refuel]" type="checkbox" checked="checked" required="required" value="true">
