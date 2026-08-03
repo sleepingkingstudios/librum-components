@@ -19,13 +19,15 @@ module Librum::Components
     #   @param result [Cuprum::Result] the result returned by the controller
     #     action.
     #   @param options [Hash] additional options for the form.
-    def initialize(result:, **)
+    def initialize(result:, **, &block)
       @result = result
 
       super(**)
 
       options[:fields] =
-        if fields.is_a?(Proc)
+        if block_given?
+          evaluate_fields(block)
+        elsif fields.is_a?(Proc)
           evaluate_fields(options[:fields])
         else
           fields.dup

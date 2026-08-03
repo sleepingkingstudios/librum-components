@@ -6,7 +6,11 @@ require 'librum/components'
 
 RSpec.describe Librum::Components::Form, type: :component do
   subject(:component) do
-    described_class.new(**required_keywords, **component_options)
+    described_class.new(
+      **required_keywords,
+      **component_options,
+      &component_block
+    )
   end
 
   deferred_context 'when the field component is defined' do
@@ -98,6 +102,7 @@ RSpec.describe Librum::Components::Form, type: :component do
 
   let(:result)            { Cuprum::Rails::Result.new }
   let(:required_keywords) { { result: } }
+  let(:component_block)   { nil }
 
   include_deferred 'should be a view component',
     has_required_keywords: true
@@ -194,6 +199,38 @@ RSpec.describe Librum::Components::Form, type: :component do
     include_deferred 'when the field component is defined'
 
     it { expect(rendered).to match_snapshot(snapshot) }
+
+    describe 'with a block' do
+      let(:tag_helper) { ViewComponent::Base.new }
+      let(:component_block) do
+        lambda do |builder|
+          builder.fields << tag_helper.content_tag('h1') { 'Form Heading' }
+
+          builder.input('rocket[name]')
+
+          builder.checkbox('rocket[refuel]')
+
+          builder.text_area('rocket[description]')
+        end
+      end
+      let(:snapshot) do
+        <<~HTML
+          <form>
+            <h1>
+              Form Heading
+            </h1>
+
+            <input name="rocket[name]" type="text">
+
+            <input name="rocket[refuel]" type="checkbox">
+
+            <input name="rocket[description]" type="textarea">
+          </form>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot(snapshot) }
+    end
 
     describe 'with action: value' do
       let(:component_options) { super().merge(action: '/rockets') }
