@@ -104,6 +104,7 @@ module Librum::Components
     def input(name, type: 'text', **options)
       tools.assertions.validate_name(name, as: 'name')
 
+      name    = name.to_s
       value   = value_for(name)
       errors  = errors_for(name)
       options = options_for(type:, value:, errors:, **options)
