@@ -14,7 +14,8 @@ module Librum::Components::Bulma::Forms
     option :color,      validate: true
     option :icon_left,  validate: :icon
     option :icon_right, validate: :icon
-    option :inline?,    boolean:  true, default: true
+    option :id,         required: false, validate: true
+    option :inline?,    boolean:  true,  default: true
     option :label,      validate: true
     option :message,    validate: :label
     option :name,       validate: String, required: true
@@ -52,6 +53,7 @@ module Librum::Components::Bulma::Forms
       build_component(
         components::Forms::Checkbox,
         **options,
+        id:    input_id,
         label: label || extract_label
       )
     end
@@ -66,16 +68,17 @@ module Librum::Components::Bulma::Forms
       build_component(
         components::Forms::Select,
         full_width: true,
-        **options
+        **options,
+        id:         input_id
       )
     end
 
     def build_text_area
-      build_component(components::Forms::TextArea, **options)
+      build_component(components::Forms::TextArea, **options, id: input_id)
     end
 
     def build_text_input
-      build_component(components::Forms::Input, **options)
+      build_component(components::Forms::Input, **options, id: input_id)
     end
 
     def control_class_name
@@ -98,6 +101,10 @@ module Librum::Components::Bulma::Forms
       )
     end
 
+    def input_id
+      @input_id ||= id || name.gsub(/\]?\[/, '_').sub(/\]\z/, '')
+    end
+
     def message_class_name
       class_names(
         bulma_class_names('help'),
@@ -116,7 +123,9 @@ module Librum::Components::Bulma::Forms
     end
 
     def render_empty_label
-      content_tag('label', class: bulma_class_names('label')) { "\u00A0" }
+      content_tag('label', class: bulma_class_names('label'), for: input_id) do
+        "\u00A0"
+      end
     end
 
     def render_icon(icon, direction)
@@ -142,7 +151,7 @@ module Librum::Components::Bulma::Forms
       render(component) if component
     end
 
-    def render_label # rubocop:disable Metrics/AbcSize
+    def render_label # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       return if type == 'checkbox' && inline?
 
       return render_empty_label if type == 'checkbox'
@@ -151,7 +160,11 @@ module Librum::Components::Bulma::Forms
 
       return label if safe_buffer?(label)
 
-      content_tag('label', class: bulma_class_names('label')) do
+      content_tag(
+        'label',
+        class: bulma_class_names('label'),
+        for:   input_id
+      ) do
         strip_tags(label || extract_label)
       end
     end
@@ -164,6 +177,12 @@ module Librum::Components::Bulma::Forms
       content_tag('p', class: message_class_name) do
         strip_tags(message)
       end
+    end
+
+    def validate_id(value, as: 'id')
+      return if value.nil?
+
+      tools.assertions.validate_name(value, as:)
     end
 
     def validate_label(value, as: 'label')

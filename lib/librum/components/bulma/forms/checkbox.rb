@@ -19,7 +19,7 @@ module Librum::Components::Bulma::Forms
     #
     # @return [ActiveSupport::SafeBuffer] the rendered input.
     def call
-      content_tag('label', class: bulma_class_names('checkbox')) do
+      content_tag('label', class: bulma_class_names('checkbox'), for: id) do
         safe_buffer do |buffer|
           buffer << render_hidden_input << "\n"
           buffer << render_checkbox

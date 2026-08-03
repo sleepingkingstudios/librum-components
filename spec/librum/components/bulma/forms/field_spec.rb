@@ -58,6 +58,38 @@ do
 
     include_deferred 'should validate that option is a valid name', :type
 
+    describe 'with id: nil' do
+      let(:component_options) { super().merge(id: nil) }
+
+      it 'should not raise an exception' do
+        expect { described_class.new(**component_options) }.not_to raise_error
+      end
+    end
+
+    describe 'with id: an Object' do
+      let(:component_options) { super().merge(id: Object.new.freeze) }
+      let(:error_message) do
+        tools.assertions.error_message_for(:name, as: 'id')
+      end
+
+      it 'should raise an exception' do
+        expect { described_class.new(**component_options) }
+          .to raise_error ArgumentError, error_message
+      end
+    end
+
+    describe 'with id: an empty String' do
+      let(:component_options) { super().merge(id: '') }
+      let(:error_message) do
+        tools.assertions.error_message_for(:presence, as: 'id')
+      end
+
+      it 'should raise an exception' do
+        expect { described_class.new(**component_options) }
+          .to raise_error ArgumentError, error_message
+      end
+    end
+
     describe 'with label: an Object' do
       let(:component_options) { super().merge(label: Object.new.freeze) }
       let(:error_message) do
@@ -91,36 +123,36 @@ do
     let(:snapshot) do
       <<~HTML
         <div class="field">
-          <label class="label">
+          <label class="label" for="rocket_name">
             Name
           </label>
 
           <div class="control">
-            <input name="rocket[name]" class="input" type="text">
+            <input id="rocket_name" name="rocket[name]" class="input" type="text">
           </div>
         </div>
       HTML
     end
 
-    it { expect(rendered).to match_snapshot(snapshot) }
+    it { expect(rendered).to match_snapshot }
 
     describe 'with class_name: value' do
       let(:component_options) { super().merge(class_name: 'custom-class') }
       let(:snapshot) do
         <<~HTML
           <div class="field custom-class">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Name
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
             </div>
           </div>
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with color: value' do
@@ -128,18 +160,18 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Name
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input is-danger" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input is-danger" type="text">
             </div>
           </div>
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with icon_left: value' do
@@ -147,12 +179,12 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Name
             </label>
 
             <div class="control has-icons-left">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
 
               <span class="icon is-small is-left">
                 <i class="fa-solid fa-rocket"></i>
@@ -162,7 +194,7 @@ do
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with icon_right: value' do
@@ -170,12 +202,12 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Name
             </label>
 
             <div class="control has-icons-right">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
 
               <span class="icon is-small is-right">
                 <i class="fa-solid fa-radiation"></i>
@@ -185,7 +217,26 @@ do
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
+    end
+
+    describe 'with id: a String' do
+      let(:component_options) { super().merge(id: 'custom_id') }
+      let(:snapshot) do
+        <<~HTML
+          <div class="field">
+            <label class="label" for="custom_id">
+              Name
+            </label>
+
+            <div class="control">
+              <input id="custom_id" name="rocket[name]" class="input" type="text">
+            </div>
+          </div>
+        HTML
+      end
+
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with label: a String' do
@@ -194,18 +245,18 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Refuel Rocket
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
             </div>
           </div>
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with label: an HTML string' do
@@ -216,18 +267,18 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Refuel Rocket
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
             </div>
           </div>
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with label: a safe HTML string' do
@@ -243,13 +294,13 @@ do
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
             </div>
           </div>
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with label: a component' do
@@ -267,13 +318,13 @@ do
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
             </div>
           </div>
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with message: a String' do
@@ -282,12 +333,12 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Name
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
             </div>
 
             <p class="help">
@@ -297,7 +348,7 @@ do
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with message: an HTML string' do
@@ -308,12 +359,12 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Name
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
             </div>
 
             <p class="help">
@@ -323,7 +374,7 @@ do
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with message: a safe HTML string' do
@@ -334,12 +385,12 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Name
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
             </div>
 
             <p class="has-text-danger">
@@ -349,7 +400,7 @@ do
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with message: a component' do
@@ -362,12 +413,12 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Name
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="text">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text">
             </div>
 
             <p class="has-text-danger">
@@ -377,7 +428,7 @@ do
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with type: value' do
@@ -385,18 +436,18 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Name
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="password">
+              <input id="rocket_name" name="rocket[name]" class="input" type="password">
             </div>
           </div>
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with value: value' do
@@ -404,18 +455,18 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_name">
               Name
             </label>
 
             <div class="control">
-              <input name="rocket[name]" class="input" type="text" value="Hellhound IV">
+              <input id="rocket_name" name="rocket[name]" class="input" type="text" value="Hellhound IV">
             </div>
           </div>
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with multiple options' do
@@ -425,7 +476,7 @@ do
           color:       'danger',
           icon_left:   'rocket',
           icon_right:  'radiation',
-          id:          'rocket_name',
+          id:          'custom_id',
           label:       'Rocket Name',
           message:     'Rocket is out of fuel',
           placeholder: 'Name of Rocket',
@@ -436,12 +487,12 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field custom-class">
-            <label class="label">
+            <label class="label" for="custom_id">
               Rocket Name
             </label>
 
             <div class="control has-icons-left has-icons-right">
-              <input id="rocket_name" name="rocket[name]" class="input is-danger" placeholder="Name of Rocket" required="required" type="text" value="Hellhound IV">
+              <input id="custom_id" name="rocket[name]" class="input is-danger" placeholder="Name of Rocket" required="required" type="text" value="Hellhound IV">
 
               <span class="icon is-small is-left">
                 <i class="fa-solid fa-rocket"></i>
@@ -459,7 +510,7 @@ do
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
     end
 
     describe 'with type: checkbox' do
@@ -473,10 +524,10 @@ do
         <<~HTML
           <div class="field">
             <div class="control">
-              <label class="checkbox">
+              <label class="checkbox" for="rocket_refuel">
                 <input autocomplete="off" name="rocket[refuel]" type="hidden" value="0">
 
-                <input name="rocket[refuel]" type="checkbox" value="1">
+                <input id="rocket_refuel" name="rocket[refuel]" type="checkbox" value="1">
 
                 <span class="ml-1">
                   Refuel
@@ -487,22 +538,18 @@ do
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
 
-      describe 'with inline: false' do
-        let(:component_options) { super().merge(inline: false) }
+      describe 'with id: a String' do
+        let(:component_options) { super().merge(id: 'custom_id') }
         let(:snapshot) do
           <<~HTML
             <div class="field">
-              <label class="label">
-                &nbsp;
-              </label>
-
-              <div class="control px-1 py-2">
-                <label class="checkbox">
+              <div class="control">
+                <label class="checkbox" for="custom_id">
                   <input autocomplete="off" name="rocket[refuel]" type="hidden" value="0">
 
-                  <input name="rocket[refuel]" type="checkbox" value="1">
+                  <input id="custom_id" name="rocket[refuel]" type="checkbox" value="1">
 
                   <span class="ml-1">
                     Refuel
@@ -513,7 +560,34 @@ do
           HTML
         end
 
-        it { expect(rendered).to match_snapshot(snapshot) }
+        it { expect(rendered).to match_snapshot }
+      end
+
+      describe 'with inline: false' do
+        let(:component_options) { super().merge(inline: false) }
+        let(:snapshot) do
+          <<~HTML
+            <div class="field">
+              <label class="label" for="rocket_refuel">
+                &nbsp;
+              </label>
+
+              <div class="control px-1 py-2">
+                <label class="checkbox" for="rocket_refuel">
+                  <input autocomplete="off" name="rocket[refuel]" type="hidden" value="0">
+
+                  <input id="rocket_refuel" name="rocket[refuel]" type="checkbox" value="1">
+
+                  <span class="ml-1">
+                    Refuel
+                  </span>
+                </label>
+              </div>
+            </div>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot }
       end
 
       describe 'with multiple options' do
@@ -530,10 +604,10 @@ do
           <<~HTML
             <div class="field">
               <div class="control">
-                <label class="checkbox">
+                <label class="checkbox" for="rocket_refuel">
                   <input autocomplete="off" name="rocket[refuel]" type="hidden" value="0">
 
-                  <input name="rocket[refuel]" type="checkbox" checked="checked" required="required" value="1">
+                  <input id="rocket_refuel" name="rocket[refuel]" type="checkbox" checked="checked" required="required" value="1">
 
                   <span class="ml-1">
                     Refuel Rocket
@@ -548,7 +622,7 @@ do
           HTML
         end
 
-        it { expect(rendered).to match_snapshot(snapshot) }
+        it { expect(rendered).to match_snapshot }
       end
     end
 
@@ -569,13 +643,13 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="game_space_program">
               Space Program
             </label>
 
             <div class="control">
               <div class="select is-block">
-                <select name="game[space_program]">
+                <select id="game_space_program" name="game[space_program]">
                   <option value="ahi">
                     Avalon Heavy Industries
                   </option>
@@ -590,7 +664,36 @@ do
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
+
+      describe 'with id: a String' do
+        let(:component_options) { super().merge(id: 'custom_id') }
+        let(:snapshot) do
+          <<~HTML
+            <div class="field">
+              <label class="label" for="custom_id">
+                Space Program
+              </label>
+
+              <div class="control">
+                <div class="select is-block">
+                  <select id="custom_id" name="game[space_program]">
+                    <option value="ahi">
+                      Avalon Heavy Industries
+                    </option>
+
+                    <option value="mst">
+                      Morningstar Technologies
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot }
+      end
 
       describe 'with multiple options' do
         let(:component_options) do
@@ -606,13 +709,13 @@ do
         let(:snapshot) do
           <<~HTML
             <div class="field">
-              <label class="label">
+              <label class="label" for="game_space_program">
                 Select Space Program
               </label>
 
               <div class="control">
                 <div class="select is-danger is-block">
-                  <select name="game[space_program]" required="required">
+                  <select id="game_space_program" name="game[space_program]" required="required">
                     <option value="">
                       Space Program
                     </option>
@@ -635,7 +738,7 @@ do
           HTML
         end
 
-        it { expect(rendered).to match_snapshot(snapshot) }
+        it { expect(rendered).to match_snapshot }
       end
     end
 
@@ -649,18 +752,37 @@ do
       let(:snapshot) do
         <<~HTML
           <div class="field">
-            <label class="label">
+            <label class="label" for="rocket_description">
               Description
             </label>
 
             <div class="control">
-              <textarea name="rocket[description]" class="textarea"></textarea>
+              <textarea id="rocket_description" name="rocket[description]" class="textarea"></textarea>
             </div>
           </div>
         HTML
       end
 
-      it { expect(rendered).to match_snapshot(snapshot) }
+      it { expect(rendered).to match_snapshot }
+
+      describe 'with id: a String' do
+        let(:component_options) { super().merge(id: 'custom_id') }
+        let(:snapshot) do
+          <<~HTML
+            <div class="field">
+              <label class="label" for="custom_id">
+                Description
+              </label>
+
+              <div class="control">
+                <textarea id="custom_id" name="rocket[description]" class="textarea"></textarea>
+              </div>
+            </div>
+          HTML
+        end
+
+        it { expect(rendered).to match_snapshot }
+      end
 
       describe 'with multiple options' do
         let(:value) do
@@ -684,12 +806,12 @@ do
         let(:snapshot) do
           <<~HTML
             <div class="field">
-              <label class="label">
+              <label class="label" for="rocket_description">
                 Decribe The Rocket
               </label>
 
               <div class="control">
-                <textarea name="rocket[description]" class="textarea is-danger" required="required">
+                <textarea id="rocket_description" name="rocket[description]" class="textarea is-danger" required="required">
                   And thou, Mercurius, that with wingèd brow
                   Dost mount aloft into the yielding sky,
                   And thro' Heav'n's halls thy airy flight dost throw,
@@ -705,7 +827,7 @@ do
           HTML
         end
 
-        it { expect(rendered).to match_snapshot(snapshot) }
+        it { expect(rendered).to match_snapshot }
       end
     end
   end

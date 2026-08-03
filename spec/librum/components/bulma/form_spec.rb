@@ -163,21 +163,21 @@ do
                 </h1>
 
                 <div class="field cell is-col-span-2">
-                  <label class="label">
+                  <label class="label" for="rocket_name">
                     Name
                   </label>
 
                   <div class="control">
-                    <input name="rocket[name]" class="input" type="text">
+                    <input id="rocket_name" name="rocket[name]" class="input" type="text">
                   </div>
                 </div>
 
                 <div class="field">
                   <div class="control">
-                    <label class="checkbox">
+                    <label class="checkbox" for="rocket_refuel">
                       <input autocomplete="off" name="rocket[refuel]" type="hidden" value="0">
 
-                      <input name="rocket[refuel]" type="checkbox" value="1">
+                      <input id="rocket_refuel" name="rocket[refuel]" type="checkbox" value="1">
 
                       <span class="ml-1">
                         Refuel
@@ -187,12 +187,12 @@ do
                 </div>
 
                 <div class="field cell is-col-span-3">
-                  <label class="label">
+                  <label class="label" for="rocket_description">
                     Description
                   </label>
 
                   <div class="control">
-                    <textarea name="rocket[description]" class="textarea"></textarea>
+                    <textarea id="rocket_description" name="rocket[description]" class="textarea"></textarea>
                   </div>
                 </div>
               </div>
