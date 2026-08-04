@@ -15,6 +15,10 @@
  * COMPONENTS
  ******************************************************************************/
 
+a.icon-text {
+  color: var(--bulma-link-text);
+}
+
 .alert {
   border-radius: var(--bulma-radius);
   border-style: solid;
